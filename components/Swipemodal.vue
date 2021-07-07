@@ -96,8 +96,11 @@ export default {
       console.log('move:' + this.movey + '  height:' + window.outerHeight)
     },
     touchEnd(e) {
-      if(this.moveY < 0) {
+      if(this.moveY < -1 * window.outerHeight / 4) {
         this.close()
+      }else {
+        this.moveY = 0
+        this.movey = this.moveY + 'px'
       }
     }
   }
