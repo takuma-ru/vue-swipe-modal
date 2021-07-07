@@ -17,7 +17,7 @@
       <div
         id="modal"
         :class="modal_anim ? `modal__open` : `modal__close`"
-        :style="`bottom: ${moveX}vh;`"
+        :style="`bottom: ${-moveY}px;`"
         @touchstart="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
@@ -40,8 +40,8 @@ export default {
   data() {
     return {
       position: 0,
-      startX: 0,
-      moveX: 0,
+      startY: 0,
+      moveY: 0,
       modal: false,
       modal_anim: false,
     }
@@ -53,7 +53,7 @@ export default {
     // バインドするスタイルを生成
     styles () {
       return {
-        '--movex': this.moveX,
+        '--movex': this.moveY,
       }
     }
   },
@@ -77,17 +77,17 @@ export default {
     },
 
     touchStart(e) {
-      this.startX = e.touches[0].pageX;
+      this.startY = e.touches[0].pageY;
     },
     touchMove(e) {
-      this.moveX = e.touches[0].pageX - this.startX;
-      if(this.moveX > 0) {
-        this.moveX = 0
+      this.moveY = e.touches[0].pageY - this.startY;
+      if(this.moveY < 0) {
+        this.moveY = 0
       }
-        //console.log('move:', this.moveX)
+      console.log('move:', this.moveY)
     },
     touchEnd(e) {
-      this.moveX = 0
+      this.moveY = 0
     }
   }
 }
@@ -168,6 +168,7 @@ export default {
 
   margin-top: 1vh;
   margin-bottom: 1vh;
+  cursor: pointer;
 }
 
 .modal_deco_top::after {

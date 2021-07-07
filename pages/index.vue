@@ -21,7 +21,10 @@ export default {
 
   methods: {
     open() {
-      this.modal = true
+      this.$refs.myBottomSheet.open();
+    },
+    close() {
+      this.$refs.myBottomSheet.close();
     }
   }
 }
