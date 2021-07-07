@@ -18,13 +18,13 @@
         id="modal"
         :class="modal_anim ? `modal__open` : `modal__close`"
         :style="`bottom: ${moveX}vh;`"
+        @touchstart="touchStart"
+        @touchmove="touchMove"
+        @touchend="touchEnd"
       >
         <div
           ref="swipe"
           @mouseover="over"
-          @touchstart="touchStart"
-          @touchmove="touchMove"
-          @touchend="/*touchEnd*/"
           class="modal_deco_top"
         />
         <div id="modal_contents">
@@ -76,16 +76,19 @@ export default {
       console.log('over')
     },
 
-    touchStart(e){
+    touchStart(e) {
       this.startX = e.touches[0].pageX;
     },
-    touchMove(e){
+    touchMove(e) {
       this.moveX = e.touches[0].pageX - this.startX;
       if(this.moveX > 0) {
         this.moveX = 0
       }
-        console.log('move:', this.moveX)
+        //console.log('move:', this.moveX)
     },
+    touchEnd(e) {
+      this.moveX = 0
+    }
   }
 }
 </script>
