@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!modal">
+    <div v-if="!modal" class="modal_button">
       <button @click="open">
         <span>
           swipemodal open
@@ -17,7 +17,7 @@
       <div
         id="modal"
         :class="modal_anim ? `modal__open` : `modal__close`"
-        :style="`bottom: ${-moveY}px;`"
+        :style="`bottom: ${movey}; --movey: ${movey};`"
         @touchstart="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
@@ -44,16 +44,20 @@ export default {
       moveY: 0,
       modal: false,
       modal_anim: false,
+      movey: 0,
     }
   },
+
   props: [
-    ],
+  ],
 
   computed: {
-    // バインドするスタイルを生成
     styles () {
       return {
-        '--movex': this.moveY,
+        '--movey': {
+          type: String,
+          default: this.movey,
+        },
       }
     }
   },
@@ -61,6 +65,9 @@ export default {
   methods: {
     close_func() {
       this.modal = false
+      this.startY = 0
+      this.moveY = 0
+      this.movey = 0
       //console.log('close')
     },
     close(){
@@ -77,23 +84,27 @@ export default {
     },
 
     touchStart(e) {
-      this.startY = e.touches[0].pageY;
+      this.startY = e.touches[0].pageY
     },
     touchMove(e) {
-      this.moveY = e.touches[0].pageY - this.startY;
-      if(this.moveY < 0) {
+      this.moveY = -1 * (e.touches[0].pageY - this.startY)
+      this.movey = this.moveY + 'px'
+      if(this.moveY > 0) {
         this.moveY = 0
+        this.movey = this.moveY + 'px'
       }
-      console.log('move:', this.moveY)
+      console.log('move:' + this.movey + '  height:' + window.outerHeight)
     },
     touchEnd(e) {
-      this.moveY = 0
+      if(this.moveY < 0) {
+        this.close()
+      }
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 #modal_back {
   z-index: 0;
   position: fixed;
@@ -124,6 +135,7 @@ export default {
 }
 
 #modal {
+  overscroll-behavior-y: none;
   z-index: 1;
   position: fixed;
   height: 50vh;
@@ -202,7 +214,7 @@ export default {
 
 @keyframes close {
   0% {
-    bottom: 0%;
+    bottom: var(--movey);
   }
   100% {
     bottom: -50vh;
