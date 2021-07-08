@@ -3,7 +3,7 @@
     <div v-if="!modal" class="modal_button">
       <button @click="open">
         <span>
-          swipemodal open
+          OPEN
         </span>
       </button>
     </div>
@@ -24,11 +24,36 @@
       >
         <div
           ref="swipe"
-          @mouseover="over"
           class="modal_deco_top"
         />
         <div id="modal_contents">
-          Hello
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
+          Hello <br>
         </div>
       </div>
     </div>
@@ -68,7 +93,8 @@ export default {
       this.startY = 0
       this.moveY = 0
       this.movey = 0
-      //console.log('close')
+      document.body.classList.remove("modal-open")
+      console.log('close')
     },
     close(){
       this.modal_anim = false
@@ -78,11 +104,8 @@ export default {
       //console.log('open')
       this.modal_anim = true
       this.modal = true
+      document.body.classList.add("modal-open")
     },
-    over() {
-      console.log('over')
-    },
-
     touchStart(e) {
       this.startY = e.touches[0].pageY
     },
@@ -96,7 +119,7 @@ export default {
       console.log('move:' + this.movey + '  height:' + window.outerHeight)
     },
     touchEnd(e) {
-      if(this.moveY < -1 * window.outerHeight / 4) {
+      if(this.moveY < -1 * window.outerHeight / 6) {
         this.close()
       }else {
         this.moveY = 0
@@ -108,8 +131,16 @@ export default {
 </script>
 
 <style>
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal_button {
+  text-align: center;
+}
+
 #modal_back {
-  z-index: 0;
+  z-index: 1;
   position: fixed;
   height: 100vh;
   width: 100vw;
@@ -138,8 +169,8 @@ export default {
 }
 
 #modal {
-  overscroll-behavior-y: none;
-  z-index: 1;
+  overscroll-behavior-y: contain;
+  z-index: 2;
   position: fixed;
   height: 50vh;
   width: 100vw;
@@ -177,18 +208,20 @@ export default {
 }
 
 .modal_deco_top {
-  position: relative;
+  z-index: 2;
+  position: sticky;
+  top: 1vh;
   height: 0.7vh;
   width: 100%;
 
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-  cursor: pointer;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
 
 .modal_deco_top::after {
   position: absolute;
   content:"";
+  top: 0%;
   height: 0.7vh;
   width: 35px;
   background-color: rgb(200, 200, 200);

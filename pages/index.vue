@@ -5,6 +5,8 @@
       <h1>
         SwipeModal Package
       </h1>
+      <strong>Android ios 対応</strong>
+      <p><strong>GitHub</strong>：<a href="https://github.com/takuma-ru/vue_SwipeModal">takuma-ru/vue_SwipeModal</a></p>
     </div>
 
     <Swipemodal />
@@ -38,7 +40,7 @@ body {
 .container {
   position: relative;
   padding: 2vh 1vw;
-  min-height: 100vh;
+  min-height: 150vh;
 }
 .title {
   text-align: center;
