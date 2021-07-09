@@ -9,6 +9,7 @@ https://vue-swipe-modal.vercel.app/
 
 ## Requirement
 | name | version |
+| --- | --- |
 | nuxt.js | 2.15.3 |
 | core-js | 3.9.1 |
 
