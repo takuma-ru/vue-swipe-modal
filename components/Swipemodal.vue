@@ -41,12 +41,16 @@
 export default {
   data() {
     return {
+      //bool
+      down: false,
+      modal_anim: false,
+      top: true,
+      //int
       position: 0,
+      topY: null,
       startY: 0,
       moveY: 0,
-      modal_anim: false,
       movey: 0,
-      down: false,
     }
   },
 
@@ -98,18 +102,26 @@ export default {
     }
   },
 
+  mounted() {
+    document.querySelector(`#modal`).addEventListener('scroll', this.handleScroll)
+  },
+  destroyed() {
+    document.querySelector(`#modal`).removeEventListener("scroll", this.handleScroll);
+  },
+
   watch: {
     modal: function(newmodal, oldmodal) {
       if(newmodal) {
         this.open()
       }
-    }
+    },
   },
 
   methods: {
     //common
     close_func() {
       this.down = false
+      this.topY = null
       this.startY = 0
       this.moveY = 0
       this.movey = 0
@@ -121,11 +133,26 @@ export default {
       this.modal_anim = false
       setTimeout(this.close_func, 235)
     },
+    open_func() {
+    },
     open(){
       //console.log('open')
       this.modal_anim = true
       this.$emit('change-modal', true)
       document.body.classList.add("modal-open")
+    },
+    handleScroll() {
+      const title = document.querySelector(`#modal_contents`);
+      const rect = title.getBoundingClientRect().y;
+      if(this.topY == null) {
+        this.topY = rect
+      }
+      if (rect >= this.topY) {
+        this.top = true
+      }else {
+        this.top = false
+      }
+      console.log('topY: ' + this.topY + ' rect: ' + rect)
     },
 
     //mobile
@@ -133,13 +160,15 @@ export default {
       this.startY = e.touches[0].pageY
     },
     touchMove(e) {
-      this.moveY = -1 * (e.touches[0].pageY - this.startY)
-      this.movey = this.moveY + 'px'
-      if(this.moveY > 0) {
-        this.moveY = 0
+      if(this.top) {
+        this.moveY = -1 * (e.touches[0].pageY - this.startY)
         this.movey = this.moveY + 'px'
+        if(this.moveY > 0) {
+          this.moveY = 0
+          this.movey = this.moveY + 'px'
+        }
+        //console.log('move:' + this.movey + '  height:' + window.outerHeight)
       }
-      //console.log('move:' + this.movey + '  height:' + window.outerHeight)
     },
     touchEnd(e) {
       if(this.moveY < -1 * window.outerHeight / 8) {

@@ -35,7 +35,6 @@
       height="80vh"
       width="100%"
       radius="20px"
-      fullscreen
     >
       <h1>modal 1</h1>
       <table>
@@ -58,6 +57,9 @@
           <td>notip</td> <td>false</td>
         </tr>
       </table>
+      <div v-for="i in 100" :key="i">
+        {{ i }}
+      </div>
     </Swipemodal>
 
     <Swipemodal
@@ -120,7 +122,7 @@ body {
 .container {
   position: relative;
   padding: 2vh 1vw;
-  min-height: 100vh;
+  min-height: 150vh;
 }
 .title {
   text-align: center;
