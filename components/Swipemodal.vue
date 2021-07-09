@@ -13,7 +13,7 @@
         :style="`
           bottom: ${movey};
           --movey: ${movey};
-          --height: ${fullscreen ? '100vh' : height};
+          --height: ${fullscreen ? '100%' : height};
           --width: ${width};
           --color: ${color};
           --radius: ${radius};

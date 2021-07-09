@@ -68,6 +68,26 @@
       notip
     >
       <h1>modal 2</h1>
+      <table>
+        <tr>
+          <th>name</th> <th>value</th>
+        </tr>
+        <tr>
+          <td>height</td> <td>50vh</td>
+        </tr>
+        <tr>
+          <td>width</td> <td>50%</td>
+        </tr>
+        <tr>
+          <td>radius</td> <td>0px</td>
+        </tr>
+        <tr>
+          <td>fullscreen</td> <td>false</td>
+        </tr>
+        <tr>
+          <td>notip</td> <td>true</td>
+        </tr>
+      </table>
     </Swipemodal>
   </div>
 </template>
