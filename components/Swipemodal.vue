@@ -122,6 +122,7 @@ export default {
     close_func() {
       this.down = false
       this.topY = null
+      document.querySelector(`#modal_contents`).scrollIntoView(true)
       this.startY = 0
       this.moveY = 0
       this.movey = 0
@@ -152,7 +153,7 @@ export default {
       }else {
         this.top = false
       }
-      console.log('topY: ' + this.topY + ' rect: ' + rect)
+      //console.log('topY: ' + this.topY + ' rect: ' + rect)
     },
 
     //mobile
@@ -295,6 +296,7 @@ body.modal-open {
 
   padding-top: 1vh;
   padding-bottom: 1vh;
+  cursor: pointer;
 }
 
 .modal_deco_top::after {
