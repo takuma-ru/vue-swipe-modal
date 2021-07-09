@@ -10,52 +10,34 @@
     <div v-else>
       <div
         id="modal_back"
-        @click="close"
+        @click="persistent ? null : close()"
         :class="modal_anim ? `modal_back__open` : `modal_back__close`"
       />
 
       <div
         id="modal"
         :class="modal_anim ? `modal__open` : `modal__close`"
-        :style="`bottom: ${movey}; --movey: ${movey};`"
+        :style="`
+          bottom: ${movey};
+          --movey: ${movey};
+          --height: ${height};
+          --width: ${width};
+          --color: ${color};
+          --radius: ${radius};
+        `"
         @touchstart="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
       >
         <div
+          v-if="!notip"
           ref="swipe"
           class="modal_deco_top"
           @mousedown="mouseDown"
           @mouseup="mouseUp"
         />
         <div id="modal_contents">
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
-          Hello <br>
+          <slot></slot>
         </div>
       </div>
     </div>
@@ -76,8 +58,27 @@ export default {
     }
   },
 
-  props: [
-  ],
+  props: {
+    height: {
+      type: String,
+      default: '50vh'
+    },
+    width: {
+      type: String,
+      default: '50vw'
+    },
+    color: {
+      type: String,
+      default: '#FFFFFF'
+    },
+    radius: {
+      type: String,
+      default: '20px'
+    },
+    persistent: Boolean,
+    dark: Boolean,
+    notip: Boolean,
+  },
 
   computed: {
     styles () {
@@ -85,6 +86,14 @@ export default {
         '--movey': {
           type: String,
           default: this.movey,
+        },
+        '--height': {
+          type: String,
+          default: this.height,
+        },
+        '--width': {
+          type: String,
+          default: this.width,
         },
       }
     }
@@ -102,7 +111,7 @@ export default {
       this.moveY = 0
       this.movey = 0
       document.body.classList.remove("modal-open")
-      console.log('close')
+      //console.log('close')
     },
     close(){
       this.modal_anim = false
@@ -141,7 +150,7 @@ export default {
     mouseDown(e) {
       this.startY = e.pageY;
       this.down = true
-      console.log('mouseDown')
+      //console.log('mouseDown')
     },
     mouseMove(e) {
       if(this.down) {
@@ -161,7 +170,7 @@ export default {
         this.movey = this.moveY + 'px'
       }
       this.down = false
-      console.log('mouseUp')
+      //console.log('mouseUp')
     },
   }
 }
@@ -209,17 +218,17 @@ body.modal-open {
   overscroll-behavior-y: contain;
   z-index: 2;
   position: fixed;
-  height: 50vh;
-  width: 100vw;
+  height: var(--height);
+  width: var(--width);
 
   bottom: 0%;
   left: 50%;
   transform: translate(-50%, 0%);
 
-  border-radius: 20px 20px 0px 0px;
+  border-radius: var(--radius) var(--radius) 0px 0px;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
 
-  background-color: white;
+  background-color: var(--color);
 
   overflow: scroll;
   -ms-overflow-style: none;
@@ -278,7 +287,7 @@ body.modal-open {
 
 @keyframes open {
   0% {
-    bottom: -50vh;
+    bottom: calc(-1 * var(--height));
   }
   100% {
     bottom: 0%;
@@ -290,7 +299,7 @@ body.modal-open {
     bottom: var(--movey);
   }
   100% {
-    bottom: -50vh;
+    bottom: calc(-1 * var(--height));
   }
 }
 

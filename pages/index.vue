@@ -15,7 +15,22 @@
       <h2>GitHub：<a href="https://github.com/takuma-ru/vue_SwipeModal">takuma-ru/vue_SwipeModal</a></h2>
     </div>
 
-    <Swipemodal />
+    <Swipemodal
+      height="80vh"
+      width="100%"
+      radius="20px"
+    >
+      <h1>タイトル</h1>
+    </Swipemodal>
+
+    <Swipemodal
+      height="50vh"
+      width="50%"
+      radius="0px"
+      notip
+    >
+      <h1>タイトル</h1>
+    </Swipemodal>
   </div>
 </template>
 
@@ -46,7 +61,7 @@ body {
 .container {
   position: relative;
   padding: 2vh 1vw;
-  min-height: 150vh;
+  min-height: 100vh;
 }
 .title {
   text-align: center;

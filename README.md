@@ -1,20 +1,31 @@
 # vue_SwipeModal
 
-## Build Setup
+## Description
+スワイプして閉じることのできるモーダルウィンドウです。（通称:
+ Swipeable Bottom Sheet）
 
-```bash
-# install dependencies
-$ npm install
+## DEMO
+https://vue-swipe-modal.vercel.app/
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Requirement
+| name | version |
+| nuxt.js | 2.15.3 |
+| core-js | 3.9.1 |
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+## Getting Started
+```
+<template>
+  <div>
+    <Swipemodal
+      height="50vh"
+      width="50%"
+      radius="20px"
+      notip
+    >
+      <h1>contents</h1>
+    </Swipemodal>
+  </div>
+</template>
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Installation
