@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @mousemove="mouseMove">
     <div v-if="!modal" class="modal_button">
       <button @click="open">
         <span>
@@ -25,6 +25,8 @@
         <div
           ref="swipe"
           class="modal_deco_top"
+          @mousedown="mouseDown"
+          @mouseup="mouseUp"
         />
         <div id="modal_contents">
           Hello <br>
@@ -70,6 +72,7 @@ export default {
       modal: false,
       modal_anim: false,
       movey: 0,
+      down: false,
     }
   },
 
@@ -87,9 +90,14 @@ export default {
     }
   },
 
+  watch: {
+  },
+
   methods: {
+    //common
     close_func() {
       this.modal = false
+      this.down = false
       this.startY = 0
       this.moveY = 0
       this.movey = 0
@@ -106,6 +114,8 @@ export default {
       this.modal = true
       document.body.classList.add("modal-open")
     },
+
+    //mobile
     touchStart(e) {
       this.startY = e.touches[0].pageY
     },
@@ -116,16 +126,43 @@ export default {
         this.moveY = 0
         this.movey = this.moveY + 'px'
       }
-      console.log('move:' + this.movey + '  height:' + window.outerHeight)
+      //console.log('move:' + this.movey + '  height:' + window.outerHeight)
     },
     touchEnd(e) {
-      if(this.moveY < -1 * window.outerHeight / 6) {
+      if(this.moveY < -1 * window.outerHeight / 8) {
         this.close()
       }else {
         this.moveY = 0
         this.movey = this.moveY + 'px'
       }
-    }
+    },
+
+    //PC
+    mouseDown(e) {
+      this.startY = e.pageY;
+      this.down = true
+      console.log('mouseDown')
+    },
+    mouseMove(e) {
+      if(this.down) {
+        this.moveY = -1 * (e.pageY - this.startY)
+        this.movey = this.moveY + 'px'
+        if(this.moveY > 0) {
+          this.moveY = 0
+          this.movey = this.moveY + 'px'
+        }
+      }
+    },
+    mouseUp(e) {
+      if(this.moveY < -1 * window.outerHeight / 8) {
+        this.close()
+      }else {
+        this.moveY = 0
+        this.movey = this.moveY + 'px'
+      }
+      this.down = false
+      console.log('mouseUp')
+    },
   }
 }
 </script>

@@ -5,8 +5,14 @@
       <h1>
         SwipeModal Package
       </h1>
-      <strong>Android ios 対応</strong>
-      <p><strong>GitHub</strong>：<a href="https://github.com/takuma-ru/vue_SwipeModal">takuma-ru/vue_SwipeModal</a></p>
+      <h2>対応ブラウザ</h2>
+      <p>Chromium（Chrome, Edge, Opera ...）</p>
+      <p>Gecko（Firefox ...）</p>
+      <p>Safari</p>
+      <h2>対応OS</h2>
+      <p>PC（Windows, macOS ...）</p>
+      <p>モバイル端末（Android, iOS ...）</p>
+      <h2>GitHub：<a href="https://github.com/takuma-ru/vue_SwipeModal">takuma-ru/vue_SwipeModal</a></h2>
     </div>
 
     <Swipemodal />
