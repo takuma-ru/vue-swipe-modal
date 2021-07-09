@@ -5,6 +5,7 @@
       <h1>
         SwipeModal Package
       </h1>
+      <h2><a href="https://github.com/takuma-ru/vue_SwipeModal">GitHub</a></h2>
       <h2>対応ブラウザ</h2>
       <p>Chromium（Chrome, Edge, Opera ...）</p>
       <p>Gecko（Firefox ...）</p>
@@ -12,24 +13,61 @@
       <h2>対応OS</h2>
       <p>PC（Windows, macOS ...）</p>
       <p>モバイル端末（Android, iOS ...）</p>
-      <h2>GitHub：<a href="https://github.com/takuma-ru/vue_SwipeModal">takuma-ru/vue_SwipeModal</a></h2>
+    </div>
+
+    <div class="modal_button">
+      <button @click="modal = true">
+        <span>
+          modal1 OPEN
+        </span>
+      </button>
+    </div>
+    <div class="modal_button">
+      <button @click="modal2 = true">
+        <span>
+          modal2 OPEN
+        </span>
+      </button>
     </div>
 
     <Swipemodal
+      v-model="modal"
       height="80vh"
       width="100%"
       radius="20px"
+      fullscreen
     >
-      <h1>タイトル</h1>
+      <h1>modal 1</h1>
+      <table>
+        <tr>
+          <th>name</th> <th>value</th>
+        </tr>
+        <tr>
+          <td>height</td> <td>80vh</td>
+        </tr>
+        <tr>
+          <td>width</td> <td>100%</td>
+        </tr>
+        <tr>
+          <td>radius</td> <td>20px</td>
+        </tr>
+        <tr>
+          <td>fullscreen</td> <td>true</td>
+        </tr>
+        <tr>
+          <td>notip</td> <td>false</td>
+        </tr>
+      </table>
     </Swipemodal>
 
     <Swipemodal
+      v-model="modal2"
       height="50vh"
       width="50%"
       radius="0px"
       notip
     >
-      <h1>タイトル</h1>
+      <h1>modal 2</h1>
     </Swipemodal>
   </div>
 </template>
@@ -38,7 +76,8 @@
 export default {
   data() {
     return {
-      modal: false
+      modal: false,
+      modal2: false
     }
   },
 
@@ -80,5 +119,14 @@ button {
 
 button span {
   margin: 2vh 1vw;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 2vmin;
+}
+
+th, td {
+  border: 1px solid #333;
 }
 </style>

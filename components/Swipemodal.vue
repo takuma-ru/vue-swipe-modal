@@ -1,13 +1,6 @@
 <template>
   <div @mousemove="mouseMove">
-    <div v-if="!modal" class="modal_button">
-      <button @click="open">
-        <span>
-          OPEN
-        </span>
-      </button>
-    </div>
-    <div v-else>
+    <div v-show="modal">
       <div
         id="modal_back"
         @click="persistent ? null : close()"
@@ -20,7 +13,7 @@
         :style="`
           bottom: ${movey};
           --movey: ${movey};
-          --height: ${height};
+          --height: ${fullscreen ? '100vh' : height};
           --width: ${width};
           --color: ${color};
           --radius: ${radius};
@@ -51,14 +44,23 @@ export default {
       position: 0,
       startY: 0,
       moveY: 0,
-      modal: false,
       modal_anim: false,
       movey: 0,
       down: false,
     }
   },
 
+  model: {
+    prop: 'modal',
+    event: 'change-modal',
+  },
+
   props: {
+    modal: Boolean,
+    persistent: Boolean,
+    dark: Boolean,
+    notip: Boolean,
+    fullscreen: Boolean,
     height: {
       type: String,
       default: '50vh'
@@ -75,9 +77,6 @@ export default {
       type: String,
       default: '20px'
     },
-    persistent: Boolean,
-    dark: Boolean,
-    notip: Boolean,
   },
 
   computed: {
@@ -100,17 +99,22 @@ export default {
   },
 
   watch: {
+    modal: function(newmodal, oldmodal) {
+      if(newmodal) {
+        this.open()
+      }
+    }
   },
 
   methods: {
     //common
     close_func() {
-      this.modal = false
       this.down = false
       this.startY = 0
       this.moveY = 0
       this.movey = 0
       document.body.classList.remove("modal-open")
+      this.$emit('change-modal', false)
       //console.log('close')
     },
     close(){
@@ -120,7 +124,7 @@ export default {
     open(){
       //console.log('open')
       this.modal_anim = true
-      this.modal = true
+      this.$emit('change-modal', true)
       document.body.classList.add("modal-open")
     },
 
