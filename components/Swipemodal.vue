@@ -17,6 +17,8 @@
           --width: ${width};
           --color: ${color};
           --radius: ${radius};
+          --maxheight: ${maxheight};
+          --maxwidth: ${maxwidth};
         `"
         @touchstart="touchStart"
         @touchmove="touchMove"
@@ -67,11 +69,19 @@ export default {
     fullscreen: Boolean,
     height: {
       type: String,
-      default: '50vh'
+      default: 'auto'
+    },
+    maxheight: {
+      type: String,
+      default: '100vh'
     },
     width: {
       type: String,
-      default: '50vw'
+      default: 'auto'
+    },
+    maxwidth: {
+      type: String,
+      default: '100vw'
     },
     color: {
       type: String,
@@ -113,6 +123,8 @@ export default {
     modal: function(newmodal) {
       if(newmodal) {
         this.open()
+      }else if(!newmodal) {
+        this.close()
       }
     },
   },
@@ -253,6 +265,8 @@ body.modal-open {
   position: fixed;
   height: var(--height);
   width: var(--width);
+  max-height: var(--maxheight);
+  max-width: var(--maxwidth);
 
   bottom: 0%;
   left: 50%;
