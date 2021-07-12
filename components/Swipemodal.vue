@@ -23,7 +23,7 @@
         @touchend="touchEnd"
       >
         <div
-          v-if="!notip"
+          v-show="!notip"
           ref="swipe"
           class="modal_deco_top"
           @mousedown="mouseDown"
@@ -110,7 +110,7 @@ export default {
   },
 
   watch: {
-    modal: function(newmodal, oldmodal) {
+    modal: function(newmodal) {
       if(newmodal) {
         this.open()
       }
@@ -122,6 +122,7 @@ export default {
     close_func() {
       this.down = false
       this.topY = null
+      this.modal_height = 0
       document.querySelector(`#modal_contents`).scrollIntoView(true)
       this.startY = 0
       this.moveY = 0
@@ -134,13 +135,11 @@ export default {
       this.modal_anim = false
       setTimeout(this.close_func, 235)
     },
-    open_func() {
-    },
     open(){
       //console.log('open')
       this.modal_anim = true
-      this.$emit('change-modal', true)
       document.body.classList.add("modal-open")
+      this.$emit('change-modal', true)
     },
     handleScroll() {
       const title = document.querySelector(`#modal_contents`);
@@ -249,8 +248,8 @@ body.modal-open {
 }
 
 #modal {
-  overscroll-behavior-y: contain;
   z-index: 2;
+  display: block;
   position: fixed;
   height: var(--height);
   width: var(--width);
@@ -296,7 +295,7 @@ body.modal-open {
 
   padding-top: 1vh;
   padding-bottom: 1vh;
-  cursor: pointer;
+  cursor: s-resize;
 }
 
 .modal_deco_top::after {
@@ -313,16 +312,14 @@ body.modal-open {
 }
 
 #modal_contents {
-  position: relative;
-  height: fit-content;
   width: 100%;
-
-  padding: 20px 20px;
+  height: 100%;
+  padding: 2vh 2vw;
 }
 
 @keyframes open {
   0% {
-    bottom: calc(-1 * var(--height));
+    bottom: -100vh;
   }
   100% {
     bottom: 0%;
@@ -334,7 +331,7 @@ body.modal-open {
     bottom: var(--movey);
   }
   100% {
-    bottom: calc(-1 * var(--height));
+    bottom: -100vh;
   }
 }
 

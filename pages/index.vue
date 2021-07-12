@@ -35,27 +35,30 @@
       height="80vh"
       width="100%"
       radius="20px"
+      fullscreen
     >
       <h1>modal 1</h1>
       <table>
-        <tr>
-          <th>name</th> <th>value</th>
-        </tr>
-        <tr>
-          <td>height</td> <td>80vh</td>
-        </tr>
-        <tr>
-          <td>width</td> <td>100%</td>
-        </tr>
-        <tr>
-          <td>radius</td> <td>20px</td>
-        </tr>
-        <tr>
-          <td>fullscreen</td> <td>true</td>
-        </tr>
-        <tr>
-          <td>notip</td> <td>false</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>name</th> <th>value</th>
+          </tr>
+          <tr>
+            <td>height</td> <td>80vh</td>
+          </tr>
+          <tr>
+            <td>width</td> <td>100%</td>
+          </tr>
+          <tr>
+            <td>radius</td> <td>20px</td>
+          </tr>
+          <tr>
+            <td>fullscreen</td> <td>true</td>
+          </tr>
+          <tr>
+            <td>notip</td> <td>false</td>
+          </tr>
+        </tbody>
       </table>
       <div v-for="i in 100" :key="i">
         {{ i }}
@@ -64,31 +67,33 @@
 
     <Swipemodal
       v-model="modal2"
-      height="50vh"
+      height="auto"
       width="50%"
       radius="0px"
       notip
     >
       <h1>modal 2</h1>
       <table>
-        <tr>
-          <th>name</th> <th>value</th>
-        </tr>
-        <tr>
-          <td>height</td> <td>50vh</td>
-        </tr>
-        <tr>
-          <td>width</td> <td>50%</td>
-        </tr>
-        <tr>
-          <td>radius</td> <td>0px</td>
-        </tr>
-        <tr>
-          <td>fullscreen</td> <td>false</td>
-        </tr>
-        <tr>
-          <td>notip</td> <td>true</td>
-        </tr>
+        <tbody>
+          <tr>
+            <th>name</th> <th>value</th>
+          </tr>
+          <tr>
+            <td>height</td> <td>50vh</td>
+          </tr>
+          <tr>
+            <td>width</td> <td>50%</td>
+          </tr>
+          <tr>
+            <td>radius</td> <td>0px</td>
+          </tr>
+          <tr>
+            <td>fullscreen</td> <td>false</td>
+          </tr>
+          <tr>
+            <td>notip</td> <td>true</td>
+          </tr>
+        </tbody>
       </table>
     </Swipemodal>
   </div>
