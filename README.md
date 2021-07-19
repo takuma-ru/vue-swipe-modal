@@ -14,19 +14,45 @@ https://vue-swipe-modal.vercel.app/
 | core-js | 3.9.1 |
 
 ## Getting Started
+
+```md
+npm i nekoo_vue_swipemodal
 ```
+
+```vue
 <template>
   <div>
-    <Swipemodal
-      height="50vh"
-      width="50%"
+    <button @click="modal = true">open</button>
+
+    <swipemodal
+      v-model="modal"
+      height="80vh"
+      width="100%"
       radius="20px"
-      notip
     >
       <h1>contents</h1>
-    </Swipemodal>
+    </swipemodal>
   </div>
 </template>
+
+<script>
+import swipemodal from 'nekoo_vue_swipemodal'
+import 'nekoo_vue_swipemodal/dist/swipemodal.css'
+
+export default {
+  name: 'App',
+
+  data() {
+    return {
+      modal: false
+    }
+  },
+
+  components: {
+    swipemodal
+  }
+}
+</script>
 ```
 
 | 変数 | データ型 | 初期値 | 説明 |
