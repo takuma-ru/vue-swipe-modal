@@ -55,6 +55,8 @@ export default {
 </script>
 ```
 
+## Installation
+
 | 変数 | データ型 | 初期値 | 説明 |
 | --- | --- | --- | --- |
 | **v-model** | Boolean | false | モダールの開閉を指定する変数を代入 |
@@ -67,5 +69,3 @@ export default {
 | **persistent** | Boolean | false | モーダルの外をクリックした際にモーダルを閉じるか |
 | **fullscreen** | Boolean | false | モーダルを画面いっぱいに表示させるか。trueの場合heightは100vhとなる |
 | **notip** | Boolean | false | モダール上部にある装飾を表示させないか。trueの場合は表示せず、マウスを使ってスワイプモーションができない 。|
-
-## Installation
