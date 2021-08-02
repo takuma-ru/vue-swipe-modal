@@ -250,13 +250,13 @@ body.modal-open {
 .modal_back__open {
   animation-name: backopen;
   animation-duration: 0.2s;
-  animation-timing-function: ease;
+  animation-timing-function: linear;
 }
 
 .modal_back__close {
   animation-name: backclose;
   animation-duration: 0.25s;
-  animation-timing-function: ease;
+  animation-timing-function: linear;
 }
 
 #modal {
@@ -290,13 +290,13 @@ body.modal-open {
 
 .modal__open {
   animation-name: open;
-  animation-duration: 0.15s;
+  animation-duration: 0.3s;
   animation-timing-function: ease;
 }
 
 .modal__close {
   animation-name: close;
-  animation-duration: 0.25s;
+  animation-duration: 0.35s;
   animation-timing-function: ease;
 }
 
