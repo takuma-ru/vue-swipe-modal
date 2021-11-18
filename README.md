@@ -8,6 +8,9 @@
 スワイプして閉じることのできるモーダルウィンドウです。（通称:
  Swipeable Bottom Sheet）
 
+## npm
+https://www.npmjs.com/package/nekoo_vue_swipemodal 
+
 ## DEMO
 https://vue-swipe-modal.vercel.app/
 
