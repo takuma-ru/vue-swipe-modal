@@ -116,7 +116,10 @@ export default {
     document.querySelector(`#modal`).addEventListener('scroll', this.handleScroll)
   },
   destroyed() {
-    document.querySelector(`#modal`).removeEventListener("scroll", this.handleScroll);
+    var el = document.querySelector('#modal')
+    if(el){
+      document.querySelector('#modal').removeEventListener("scroll", this.handleScroll);
+    }
   },
 
   watch: {
@@ -303,8 +306,8 @@ body.modal-open {
 .modal_deco_top {
   z-index: 2;
   position: sticky;
-  top: 1vh;
-  height: 0.7vh;
+  top: 0px;
+  height: 4px;
   width: 100%;
 
   padding-top: 1vh;
@@ -315,9 +318,9 @@ body.modal-open {
 .modal_deco_top::after {
   position: absolute;
   content:"";
-  top: 0%;
-  height: 0.7vh;
-  width: 35px;
+  top: 8px;
+  height: 4px;
+  width: 40px;
   background-color: rgb(200, 200, 200);
 
   margin-left: calc(50% - 17.5px);
@@ -328,7 +331,6 @@ body.modal-open {
 #modal_contents {
   width: 100%;
   height: 100%;
-  padding: 2vh 2vw;
 }
 
 @keyframes open {
