@@ -1,8 +1,15 @@
 # vue_SwipeModal
 
+[![npm version](https://badge.fury.io/js/nekoo_vue_swipemodal.svg)](https://badge.fury.io/js/nekoo_vue_swipemodal)
+[![Npm package total downloads](https://badgen.net/npm/dt/nekoo_vue_swipemodal)](https://npmjs.com/package/nekoo_vue_swipemodal)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 ## Description
 スワイプして閉じることのできるモーダルウィンドウです。（通称:
  Swipeable Bottom Sheet）
+
+## npm
+https://www.npmjs.com/package/nekoo_vue_swipemodal 
 
 ## DEMO
 https://vue-swipe-modal.vercel.app/
