@@ -1,41 +1,46 @@
 <template>
-  <div
-    id="modal"
-    @mousemove="mouseMove"
-    @mouseup="mouseUp"
-  >
+  <div id="modal" @mousemove="mouseMove" @mouseup="mouseUp">
     <transition name="swipe_modal_background">
       <div
-        v-if="isOpen"
+        v-if="modal"
         class="modal_background"
         :style="{
           backgroundColor: backgroundColor,
         }"
-        @click="close()"
+        @mouseup="persistent ? null : close()"
       />
     </transition>
     <transition name="swipe_modal_contents">
       <div
-        v-if="isOpen"
+        v-if="modal"
         ref="modal_contents"
         class="modal_contents"
         :style="{
           width: contentsWidth,
-          '--contents-height': contentsHeight,
-          borderTopLeftRadius: borderTopRadius ? borderTopRadius : borderTopLeftRadius,
-          borderTopRightRadius: borderTopRadius ? borderTopRadius : borderTopRightRadius,
+          '--contents-height': fullscreen ? '100vh' : contentsHeight,
+          borderTopLeftRadius: fullscreen
+            ? '0px'
+            : borderTopRadius
+              ? borderTopRadius
+              : borderTopLeftRadius,
+          borderTopRightRadius: fullscreen
+            ? '0px'
+            : borderTopRadius
+              ? borderTopRadius
+              : borderTopRightRadius,
           backgroundColor: contentsColor,
           '--contents-bottom-position': contentsBottomPosition,
         }"
-        :mixins="[{
-          created: open()
-        }]"
         @touchstart="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
       >
         <div
+          v-if="!noTip"
           class="modal_contents_chip"
+          :style="{
+            '--tip-color': tipColor,
+          }"
           @mousedown="mouseDown"
         />
         <slot />
@@ -46,45 +51,59 @@
 
 <script>
 export default {
+  model: {
+    prop: 'modal',
+    event: 'change-modal',
+  },
+
   props: {
     // modal
+    modal: Boolean,
 
     // modal_background
+    persistent: Boolean,
     backgroundColor: {
       type: String,
-      default: '#80808080'
+      default: '#80808080',
     },
 
     // modal_contents
+    fullscreen: Boolean,
+    noTip: Boolean,
     contentsWidth: {
       type: String,
-      default: '100%'
+      default: '100%',
     },
     contentsHeight: {
       type: String,
-      default: '30vh'
+      default: '30vh',
     },
     borderTopRadius: {
       type: String,
-      default: null
+      default: null,
     },
     borderTopLeftRadius: {
       type: String,
-      default: '0px'
+      default: '0px',
     },
     borderTopRightRadius: {
       type: String,
-      default: '0px'
+      default: '0px',
     },
     contentsColor: {
       type: String,
-      default: 'white'
+      default: 'white',
+    },
+    tipColor: {
+      type: String,
+      default: '#c8c8c8'
     }
   },
 
-  data () {
+  data() {
     return {
       isMouseDown: false,
+      isTouch: false,
       modalHeight: 0,
       contentsBottomPosition: 0,
       startMovePosition: 0,
@@ -93,80 +112,100 @@ export default {
   },
 
   computed: {
-    isOpen () {
-      const isOpen = this.$route.query.isOpen
+    // TO-DO: バックイベント時にモーダルを閉じるようにする
+    /* isOpen () {
+      const name = 'a'
+      const isOpen = this.$route.query.eval(name)
+      console.log(isOpen)
       return isOpen === 'true' ? true : false
-    },
+    }, */
   },
 
   watch: {
-    isOpen (newVal, oldVal) {
-      if (newVal != oldVal) {
-        this.init()
+    modal(newmodal) {
+      if (newmodal) {
+        this.open()
       }
-    }
+    },
   },
 
   methods: {
     // anim
-    open () {
+    open() {
+      this.init()
       document.documentElement.style.overflowY = 'hidden'
     },
 
-    close () {
+    close() {
       this.isMouseDown = false
+      this.isTouch = false
       document.documentElement.style.overflowY = 'auto'
-      this.$router.push('')
+      this.$emit('change-modal', false)
     },
 
     // track
-    init () {
+    init() {
       this.isMouseDown = false
+      this.isTouch = false
+      this.modalHeight = 0
       this.contentsBottomPosition = 0
+      this.startMovePosition = 0
+      this.nowMovePosition = 0
     },
 
     touchStart(e) {
       const title = document.querySelector('.modal_contents')
       this.modalHeight = title.getBoundingClientRect().y
       this.moveStartPosition = e.touches[0].pageY
-      this.isMouseDown = true
+      this.isTouch = true
     },
     touchMove(e) {
-      if (this.isMouseDown) {
+      if (this.isTouch) {
         this.nowMovePosition = e.touches[0].pageY
-        this.contentsBottomPosition = (this.moveStartPosition - this.nowMovePosition <= 0 ? this.moveStartPosition - this.nowMovePosition : 0) + 'px'
+        this.contentsBottomPosition =
+          (this.moveStartPosition - this.nowMovePosition <= 0
+            ? this.moveStartPosition - this.nowMovePosition
+            : 0) + 'px'
       }
     },
     touchEnd() {
-      this.isMouseDown = false
-      if (-1 * (this.moveStartPosition - this.nowMovePosition) > this.modalHeight * (1 / 8)) {
+      this.isTouch = false
+      if (
+        -1 * (this.moveStartPosition - this.nowMovePosition) >
+        this.modalHeight * (1 / 8)
+      ) {
         this.close()
       } else {
         this.contentsBottomPosition = 0 + 'px'
       }
     },
 
-    mouseDown (e) {
+    mouseDown(e) {
       const title = document.querySelector('.modal_contents')
       this.modalHeight = title.getBoundingClientRect().y
       this.moveStartPosition = e.pageY
       this.isMouseDown = true
     },
-    mouseMove (e) {
+    mouseMove(e) {
       if (this.isMouseDown) {
         this.nowMovePosition = e.pageY
-        this.contentsBottomPosition = (this.moveStartPosition - this.nowMovePosition <= 0 ? this.moveStartPosition - this.nowMovePosition : 0) + 'px'
+        this.contentsBottomPosition =
+          (this.moveStartPosition - this.nowMovePosition <= 0
+            ? this.moveStartPosition - this.nowMovePosition
+            : 0) + 'px'
       }
     },
-    mouseUp () {
+    mouseUp() {
       this.isMouseDown = false
-      if (-1 * (this.moveStartPosition - this.nowMovePosition) > this.modalHeight * (1 / 8)) {
+      if (
+        -1 * (this.moveStartPosition - this.nowMovePosition) >
+        this.modalHeight * (1 / 8)
+      ) {
         this.close()
       } else {
         this.contentsBottomPosition = 0 + 'px'
       }
-      // console.log('mouseUp')
-    }
+    },
   },
 }
 </script>
@@ -192,7 +231,6 @@ export default {
   --contents-bottom-position: 0%;
   position: fixed;
   z-index: 2;
-  /* width: 100%; */
   min-height: var(--contents-height);
 
   bottom: var(--contents-bottom-position);
@@ -200,6 +238,7 @@ export default {
   transform: translateX(-50%) translateY(0%);
 
   &_chip {
+    --tip-color: #c8c8c8;
     z-index: 2;
     position: sticky;
     top: 0px;
@@ -212,11 +251,11 @@ export default {
 
     &::after {
       position: absolute;
-      content:'';
+      content: '';
       top: 8px;
       height: 4px;
       width: 40px;
-      background-color: rgb(200, 200, 200);
+      background-color: var(--tip-color);
 
       margin-left: calc(50% - 17.5px);
 
@@ -230,7 +269,8 @@ export default {
   transition: all 0.15s ease-out;
 }
 
-.swipe_modal_background-enter, .swipe_modal_background-leave-to {
+.swipe_modal_background-enter,
+.swipe_modal_background-leave-to {
   opacity: 0;
 }
 

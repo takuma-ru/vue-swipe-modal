@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="title">
-      <Logo />
       <h1>
         SwipeModal Package
       </h1>
@@ -15,22 +14,22 @@
       <p>モバイル端末（Android, iOS ...）</p>
     </div>
 
-    <div class="modal_button">
+<!--     <div class="modal_button">
       <button @click="$router.push('?isOpen=true')">
         <span>
           modal OPEN
         </span>
       </button>
-    </div>
+    </div> -->
 
-<!--     <div class="modal_button">
+    <div class="modal_button">
       <button @click="modal = true">
         <span>
           modal1 OPEN
         </span>
       </button>
     </div>
-    <div class="modal_button">
+<!--     <div class="modal_button">
       <button @click="modal2 = true">
         <span>
           modal2 OPEN
@@ -39,6 +38,7 @@
     </div> -->
 
     <SwipeModal
+      v-model="modal"
       border-top-radius="24px"
     >
       <div style="padding: 24px">
@@ -123,15 +123,6 @@ export default {
       modal2: false
     }
   },
-
-  methods: {
-    open() {
-      this.$refs.myBottomSheet.open();
-    },
-    close() {
-      this.$refs.myBottomSheet.close();
-    }
-  }
 }
 </script>
 
