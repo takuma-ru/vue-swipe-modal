@@ -16,6 +16,14 @@
     </div>
 
     <div class="modal_button">
+      <button @click="$router.push('?isOpen=true')">
+        <span>
+          modal OPEN
+        </span>
+      </button>
+    </div>
+
+<!--     <div class="modal_button">
       <button @click="modal = true">
         <span>
           modal1 OPEN
@@ -28,9 +36,17 @@
           modal2 OPEN
         </span>
       </button>
-    </div>
+    </div> -->
 
-    <Swipemodal
+    <SwipeModal
+      border-top-radius="24px"
+    >
+      <div style="padding: 24px">
+        text
+      </div>
+    </SwipeModal>
+
+<!--     <Swipemodal
       v-model="modal"
       height="80vh"
       width="100%"
@@ -95,7 +111,7 @@
           </tr>
         </tbody>
       </table>
-    </Swipemodal>
+    </Swipemodal> -->
   </div>
 </template>
 

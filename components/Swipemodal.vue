@@ -1,371 +1,257 @@
 <template>
-  <div @mousemove="mouseMove">
-    <div v-show="modal">
+  <div
+    id="modal"
+    @mousemove="mouseMove"
+    @mouseup="mouseUp"
+  >
+    <transition name="swipe_modal_background">
       <div
-        id="modal_back"
-        @click="persistent ? null : close()"
-        :class="modal_anim ? `modal_back__open` : `modal_back__close`"
+        v-if="isOpen"
+        class="modal_background"
+        :style="{
+          backgroundColor: backgroundColor,
+        }"
+        @click="close()"
       />
-
+    </transition>
+    <transition name="swipe_modal_contents">
       <div
-        id="modal"
-        :class="modal_anim ? `modal__open` : `modal__close`"
-        :style="`
-          bottom: ${movey};
-          --movey: ${movey};
-          --height: ${fullscreen ? '100%' : height};
-          --width: ${width};
-          --color: ${color};
-          --radius: ${radius};
-          --maxheight: ${maxheight};
-          --maxwidth: ${maxwidth};
-        `"
+        v-if="isOpen"
+        ref="modal_contents"
+        class="modal_contents"
+        :style="{
+          width: contentsWidth,
+          '--contents-height': contentsHeight,
+          borderTopLeftRadius: borderTopRadius ? borderTopRadius : borderTopLeftRadius,
+          borderTopRightRadius: borderTopRadius ? borderTopRadius : borderTopRightRadius,
+          backgroundColor: contentsColor,
+          '--contents-bottom-position': contentsBottomPosition,
+        }"
+        :mixins="[{
+          created: open()
+        }]"
         @touchstart="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
       >
         <div
-          v-show="!notip"
-          ref="swipe"
-          class="modal_deco_top"
+          class="modal_contents_chip"
           @mousedown="mouseDown"
-          @mouseup="mouseUp"
         />
-        <div id="modal_contents">
-          <slot></slot>
-        </div>
+        <slot />
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      //bool
-      down: false,
-      modal_anim: false,
-      top: true,
-      //int
-      position: 0,
-      topY: null,
-      startY: 0,
-      moveY: 0,
-      movey: 0,
+  props: {
+    // modal
+
+    // modal_background
+    backgroundColor: {
+      type: String,
+      default: '#80808080'
+    },
+
+    // modal_contents
+    contentsWidth: {
+      type: String,
+      default: '100%'
+    },
+    contentsHeight: {
+      type: String,
+      default: '30vh'
+    },
+    borderTopRadius: {
+      type: String,
+      default: null
+    },
+    borderTopLeftRadius: {
+      type: String,
+      default: '0px'
+    },
+    borderTopRightRadius: {
+      type: String,
+      default: '0px'
+    },
+    contentsColor: {
+      type: String,
+      default: 'white'
     }
   },
 
-  model: {
-    prop: 'modal',
-    event: 'change-modal',
-  },
-
-  props: {
-    modal: Boolean,
-    persistent: Boolean,
-    dark: Boolean,
-    notip: Boolean,
-    fullscreen: Boolean,
-    height: {
-      type: String,
-      default: 'auto'
-    },
-    maxheight: {
-      type: String,
-      default: '100vh'
-    },
-    width: {
-      type: String,
-      default: 'auto'
-    },
-    maxwidth: {
-      type: String,
-      default: '100vw'
-    },
-    color: {
-      type: String,
-      default: '#FFFFFF'
-    },
-    radius: {
-      type: String,
-      default: '20px'
-    },
+  data () {
+    return {
+      isMouseDown: false,
+      modalHeight: 0,
+      contentsBottomPosition: 0,
+      startMovePosition: 0,
+      nowMovePosition: 0,
+    }
   },
 
   computed: {
-    styles () {
-      return {
-        '--movey': {
-          type: String,
-          default: this.movey,
-        },
-        '--height': {
-          type: String,
-          default: this.height,
-        },
-        '--width': {
-          type: String,
-          default: this.width,
-        },
-      }
-    }
-  },
-
-  mounted() {
-    document.querySelector(`#modal`).addEventListener('scroll', this.handleScroll)
-  },
-  destroyed() {
-    var el = document.querySelector('#modal')
-    if(el){
-      document.querySelector('#modal').removeEventListener("scroll", this.handleScroll);
-    }
+    isOpen () {
+      const isOpen = this.$route.query.isOpen
+      return isOpen === 'true' ? true : false
+    },
   },
 
   watch: {
-    modal: function(newmodal) {
-      if(newmodal) {
-        this.open()
-      }else if(!newmodal) {
-        this.close()
+    isOpen (newVal, oldVal) {
+      if (newVal != oldVal) {
+        this.init()
       }
-    },
+    }
   },
 
   methods: {
-    //common
-    close_func() {
-      this.down = false
-      this.topY = null
-      this.modal_height = 0
-      document.querySelector(`#modal_contents`).scrollIntoView(true)
-      this.startY = 0
-      this.moveY = 0
-      this.movey = 0
-      document.body.classList.remove("modal-open")
-      this.$emit('change-modal', false)
-      //console.log('close')
-    },
-    close(){
-      this.modal_anim = false
-      setTimeout(this.close_func, 235)
-    },
-    open(){
-      //console.log('open')
-      this.modal_anim = true
-      document.body.classList.add("modal-open")
-      this.$emit('change-modal', true)
-    },
-    handleScroll() {
-      const title = document.querySelector(`#modal_contents`);
-      const rect = title.getBoundingClientRect().y;
-      if(this.topY == null) {
-        this.topY = rect
-      }
-      if (rect >= this.topY) {
-        this.top = true
-      }else {
-        this.top = false
-      }
-      //console.log('topY: ' + this.topY + ' rect: ' + rect)
+    // anim
+    open () {
+      document.documentElement.style.overflowY = 'hidden'
     },
 
-    //mobile
+    close () {
+      this.isMouseDown = false
+      document.documentElement.style.overflowY = 'auto'
+      this.$router.push('')
+    },
+
+    // track
+    init () {
+      this.isMouseDown = false
+      this.contentsBottomPosition = 0
+    },
+
     touchStart(e) {
-      this.startY = e.touches[0].pageY
+      const title = document.querySelector('.modal_contents')
+      this.modalHeight = title.getBoundingClientRect().y
+      this.moveStartPosition = e.touches[0].pageY
+      this.isMouseDown = true
     },
     touchMove(e) {
-      if(this.top) {
-        this.moveY = -1 * (e.touches[0].pageY - this.startY)
-        this.movey = this.moveY + 'px'
-        if(this.moveY > 0) {
-          this.moveY = 0
-          this.movey = this.moveY + 'px'
-        }
-        //console.log('move:' + this.movey + '  height:' + window.outerHeight)
+      if (this.isMouseDown) {
+        this.nowMovePosition = e.touches[0].pageY
+        this.contentsBottomPosition = (this.moveStartPosition - this.nowMovePosition <= 0 ? this.moveStartPosition - this.nowMovePosition : 0) + 'px'
       }
     },
-    touchEnd(e) {
-      if(this.moveY < -1 * window.outerHeight / 8) {
+    touchEnd() {
+      this.isMouseDown = false
+      if (-1 * (this.moveStartPosition - this.nowMovePosition) > this.modalHeight * (1 / 8)) {
         this.close()
-      }else {
-        this.moveY = 0
-        this.movey = this.moveY + 'px'
+      } else {
+        this.contentsBottomPosition = 0 + 'px'
       }
     },
 
-    //PC
-    mouseDown(e) {
-      this.startY = e.pageY;
-      this.down = true
-      //console.log('mouseDown')
+    mouseDown (e) {
+      const title = document.querySelector('.modal_contents')
+      this.modalHeight = title.getBoundingClientRect().y
+      this.moveStartPosition = e.pageY
+      this.isMouseDown = true
     },
-    mouseMove(e) {
-      if(this.down) {
-        this.moveY = -1 * (e.pageY - this.startY)
-        this.movey = this.moveY + 'px'
-        if(this.moveY > 0) {
-          this.moveY = 0
-          this.movey = this.moveY + 'px'
-        }
+    mouseMove (e) {
+      if (this.isMouseDown) {
+        this.nowMovePosition = e.pageY
+        this.contentsBottomPosition = (this.moveStartPosition - this.nowMovePosition <= 0 ? this.moveStartPosition - this.nowMovePosition : 0) + 'px'
       }
     },
-    mouseUp(e) {
-      if(this.moveY < -1 * window.outerHeight / 8) {
+    mouseUp () {
+      this.isMouseDown = false
+      if (-1 * (this.moveStartPosition - this.nowMovePosition) > this.modalHeight * (1 / 8)) {
         this.close()
-      }else {
-        this.moveY = 0
-        this.movey = this.moveY + 'px'
+      } else {
+        this.contentsBottomPosition = 0 + 'px'
       }
-      this.down = false
-      //console.log('mouseUp')
-    },
-  }
+      // console.log('mouseUp')
+    }
+  },
 }
 </script>
 
-<style>
-body.modal-open {
-  overflow: hidden;
-}
-
-.modal_button {
-  text-align: center;
-}
-
-#modal_back {
-  z-index: 1;
+<style lang="scss">
+#modal {
   position: fixed;
-  height: 100vh;
+}
+
+.modal_background {
+  position: fixed;
+  z-index: 1;
   width: 100vw;
+  height: 100vh;
 
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
-  transition: all 0.25s;
-
-  background-color: rgba(0, 0, 0, 0.7);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
-.modal_back__open {
-  animation-name: backopen;
-  animation-duration: 0.2s;
-  animation-timing-function: linear;
-}
-
-.modal_back__close {
-  animation-name: backclose;
-  animation-duration: 0.25s;
-  animation-timing-function: linear;
-}
-
-#modal {
-  z-index: 2;
-  display: block;
+.modal_contents {
+  --contents-height: 30vh;
+  --contents-bottom-position: 0%;
   position: fixed;
-  height: var(--height);
-  width: var(--width);
-  max-height: var(--maxheight);
-  max-width: var(--maxwidth);
-
-  bottom: 0%;
-  left: 50%;
-  transform: translate(-50%, 0%);
-
-  border-radius: var(--radius) var(--radius) 0px 0px;
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
-
-  background-color: var(--color);
-
-  overflow: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-#modal::-webkit-scrollbar {
-  display: none;
-}
-
-.modal__open {
-  animation-name: open;
-  animation-duration: 0.3s;
-  animation-timing-function: ease;
-}
-
-.modal__close {
-  animation-name: close;
-  animation-duration: 0.35s;
-  animation-timing-function: ease;
-}
-
-.modal_deco_top {
   z-index: 2;
-  position: sticky;
-  top: 0px;
-  height: 4px;
-  width: 100%;
+  /* width: 100%; */
+  min-height: var(--contents-height);
 
-  padding-top: 1vh;
-  padding-bottom: 1vh;
-  cursor: s-resize;
-}
+  bottom: var(--contents-bottom-position);
+  left: 50%;
+  transform: translateX(-50%) translateY(0%);
 
-.modal_deco_top::after {
-  position: absolute;
-  content:"";
-  top: 8px;
-  height: 4px;
-  width: 40px;
-  background-color: rgb(200, 200, 200);
+  &_chip {
+    z-index: 2;
+    position: sticky;
+    top: 0px;
+    height: 4px;
+    width: 100%;
 
-  margin-left: calc(50% - 17.5px);
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    cursor: s-resize;
 
-  border-radius: 10px;
-}
+    &::after {
+      position: absolute;
+      content:'';
+      top: 8px;
+      height: 4px;
+      width: 40px;
+      background-color: rgb(200, 200, 200);
 
-#modal_contents {
-  width: 100%;
-  height: 100%;
-}
+      margin-left: calc(50% - 17.5px);
 
-@keyframes open {
-  0% {
-    bottom: -100vh;
-  }
-  100% {
-    bottom: 0%;
+      border-radius: 10px;
+    }
   }
 }
 
-@keyframes close {
-  0% {
-    bottom: var(--movey);
-  }
-  100% {
-    bottom: -100vh;
-  }
+.swipe_modal_background-enter-active,
+.swipe_modal_background-leave-active {
+  transition: all 0.15s ease-out;
 }
 
-@keyframes backopen {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.swipe_modal_background-enter, .swipe_modal_background-leave-to {
+  opacity: 0;
 }
 
-@keyframes backclose {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+.swipe_modal_contents-enter-active {
+  transition: all 0.2s ease-out;
+}
+.swipe_modal_contents-leave-active {
+  transition: all 0.15s ease-out;
+}
+
+.swipe_modal_contents-enter {
+  bottom: calc(-1 * var(--contents-height)) !important;
+}
+.swipe_modal_contents-enter-to {
+  bottom: var(--contents-bottom-position) !important;
+}
+
+.swipe_modal_contents-leave {
+  bottom: var(--contents-bottom-position) !important;
+}
+.swipe_modal_contents-leave-to {
+  bottom: calc(-1 * var(--contents-height)) !important;
 }
 </style>
