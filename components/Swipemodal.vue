@@ -149,12 +149,14 @@ export default {
     close(){
       this.modal_anim = false
       setTimeout(this.close_func, 235)
+      document.documentElement.style.overflowY = 'auto'
     },
     open(){
       //console.log('open')
       this.modal_anim = true
       document.body.classList.add("modal-open")
       this.$emit('change-modal', true)
+      document.documentElement.style.overflowY = 'hidden'
     },
     handleScroll() {
       const title = document.querySelector(`#modal_contents`);
