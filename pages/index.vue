@@ -42,7 +42,9 @@
       border-top-radius="24px"
     >
       <div style="padding: 24px">
-        text
+        <div v-for="i in 100" :key="i">
+          {{ i }}
+        </div>
       </div>
     </SwipeModal>
 

@@ -28,7 +28,8 @@
             : borderTopRadius
               ? borderTopRadius
               : borderTopRightRadius,
-          backgroundColor: contentsColor,
+          backgroundColor: dark ? darkContentsColor : contentsColor,
+          color: dark ? 'white' : 'back',
           '--contents-bottom-position': contentsBottomPosition,
         }"
         @touchstart="touchStart"
@@ -59,6 +60,7 @@ export default {
   props: {
     // modal
     modal: Boolean,
+    dark: Boolean,
 
     // modal_background
     persistent: Boolean,
@@ -97,7 +99,11 @@ export default {
     tipColor: {
       type: String,
       default: '#c8c8c8'
-    }
+    },
+    darkContentsColor: {
+      type: String,
+      default: 'black'
+    },
   },
 
   data() {
@@ -154,8 +160,8 @@ export default {
     },
 
     touchStart(e) {
-      const title = document.querySelector('.modal_contents')
-      this.modalHeight = title.getBoundingClientRect().y
+      const modal = document.querySelector('.modal_contents')
+      this.modalHeight = modal.getBoundingClientRect().height
       this.moveStartPosition = e.touches[0].pageY
       this.isTouch = true
     },
@@ -181,8 +187,9 @@ export default {
     },
 
     mouseDown(e) {
-      const title = document.querySelector('.modal_contents')
-      this.modalHeight = title.getBoundingClientRect().y
+      const modal = document.querySelector('.modal_contents')
+      this.modalHeight = modal.getBoundingClientRect().height
+      console.log(modal.getBoundingClientRect().height)
       this.moveStartPosition = e.pageY
       this.isMouseDown = true
     },
@@ -213,6 +220,7 @@ export default {
 <style lang="scss">
 #modal {
   position: fixed;
+  scrollbar-width: none;
 }
 
 .modal_background {
@@ -232,10 +240,21 @@ export default {
   position: fixed;
   z-index: 2;
   min-height: var(--contents-height);
+  max-height: 100vh;
 
   bottom: var(--contents-bottom-position);
   left: 50%;
   transform: translateX(-50%) translateY(0%);
+
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
 
   &_chip {
     --tip-color: #c8c8c8;
