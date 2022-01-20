@@ -1,5 +1,9 @@
 <template>
-  <div id="modal" @mousemove="mouseMove" @mouseup="mouseUp">
+  <div
+    id="modal"
+    @mousemove="mouseMove"
+    @mouseup="mouseUp"
+  >
     <transition name="swipe_modal_background">
       <div
         v-if="modal"
@@ -17,17 +21,21 @@
         class="modal_contents"
         :style="{
           width: contentsWidth,
-          '--contents-height': fullscreen ? '100vh' : contentsHeight,
+          '--contents-height': fullscreen
+            ? '100vh'
+            : modalHeight > 0
+            ? modalHeight + 'px'
+            : contentsHeight,
           borderTopLeftRadius: fullscreen
             ? '0px'
             : borderTopRadius
-              ? borderTopRadius
-              : borderTopLeftRadius,
+            ? borderTopRadius
+            : borderTopLeftRadius,
           borderTopRightRadius: fullscreen
             ? '0px'
             : borderTopRadius
-              ? borderTopRadius
-              : borderTopRightRadius,
+            ? borderTopRadius
+            : borderTopRightRadius,
           backgroundColor: dark ? darkContentsColor : contentsColor,
           color: dark ? 'white' : 'back',
           '--contents-bottom-position': contentsBottomPosition,
@@ -98,11 +106,11 @@ export default {
     },
     tipColor: {
       type: String,
-      default: '#c8c8c8'
+      default: '#c8c8c8',
     },
     darkContentsColor: {
       type: String,
-      default: 'black'
+      default: 'black',
     },
   },
 
@@ -110,7 +118,10 @@ export default {
     return {
       isMouseDown: false,
       isTouch: false,
+
+      modalQuery: null,
       modalHeight: 0,
+
       contentsBottomPosition: 0,
       startMovePosition: 0,
       nowMovePosition: 0,
@@ -153,6 +164,7 @@ export default {
     init() {
       this.isMouseDown = false
       this.isTouch = false
+      this.modalQuery = null
       this.modalHeight = 0
       this.contentsBottomPosition = 0
       this.startMovePosition = 0
@@ -160,18 +172,22 @@ export default {
     },
 
     touchStart(e) {
-      const modal = document.querySelector('.modal_contents')
-      this.modalHeight = modal.getBoundingClientRect().height
-      this.moveStartPosition = e.touches[0].pageY
-      this.isTouch = true
+      this.modalQuery = document.querySelector('.modal_contents')
+      this.modalHeight = this.modalQuery.getBoundingClientRect().height
+      if (this.modalQuery.scrollTop <= 0) {
+        this.moveStartPosition = e.touches[0].pageY
+        this.isTouch = true
+      }
     },
     touchMove(e) {
       if (this.isTouch) {
         this.nowMovePosition = e.touches[0].pageY
-        this.contentsBottomPosition =
-          (this.moveStartPosition - this.nowMovePosition <= 0
-            ? this.moveStartPosition - this.nowMovePosition
-            : 0) + 'px'
+        if (this.moveStartPosition - this.nowMovePosition <= 0) {
+          this.contentsBottomPosition = this.moveStartPosition - this.nowMovePosition
+        } else {
+          this.contentsBottomPosition = 0 + 'px'
+        }
+        this.contentsBottomPosition = (this.moveStartPosition - this.nowMovePosition <= 0 ? this.moveStartPosition - this.nowMovePosition : 0) + 'px'
       }
     },
     touchEnd() {
@@ -187,9 +203,8 @@ export default {
     },
 
     mouseDown(e) {
-      const modal = document.querySelector('.modal_contents')
-      this.modalHeight = modal.getBoundingClientRect().height
-      console.log(modal.getBoundingClientRect().height)
+      this.modalQuery = document.querySelector('.modal_contents')
+      this.modalHeight = this.modalQuery.getBoundingClientRect().height
       this.moveStartPosition = e.pageY
       this.isMouseDown = true
     },

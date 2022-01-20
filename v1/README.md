@@ -1,4 +1,4 @@
-# vue_SwipeModal v2.x
+# vue_SwipeModal v1.x
 
 [![npm version](https://badge.fury.io/js/nekoo_vue_swipemodal.svg)](https://badge.fury.io/js/nekoo_vue_swipemodal)
 [![Npm package total downloads](https://badgen.net/npm/dt/nekoo_vue_swipemodal)](https://npmjs.com/package/nekoo_vue_swipemodal)
@@ -14,6 +14,12 @@ https://www.npmjs.com/package/nekoo_vue_swipemodal
 ## DEMO
 https://vue-swipe-modal.vercel.app/
 
+## Requirement
+| name | version |
+| --- | --- |
+| nuxt.js | 2.15.3 |
+| core-js | 3.9.1 |
+
 ## Getting Started
 
 ```md
@@ -25,19 +31,19 @@ npm i nekoo_vue_swipemodal
   <div>
     <button @click="modal = true">open</button>
 
-    <swipe-modal
+    <swipemodal
       v-model="modal"
       height="80vh"
       width="100%"
       radius="20px"
     >
       <h1>contents</h1>
-    </swipe-modal>
+    </swipemodal>
   </div>
 </template>
 
 <script>
-import swipeModal from 'nekoo_vue_swipemodal'
+import swipemodal from 'nekoo_vue_swipemodal'
 import 'nekoo_vue_swipemodal/dist/swipemodal.css'
 
 export default {
@@ -50,7 +56,7 @@ export default {
   },
 
   components: {
-    swipeModal
+    swipemodal
   }
 }
 </script>
