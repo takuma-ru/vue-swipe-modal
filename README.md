@@ -63,16 +63,15 @@ export default {
 | **v-model** | Boolean | `false` | Control the opening and closing |
 | **dark** | Boolean | `false` | Dark mode |
 
-### Background
+#### Background
 | Variable | Type | default | Details |
 | --- | --- | --- | --- |
 | **persistent** | Boolean | `false` | Don't close it by pressing background (out of modal) |
 | **backgroundColor** | String | `#80808080` | Background (out of modal) color |
 
-### Background
+#### Modal
 | Variable | Type | default | Details |
 | --- | --- | --- | --- |
-| **** |  |  |  |
 | **fullscreen** | Boolean | `false` | Display in full screen mode (height: 100%)|
 | **noTip** | Boolean | `false` | Don't show the chip at the top of the modal. |
 | **contents-width** | String | `100%` | Width of the modal |
