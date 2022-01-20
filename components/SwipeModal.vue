@@ -22,7 +22,7 @@
         :style="{
           width: contentsWidth,
           '--contents-height': fullscreen
-            ? '100vh'
+            ? '100%'
             : modalHeight > 0
             ? modalHeight + 'px'
             : contentsHeight,
