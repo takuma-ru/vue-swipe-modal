@@ -1,24 +1,22 @@
-# vue_SwipeModal
+# vue_SwipeModal v2.x
 
 [![npm version](https://badge.fury.io/js/nekoo_vue_swipemodal.svg)](https://badge.fury.io/js/nekoo_vue_swipemodal)
 [![Npm package total downloads](https://badgen.net/npm/dt/nekoo_vue_swipemodal)](https://npmjs.com/package/nekoo_vue_swipemodal)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
+## WARNING!
+The latest version is 2.
+Note that the component names and available props are still different.
+[version 1.x](https://github.com/takuma-ru/vue_SwipeModal/tree/new/swipeModal/v1)
+
 ## Description
-スワイプして閉じることのできるモーダルウィンドウです。（通称:
- Swipeable Bottom Sheet）
+Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
 ## npm
-https://www.npmjs.com/package/nekoo_vue_swipemodal 
+https://www.npmjs.com/package/nekoo_vue_swipemodal
 
 ## DEMO
 https://vue-swipe-modal.vercel.app/
-
-## Requirement
-| name | version |
-| --- | --- |
-| nuxt.js | 2.15.3 |
-| core-js | 3.9.1 |
 
 ## Getting Started
 
@@ -31,19 +29,19 @@ npm i nekoo_vue_swipemodal
   <div>
     <button @click="modal = true">open</button>
 
-    <swipemodal
+    <swipe-modal
       v-model="modal"
-      height="80vh"
-      width="100%"
-      radius="20px"
+      contents-height="80vh"
+      contents-width="100%"
+      border-top-radius="20px"
     >
       <h1>contents</h1>
-    </swipemodal>
+    </swipe-modal>
   </div>
 </template>
 
 <script>
-import swipemodal from 'nekoo_vue_swipemodal'
+import swipeModal from 'nekoo_vue_swipemodal'
 import 'nekoo_vue_swipemodal/dist/swipemodal.css'
 
 export default {
@@ -56,7 +54,7 @@ export default {
   },
 
   components: {
-    swipemodal
+    swipeModal
   }
 }
 </script>
@@ -64,15 +62,28 @@ export default {
 
 ## Installation
 
-| 変数 | データ型 | 初期値 | 説明 |
+#### Modal General
+| Variable | Type | default | Details |
 | --- | --- | --- | --- |
-| **v-model** | Boolean | false | モダールの開閉を指定する変数を代入 |
-| **height** | String | auto | モーダル高さ |
-| **width** | String | auto | モーダルの横幅 |
-| **max-height** | String | null | モーダルの高さの最大値 |
-| **max-width** | String | null | モーダルの横幅の最大値 |
-| **radius** | String | 20px | モダールの上角の丸み |
-| **color** | String | #FFFFFF | モダールの背景色 |
-| **persistent** | Boolean | false | モーダルの外をクリックした際にモーダルを閉じるか |
-| **fullscreen** | Boolean | false | モーダルを画面いっぱいに表示させるか。trueの場合heightは100vhとなる |
-| **notip** | Boolean | false | モダール上部にある装飾を表示させないか。trueの場合は表示せず、マウスを使ってスワイプモーションができない 。|
+| **v-model** | Boolean | `false` | Control the opening and closing |
+| **dark** | Boolean | `false` | Dark mode |
+
+#### Background
+| Variable | Type | default | Details |
+| --- | --- | --- | --- |
+| **persistent** | Boolean | `false` | Don't close it by pressing background (out of modal) |
+| **backgroundColor** | String | `#80808080` | Background (out of modal) color |
+
+#### Modal
+| Variable | Type | default | Details |
+| --- | --- | --- | --- |
+| **fullscreen** | Boolean | `false` | Display in full screen mode (height: 100%)|
+| **noTip** | Boolean | `false` | Don't show the chip at the top of the modal. |
+| **contents-width** | String | `100%` | Width of the modal |
+| **contents-height** | String | `30vh` | Height of the modal |
+| **border-top-radius** | String | `null` | Radius at the top of the modal(This value takes precedence) |
+| **border-top-left-radius** | String | `0px` | Modal upper left radius |
+| **border-top-right-radius** | String | `0px` | Modal upper right radius |
+| **contents-color** | String | `white` | Modal background color |
+| **tip-color** | String | `#c8c8c8` | Tip chip color |
+| **dark-contents-color** | String | `black` | Modal background color in dark mode |

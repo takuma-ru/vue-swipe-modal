@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="title">
-      <Logo />
       <h1>
         SwipeModal Package
       </h1>
@@ -22,80 +21,18 @@
         </span>
       </button>
     </div>
-    <div class="modal_button">
-      <button @click="modal2 = true">
-        <span>
-          modal2 OPEN
-        </span>
-      </button>
-    </div>
 
-    <Swipemodal
+    <SwipeModal
       v-model="modal"
-      height="80vh"
-      width="100%"
-      radius="20px"
-      fullscreen
+      border-top-radius="24px"
+      contents-height="50vh"
     >
-      <h1>modal 1</h1>
-      <table>
-        <tbody>
-          <tr>
-            <th>name</th> <th>value</th>
-          </tr>
-          <tr>
-            <td>height</td> <td>80vh</td>
-          </tr>
-          <tr>
-            <td>width</td> <td>100%</td>
-          </tr>
-          <tr>
-            <td>radius</td> <td>20px</td>
-          </tr>
-          <tr>
-            <td>fullscreen</td> <td>true</td>
-          </tr>
-          <tr>
-            <td>notip</td> <td>false</td>
-          </tr>
-        </tbody>
-      </table>
-      <div v-for="i in 100" :key="i">
-        {{ i }}
+      <div style="padding: 24px">
+        <div v-for="i in 100" :key="i">
+          {{ i }}
+        </div>
       </div>
-    </Swipemodal>
-
-    <Swipemodal
-      v-model="modal2"
-      height="auto"
-      width="50%"
-      radius="0px"
-      notip
-    >
-      <h1>modal 2</h1>
-      <table>
-        <tbody>
-          <tr>
-            <th>name</th> <th>value</th>
-          </tr>
-          <tr>
-            <td>height</td> <td>50vh</td>
-          </tr>
-          <tr>
-            <td>width</td> <td>50%</td>
-          </tr>
-          <tr>
-            <td>radius</td> <td>0px</td>
-          </tr>
-          <tr>
-            <td>fullscreen</td> <td>false</td>
-          </tr>
-          <tr>
-            <td>notip</td> <td>true</td>
-          </tr>
-        </tbody>
-      </table>
-    </Swipemodal>
+    </SwipeModal>
   </div>
 </template>
 
@@ -107,15 +44,6 @@ export default {
       modal2: false
     }
   },
-
-  methods: {
-    open() {
-      this.$refs.myBottomSheet.open();
-    },
-    close() {
-      this.$refs.myBottomSheet.close();
-    }
-  }
 }
 </script>
 
