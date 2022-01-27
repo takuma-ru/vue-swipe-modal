@@ -1,29 +1,33 @@
-# vue_SwipeModal v2.x
-
-[![npm version](https://badge.fury.io/js/nekoo_vue_swipemodal.svg)](https://badge.fury.io/js/nekoo_vue_swipemodal)
-[![Npm package total downloads](https://badgen.net/npm/dt/nekoo_vue_swipemodal)](https://npmjs.com/package/nekoo_vue_swipemodal)
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+# vue_SwipeModal
 
 ## WARNING!
-The latest version is 2.
-Note that the component names and available props are still different.
-[version 1.x](https://github.com/takuma-ru/vue_SwipeModal/tree/new/swipeModal/v1)
+- #### The latest version is **2**.
+  Note that the component names and available props are still different.
+- #### New package name: @takuma-ru/vue-swipe-modal
+  The name of this package has been changed!
+  Install the package at the following link.
+  [@takuma-ru/vue-swipe-modal(New package link)](https://www.npmjs.com/package/@takuma-ru/vue-swipe-modal)
+- #### End of Support.
+  **Version 2.0.5 and later** will not be supported due to the above package transition.
+  For 2.0.5 and later, please use **@takuma-ru/vue-swpie-modal**.
+
 
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
-
-## npm
-https://www.npmjs.com/package/nekoo_vue_swipemodal
 
 ## DEMO
 https://vue-swipe-modal.vercel.app/
 
 ## Getting Started
-
+1. Install
 ```md
-npm i nekoo_vue_swipemodal
+npm i @takuma-ru/vue-swpie-modal
+```
+```md
+yarn add @takuma-ru/vue-swpie-modal
 ```
 
+2. Come on, let's use it.
 ```vue
 <template>
   <div>
@@ -60,7 +64,7 @@ export default {
 </script>
 ```
 
-## Installation
+## Props
 
 #### Modal General
 | Variable | Type | default | Details |
