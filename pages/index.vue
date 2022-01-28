@@ -2,7 +2,7 @@
   <div class="container">
     <div class="title">
       <h1>
-        SwipeModal Package
+        @takuma-ru/vue-swipe-modal
       </h1>
       <h2><a href="https://github.com/takuma-ru/vue_SwipeModal">GitHub</a></h2>
       <h2>対応ブラウザ</h2>

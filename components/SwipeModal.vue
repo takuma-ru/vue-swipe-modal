@@ -236,6 +236,7 @@ export default {
 #modal {
   position: fixed;
   scrollbar-width: none;
+  z-index: 5;
 }
 
 .modal_background {
