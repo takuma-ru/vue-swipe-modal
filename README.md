@@ -4,6 +4,11 @@
 [![Npm package total downloads](https://badgen.net/npm/dt/nekoo_vue_swipemodal)](https://npmjs.com/package/nekoo_vue_swipemodal)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
+## WARNING!
+The latest version is 2.
+Note that the component names and available props are still different.
+[version 1.x](https://github.com/takuma-ru/vue_SwipeModal/tree/new/swipeModal/v1)
+
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
