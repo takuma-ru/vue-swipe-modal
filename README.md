@@ -21,10 +21,10 @@ https://vue-swipe-modal.vercel.app/
 ## Getting Started
 1. Install
 ```md
-npm i @takuma-ru/vue-swpie-modal
+npm i @takuma-ru/vue-swipe-modal
 ```
 ```md
-yarn add @takuma-ru/vue-swpie-modal
+yarn add @takuma-ru/vue-swipe-modal
 ```
 
 2. Come on, let's use it.
