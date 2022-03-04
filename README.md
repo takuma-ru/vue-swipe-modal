@@ -10,7 +10,9 @@
 - #### End of Support.
   **Version 2.0.5 and later** will not be supported due to the above package transition.
   For 2.0.5 and later, please use **@takuma-ru/vue-swpie-modal**.
-
+  
+## NOW Developing
+ **Vue3.x** and **TypeScript** support.
 
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
