@@ -1,23 +1,89 @@
 {
-  "name": "vue_SwipeModal",
-  "version": "1.0.0",
-  "private": true,
+  "name": "@takuma-ru/vue-swipe-modal",
+  "version": "3.2.1-dev",
+  "private": false,
+  "description": "",
+  "license": "MIT",
+  "author": "takuma-ru <kcattdev@gmail.com> (https://github.com/takuma-ru/)",
+  "keywords": [
+    "vue",
+    "vue.js",
+    "nuxt",
+    "nuxt.js",
+    "swipe",
+    "swipeble",
+    "modal",
+    "dialog",
+    "bottom sheet",
+    "sheet",
+    "pwa"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:takuma-ru/vue_SwipeModal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/vue_SwipeModal/issues",
+    "email": "kcattdev@gmail.com"
+  },
+  "homepage": "https://vue-swipe-modal.vercel.app/",
+  "main": "dist/swipe-modal.ssr.js",
+  "browser": {
+    "./sfc": "./src/swipe-modal.vue"
+  },
+  "module": "dist/swipe-modal.esm.js",
+  "unpkg": "dist/swipe-modal.min.js",
+  "types": "dist/types/src/entry.esm.d.ts",
+  "files": [
+    "dist/*",
+    "src/**/*.vue"
+  ],
+  "sideEffects": false,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "dev": "vue-cli-service serve dev/serve.ts",
+    "prebuild": "rimraf ./dist",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
   },
   "dependencies": {
-    "core-js": "^3.9.1",
-    "fibers": "^5.0.0",
-    "nuxt": "^2.15.3"
+    "@takuma-ru/vue-swipe-modal": "3.2.1-dev"
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "prettier": "^2.2.1",
-    "sass": "^1.48.0",
-    "sass-loader": "^10.1.1"
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@rollup/plugin-alias": "^3.1.2",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-typescript": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/compiler-sfc": "^3.0.11",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "cross-env": "^7.0.3",
+    "minimist": "^1.2.5",
+    "postcss": "^8.2.10",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.52.8",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-vue": "^6.0.0",
+    "sass": "^1.49.0",
+    "sass-loader": "10",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.0.3",
+    "vue": "^3.0.5"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=12"
   }
 }
