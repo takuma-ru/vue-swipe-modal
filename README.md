@@ -1,18 +1,5 @@
-# vue_SwipeModal
+# @takuma-ru/vue-swpie-modal
 
-## WARNING!
-- #### The latest version is **2**.
-  Note that the component names and available props are still different.
-- #### New package name: @takuma-ru/vue-swipe-modal
-  The name of this package has been changed!
-  Install the package at the following link.
-  [@takuma-ru/vue-swipe-modal(New package link)](https://www.npmjs.com/package/@takuma-ru/vue-swipe-modal)
-- #### End of Support.
-  **Version 2.0.5 and later** will not be supported due to the above package transition.
-  For 2.0.5 and later, please use **@takuma-ru/vue-swpie-modal**.
-  
-## NOW Developing
- **Vue3.x** and **TypeScript** support.
 
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
@@ -23,10 +10,10 @@ https://vue-swipe-modal.vercel.app/
 ## Getting Started
 1. Install
 ```md
-npm i @takuma-ru/vue-swipe-modal
+npm i @takuma-ru/vue-swpie-modal
 ```
 ```md
-yarn add @takuma-ru/vue-swipe-modal
+yarn add @takuma-ru/vue-swpie-modal
 ```
 
 2. Come on, let's use it.
