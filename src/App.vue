@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import SwipeModal from '@takuma-ru/vue-swipe-modal';
-
+import SwipeModal from './components/swipe-modal.vue';
 export default defineComponent({
   name: 'ServeDev',
   components: {
@@ -9,7 +8,6 @@ export default defineComponent({
   },
   setup() {
     const modal = ref(false)
-
     return {
       modal
     }
