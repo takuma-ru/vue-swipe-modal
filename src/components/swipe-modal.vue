@@ -25,17 +25,13 @@
             ? '100%'
             : modalHeight > 0
             ? modalHeight + 'px'
-            : contentsHeight};
-          border-top-left-radius: ${fullscreen
-            ? '0px'
-            : borderTopRadius
+        : contentsHeight};
+          border-top-left-radius: ${borderTopRadius
             ? borderTopRadius
-            : borderTopLeftRadius};
-          border-top-right-radius: ${fullscreen
-            ? '0px'
-            : borderTopRadius
+        : borderTopLeftRadius};
+          border-top-right-radius: ${borderTopRadius
             ? borderTopRadius
-            : borderTopRightRadius};
+        : borderTopRightRadius};
           background-color: ${dark ? darkContentsColor : contentsColor};
           color: ${dark ? 'white' : 'back'};
           --contents-bottom-position: ${contentsBottomPosition};
@@ -48,38 +44,58 @@
           v-if="!noTip"
           class="modal-contents-chip"
           :style="`
-            --tip-color: ${tipColor},
+            --tip-color: ${tipColor};
           `"
           @mousedown="mouseDown"
         />
         <slot />
-        {{ modal }}
       </div>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue'
+import {
+  computed,
+  defineComponent,
+  ref,
+  watch,
+} from 'vue-demi'
 
 export default defineComponent({
-  name: 'swipeModal',
+  name: 'SwipeModal',
+  model: {
+    prop: 'modal',
+    event: 'update:modal',
+  },
   props: {
     // modal
     modal: {
       type: Boolean,
       default: false,
     },
-    dark: Boolean,
+    dark: {
+      type: Boolean,
+      default: false,
+    },
     // modal_background
-    persistent: Boolean,
+    persistent: {
+      type: Boolean,
+      default: false,
+    },
     backgroundColor: {
       type: String,
       default: '#80808080',
     },
     // modal_contents
-    fullscreen: Boolean,
-    noTip: Boolean,
+    fullscreen: {
+      type: Boolean,
+      default: false,
+    },
+    noTip: {
+      type: Boolean,
+      default: false,
+    },
     contentsWidth: {
       type: String,
       default: '100%',
@@ -89,7 +105,7 @@ export default defineComponent({
       default: '30vh',
     },
     borderTopRadius: {
-      type: String,
+      type: String || null,
       default: null,
     },
     borderTopLeftRadius: {
@@ -113,8 +129,10 @@ export default defineComponent({
       default: 'black',
     },
   },
+
   emits: ['update:modal'],
-  setup(props, ctx) {
+
+  setup (props, ctx) {
     // const
     const modal = computed({
       get: () => props.modal,
@@ -123,11 +141,10 @@ export default defineComponent({
     const isMouseDown = ref<boolean>(false)
     const isTouch = ref<boolean>(false)
     const modalQuery = ref<any>(null)
-    const modalHeight=  ref<number>(0)
-    const contentsBottomPosition=  ref<string>('0px')
+    const modalHeight = ref<number>(0)
+    const contentsBottomPosition = ref<string>('0px')
     const moveStartPosition = ref<number>(0)
     const nowMovePosition = ref<number>(0)
-
 
     // watch
     watch(modal, (newModal: any) => {
@@ -157,14 +174,29 @@ export default defineComponent({
       ctx.emit('update:modal', false)
     }
 
-    const mouseDown = () => {
-      console.log('open')
+    const mouseDown = (payload: MouseEvent) => {
+      modalQuery.value = document.querySelector('.modal-contents')
+      modalHeight.value = modalQuery.value.getBoundingClientRect().height
+      moveStartPosition.value = payload.pageY
+      isMouseDown.value = true
     }
-    const mouseMove = () => {
-      console.log('open')
+    const mouseMove = (payload: MouseEvent) => {
+      if (isMouseDown.value) {
+        nowMovePosition.value = payload.pageY
+        contentsBottomPosition.value = (
+          moveStartPosition.value - nowMovePosition.value <= 0
+            ? moveStartPosition.value - nowMovePosition.value
+            : 0
+        ) + 'px'
+      }
     }
     const mouseUp = () => {
-      console.log('open')
+      isMouseDown.value = false
+      if (-1 * (moveStartPosition.value - nowMovePosition.value) > modalHeight.value * (1 / 8)) {
+        close()
+      } else {
+        contentsBottomPosition.value = 0 + 'px'
+      }
     }
 
     const touchStart = (payload: TouchEvent) => {
@@ -218,11 +250,11 @@ export default defineComponent({
 #swipe-modal {
   position: fixed;
   scrollbar-width: none;
-  z-index: 5;
+  z-index: 15;
 }
 .modal-background {
   position: fixed;
-  z-index: 1;
+  z-index: 11;
   width: 100vw;
   height: 100vh;
   top: 50%;
@@ -233,7 +265,7 @@ export default defineComponent({
   --contents-height: 30vh;
   --contents-bottom-position: 0%;
   position: fixed;
-  z-index: 2;
+  z-index: 12;
   min-height: var(--contents-height);
   max-height: 100vh;
   bottom: var(--contents-bottom-position);
@@ -244,18 +276,20 @@ export default defineComponent({
   scrollbar-width: none;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  filter: drop-shadow(0px 16px 40px rgba(0, 37, 80, 0.2));
+
   &::-webkit-scrollbar {
     width: 0px;
   }
   &-chip {
     --tip-color: #c8c8c8;
-    z-index: 2;
-    position: sticky;
+    z-index: 12;
+    position: relative;
     top: 0px;
     height: 4px;
     width: 100%;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: 8px;
+    padding-bottom: 8px;
     cursor: s-resize;
     &::after {
       position: absolute;
@@ -272,7 +306,7 @@ export default defineComponent({
 
 .swipe-modal-background {
   &-enter {
-    &-from {
+    & {
       opacity: 0;
     }
     &-active {
@@ -283,7 +317,7 @@ export default defineComponent({
     }
   }
   &-leave {
-    &-from {
+    & {
       opacity: 1;
     }
     &-active {
@@ -297,22 +331,28 @@ export default defineComponent({
 
 .swipe-modal-contents {
   &-enter {
+    & {
+      bottom: calc(-1 * var(--contents-height)) !important;
+    }
     &-from {
       bottom: calc(-1 * var(--contents-height)) !important;
     }
     &-active {
-      transition: all 0.2s ease-out;
+      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
     }
     &-to {
       bottom: var(--contents-bottom-position) !important;
     }
   }
   &-leave {
+    & {
+      bottom: var(--contents-bottom-position) !important;
+    }
     &-from {
       bottom: var(--contents-bottom-position) !important;
     }
     &-active {
-      transition: all 0.15s ease-out;
+      transition: all 0.2s cubic-bezier(.25,.8,.25,1);
     }
     &-to {
       bottom: calc(-1 * var(--contents-height)) !important;
