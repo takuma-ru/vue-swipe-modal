@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "private": false,
   "description": "",
   "license": "MIT",
@@ -28,13 +28,20 @@
   },
   "homepage": "https://vue-swipe-modal.vercel.app/",
   "sideEffects": false,
+  "main": "dist/swipe-modal.umd.js",
+  "module": "dist/swipe-modal.es.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
+  "files": [
+    "./types",
+    "./dist"
+  ],
   "dependencies": {
     "vue": "^3.2.33"
   },
@@ -42,6 +49,8 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.27",
     "@vitejs/plugin-vue": "^2.3.1",
+    "@vue/cli-service": "^5.0.4",
+    "@vue/composition-api": "^1.4.9",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/tsconfig": "^0.1.3",
     "eslint": "^8.5.0",
@@ -60,6 +69,9 @@
   },
   "peerDependenciesMeta": {
     "@vue/composition-api": {
+      "optional": true
+    },
+    "@nuxtjs/composition-api": {
       "optional": true
     }
   }
