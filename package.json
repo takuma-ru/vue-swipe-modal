@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.0",
   "private": false,
   "description": "",
   "license": "MIT",
@@ -27,44 +27,63 @@
     "email": "kcattdev@gmail.com"
   },
   "homepage": "https://vue-swipe-modal.vercel.app/",
-  "sideEffects": false,
-  "main": "dist/swipe-modal.umd.js",
-  "module": "dist/swipe-modal.es.js",
-  "types": "dist/types/index.d.ts",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview --port 5050",
-    "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  "main": "dist/swipe-modal.ssr.js",
+  "browser": {
+    "./sfc": "./src/swipe-modal.vue"
   },
+  "module": "dist/swipe-modal.esm.js",
+  "unpkg": "dist/swipe-modal.min.js",
+  "types": "dist/types/src/entry.esm.d.ts",
   "files": [
-    "./types",
-    "./dist"
+    "dist/*",
+    "src/**/*.vue"
   ],
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vue-cli-service serve dev/serve.ts --port 3000",
+    "prebuild": "rimraf ./dist",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
+    "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
+    "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "postbuild": "rimraf ./dist/types/dev ./dist/types/src/entry.d.ts"
+  },
   "dependencies": {
     "vue": "^3.2.33"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.1.0",
-    "@types/node": "^16.11.27",
-    "@vitejs/plugin-vue": "^2.3.1",
-    "@vue/cli-service": "^5.0.4",
-    "@vue/composition-api": "^1.4.9",
-    "@vue/eslint-config-typescript": "^10.0.0",
-    "@vue/tsconfig": "^0.1.3",
-    "eslint": "^8.5.0",
-    "eslint-plugin-vue": "^8.2.0",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-typescript": "^7.14.5",
+    "@rollup/plugin-alias": "^3.1.2",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.4.2",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-typescript": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
+    "@vue/compiler-sfc": "^3.0.11",
+    "@vue/composition-api": "^1.5.0",
+    "@zerollup/ts-transform-paths": "^1.7.18",
+    "cross-env": "^7.0.3",
+    "minimist": "^1.2.5",
+    "postcss": "^8.2.10",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.52.8",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.49.0",
     "sass-loader": "10",
-    "typescript": "~4.6.3",
-    "vite": "^2.9.5",
-    "vue-demi": "^0.12.5",
-    "vue-tsc": "^0.34.7"
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.0.3",
+    "vue-demi": "^0.12.5"
   },
   "peerDependencies": {
     "@nuxtjs/composition-api": "^0.12.0",
-    "@vue/composition-api": "^1.0.0",
+    "@vue/composition-api": "^0.9.0",
     "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {

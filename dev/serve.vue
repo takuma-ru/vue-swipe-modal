@@ -111,7 +111,7 @@ import {
   reactive,
   ref,
 } from 'vue-demi';
-import SwipeModal from './components/swipe-modal.vue';
+import SwipeModal from '../src/swipe-modal.vue';
 export default defineComponent({
   name: 'demoPage',
   components: {
@@ -194,6 +194,12 @@ export default defineComponent({
   }
 });
 </script>
+
+<style>
+body {
+  margin: 0px;
+}
+</style>
 
 <style lang="scss" scoped>
 .header {
