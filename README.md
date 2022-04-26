@@ -1,5 +1,9 @@
 # @takuma-ru/vue-swpie-modal
 
+## WERNING
+
+I want to support vue2 and vue3 but I can't~!
+It may not work properly for the time being: ....
 
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）

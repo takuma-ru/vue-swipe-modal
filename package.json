@@ -27,6 +27,17 @@
     "email": "kcattdev@gmail.com"
   },
   "homepage": "https://vue-swipe-modal.vercel.app/",
+  "main": "dist/swipe-modal.ssr.js",
+  "browser": {
+    "./sfc": "./src/swipe-modal.vue"
+  },
+  "module": "dist/swipe-modal.esm.js",
+  "unpkg": "dist/swipe-modal.min.js",
+  "types": "dist/types/src/entry.esm.d.ts",
+  "files": [
+    "dist/*",
+    "src/**/*.vue"
+  ],
   "sideEffects": false,
   "files": [
     "dist",
