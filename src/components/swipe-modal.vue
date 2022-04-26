@@ -60,7 +60,7 @@ import {
   defineComponent,
   ref,
   watch,
-} from 'vue-demi'
+} from 'vue'
 
 export default defineComponent({
   name: 'SwipeModal',

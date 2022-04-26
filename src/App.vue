@@ -7,22 +7,6 @@
       </h1>
     </div>
 
-    <div class="demo">
-      <div class="sub-header">
-        <div class="marker" />
-        <h2>
-          Result
-        </h2>
-      </div>
-      <div class="contents">
-        <button @click="modal = true">
-          <span>
-            Open swipe-modal
-          </span>
-        </button>
-      </div>
-    </div>
-
     <div class="inputs">
         <div class="sub-header">
           <div class="marker" />
@@ -67,6 +51,22 @@
         </div>
     </div>
 
+    <div class="demo">
+      <div class="sub-header">
+        <div class="marker" />
+        <h2>
+          Result
+        </h2>
+      </div>
+      <div class="contents">
+        <button @click="modal = true">
+          <span>
+            Open swipe-modal
+          </span>
+        </button>
+      </div>
+    </div>
+
     <div class="links">
       <div class="sub-header">
         <div class="marker" />
@@ -106,12 +106,8 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  ref,
-} from 'vue-demi';
-import SwipeModal from '../src/swipe-modal.vue';
+import { defineComponent, reactive, ref } from 'vue';
+import SwipeModal from './components/swipe-modal.vue';
 export default defineComponent({
   name: 'demoPage',
   components: {
@@ -157,7 +153,7 @@ export default defineComponent({
       },
       borderTopRadius: {
         type: 'text',
-        value: undefined,
+        value: null,
         name: 'border-top-radius'
       },
       borderTopLeftRadius: {
@@ -194,12 +190,6 @@ export default defineComponent({
   }
 });
 </script>
-
-<style>
-body {
-  margin: 0px;
-}
-</style>
 
 <style lang="scss" scoped>
 .header {
