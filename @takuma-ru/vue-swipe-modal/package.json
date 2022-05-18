@@ -1,0 +1,57 @@
+{
+  "name": "@takuma-ru/vue-swipe-modal",
+  "version": "1.1.0",
+  "description": "",
+  "main": "dist/components.ssr.js",
+  "browser": "dist/components.esm.js",
+  "module": "dist/components.esm.js",
+  "unpkg": "dist/components.min.js",
+  "types": "components.d.ts",
+  "files": [
+    "dist/*",
+    "components.d.ts",
+    "src/**/*.vue"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prebuild:vue2": "vue-demi-switch 2",
+    "build:vue2": "cross-env VUE_VERSION=2 NODE_ENV=production rollup --config build/rollup.config.js",
+    "prebuild:vue3": "vue-demi-switch 3",
+    "build:vue3": "cross-env VUE_VERSION=3 NODE_ENV=production rollup --config build/rollup.config.js"
+  },
+  "dependencies": {
+    "@vue/composition-api": "^1.6.1",
+    "vue-demi": "latest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
+    "@rollup/plugin-alias": "^3.1.1",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "cross-env": "^7.0.3",
+    "minimist": "^1.2.5",
+    "postcss": "^8.0.0",
+    "rollup": "^2.36.1",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-vue": "^6.0.0",
+    "rollup-plugin-vue2": "npm:rollup-plugin-vue@^5.0.0",
+    "typescript": "^4.0.0",
+    "vue": "^2.6.12",
+    "vue-template-compiler": "^2.6.12"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.0.0 || ^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
+  }
+}
