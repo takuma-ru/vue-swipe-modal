@@ -56,6 +56,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue-demi'
+
 export default defineComponent({
   name: 'SwipeModal',
   model: {
@@ -281,6 +282,7 @@ export default defineComponent({
     padding-top: 8px;
     padding-bottom: 8px;
     cursor: s-resize;
+
     &::after {
       position: absolute;
       content: '';
@@ -288,7 +290,7 @@ export default defineComponent({
       height: 4px;
       width: 40px;
       background-color: var(--tip-color);
-      margin-left: calc(50% - 17.5px);
+      transform: translateX(-50%);
       border-radius: 10px;
     }
   }
