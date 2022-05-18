@@ -20,21 +20,13 @@
         ref="modal-contents"
         class="modal-contents"
         :style="`
-          width: ${contentsWidth};
-          --contents-height: ${fullscreen
-            ? '100%'
-            : modalHeight > 0
-            ? modalHeight + 'px'
-        : contentsHeight};
-          border-top-left-radius: ${borderTopRadius
-            ? borderTopRadius
-        : borderTopLeftRadius};
-          border-top-right-radius: ${borderTopRadius
-            ? borderTopRadius
-        : borderTopRightRadius};
-          background-color: ${dark ? darkContentsColor : contentsColor};
-          color: ${dark ? 'white' : 'back'};
-          --contents-bottom-position: ${contentsBottomPosition};
+          width: ${ contentsWidth };
+          --contents-height: ${ fullscreen ? '100%' : modalHeight > 0 ? modalHeight + 'px' : contentsHeight };
+          border-top-left-radius: ${ borderTopRadius ? borderTopRadius : borderTopLeftRadius };
+          border-top-right-radius: ${ borderTopRadius ? borderTopRadius : borderTopRightRadius };
+          background-color: ${ dark ? darkContentsColor : contentsColor };
+          color: ${ dark ? 'white' : 'back' };
+          --contents-bottom-position: ${ isVue2 ? contentsBottomPosition['value'] : contentsBottomPosition};
         `"
         @touchstart="touchStart"
         @touchmove="touchMove"
@@ -55,7 +47,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from 'vue-demi'
+import {
+  computed,
+  defineComponent,
+  isVue2,
+  isVue3,
+  ref,
+  watch,
+} from 'vue-demi'
 
 export default defineComponent({
   name: 'SwipeModal',
@@ -125,7 +124,7 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  setup (props, context) {
+  setup (props: any, context: any) {
     // const
     const isMouseDown = ref<boolean>(false)
     const isTouch = ref<boolean>(false)
@@ -142,7 +141,7 @@ export default defineComponent({
     })
 
     // watch
-    watch(modal, (newModal: any) => {
+    watch(modal, (newModal: boolean) => {
       if (newModal) {
         open()
       }
@@ -224,8 +223,12 @@ export default defineComponent({
     }
 
     return {
+      isVue2,
+      isVue3,
+
       modalHeight,
       contentsBottomPosition,
+
       close,
       mouseDown,
       mouseMove,

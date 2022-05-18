@@ -2,10 +2,10 @@
   "name": "@takuma-ru/vue-swipe-modal",
   "version": "1.1.0",
   "description": "",
-  "main": "dist/components.ssr.js",
-  "browser": "dist/components.esm.js",
-  "module": "dist/components.esm.js",
-  "unpkg": "dist/components.min.js",
+  "main": "dist/swipe-modal.ssr.js",
+  "browser": "dist/swipe-modal.esm.js",
+  "module": "dist/swipe-modal.esm.js",
+  "unpkg": "dist/swipe-modal.min.js",
   "types": "components.d.ts",
   "files": [
     "dist/*",
@@ -20,7 +20,6 @@
     "build:vue3": "cross-env VUE_VERSION=3 NODE_ENV=production rollup --config build/rollup.config.js"
   },
   "dependencies": {
-    "@vue/composition-api": "^1.6.1",
     "vue-demi": "latest"
   },
   "devDependencies": {
@@ -32,6 +31,7 @@
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-replace": "^4.0.0",
+    "@vue/composition-api": "^1.6.1",
     "@vue/compiler-sfc": "^3.0.0",
     "cross-env": "^7.0.3",
     "minimist": "^1.2.5",
@@ -42,7 +42,8 @@
     "rollup-plugin-vue": "^6.0.0",
     "rollup-plugin-vue2": "npm:rollup-plugin-vue@^5.0.0",
     "typescript": "^4.0.0",
-    "vue": "^2.6.12",
+    "vue": "^3.0.0",
+    "vue2": "npm:vue@2",
     "vue-template-compiler": "^2.6.12"
   },
   "peerDependencies": {
