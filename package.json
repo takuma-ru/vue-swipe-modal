@@ -5,8 +5,8 @@
   "scripts": {
     "switch:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-fix",
     "dev:all": "yarn workspace vue2-app dev && yarn workspace vue3-app dev",
-    "dev:2": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch   2 vue2 && yarn workspace vue2-app dev",
-    "dev:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 3 && yarn workspace vue3-app dev",
+    "dev:2": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 2 && yarn workspace vue2-app dev",
+    "dev:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 3 vue3 && yarn workspace vue3-app dev",
     "build:2": "yarn workspace @takuma-ru/vue-swipe-modal build:vue2",
     "build:3": "yarn workspace @takuma-ru/vue-swipe-modal build:vue3"
   },

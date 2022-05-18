@@ -26,7 +26,7 @@
           border-top-right-radius: ${ borderTopRadius ? borderTopRadius : borderTopRightRadius };
           background-color: ${ dark ? darkContentsColor : contentsColor };
           color: ${ dark ? 'white' : 'back' };
-          --contents-bottom-position: ${ isVue2 ? contentsBottomPosition['value'] : contentsBottomPosition};
+          --contents-bottom-position: ${ contentsBottomPosition };
         `"
         @touchstart="touchStart"
         @touchmove="touchMove"
@@ -223,9 +223,6 @@ export default defineComponent({
     }
 
     return {
-      isVue2,
-      isVue3,
-
       modalHeight,
       contentsBottomPosition,
 
@@ -236,6 +233,9 @@ export default defineComponent({
       touchStart,
       touchMove,
       touchEnd,
+
+      isVue2,
+      isVue3,
     }
   },
 })
