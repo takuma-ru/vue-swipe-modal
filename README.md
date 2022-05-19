@@ -1,18 +1,9 @@
-# vue_SwipeModal
+# @takuma-ru/vue-swpie-modal
 
-## WARNING!
-- #### The latest version is **2**.
-  Note that the component names and available props are still different.
-- #### New package name: @takuma-ru/vue-swipe-modal
-  The name of this package has been changed!
-  Install the package at the following link.
-  [@takuma-ru/vue-swipe-modal(New package link)](https://www.npmjs.com/package/@takuma-ru/vue-swipe-modal)
-- #### End of Support.
-  **Version 2.0.5 and later** will not be supported due to the above package transition.
-  For 2.0.5 and later, please use **@takuma-ru/vue-swpie-modal**.
-  
-## NOW Developing
- **Vue3.x** and **TypeScript** support.
+## WERNING
+
+I want to support vue2 and vue3 but I can't~!
+It may not work properly for the time being: ....
 
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
@@ -22,47 +13,38 @@ https://vue-swipe-modal.vercel.app/
 
 ## Getting Started
 1. Install
-```md
-npm i @takuma-ru/vue-swipe-modal
-```
-```md
-yarn add @takuma-ru/vue-swipe-modal
-```
+- for Vue3
+  ```md
+  yarn add @takuma-ru/vue-swipe-modal@^3
+  ```
+
+- for Vue2
+  ```md
+  yarn add @takuma-ru/vue-swipe-modal@~2
+  ```
 
 2. Come on, let's use it.
 ```vue
+<!-- for Vue3 -->
 <template>
   <div>
     <button @click="modal = true">open</button>
 
     <swipe-modal
       v-model="modal"
-      contents-height="80vh"
-      contents-width="100%"
-      border-top-radius="20px"
+      contents-height="50vh"
+      border-top-radius="16px"
     >
       <h1>contents</h1>
     </swipe-modal>
   </div>
 </template>
 
-<script>
-import swipeModal from 'nekoo_vue_swipemodal'
-import 'nekoo_vue_swipemodal/dist/swipemodal.css'
+<script lang="ts" setup>
+import { ref } from 'vue'
+import swipeModal from '@takuma-ru/vue-swpie-modal'
 
-export default {
-  name: 'App',
-
-  data() {
-    return {
-      modal: false
-    }
-  },
-
-  components: {
-    swipeModal
-  }
-}
+const modal = ref(false)
 </script>
 ```
 
