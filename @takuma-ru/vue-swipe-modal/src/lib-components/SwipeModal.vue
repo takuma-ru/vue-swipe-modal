@@ -1,6 +1,6 @@
 <template>
   <div
-    id="swipe-modal"
+    id="swipe-modal-takumaru-vue-swipe-modal"
     @mousemove="mouseMove"
     @mouseup="mouseUp"
   >
@@ -120,7 +120,7 @@ export default defineComponent({
     },
     darkContentsColor: {
       type: String,
-      default: 'black',
+      default: '#1E1E1E',
     },
   },
   emits: ['update:modelValue'],
@@ -241,120 +241,128 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-#swipe-modal {
+<style lang="scss">
+#swipe-modal-takumaru-vue-swipe-modal {
   position: fixed;
   scrollbar-width: none;
   z-index: 15;
-}
-.modal-background {
-  position: fixed;
-  z-index: 11;
-  width: 100vw;
-  height: 100vh;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.modal-contents {
-  --contents-height: 30vh;
-  --contents-bottom-position: 0%;
-  position: fixed;
-  z-index: 12;
-  min-height: var(--contents-height);
-  max-height: 100vh;
-  bottom: var(--contents-bottom-position);
-  left: 50%;
-  transform: translateX(-50%) translateY(0%);
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  filter: drop-shadow(0px 16px 40px rgba(0, 37, 80, 0.2));
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-  &-chip {
-    --tip-color: #c8c8c8;
-    z-index: 12;
-    position: relative;
-    top: 0px;
-    height: 4px;
-    width: 100%;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    cursor: s-resize;
 
-    &::after {
-      position: absolute;
-      content: '';
-      top: 8px;
+  .modal-background {
+    position: fixed;
+    z-index: 11;
+    width: 100vw;
+    height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal-contents {
+    --contents-height: 30vh;
+    --contents-bottom-position: 0%;
+    position: fixed;
+    z-index: 12;
+    min-height: var(--contents-height);
+    max-height: 100vh;
+    bottom: var(--contents-bottom-position);
+    left: 50%;
+    transform: translateX(-50%) translateY(0%);
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    filter: drop-shadow(0px 16px 40px rgba(0, 37, 80, 0.2));
+
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    &-chip {
+      --tip-color: #c8c8c8;
+      z-index: 12;
+      position: relative;
+      top: 0px;
       height: 4px;
-      width: 40px;
-      background-color: var(--tip-color);
-      transform: translateX(-50%);
-      border-radius: 10px;
+      width: 100%;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      cursor: s-resize;
+
+      &::after {
+        position: absolute;
+        content: '';
+        top: 8px;
+        height: 4px;
+        width: 40px;
+        background-color: var(--tip-color);
+        transform: translateX(-50%);
+        border-radius: 10px;
+      }
     }
   }
-}
-.swipe-modal-background {
-  &-enter {
-    & {
-      opacity: 0;
+
+  .swipe-modal-background {
+    &-enter {
+      & {
+        opacity: 0;
+      }
+      &-from {
+        opacity: 0;
+      }
+      &-active {
+        transition: all 0.2s ease-out;
+      }
+      &-to {
+        opacity: 1;
+      }
     }
-    &-from {
-      opacity: 0;
-    }
-    &-active {
-      transition: all 0.2s ease-out;
-    }
-    &-to {
-      opacity: 1;
-    }
-  }
-  &-leave {
-    & {
-      opacity: 1;
-    }
-    &-from {
-      opacity: 1;
-    }
-    &-active {
-      transition: all 0.2s ease-out;
-    }
-    &-to {
-      opacity: 0;
-    }
-  }
-}
-.swipe-modal-contents {
-  &-enter {
-    & {
-      bottom: calc(-1 * var(--contents-height)) !important;
-    }
-    &-from {
-      bottom: calc(-1 * var(--contents-height)) !important;
-    }
-    &-active {
-      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-    }
-    &-to {
-      bottom: var(--contents-bottom-position) !important;
+
+    &-leave {
+      & {
+        opacity: 1;
+      }
+      &-from {
+        opacity: 1;
+      }
+      &-active {
+        transition: all 0.2s ease-out;
+      }
+      &-to {
+        opacity: 0;
+      }
     }
   }
-  &-leave {
-    & {
-      bottom: var(--contents-bottom-position) !important;
+
+  .swipe-modal-contents {
+    &-enter {
+      & {
+        bottom: calc(-1 * var(--contents-height)) !important;
+      }
+      &-from {
+        bottom: calc(-1 * var(--contents-height)) !important;
+      }
+      &-active {
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+      }
+      &-to {
+        bottom: var(--contents-bottom-position) !important;
+      }
     }
-    &-from {
-      bottom: var(--contents-bottom-position) !important;
-    }
-    &-active {
-      transition: all 0.25s cubic-bezier(.25,.8,.25,1);
-    }
-    &-to {
-      bottom: calc(-1 * var(--contents-height)) !important;
+
+    &-leave {
+      & {
+        bottom: var(--contents-bottom-position) !important;
+      }
+      &-from {
+        bottom: var(--contents-bottom-position) !important;
+      }
+      &-active {
+        transition: all 0.25s cubic-bezier(.25,.8,.25,1);
+      }
+      &-to {
+        bottom: calc(-1 * var(--contents-height)) !important;
+      }
     }
   }
 }

@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@takuma-ru/vue-swipe-modal": "3.0.0-alpha.7",
     "vue": "^3.2.25"
   },
   "devDependencies": {

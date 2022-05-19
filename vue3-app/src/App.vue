@@ -107,7 +107,8 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
-import swipeModal from '../../@takuma-ru/vue-swipe-modal/src/lib-components/SwipeModal.vue'
+/* import swipeModal from '../../@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue' */
+import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal'
 
 const modal = ref<boolean>(false)
 
@@ -174,7 +175,7 @@ const propsValue = reactive({
   },
   darkContentsColor: {
     type: 'text',
-    value: 'black',
+    value: '#1E1E1E',
     name: 'dark-contetns-color'
   }
 })

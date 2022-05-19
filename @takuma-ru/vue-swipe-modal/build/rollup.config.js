@@ -34,10 +34,10 @@ const postCssConfig = [
     modules: {
       generateScopedName: '[local]___[hash:base64:5]',
     },
-    include: /&module=.*\.css$/,
+    include: /&module=.*\.s?css$/,
   }),
   // Process all `<style>` blocks except `<style module>`.
-  PostCSS({ include: /(?<!&module=.*)\.css$/ }),
+  PostCSS({ include: /(?<!&module=.*)\.s?css$/ }),
 ]
 const baseConfig = {
   input: 'src/entry.ts',
@@ -53,7 +53,6 @@ const baseConfig = {
       }),
     ],
     replace: {
-      preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify('production'),
     },
     vue: process.env.VUE_VERSION === '2' ? {
@@ -105,6 +104,7 @@ if (!argv.format || argv.format === 'es') {
     output: {
       file: 'dist/swipe-modal.esm.js',
       format: 'esm',
+      name: 'SwipeModal',
       exports: 'named',
     },
     plugins: [
@@ -142,6 +142,7 @@ if (!argv.format || argv.format === 'cjs') {
       globals,
     },
     plugins: [
+      /* scss(), */
       replace(baseConfig.plugins.replace),
       ...baseConfig.plugins.preVue,
       vue({

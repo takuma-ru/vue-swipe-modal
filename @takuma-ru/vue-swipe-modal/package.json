@@ -1,15 +1,42 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "1.1.0",
+  "version": "2.1.0",
+  "private": false,
   "description": "",
+  "license": "MIT",
+  "author": "takuma-ru <kcattdev@gmail.com> (https://github.com/takuma-ru/)",
+  "keywords": [
+    "vue",
+    "vue.js",
+    "nuxt",
+    "nuxt.js",
+    "swipe",
+    "swipeble",
+    "modal",
+    "dialog",
+    "bottom sheet",
+    "sheet",
+    "pwa"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:takuma-ru/vue_SwipeModal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/vue_SwipeModal/issues",
+    "email": "kcattdev@gmail.com"
+  },
+  "homepage": "https://vue-swipe-modal.vercel.app/",
   "main": "dist/swipe-modal.ssr.js",
-  "browser": "dist/swipe-modal.esm.js",
+  "browser": "src/lib-components/swipeModal.vue",
   "module": "dist/swipe-modal.esm.js",
   "unpkg": "dist/swipe-modal.min.js",
-  "types": "components.d.ts",
+  "types": "dist/lib-components/swipeModal.vue.d.ts",
   "files": [
     "dist/*",
-    "components.d.ts",
     "src/**/*.vue"
   ],
   "sideEffects": false,
@@ -17,7 +44,9 @@
     "prebuild:vue2": "vue-demi-switch 2",
     "build:vue2": "cross-env VUE_VERSION=2 NODE_ENV=production rollup --config build/rollup.config.js",
     "prebuild:vue3": "vue-demi-switch 3",
-    "build:vue3": "cross-env VUE_VERSION=3 NODE_ENV=production rollup --config build/rollup.config.js"
+    "build:vue3": "cross-env VUE_VERSION=3 NODE_ENV=production rollup --config build/rollup.config.js",
+    "publish:vue2": "yarn build:vue2 && npm publish --access=public",
+    "publish:vue3": "yarn build:vue3 && npm publish --access=public"
   },
   "dependencies": {
     "vue-demi": "latest"
@@ -31,20 +60,21 @@
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-replace": "^4.0.0",
-    "@vue/composition-api": "^1.6.1",
     "@vue/compiler-sfc": "^3.0.0",
+    "@vue/composition-api": "^1.6.1",
     "cross-env": "^7.0.3",
     "minimist": "^1.2.5",
     "postcss": "^8.0.0",
     "rollup": "^2.36.1",
     "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-scss": "3",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-vue": "^6.0.0",
     "rollup-plugin-vue2": "npm:rollup-plugin-vue@^5.0.0",
     "typescript": "^4.0.0",
     "vue": "^2.6.0",
-    "vue3": "npm:vue@3",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "vue3": "npm:vue@3"
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",

@@ -1176,6 +1176,13 @@
   resolved "https://registry.yarnpkg.com/@soda/get-current-script/-/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w==
 
+"@takuma-ru/vue-swipe-modal@2.1.0-alpha.3":
+  version "2.1.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@takuma-ru/vue-swipe-modal/-/vue-swipe-modal-2.1.0-alpha.3.tgz#21547ecb8642c94e48586a0cb12061a9a00a91f7"
+  integrity sha512-m+Ji5i4K0xLX2gEhXYEdmwrlPUlAQzOpr0A7r8hCjNTvv9SwI5TBRZxa6UCqWcTg1NJqRwybhRnzOvhlRrGwjQ==
+  dependencies:
+    vue-demi latest
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
@@ -6102,6 +6109,13 @@ rollup-plugin-postcss@^4.0.0:
     safe-identifier "^0.4.2"
     style-inject "^0.3.0"
 
+rollup-plugin-scss@3:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-scss/-/rollup-plugin-scss-3.0.0.tgz#35ad0adc614217e0278e702d8a674820faa0929e"
+  integrity sha512-UldNaNHEon2a5IusHvj/Nnwc7q13YDvbFxz5pfNbHBNStxGoUNyM+0XwAA/UafJ1u8XRPGdBMrhWFthrrGZdWQ==
+  dependencies:
+    rollup-pluginutils "^2.3.3"
+
 rollup-plugin-terser@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-terser/-/rollup-plugin-terser-7.0.2.tgz#e8fbba4869981b2dc35ae7e8a502d5c6c04d324d"
@@ -6136,7 +6150,7 @@ rollup-plugin-vue@^6.0.0:
     hash-sum "^2.0.0"
     rollup-pluginutils "^2.8.2"
 
-rollup-pluginutils@^2.8.2:
+rollup-pluginutils@^2.3.3, rollup-pluginutils@^2.8.2:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz#72f2af0748b592364dbd3389e600e5a9444a351e"
   integrity sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==
@@ -7074,6 +7088,7 @@ vue-tsc@^0.34.7:
     "@volar/vue-typescript" "0.34.15"
 
 "vue3@npm:vue@3", vue@^3.2.25:
+  name vue3
   version "3.2.33"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.33.tgz#7867eb16a3293a28c4d190a837bc447878bd64c2"
   integrity sha512-si1ExAlDUrLSIg/V7D/GgA4twJwfsfgG+t9w10z38HhL/HA07132pUQ2KuwAo8qbCyMJ9e6OqrmWrOCr+jW7ZQ==

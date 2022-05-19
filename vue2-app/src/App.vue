@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <swipe-modal
+    <swipeModal
       v-model="modal"
       :dark="propsValue.dark.value"
       :persistent="propsValue.persistent.value"
@@ -101,13 +101,14 @@
           {{ i }}
         </div> -->
       </div>
-    </swipe-modal>
+    </swipeModal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@vue/composition-api';
-import swipeModal from '../../@takuma-ru/vue-swipe-modal/src/lib-components/SwipeModal.vue'
+/* import swipeModal from '../../@takuma-ru/vue-swipe-modal' */
+import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal'
 
 export default defineComponent({
   components: {
@@ -179,10 +180,10 @@ export default defineComponent({
       },
       darkContentsColor: {
         type: 'text',
-        value: 'black',
+        value: '#1E1E1E',
         name: 'dark-contetns-color'
       }
-    })
+    }) as any
 
     return {
       modal,

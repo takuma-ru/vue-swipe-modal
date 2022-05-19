@@ -1,10 +1,5 @@
 # @takuma-ru/vue-swpie-modal
 
-## WERNING
-
-I want to support vue2 and vue3 but I can't~!
-It may not work properly for the time being: ....
-
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
@@ -42,9 +37,44 @@ https://vue-swipe-modal.vercel.app/
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import swipeModal from '@takuma-ru/vue-swpie-modal'
+import swipeModal from '@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue'
 
 const modal = ref(false)
+</script>
+```
+
+```vue
+<!-- for Vue2 -->
+<template>
+  <div>
+    <button @click="modal = true">open</button>
+
+    <swipe-modal
+      v-model="modal"
+      contents-height="50vh"
+      border-top-radius="16px"
+    >
+      <h1>contents</h1>
+    </swipe-modal>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref, reactive } from '@vue/composition-api';
+import swipeModal from '@takuma-ru/vue-swipe-modal'
+
+export default defineComponent({
+  components: {
+    swipeModal,
+  },
+  setup () {
+    const modal = ref<boolean>(false)
+
+    return {
+      modal,
+    }
+  }
+})
 </script>
 ```
 
