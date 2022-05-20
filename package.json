@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "switch:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-fix",
+    "fix": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-fix",
     "dev:all": "yarn workspace vue2-app dev && yarn workspace vue3-app dev",
     "dev:2": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 2 && yarn workspace vue2-app dev",
     "dev:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 3 vue3 && yarn workspace vue3-app dev",

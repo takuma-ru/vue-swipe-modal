@@ -58,7 +58,7 @@
             >
               <label :for="prop.name" class="label">{{ prop.name }}</label>
               <input
-                v-model="prop.value"
+                :value="prop.value"
                 type="checkbox"
                 :id="prop.name"
               />
@@ -105,10 +105,10 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref, reactive } from 'vue';
-/* import swipeModal from '../../@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue' */
-import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal'
+import swipeModal from '@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue'
+/* import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal' */
 
 const modal = ref<boolean>(false)
 
