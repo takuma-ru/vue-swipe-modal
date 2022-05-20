@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <swipeModal
+    <swipe-modal
       v-model="modal"
       :dark="propsValue.dark.value"
       :persistent="propsValue.persistent.value"
@@ -101,18 +101,18 @@
           {{ i }}
         </div> -->
       </div>
-    </swipeModal>
+    </swipe-modal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@vue/composition-api';
-import swipeModal from '@takuma-ru/vue-swipe-modal'
-/* import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal' */
+/* import swipeModal from '@takuma-ru/vue-swipe-modal' */
+import swipeModal from '../../@takuma-ru/vue-swipe-modal'
 
 export default defineComponent({
   components: {
-    swipeModal,
+    'swipe-modal': swipeModal,
   },
   setup () {
     const modal = ref<boolean>(false)

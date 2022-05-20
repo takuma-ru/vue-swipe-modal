@@ -31,7 +31,7 @@
   },
   "homepage": "https://vue-swipe-modal.vercel.app/",
   "main": "dist/swipe-modal.ssr.js",
-  "browser": "src/lib-components/swipeModal.vue",
+  "browser": "dist/swipe-modal.esm.js",
   "module": "dist/swipe-modal.esm.js",
   "unpkg": "dist/swipe-modal.min.js",
   "types": "dist/lib-components/swipeModal.vue.d.ts",

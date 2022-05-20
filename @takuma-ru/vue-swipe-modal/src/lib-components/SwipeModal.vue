@@ -57,7 +57,7 @@ import {
 } from 'vue-demi'
 
 export default defineComponent({
-  name: 'SwipeModal',
+  name: 'swipe-modal',
   model: {
     prop: 'modelValue',
     event: 'update:modelValue',

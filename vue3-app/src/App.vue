@@ -107,7 +107,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import swipeModal from '@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue'
+import { swipeModal } from '../../@takuma-ru/vue-swipe-modal'
 /* import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal' */
 
 const modal = ref<boolean>(false)

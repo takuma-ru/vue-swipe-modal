@@ -54,6 +54,7 @@ const baseConfig = {
     ],
     replace: {
       'process.env.NODE_ENV': JSON.stringify('production'),
+      preventAssignment: true,
     },
     vue: process.env.VUE_VERSION === '2' ? {
       css: true,
@@ -104,7 +105,6 @@ if (!argv.format || argv.format === 'es') {
     output: {
       file: 'dist/swipe-modal.esm.js',
       format: 'esm',
-      name: 'SwipeModal',
       exports: 'named',
     },
     plugins: [
