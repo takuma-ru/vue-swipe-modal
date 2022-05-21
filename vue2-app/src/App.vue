@@ -108,7 +108,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@vue/composition-api';
 /* import swipeModal from '@takuma-ru/vue-swipe-modal' */
-import { swipeModal } from '../../@takuma-ru/vue-swipe-modal'
+import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
 export default defineComponent({
   components: {
