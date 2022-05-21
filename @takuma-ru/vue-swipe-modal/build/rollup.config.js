@@ -100,7 +100,7 @@ const buildFormats = [];
 if (!argv.format || argv.format === 'es') {
   const esConfig = {
     ...baseConfig,
-    input: 'src/entry.esm.ts',
+    input: 'src/entry.ts',
     external,
     output: {
       file: 'dist/swipe-modal.esm.js',

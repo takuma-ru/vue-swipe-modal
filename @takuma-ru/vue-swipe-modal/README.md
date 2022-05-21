@@ -37,7 +37,7 @@ https://vue-swipe-modal.vercel.app/
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import swipeModal from '@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue'
+import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
 const modal = ref(false)
 </script>
@@ -61,7 +61,7 @@ const modal = ref(false)
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@vue/composition-api';
-import swipeModal from '@takuma-ru/vue-swipe-modal'
+import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
 export default defineComponent({
   components: {

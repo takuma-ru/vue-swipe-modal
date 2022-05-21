@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": false,
   "description": "",
   "license": "MIT",
@@ -34,10 +34,11 @@
   "browser": "dist/swipe-modal.esm.js",
   "module": "dist/swipe-modal.esm.js",
   "unpkg": "dist/swipe-modal.min.js",
-  "types": "dist/lib-components/swipeModal.vue.d.ts",
+  "types": "src/types.d.ts",
   "files": [
     "dist/*",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "src/types.d.ts"
   ],
   "sideEffects": false,
   "scripts": {
@@ -52,6 +53,8 @@
     "vue-demi": "latest"
   },
   "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-typescript": "^8.3.2",
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
