@@ -3,6 +3,13 @@
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
+## Warning!
+When using this library, please install<br>
+vue3.x -> More than "3.2.0" and less than "4"<br>
+vue2.x -> More than "2.2.0" and less than "3"<br>
+<br>
+Any version less than that may not work properly.
+
 ## DEMO
 https://vue-swipe-modal.vercel.app/
 
@@ -10,12 +17,12 @@ https://vue-swipe-modal.vercel.app/
 1. Install
 - for Vue3
   ```md
-  yarn add @takuma-ru/vue-swipe-modal@^3
+  yarn add @takuma-ru/vue-swipe-modal@^3.2.0
   ```
 
 - for Vue2
   ```md
-  yarn add @takuma-ru/vue-swipe-modal@~2
+  yarn add @takuma-ru/vue-swipe-modal@^2.2.0
   ```
 
 2. Come on, let's use it.
@@ -37,7 +44,7 @@ https://vue-swipe-modal.vercel.app/
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import swipeModal from '@takuma-ru/vue-swipe-modal/src/lib-components/swipeModal.vue'
+import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
 const modal = ref(false)
 </script>
@@ -61,7 +68,7 @@ const modal = ref(false)
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@vue/composition-api';
-import swipeModal from '@takuma-ru/vue-swipe-modal'
+import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
 export default defineComponent({
   components: {

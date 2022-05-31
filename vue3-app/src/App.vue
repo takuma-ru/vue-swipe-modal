@@ -58,7 +58,7 @@
             >
               <label :for="prop.name" class="label">{{ prop.name }}</label>
               <input
-                :value="prop.value"
+                :value="prop.value?.valueOf()"
                 type="checkbox"
                 :id="prop.name"
               />
@@ -81,10 +81,10 @@
 
     <swipe-modal
       v-model="modal"
-      :dark="propsValue.dark.value"
+      :dark="propsValue.dark.value.valueOf()"
       :persistent="propsValue.persistent.value"
       :backgroundC-color="propsValue.backgroundColor.value"
-      :fullscreen="propsValue.fullscreen.value"
+      :fullscreen="propsValue.fullscreen.value.valueOf()"
       :no-tip="propsValue.noTip.value"
       :contents-width="propsValue.contentsWidth.value"
       :contents-height="propsValue.contentsHeight.value"
@@ -108,7 +108,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { swipeModal } from '../../@takuma-ru/vue-swipe-modal'
-/* import swipeModal from '../../node_modules/@takuma-ru/vue-swipe-modal' */
 
 const modal = ref<boolean>(false)
 

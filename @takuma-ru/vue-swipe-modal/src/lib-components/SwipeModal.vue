@@ -19,28 +19,26 @@
         v-if="modelValue"
         ref="modal-contents"
         class="modal-contents"
-        :style="`
-          width: ${ contentsWidth };
-          --contents-height: ${ fullscreen ? '100%' : modalHeight > 0 ? modalHeight + 'px' : contentsHeight };
-          border-top-left-radius: ${ borderTopRadius ? borderTopRadius : borderTopLeftRadius };
-          border-top-right-radius: ${ borderTopRadius ? borderTopRadius : borderTopRightRadius };
-          background-color: ${ dark ? darkContentsColor : contentsColor };
-          color: ${ dark ? 'white' : 'back' };
-          --contents-bottom-position: ${ contentsBottomPosition };
-        `"
+        :style="styles"
         @touchstart="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
       >
         <div
           v-if="!noTip"
-          class="modal-contents-chip"
-          :style="`
-            --tip-color: ${tipColor};
-          `"
+          class="modal-contents-chip-wrapper"
           @mousedown="mouseDown"
-        />
+        >
+          <div
+            class="modal-contents-chip"
+            :style="`
+              --tip-color: ${tipColor};
+            `"
+            />
+        </div>
+
         <slot />
+
       </div>
     </transition>
   </div>
@@ -50,11 +48,12 @@
 import {
   computed,
   defineComponent,
-  isVue2,
-  isVue3,
   ref,
   watch,
-} from 'vue-demi'
+  toRefs,
+  watchEffect,
+  onMounted,
+} from 'vue'
 
 export default defineComponent({
   name: 'swipe-modal',
@@ -124,8 +123,9 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  setup (props: any, context: any) {
+  setup (props, context: any) {
     // const
+    const propsRef = toRefs(props)
     const isMouseDown = ref<boolean>(false)
     const isTouch = ref<boolean>(false)
     const modalQuery = ref<any>(null)
@@ -136,12 +136,24 @@ export default defineComponent({
 
     // computed
     const modal = computed({
-      get: () => props.modelValue,
+      get: () => propsRef.modelValue.value,
       set: (value: any) => context.emit('update:modelValue', value),
     })
 
+    const styles = computed(() => {
+      return {
+        width: propsRef.contentsWidth.value,
+        borderTopLeftRadius: propsRef.borderTopRadius.value ? propsRef.borderTopRadius.value : propsRef.borderTopLeftRadius.value,
+        borderTopRightRadius: propsRef.borderTopRadius ? propsRef.borderTopRadius.value : propsRef.borderTopRightRadius.value,
+        backgroundColor: propsRef.dark.value ? propsRef.darkContentsColor.value : propsRef.contentsColor.value,
+        color: propsRef.dark.value ? 'white' : 'black',
+        /* '--contents-height': propsRef.fullscreen.value? '100%' : modalHeight.value > 0 ? modalHeight.value + 'px' : propsRef.contentsHeight.value,
+        '--contents-bottom-position': contentsBottomPosition.value ? contentsBottomPosition.value : '0px', */
+      }
+    })
+
     // watch
-    watch(modal, (newModal: boolean) => {
+    watch(() => propsRef.modelValue.value, (newModal: boolean) => {
       if (newModal) {
         open()
       }
@@ -156,6 +168,8 @@ export default defineComponent({
       contentsBottomPosition.value = '0px'
       moveStartPosition.value = 0
       nowMovePosition.value = 0
+      document.documentElement.style.setProperty('--contents-height', propsRef.fullscreen.value? '100%' : modalHeight.value > 0 ? modalHeight.value + 'px' : propsRef.contentsHeight.value)
+      document.documentElement.style.setProperty('--contents-bottom-position', contentsBottomPosition.value ? contentsBottomPosition.value : '0px')
     }
     const open = () => {
       init()
@@ -182,6 +196,7 @@ export default defineComponent({
             : 0
         ) + 'px'
       }
+      document.documentElement.style.setProperty('--contents-bottom-position', contentsBottomPosition.value ? contentsBottomPosition.value : '0px')
     }
     const mouseUp = () => {
       isMouseDown.value = false
@@ -209,6 +224,7 @@ export default defineComponent({
         }
         contentsBottomPosition.value = (moveStartPosition.value - nowMovePosition.value <= 0 ? moveStartPosition.value - nowMovePosition.value : 0) + 'px'
       }
+      document.documentElement.style.setProperty('--contents-bottom-position', contentsBottomPosition.value ? contentsBottomPosition.value : '0px')
     }
     const touchEnd = () => {
       isTouch.value = false
@@ -222,9 +238,16 @@ export default defineComponent({
       }
     }
 
+    //lifeCycle
+    onMounted(() => {
+    })
+
     return {
+      propsRef,
+      modal,
       modalHeight,
       contentsBottomPosition,
+      styles,
 
       close,
       mouseDown,
@@ -233,15 +256,17 @@ export default defineComponent({
       touchStart,
       touchMove,
       touchEnd,
-
-      isVue2,
-      isVue3,
     }
   },
 })
 </script>
 
 <style lang="scss">
+:root {
+  --contents-height: 30vh;
+  --contents-bottom-position: 0%;
+}
+
 #swipe-modal-takumaru-vue-swipe-modal {
   position: fixed;
   scrollbar-width: none;
@@ -258,8 +283,6 @@ export default defineComponent({
   }
 
   .modal-contents {
-    --contents-height: 30vh;
-    --contents-bottom-position: 0%;
     position: fixed;
     z-index: 12;
     min-height: var(--contents-height);
@@ -278,9 +301,14 @@ export default defineComponent({
       width: 0px;
     }
 
-    &-chip {
-      --tip-color: #c8c8c8;
+    &-chip-wrapper {
       z-index: 12;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      justify-content: center;
+      align-content: center;
+
       position: relative;
       top: 0px;
       height: 4px;
@@ -288,17 +316,15 @@ export default defineComponent({
       padding-top: 8px;
       padding-bottom: 8px;
       cursor: s-resize;
+    }
 
-      &::after {
-        position: absolute;
-        content: '';
-        top: 8px;
-        height: 4px;
-        width: 40px;
-        background-color: var(--tip-color);
-        transform: translateX(-50%);
-        border-radius: 10px;
-      }
+    &-chip {
+      --tip-color: #c8c8c8;
+      width: 40px;
+      height: 100%;
+      border-radius: 4px;
+
+      background-color: var(--tip-color);
     }
   }
 

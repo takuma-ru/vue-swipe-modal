@@ -103,6 +103,7 @@ if (!argv.format || argv.format === 'es') {
     input: 'src/entry.ts',
     external,
     output: {
+      compact: true,
       file: 'dist/swipe-modal.esm.js',
       format: 'esm',
       exports: 'named',
