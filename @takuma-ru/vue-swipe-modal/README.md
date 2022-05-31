@@ -11,7 +11,7 @@ vue2.x -> More than "2.2.0" and less than "3"<br>
 Any version less than that may not work properly.
 
 ## DEMO
-https://vue-swipe-modal.vercel.app/
+[vue2-demo-link](https://vue-swipe-modal-vue2.vercel.app)
 
 ## Getting Started
 1. Install

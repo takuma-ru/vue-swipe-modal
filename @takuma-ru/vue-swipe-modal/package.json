@@ -29,7 +29,7 @@
     "url": "https://github.com/takuma-ru/vue_SwipeModal/issues",
     "email": "kcattdev@gmail.com"
   },
-  "homepage": "https://vue-swipe-modal.vercel.app/",
+  "homepage": "https://vue-swipe-modal-vue2.vercel.app",
   "main": "dist/swipe-modal.ssr.js",
   "browser": "dist/swipe-modal.esm.js",
   "module": "dist/swipe-modal.esm.js",
