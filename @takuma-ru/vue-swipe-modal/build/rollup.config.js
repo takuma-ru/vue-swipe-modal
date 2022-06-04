@@ -40,7 +40,7 @@ const postCssConfig = [
   PostCSS({ include: /(?<!&module=.*)\.s?css$/ }),
 ]
 const baseConfig = {
-  input: 'src/entry.ts',
+  input: process.env.VUE_VERSION === '2' ? 'src/entryVue2.ts' : 'src/entryVue3.ts',
   plugins: {
     preVue: [
       alias({
@@ -100,7 +100,7 @@ const buildFormats = [];
 if (!argv.format || argv.format === 'es') {
   const esConfig = {
     ...baseConfig,
-    input: 'src/entry.ts',
+    input: process.env.VUE_VERSION === '2' ? 'src/entryVue2.ts' : 'src/entryVue3.ts',
     external,
     output: {
       compact: true,

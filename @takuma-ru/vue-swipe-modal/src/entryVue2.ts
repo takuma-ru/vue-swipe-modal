@@ -1,20 +1,18 @@
-import swipeModal from './lib-components/swipeModal.vue';
+import swipeModal from './lib-components/swipeModalVue2.vue';
+
 import { Install } from './types';
 
 // 重複して読み込まないようにする
 const install = function(Vue) {
   if (install.installed) return;
   install.installed = true;
-  Vue.component('swipeModal', swipeModal); // Vuetifyのように、どこからでもこのコンポーネントを呼び出せるようにする
+  Vue.component('swipeModal', swipeModal);
 } as Install;
 
-// Vue.use() のためのモジュール定義を作成
-// Create module definition for Vue.use()
 const plugin = {
   install
 };
 
-// vue が見つかった場合に自動インストールする (ブラウザで <script> タグを用いた場合等)
 let GlobalVue = null;
 if (typeof window !== 'undefined') {
   GlobalVue = window.Vue;

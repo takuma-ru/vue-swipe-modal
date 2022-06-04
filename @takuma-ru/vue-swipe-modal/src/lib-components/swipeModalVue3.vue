@@ -51,7 +51,6 @@ import {
   ref,
   watch,
   toRefs,
-  watchEffect,
   onMounted,
 } from 'vue'
 
@@ -154,7 +153,7 @@ export default defineComponent({
 
     // watch
     watch(() => propsRef.modelValue.value, (newModal: boolean) => {
-      if (newModal) {
+      if (newModal.valueOf()) {
         open()
       }
     })
