@@ -26,64 +26,64 @@ Any version less than that may not work properly.
   ```
 
 2. Come on, let's use it.
-```vue
-<!-- for Vue3 -->
-<template>
-  <div>
-    <button @click="modal = true">open</button>
+    ```vue
+    <!-- for Vue3 -->
+    <template>
+      <div>
+        <button @click="modal = true">open</button>
 
-    <swipe-modal
-      v-model="modal"
-      contents-height="50vh"
-      border-top-radius="16px"
-    >
-      <h1>contents</h1>
-    </swipe-modal>
-  </div>
-</template>
+        <swipe-modal
+          v-model="modal"
+          contents-height="50vh"
+          border-top-radius="16px"
+        >
+          <h1>contents</h1>
+        </swipe-modal>
+      </div>
+    </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { swipeModal } from '@takuma-ru/vue-swipe-modal'
+    <script lang="ts" setup>
+    import { ref } from 'vue'
+    import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
-const modal = ref(false)
-</script>
-```
+    const modal = ref(false)
+    </script>
+    ```
 
-```vue
-<!-- for Vue2 -->
-<template>
-  <div>
-    <button @click="modal = true">open</button>
+    ```vue
+    <!-- for Vue2 -->
+    <template>
+      <div>
+        <button @click="modal = true">open</button>
 
-    <swipe-modal
-      v-model="modal"
-      contents-height="50vh"
-      border-top-radius="16px"
-    >
-      <h1>contents</h1>
-    </swipe-modal>
-  </div>
-</template>
+        <swipe-modal
+          v-model="modal"
+          contents-height="50vh"
+          border-top-radius="16px"
+        >
+          <h1>contents</h1>
+        </swipe-modal>
+      </div>
+    </template>
 
-<script lang="ts">
-import { defineComponent, ref, reactive } from '@vue/composition-api';
-import { swipeModal } from '@takuma-ru/vue-swipe-modal'
+    <script lang="ts">
+    import { defineComponent, ref, reactive } from '@vue/composition-api';
+    import { swipeModal } from '@takuma-ru/vue-swipe-modal'
 
-export default defineComponent({
-  components: {
-    swipeModal,
-  },
-  setup () {
-    const modal = ref<boolean>(false)
+    export default defineComponent({
+      components: {
+        swipeModal,
+      },
+      setup () {
+        const modal = ref<boolean>(false)
 
-    return {
-      modal,
-    }
-  }
-})
-</script>
-```
+        return {
+          modal,
+        }
+      }
+    })
+    </script>
+    ```
 
 ## Props
 
