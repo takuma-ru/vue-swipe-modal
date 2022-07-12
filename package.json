@@ -3,22 +3,27 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "fix": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-fix",
-    "dev:all": "yarn workspace vue2-app dev && yarn workspace vue3-app dev",
-    "dev:2": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 2 && yarn workspace vue2-app dev",
-    "dev:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 3 && yarn workspace vue3-app dev",
-    "build:2": "yarn workspace @takuma-ru/vue-swipe-modal build:vue2",
-    "build:3": "yarn workspace @takuma-ru/vue-swipe-modal build:vue3",
-    "publish:2": "yarn workspace @takuma-ru/vue-swipe-modal publish:vue2",
-    "publish:3": "yarn workspace @takuma-ru/vue-swipe-modal publish:vue3",
-    "predev:2": "yarn build:2 && yarn workspace vue2-app dev",
-    "predev:3": "yarn build:3 && yarn workspace vue3-app dev",
-    "build:vue2-app": "yarn workspace vue2-app build",
-    "build:vue3-app": "yarn workspace vue3-app build"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
   },
-  "workspaces": [
-    "@takuma-ru/vue-swipe-modal",
-    "vue2-app",
-    "vue3-app"
-  ]
+  "dependencies": {
+    "vue-demi": "^0.13.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue": "^3.2.25",
+    "vue-tsc": "^0.34.7"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.0.0 || ^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
+  }
 }
