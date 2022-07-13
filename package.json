@@ -1,24 +1,14 @@
 {
-  "name": "vue-swipe-modal",
+  "name": "vue-swipe-modal-monorepo",
   "private": true,
-  "version": "0.0.0",
-  "scripts": {
-    "fix": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-fix",
-    "dev:all": "yarn workspace vue2-app dev && yarn workspace vue3-app dev",
-    "dev:2": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 2 && yarn workspace vue2-app dev",
-    "dev:3": "yarn workspace @takuma-ru/vue-swipe-modal vue-demi-switch 3 && yarn workspace vue3-app dev",
-    "build:2": "yarn workspace @takuma-ru/vue-swipe-modal build:vue2",
-    "build:3": "yarn workspace @takuma-ru/vue-swipe-modal build:vue3",
-    "publish:2": "yarn workspace @takuma-ru/vue-swipe-modal publish:vue2",
-    "publish:3": "yarn workspace @takuma-ru/vue-swipe-modal publish:vue3",
-    "predev:2": "yarn build:2 && yarn workspace vue2-app dev",
-    "predev:3": "yarn build:3 && yarn workspace vue3-app dev",
-    "build:vue2-app": "yarn workspace vue2-app build",
-    "build:vue3-app": "yarn workspace vue3-app build"
-  },
   "workspaces": [
-    "@takuma-ru/vue-swipe-modal",
-    "vue2-app",
-    "vue3-app"
-  ]
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspace example dev",
+    "dev:2": "yarn workspace example dev:2",
+    "lib:watch": "yarn workspace vue-insta-stories run build:watch",
+    "lib": "yarn workspace vue-insta-stories",
+    "example": "yarn workspace example"
+  }
 }
