@@ -2,13 +2,14 @@
   "name": "vue-swipe-modal-monorepo",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/**"
   ],
   "scripts": {
-    "dev": "yarn workspace example dev",
-    "dev:2": "yarn workspace example dev:2",
-    "lib:watch": "yarn workspace vue-insta-stories run build:watch",
-    "lib": "yarn workspace vue-insta-stories",
-    "example": "yarn workspace example"
+    "dev:2": "yarn workspace vue2 serve",
+    "dev:3": "yarn workspace vue3 dev",
+    "build:lib": "yarn workspace @takuma-ru/vue-swipe-modal build",
+    "vue2": "yarn workspace vue2",
+    "vue3": "yarn workspace vue3",
+    "lib": "yarn workspace @takuma-ru/vue-swipe-modal"
   }
 }
