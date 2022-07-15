@@ -3,7 +3,7 @@ import { defineComponent } from 'vue-demi'
 import h, { slot } from '../scripts/h-demi'
 import { useTouchEvent } from '../composables/touchEvent'
 
-import './swipe-modal.scss'
+import '../components/swipe-modal.scss'
 
 export default defineComponent({
   name: 'swipeModal',
@@ -17,6 +17,6 @@ export default defineComponent({
       touchPosition
     } = useTouchEvent()
 
-    return () => h('h1', {}, 'text')
+    return () => h('h1', { class: 'hello' }, 'text')
   },
 })

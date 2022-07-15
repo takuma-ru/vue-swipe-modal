@@ -5,7 +5,7 @@
     "packages/**"
   ],
   "scripts": {
-    "dev:2": "yarn workspace vue2 serve",
+    "dev:2": "yarn workspace vue2 dev",
     "dev:3": "yarn workspace vue3 dev",
     "build:lib": "yarn workspace @takuma-ru/vue-swipe-modal build",
     "vue2": "yarn workspace vue2",

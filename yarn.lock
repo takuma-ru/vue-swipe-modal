@@ -6014,6 +6014,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
+vite-plugin-css-injected-by-js@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/vite-plugin-css-injected-by-js/-/vite-plugin-css-injected-by-js-1.5.1.tgz#adde0e20ab0d3404417c91f6ffc4fdc1bf067604"
+  integrity sha512-D/xdY9sWijCdoIbp5qiUejVShyTt1omzeyMwoyXWSuaXc9d/RtWdv/v7iv+i8F0KavWhK+U7nmOuxliyeFR+pA==
+
 vite@^2.9.9:
   version "2.9.14"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.14.tgz#c438324c6594afd1050df3777da981dee988bb1b"
