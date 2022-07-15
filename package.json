@@ -7,9 +7,11 @@
   "scripts": {
     "dev:2": "yarn workspace vue2 dev",
     "dev:3": "yarn workspace vue3 dev",
+    "dev:nuxt2": "yarn workspace nuxt2 dev",
     "build:lib": "yarn workspace @takuma-ru/vue-swipe-modal build",
     "vue2": "yarn workspace vue2",
     "vue3": "yarn workspace vue3",
+    "nuxt2": "yarn workspace nuxt2",
     "lib": "yarn workspace @takuma-ru/vue-swipe-modal"
   }
 }
