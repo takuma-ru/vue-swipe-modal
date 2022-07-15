@@ -14,7 +14,7 @@ Any version less than that may not work properly.
 [vue2-demo-link](https://vue-swipe-modal-vue2.vercel.app)
 
 ## Getting Started
-1. Install
+#### 1. Install
 - for Vue3
   ```md
   yarn add @takuma-ru/vue-swipe-modal@^3.2.0
@@ -25,7 +25,7 @@ Any version less than that may not work properly.
   yarn add @takuma-ru/vue-swipe-modal@^2.2.0
   ```
 
-2. Come on, let's use it.
+#### 2. Come on, let's use it.
 ```vue
 <!-- for Vue3 -->
 <template>

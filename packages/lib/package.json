@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "2.2.1",
+  "version": "4.0.0-alpha.4",
   "private": false,
   "description": "Swipeable Bottom Sheet library for vue2 and vue3",
   "license": "MIT",
@@ -36,16 +36,19 @@
     "import": "./dist/swipe-modal.es.js",
     "require": "./dist/swipe-modal.umd.js"
   },
-  "types": "src/types.d.ts",
+  "types": "types/components/swipe-modal.d.ts",
   "files": [
     "dist/*",
-    "src/types.d.ts"
+    "types/*"
   ],
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc && vite build",
+    "publish:lib": "yarn build && npm publish --access=public",
+    "switch:2": "vue-demi-switch 2 vue2",
+    "switch:3": "vue-demi-switch 3",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -59,6 +62,7 @@
     "vite": "^2.9.9",
     "vite-plugin-css-injected-by-js": "^1.5.1",
     "vue": "^3.2.25",
+    "vue2": "npm:vue@^2.6.0",
     "vue-tsc": "^0.34.7"
   },
   "peerDependencies": {

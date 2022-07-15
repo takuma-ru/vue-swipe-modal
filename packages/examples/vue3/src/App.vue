@@ -1,13 +1,14 @@
-<script setup lang="ts">
-import { swipeModal } from '../../../lib/dist/swipe-modal.es';
-
-</script>
-
 <template>
   <div>
-    <swipe-modal></swipe-modal>
+    <swipe-modal />
   </div>
 </template>
+
+<script setup lang="ts">
+/* import swipeModal from '../../../lib' */
+import swipeModal from '@takuma-ru/vue-swipe-modal'
+
+</script>
 
 <style scoped>
 .logo {

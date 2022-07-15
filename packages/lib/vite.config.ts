@@ -25,8 +25,8 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue', 'vue-demi'],
       output: {
+        exports: 'named',
         manualChunks: undefined,
-        exports: 'auto'
       },
     }
   }

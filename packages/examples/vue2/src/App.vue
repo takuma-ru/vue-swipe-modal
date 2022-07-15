@@ -7,20 +7,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { swipeModal } from '../../../lib/dist/swipe-modal.es'
+import swipeModal from '../../../lib'
+/* import swipeModal from '@takuma-ru/vue-swipe-modal' */
 
 @Component({
   components: {
     swipeModal,
   },
 
-  data() {
-    return {
-      modal: true
-    }
-  },
 })
-export default class App extends Vue {}
+
+export default class App extends Vue {
+  public modal = false;
+}
 </script>
 
 <style>
