@@ -1,25 +1,33 @@
 <template>
-  <div id="app">
-    <swipe-modal></swipe-modal>
-    {{ modal }}
+  <div>
+    <button @click="modal = true">open</button>
+
+    <swipe-modal
+      v-model="modal"
+      contents-height="50vh"
+      border-top-radius="16px"
+    >
+      <h1>contents</h1>
+    </swipe-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import swipeModal from '../../../lib'
-/* import swipeModal from '@takuma-ru/vue-swipe-modal' */
+import { defineComponent, ref, reactive } from '@vue/composition-api';
+import swipeModal from '@takuma-ru/vue-swipe-modal'
 
-@Component({
+export default defineComponent({
   components: {
     swipeModal,
   },
+  setup () {
+    const modal = ref<boolean>(false)
 
+    return {
+      modal,
+    }
+  }
 })
-
-export default class App extends Vue {
-  public modal = false;
-}
 </script>
 
 <style>

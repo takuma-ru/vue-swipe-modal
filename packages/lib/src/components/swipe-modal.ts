@@ -1,10 +1,9 @@
-import { defineComponent, isVue2 } from 'vue-demi'
+import { computed, defineComponent, h, ref } from 'vue-demi'
 
-import h, { slot } from '../scripts/h-demi'
+/* import { slot } from '../scripts/h-demi' */
 import { useTouchEvent } from '../composables/touchEvent'
 
 import '../components/swipe-modal.scss'
-
 export default defineComponent({
   name: 'swipeModal',
 
@@ -12,11 +11,28 @@ export default defineComponent({
 
   },
 
-  setup(props, ctx) {
+  setup(props, context) {
     const {
       touchPosition
     } = useTouchEvent()
 
-    return () => h('h1', { class: 'hello' }, 'Hi' + isVue2 ? 'vue2.x' : 'vue3.x')
+    return () => h( 'div' , {
+      class: 'swipe-modal-takumaru-vue-swipe-modal',
+    }, [
+
+      h('div', {
+        class: 'modal-background',
+        style: 'background-color: #80808080'
+      }),
+
+      h('div', {
+        class: 'modal-contents',
+        style: {
+          backgroundColor: '#FFFFFF',
+          width: '100vw',
+        }
+      }, context.slots.default?.()),
+
+    ])
   },
 })

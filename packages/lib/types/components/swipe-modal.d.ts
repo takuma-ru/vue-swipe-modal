@@ -1,12 +1,4 @@
 import '../components/swipe-modal.scss';
-declare const _default: import("vue-demi").DefineComponent<Readonly<import("vue-demi").ComponentPropsOptions<{
-    [x: string]: unknown;
-}>>, () => import("vue-demi").VNode<import("vue-demi").RendererNode, import("vue-demi").RendererElement, {
-    [key: string]: any;
-}>, unknown, {}, {}, import("vue-demi").ComponentOptionsMixin, import("vue-demi").ComponentOptionsMixin, Record<string, any>, string, import("vue-demi").VNodeProps & import("vue-demi").AllowedComponentProps & import("vue-demi").ComponentCustomProps, readonly string[] | Readonly<import("vue-demi").ExtractPropTypes<Readonly<import("vue-demi").ComponentObjectPropsOptions<{
-    [x: string]: unknown;
-}>>>>, {
-    [x: number]: string;
-} | {}>;
+declare const _default: import("vue").ComponentOptions<import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, (event: string, ...args: any[]) => import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, any>>, import("@vue/composition-api").ShallowUnwrapRef<() => import("vue").VNode> & import("@vue/composition-api").Data, {}, {}, {}, import("@vue/composition-api").ExtractPropTypes<{}>, {}> & Omit<import("vue").VueConstructor<import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, (event: string, ...args: any[]) => import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, any>>>, never> & (new (...args: any[]) => import("@vue/composition-api").ComponentRenderProxy<{} & {}, import("@vue/composition-api").ShallowUnwrapRef<() => import("vue").VNode>, import("@vue/composition-api").Data, {}, {}, {}, {}, {}, {} & {}, {}, true>);
 export default _default;
 //# sourceMappingURL=swipe-modal.d.ts.map

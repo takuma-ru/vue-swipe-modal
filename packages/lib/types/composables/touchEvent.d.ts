@@ -1,5 +1,5 @@
 export declare function useTouchEvent(): {
-    touchPosition: import("vue-demi").Ref<{
+    touchPosition: import("@vue/composition-api").Ref<{
         isActive: boolean;
         x: number;
         y: number;
