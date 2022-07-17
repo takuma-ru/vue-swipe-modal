@@ -1,4 +1,137 @@
 import '../components/swipe-modal.scss';
-declare const _default: import("vue").ComponentOptions<import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, (event: string, ...args: any[]) => import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, any>>, import("@vue/composition-api").ShallowUnwrapRef<() => import("vue").VNode> & import("@vue/composition-api").Data, {}, {}, {}, import("@vue/composition-api").ExtractPropTypes<{}>, {}> & Omit<import("vue").VueConstructor<import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, (event: string, ...args: any[]) => import("vue").default<Record<string, any>, Record<string, any>, never, never, never, never, any>>>, never> & (new (...args: any[]) => import("@vue/composition-api").ComponentRenderProxy<{} & {}, import("@vue/composition-api").ShallowUnwrapRef<() => import("vue").VNode>, import("@vue/composition-api").Data, {}, {}, {}, {}, {}, {} & {}, {}, true>);
+declare const _default: import("vue-demi").DefineComponent<{
+    modelValue: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    dark: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    persistent: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    backgroundColor: {
+        type: StringConstructor;
+        default: string;
+    };
+    fullscreen: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    noTip: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    contentsWidth: {
+        type: StringConstructor;
+        default: string;
+    };
+    contentsHeight: {
+        type: StringConstructor;
+        default: string;
+    };
+    borderTopRadius: {
+        type: StringConstructor;
+        default: null;
+    };
+    borderTopLeftRadius: {
+        type: StringConstructor;
+        default: string;
+    };
+    borderTopRightRadius: {
+        type: StringConstructor;
+        default: string;
+    };
+    contentsColor: {
+        type: StringConstructor;
+        default: string;
+    };
+    tipColor: {
+        type: StringConstructor;
+        default: string;
+    };
+    darkContentsColor: {
+        type: StringConstructor;
+        default: string;
+    };
+}, () => import("vue-demi").VNode<import("vue-demi").RendererNode, import("vue-demi").RendererElement, {
+    [key: string]: any;
+}> | null, unknown, {}, {}, import("vue-demi").ComponentOptionsMixin, import("vue-demi").ComponentOptionsMixin, "update:modelValue"[], "update:modelValue", import("vue-demi").VNodeProps & import("vue-demi").AllowedComponentProps & import("vue-demi").ComponentCustomProps, Readonly<import("vue-demi").ExtractPropTypes<{
+    modelValue: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    dark: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    persistent: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    backgroundColor: {
+        type: StringConstructor;
+        default: string;
+    };
+    fullscreen: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    noTip: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
+    contentsWidth: {
+        type: StringConstructor;
+        default: string;
+    };
+    contentsHeight: {
+        type: StringConstructor;
+        default: string;
+    };
+    borderTopRadius: {
+        type: StringConstructor;
+        default: null;
+    };
+    borderTopLeftRadius: {
+        type: StringConstructor;
+        default: string;
+    };
+    borderTopRightRadius: {
+        type: StringConstructor;
+        default: string;
+    };
+    contentsColor: {
+        type: StringConstructor;
+        default: string;
+    };
+    tipColor: {
+        type: StringConstructor;
+        default: string;
+    };
+    darkContentsColor: {
+        type: StringConstructor;
+        default: string;
+    };
+}>> & {
+    "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
+}, {
+    modelValue: boolean;
+    dark: boolean;
+    persistent: boolean;
+    backgroundColor: string;
+    fullscreen: boolean;
+    noTip: boolean;
+    contentsWidth: string;
+    contentsHeight: string;
+    borderTopRadius: string;
+    borderTopLeftRadius: string;
+    borderTopRightRadius: string;
+    contentsColor: string;
+    tipColor: string;
+    darkContentsColor: string;
+}>;
 export default _default;
 //# sourceMappingURL=swipe-modal.d.ts.map

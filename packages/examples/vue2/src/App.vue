@@ -1,9 +1,10 @@
 <template>
   <div>
-    <button @click="modal = true">open</button>
+    <button @click="open()">open</button>
+    {{ modal }}
 
     <swipe-modal
-      v-model="modal"
+      v-model="modal.value"
       contents-height="50vh"
       border-top-radius="16px"
     >
@@ -23,8 +24,16 @@ export default defineComponent({
   setup () {
     const modal = ref<boolean>(false)
 
+    const open = () => {
+      modal.value = true
+    }
+
+    console.log(modal)
+
     return {
       modal,
+
+      open,
     }
   }
 })
