@@ -3,87 +3,121 @@
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
-## Warning!
-When using this library, please install<br>
-vue3.x -> More than "3.2.0" and less than "4"<br>
-vue2.x -> More than "2.2.0" and less than "3"<br>
-<br>
-Any version less than that may not work properly.
-
 ## DEMO
-[vue2-demo-link](https://vue-swipe-modal-vue2.vercel.app)
+[demo-link](https://vue-swipe-modal-vue2.vercel.app)
 
 ## Getting Started
-1. Install
-- for Vue3
-  ```md
-  yarn add @takuma-ru/vue-swipe-modal@^3.2.0
-  ```
-
-- for Vue2
-  ```md
-  yarn add @takuma-ru/vue-swipe-modal@^2.2.0
-  ```
-
-2. Come on, let's use it.
-```vue
-<!-- for Vue3 -->
-<template>
-  <div>
-    <button @click="modal = true">open</button>
-
-    <swipe-modal
-      v-model="modal"
-      contents-height="50vh"
-      border-top-radius="16px"
-    >
-      <h1>contents</h1>
-    </swipe-modal>
-  </div>
-</template>
-
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { swipeModal } from '@takuma-ru/vue-swipe-modal'
-
-const modal = ref(false)
-</script>
+#### 1. Install
+```powershell
+yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 ```
 
-```vue
-<!-- for Vue2 -->
-<template>
-  <div>
-    <button @click="modal = true">open</button>
+#### 2. Come on, let's use it.
+<details>
+  <summary>Vue 3.x  /  Vue 2.7</summary>
 
-    <swipe-modal
-      v-model="modal"
-      contents-height="50vh"
-      border-top-radius="16px"
-    >
-      <h1>contents</h1>
-    </swipe-modal>
-  </div>
-</template>
+  ```vue
+  <template>
+    <div>
+      <button @click="modal = true">open</button>
 
-<script lang="ts">
-import { defineComponent, ref, reactive } from '@vue/composition-api';
-import { swipeModal } from '@takuma-ru/vue-swipe-modal'
+      <swipe-modal
+        v-model="modal"
+        contents-height="50vh"
+        border-top-radius="16px"
+      >
+        <h1>contents</h1>
+      </swipe-modal>
+    </div>
+  </template>
 
-export default defineComponent({
-  components: {
-    swipeModal,
-  },
-  setup () {
-    const modal = ref<boolean>(false)
+  <script lang="ts" setup>
+  import { ref } from 'vue'
+  import swipeModal from '@takuma-ru/vue-swipe-modal'
 
-    return {
-      modal,
+  const modal = ref(false)
+  </script>
+  ```
+</details>
+
+<details>
+  <summary>Vue 2.6 or lower (Composition API)</summary>
+
+  ```vue
+  <template>
+    <div>
+      <button @click="modal = true">open</button>
+
+      <swipe-modal
+        v-model="modal"
+        contents-height="50vh"
+        border-top-radius="16px"
+      >
+        <h1>contents</h1>
+      </swipe-modal>
+    </div>
+  </template>
+
+  <script lang="ts">
+  import { defineComponent, ref, reactive } from '@vue/composition-api';
+  import { swipeModal } from '@takuma-ru/vue-swipe-modal'
+
+  export default defineComponent({
+    components: {
+      swipeModal,
+    },
+    setup () {
+      const modal = ref<boolean>(false)
+
+      return {
+        modal,
+      }
     }
-  }
-})
-</script>
-```
+  })
+  </script>
+  ```
+
+</details>
+
+<details>
+  <summary>Nuxt 2.x</summary>
+
+  ```vue
+  <!-- for Vue2 -->
+  <template>
+    <div>
+      <button @click="modal = true">open</button>
+
+      <swipe-modal
+        v-model="modal"
+        contents-height="50vh"
+        border-top-radius="16px"
+      >
+        <h1>contents</h1>
+      </swipe-modal>
+    </div>
+  </template>
+
+  <script lang="ts">
+  import { defineComponent, ref, reactive } from '@vue/composition-api';
+  import { swipeModal } from '@takuma-ru/vue-swipe-modal'
+
+  export default defineComponent({
+    components: {
+      swipeModal,
+    },
+    setup () {
+      const modal = ref<boolean>(false)
+
+      return {
+        modal,
+      }
+    }
+  })
+  </script>
+  ```
+
+</details>
 
 ## Props
 

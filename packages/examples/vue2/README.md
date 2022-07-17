@@ -1,24 +1,13 @@
-# vue2
+# Library demo project for Vue.js 2.6
 
-## Project setup
-```
-npm install
-```
+## Getting Started
+#### 1.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
+```powershell
+yarn
 ```
 
-### Compiles and minifies for production
+#### 2.
+```powershell
+yarn dev:2
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
