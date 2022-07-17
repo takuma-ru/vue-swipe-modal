@@ -3,6 +3,11 @@
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
+## INFO
+Currently developing a library for nuxt.js<br>
+#### [Dev Branch](https://github.com/takuma-ru/vue-swipe-modal/tree/feature/16)<br>
+#### [Pull request](https://github.com/takuma-ru/vue-swipe-modal/pull/18)<br>
+
 ## Warning!
 When using this library, please install<br>
 vue3.x -> More than "3.2.0" and less than "4"<br>
