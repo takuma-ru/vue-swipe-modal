@@ -1,6 +1,6 @@
 export declare function useTouchEvent(): {
     touchPosition: import("vue-demi").Ref<{
-        isActive: boolean;
+        isTouch: boolean;
         x: number;
         y: number;
     }>;

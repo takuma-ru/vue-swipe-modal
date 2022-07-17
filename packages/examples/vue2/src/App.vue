@@ -8,7 +8,7 @@
       contents-height="50vh"
       border-top-radius="16px"
     >
-      <h1>contents</h1>
+      <p>contents</p>
     </swipe-modal>
   </div>
 </template>
@@ -16,6 +16,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from '@vue/composition-api';
 import swipeModal from '@takuma-ru/vue-swipe-modal'
+/* import swipeModal from '../../../lib' */
 
 export default defineComponent({
   components: {
@@ -27,8 +28,6 @@ export default defineComponent({
     const open = () => {
       modal.value = true
     }
-
-    console.log(modal)
 
     return {
       modal,

@@ -8,7 +8,7 @@
       contents-height="50vh"
       border-top-radius="16px"
     >
-      <h1>contents</h1>
+      <p>contents</p>
     </swipe-modal>
   </div>
 </template>

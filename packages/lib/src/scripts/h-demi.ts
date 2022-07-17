@@ -15,8 +15,7 @@ const adaptOnsV3 = (ons: Object) => {
   }, {})
 }
 
-/* const h = (type: String | Object, options: Options & any = {}, chidren?: any) => {
-  console.log(isVue2)
+const h = (type: String | Object, options: Options & any = {}, chidren?: any) => {
   if (isVue2)
     return hDemi(type, options, chidren)
 
@@ -25,7 +24,7 @@ const adaptOnsV3 = (ons: Object) => {
   let ons = adaptOnsV3(on)
   const params = { ...extraOptions, ...props, ...domProps, ...ons }
   return hDemi(type, params, chidren)
-} */
+}
 
 const slot = (s: (arg0: any) => any, attrs?: any) => {
   if (typeof s == 'function') return s(attrs)
@@ -33,4 +32,4 @@ const slot = (s: (arg0: any) => any, attrs?: any) => {
 }
 export { slot }
 
-/* export default h */
+export default h
