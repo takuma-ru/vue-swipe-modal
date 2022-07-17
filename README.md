@@ -1,5 +1,7 @@
 # @takuma-ru/vue-swpie-modal
 
+![featureGraphic](./assets/featureGraphic.png)
+
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
