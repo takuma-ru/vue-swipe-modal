@@ -15,6 +15,7 @@ import { useTouchEvent } from '../composables/touchEvent'
 import { useMouseEvent } from '../composables/mouseEvent'
 
 import '../components/swipe-modal.scss'
+import anime from 'animejs'
 
 export default defineComponent({
   name: 'swipeModal',
@@ -109,16 +110,17 @@ export default defineComponent({
     }
 
     // life cycle
-    /* onMounted(() => {
+    onMounted(() => {
+      console.log('mounted')
       anime({
         targets: '.modal-background',
         opacity: [0, 1],
-        duration: 3000,
+        duration: 30000,
         easing: 'easeInOutCubic'
       })
-    }) */
+    })
 
-    console.log(isVue2)
+    /* console.log(isVue2) */
     if (isVue2) {
       return () => (
         propsRef.modelValue.value ? h( 'div' , {
