@@ -6,7 +6,11 @@ interface touchPositionInterface {
   y: number
 }
 
-export function useTouchEvent() {
+/**
+ * タッチ座標検出関数
+ * @returns touchPosition
+ */
+export const useTouchEvent = () => {
   const touchPosition = ref<touchPositionInterface>({
     isTouch: false,
     x: 0,

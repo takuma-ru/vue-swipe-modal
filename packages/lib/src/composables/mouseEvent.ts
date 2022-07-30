@@ -6,6 +6,10 @@ interface mousePositionInterface {
   y: number
 }
 
+/**
+ * マウス座標検出関数
+ * @returns touchPosition
+ */
 export function useMouseEvent() {
   const mousePosition = ref<mousePositionInterface>({
     isMouseDown: false,

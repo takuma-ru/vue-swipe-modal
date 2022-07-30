@@ -5,17 +5,23 @@ import {
   ref,
   toRefs,
   onMounted,
-  isVue2,
+  watch,
+  onBeforeMount,
+  install,
 } from 'vue-demi'
-import { StyleValue } from 'vue'
-/* import anime from 'animejs' */
+import { rand, TransitionPresets, useTransition } from '@vueuse/core'
+import * as CSS from 'csstype'
 
 /* import h, { slot } from '../scripts/h-demi' */
 import { useTouchEvent } from '../composables/touchEvent'
 import { useMouseEvent } from '../composables/mouseEvent'
 
 import '../components/swipe-modal.scss'
-import anime from 'animejs'
+
+interface CSSProperties extends CSS.Properties<string | number> {}
+type StyleValue = CSSProperties | Array<StyleValue>
+
+install()
 
 export default defineComponent({
   name: 'swipeModal',
@@ -90,7 +96,28 @@ export default defineComponent({
   emits: ['update:modelValue'],
 
   setup(props, context) {
-    // composables
+    const baseNumber = ref(0);
+    const cubicBezierNumber = useTransition(baseNumber, {
+      duration: 1000,
+      transition: [0.75, 0, 0.25, 1],
+    });
+
+    const baseColor = ref([0, 0, 0]);
+    const colorTransition = useTransition(baseColor, {
+      duration: 500,
+      transition: TransitionPresets.easeInCubic,
+    });
+    const color = computed(() => {
+      const [r, g, b] = colorTransition.value;
+      return `rgb(${r},${g},${b})`;
+    });
+
+    const toggle = () => {
+      baseNumber.value = baseNumber.value === 100 ? 0 : 100;
+      baseColor.value = [rand(0, 255), rand(0, 255), rand(0, 255)];
+    };
+
+    /* -- composables -- */
     const {
       mousePosition,
     } = useMouseEvent()
@@ -98,10 +125,14 @@ export default defineComponent({
       touchPosition,
     } = useTouchEvent()
 
-    // variables
+    /* -- variables -- */
     const propsRef = toRefs(props)
 
-    // method
+    /* -- functions -- */
+    const open = () => {
+      toggle()
+    }
+
     const close = () => {
       mousePosition.value.isMouseDown = false
       touchPosition.value.isTouch = false
@@ -109,64 +140,47 @@ export default defineComponent({
       context.emit('update:modelValue', false)
     }
 
-    // life cycle
-    onMounted(() => {
-      console.log('mounted')
-      anime({
-        targets: '.modal-background',
-        opacity: [0, 1],
-        duration: 30000,
-        easing: 'easeInOutCubic'
-      })
+    /* -- watch -- */
+    watch(propsRef.modelValue, () => {
+      console.log(propsRef.modelValue.value)
+      if (propsRef.modelValue.value) {
+        open()
+      } else {
+        close()
+      }
     })
 
-    /* console.log(isVue2) */
-    if (isVue2) {
-      return () => (
-        propsRef.modelValue.value ? h( 'div' , {
-          class: 'swipe-modal-takumaru-vue-swipe-modal',
-        }, [
-          h('div', {
-            class: 'modal-background',
-            style: {
-              backgroundColor: props.backgroundColor,
-            } as StyleValue,
-            on: {
-              click: () => propsRef.persistent.value ? (() => null) : close()
-            },
-          }),
-          h('div', {
-            class: 'modal-contents',
-            style: {
-              backgroundColor: props.contentsColor,
-              width: props.contentsWidth,
-            } as StyleValue
-          }, context.slots.default?.()),
-        ])
-        : null
-      )
-    } else {
-      return () => (
-        propsRef.modelValue.value ? h( 'div' , {
-          class: 'swipe-modal-takumaru-vue-swipe-modal',
-        }, [
-          h('div', {
-            class: 'modal-background',
-            style: {
-              backgroundColor: props.backgroundColor,
-            } as StyleValue,
-            onClick: () => { propsRef.persistent.value ? (() => null) : close() }
-          }),
-          h('div', {
-            class: 'modal-contents',
-            style: {
-              backgroundColor: props.contentsColor,
-              width: props.contentsWidth,
-            } as StyleValue
-          }, context.slots.default?.()),
-        ])
-        : null
-      )
-    }
+    /* -- life cycle -- */
+    onBeforeMount(async () => {
+    })
+
+    onMounted(async () => {
+      console.log('mounted')
+    })
+
+    /* -- element -- */
+    return () => (
+      h('div', {
+        class: 'swipe-modal-takumaru-vue-swipe-modal',
+      }, [
+        propsRef.modelValue.value ? h('div', {
+          class: 'modal-background',
+          style: {
+            backgroundColor: color.value,
+          } as StyleValue,
+          on: {
+            click: () => propsRef.persistent.value ? (() => null) : close()
+          },
+          onClick: () => { propsRef.persistent.value ? (() => null) : close() }
+        }) : null,
+        propsRef.modelValue.value ? h('div', {
+          class: 'modal-contents',
+          style: {
+            backgroundColor: props.contentsColor,
+            width: props.contentsWidth,
+          } as StyleValue
+        }, context.slots.default?.()/* オプショナルチェーン */) : null,
+      ])
+    )
   },
 })

@@ -45,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import { useTransition } from '@vueuse/core';
 import {
   computed,
   defineComponent,
@@ -52,7 +53,7 @@ import {
   watch,
   toRefs,
   onMounted,
-} from '@vue/composition-api'
+} from 'vue-demi'
 
 export default defineComponent({
   name: 'swipe-modal',
