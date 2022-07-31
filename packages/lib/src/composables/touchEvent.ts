@@ -2,6 +2,7 @@ import { ref } from 'vue-demi'
 
 interface touchPositionInterface {
   isTouch: boolean,
+  distance: number
   x: number,
   y: number
 }
@@ -13,6 +14,7 @@ interface touchPositionInterface {
 export const useTouchEvent = () => {
   const touchPosition = ref<touchPositionInterface>({
     isTouch: false,
+    distance: 0,
     x: 0,
     y: 0
   })

@@ -9,15 +9,15 @@ import {
   onBeforeMount,
   install,
 } from 'vue-demi'
-import { rand, TransitionPresets, useCssVar, useTransition } from '@vueuse/core'
+import { useTransition } from '@vueuse/core'
 import * as CSS from 'csstype'
 
 /* import h, { slot } from '../scripts/h-demi' */
 import { useTouchEvent } from '../composables/touchEvent'
 import { useMouseEvent } from '../composables/mouseEvent'
+import { toPixel } from '../composables/toPixel'
 
 import '../components/swipe-modal.scss'
-import { toPixel } from '../composables/toPixel'
 
 interface CSSProperties extends CSS.Properties<string | number> {}
 type StyleValue = CSSProperties | Array<StyleValue>
@@ -209,7 +209,19 @@ export default defineComponent({
             color: propsRef.dark.value ? 'white' : 'black',
             bottom: `${contentsBottomPositionTransition.value}px`,
           } as StyleValue
-        }, context.slots.default?.()/* オプショナルチェーン */) : null,
+        }, [
+          !propsRef.noTip.value ? h('div', {
+            class: 'modal-contents-chip-wrapper'
+          },
+            h('div', {
+              class: 'modal-contents-chip',
+              style: {
+                '--tip-color': propsRef.tipColor.value,
+              }
+            })
+          ) : null,
+          context.slots.default?.()/* オプショナルチェーン */
+        ]) : null,
       ])
     )
   },

@@ -1,1 +1,1 @@
-{"version":3,"file":"touchEvent.d.ts","sourceRoot":"","sources":["../../src/composables/touchEvent.ts"],"names":[],"mappings":"AAQA;;;GAGG;AACH,eAAO,MAAM,aAAa;;iBATf,OAAO;WACb,MAAM;WACN,MAAM;;CAiBV,CAAA"}
+{"version":3,"file":"touchEvent.d.ts","sourceRoot":"","sources":["../../src/composables/touchEvent.ts"],"names":[],"mappings":"AASA;;;GAGG;AACH,eAAO,MAAM,aAAa;;iBAVf,OAAO;kBACN,MAAM;WACb,MAAM;WACN,MAAM;;CAkBV,CAAA"}
