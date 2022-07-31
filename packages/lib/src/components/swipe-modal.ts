@@ -9,7 +9,7 @@ import {
   onBeforeMount,
   install,
 } from 'vue-demi'
-import { rand, TransitionPresets, useTransition } from '@vueuse/core'
+import { rand, TransitionPresets, useCssVar, useTransition } from '@vueuse/core'
 import * as CSS from 'csstype'
 
 /* import h, { slot } from '../scripts/h-demi' */
@@ -17,6 +17,7 @@ import { useTouchEvent } from '../composables/touchEvent'
 import { useMouseEvent } from '../composables/mouseEvent'
 
 import '../components/swipe-modal.scss'
+import { toPixel } from '../composables/toPixel'
 
 interface CSSProperties extends CSS.Properties<string | number> {}
 type StyleValue = CSSProperties | Array<StyleValue>
@@ -112,7 +113,6 @@ export default defineComponent({
       set: (value: any) => context.emit('update:modelValue', value),
     })
 
-
     /* -- transition -- */
     const backgroundColor = ref([
       parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
@@ -129,10 +129,17 @@ export default defineComponent({
       return `rgba(${r}, ${g}, ${b}, ${a})`
     })
 
+    const contentsBottomPosition = ref(-1 * toPixel(propsRef.contentsHeight.value))
+    const contentsBottomPositionTransition = useTransition(contentsBottomPosition, {
+      duration: 250,
+      transition: [0.25, 0.8, 0.25, 1],
+    })
+
 
     /* -- functions -- */
     const open = () => {
       // console.log('open')
+      contentsBottomPosition.value = 0
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
         parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
@@ -143,6 +150,7 @@ export default defineComponent({
 
     const close = () => {
       // console.log('close')
+      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value)
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
         parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
@@ -193,8 +201,13 @@ export default defineComponent({
         propsRef.modelValue.value ? h('div', {
           class: 'modal-contents',
           style: {
-            backgroundColor: props.contentsColor,
-            width: props.contentsWidth,
+            width: propsRef.contentsWidth.value,
+            minHeight: propsRef.contentsHeight.value,
+            borderTopLeftRadius: propsRef.borderTopRadius.value ? propsRef.borderTopRadius.value : propsRef.borderTopLeftRadius.value,
+            borderTopRightRadius: propsRef.borderTopRadius ? propsRef.borderTopRadius.value : propsRef.borderTopRightRadius.value,
+            backgroundColor: propsRef.dark.value ? propsRef.darkContentsColor.value : propsRef.contentsColor.value,
+            color: propsRef.dark.value ? 'white' : 'black',
+            bottom: `${contentsBottomPositionTransition.value}px`,
           } as StyleValue
         }, context.slots.default?.()/* オプショナルチェーン */) : null,
       ])
