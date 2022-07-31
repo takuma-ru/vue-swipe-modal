@@ -96,27 +96,6 @@ export default defineComponent({
   emits: ['update:modelValue'],
 
   setup(props, context) {
-    const baseNumber = ref(0);
-    const cubicBezierNumber = useTransition(baseNumber, {
-      duration: 1000,
-      transition: [0.75, 0, 0.25, 1],
-    });
-
-    const baseColor = ref([0, 0, 0]);
-    const colorTransition = useTransition(baseColor, {
-      duration: 500,
-      transition: TransitionPresets.easeInCubic,
-    });
-    const color = computed(() => {
-      const [r, g, b] = colorTransition.value;
-      return `rgb(${r},${g},${b})`;
-    });
-
-    const toggle = () => {
-      baseNumber.value = baseNumber.value === 100 ? 0 : 100;
-      baseColor.value = [rand(0, 255), rand(0, 255), rand(0, 255)];
-    };
-
     /* -- composables -- */
     const {
       mousePosition,
@@ -125,38 +104,76 @@ export default defineComponent({
       touchPosition,
     } = useTouchEvent()
 
+
     /* -- variables -- */
     const propsRef = toRefs(props)
+    const modal = computed({
+      get: () => propsRef.modelValue.value,
+      set: (value: any) => context.emit('update:modelValue', value),
+    })
+
+
+    /* -- transition -- */
+    const backgroundColor = ref([
+      parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
+      parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
+      parseInt(propsRef.backgroundColor.value.slice(5, 7), 16),
+      0
+    ])
+    const backgroundColorEnterTransition = useTransition(backgroundColor, {
+      duration: 250,
+      transition: [0.25, 0.8, 0.25, 1],
+    })
+    const color = computed(() => {
+      const [r, g, b, a] = backgroundColorEnterTransition.value;
+      return `rgba(${r}, ${g}, ${b}, ${a})`
+    })
+
 
     /* -- functions -- */
     const open = () => {
-      toggle()
+      // console.log('open')
+      backgroundColor.value = [
+        parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
+        parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
+        parseInt(propsRef.backgroundColor.value.slice(5, 7), 16),
+        parseInt(propsRef.backgroundColor.value.slice(7, 9), 16) / 255
+      ]
     }
 
     const close = () => {
-      mousePosition.value.isMouseDown = false
-      touchPosition.value.isTouch = false
-      document.documentElement.style.overflowY = 'auto'
-      context.emit('update:modelValue', false)
+      // console.log('close')
+      backgroundColor.value = [
+        parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
+        parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
+        parseInt(propsRef.backgroundColor.value.slice(5, 7), 16),
+        0,
+      ]
+      setTimeout(() => {
+        mousePosition.value.isMouseDown = false
+        touchPosition.value.isTouch = false
+        document.documentElement.style.overflowY = 'auto'
+        modal.value = false
+      }, 250)
     }
 
+
     /* -- watch -- */
-    watch(propsRef.modelValue, () => {
-      console.log(propsRef.modelValue.value)
-      if (propsRef.modelValue.value) {
+    watch(modal, (newVal, oldVal) => {
+      if (modal.value) {
         open()
-      } else {
-        close()
       }
     })
+
 
     /* -- life cycle -- */
     onBeforeMount(async () => {
     })
 
+
     onMounted(async () => {
-      console.log('mounted')
     })
+
 
     /* -- element -- */
     return () => (
