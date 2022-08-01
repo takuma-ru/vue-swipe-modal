@@ -165,7 +165,7 @@ export default defineComponent({
 
     const close = () => {
       // console.log('close')
-      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value)
+      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value) - touchPosition.value.touchDistance
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
         parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
