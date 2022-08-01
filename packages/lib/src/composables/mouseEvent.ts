@@ -2,9 +2,9 @@ import { ref } from 'vue-demi'
 
 interface mousePositionInterface {
   isMouseDown: boolean
-  distance: number
-  x: number
-  y: number
+  mouseDistance: number
+  mouseX: number
+  mouseY: number
 }
 
 /**
@@ -14,9 +14,9 @@ interface mousePositionInterface {
 export function useMouseEvent() {
   const mousePosition = ref<mousePositionInterface>({
     isMouseDown: false,
-    distance: 0,
-    x: 0,
-    y: 0
+    mouseDistance: 0,
+    mouseX: 0,
+    mouseY: 0
   })
 
   return {

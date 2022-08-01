@@ -1,10 +1,11 @@
 import { ref } from 'vue-demi'
 
 interface touchPositionInterface {
-  isTouch: boolean,
-  distance: number
-  x: number,
-  y: number
+  isTouch: boolean
+  touchStart: number
+  touchDistance: number
+  touchX: number
+  touchY: number
 }
 
 /**
@@ -14,12 +15,45 @@ interface touchPositionInterface {
 export const useTouchEvent = () => {
   const touchPosition = ref<touchPositionInterface>({
     isTouch: false,
-    distance: 0,
-    x: 0,
-    y: 0
+    touchStart: 0,
+    touchDistance: 0,
+    touchX: 0,
+    touchY: 0
   })
+
+  const initTouchPosition = () => {
+    touchPosition.value = {
+      isTouch: false,
+      touchStart: 0,
+      touchDistance: 0,
+      touchX: 0,
+      touchY: 0,
+    }
+  }
+
+  const touchStart = (payload: TouchEvent) => {
+    touchPosition.value.touchStart = payload.touches[0].pageY
+    touchPosition.value.isTouch = true
+  }
+
+  const touchMove = (payload: TouchEvent) => {
+    if (touchPosition.value.isTouch) {
+      touchPosition.value.touchY = payload.touches[0].pageY
+
+      touchPosition.value.touchDistance = touchPosition.value.touchStart - touchPosition.value.touchY
+    }
+  }
+
+  const touchEnd = () => {
+    touchPosition.value.isTouch = false
+  }
 
   return {
     touchPosition,
+
+    initTouchPosition,
+    touchStart,
+    touchMove,
+    touchEnd,
   }
 }

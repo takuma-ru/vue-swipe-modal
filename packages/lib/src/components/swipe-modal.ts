@@ -103,6 +103,10 @@ export default defineComponent({
     } = useMouseEvent()
     const {
       touchPosition,
+      initTouchPosition,
+      touchStart,
+      touchMove,
+      touchEnd,
     } = useTouchEvent()
 
 
@@ -112,6 +116,7 @@ export default defineComponent({
       get: () => propsRef.modelValue.value,
       set: (value: any) => context.emit('update:modelValue', value),
     })
+    const contentsBottomPositionTransitionDuration = ref(250)
 
     /* -- transition -- */
     const backgroundColor = ref([
@@ -131,12 +136,22 @@ export default defineComponent({
 
     const contentsBottomPosition = ref(-1 * toPixel(propsRef.contentsHeight.value))
     const contentsBottomPositionTransition = useTransition(contentsBottomPosition, {
-      duration: 250,
+      duration: contentsBottomPositionTransitionDuration.value,
       transition: [0.25, 0.8, 0.25, 1],
+    })
+
+    const contentsBottomDistance = computed(() => {
+      const distance = contentsBottomPositionTransition.value + touchPosition.value.touchDistance
+      return distance
     })
 
 
     /* -- functions -- */
+    const init = () => {
+      document.documentElement.style.overflowY = 'auto'
+      modal.value = false
+    }
+
     const open = () => {
       // console.log('open')
       contentsBottomPosition.value = 0
@@ -159,10 +174,18 @@ export default defineComponent({
       ]
       setTimeout(() => {
         mousePosition.value.isMouseDown = false
-        touchPosition.value.isTouch = false
-        document.documentElement.style.overflowY = 'auto'
-        modal.value = false
-      }, 250)
+        initTouchPosition()
+        init()
+      }, contentsBottomPositionTransitionDuration.value)
+    }
+
+    const closeCheck = () => {
+      touchEnd()
+      if (-1 * touchPosition.value.touchDistance > toPixel(propsRef.contentsHeight.value) / 8) {
+        close()
+      } else {
+        touchPosition.value.touchDistance = 0
+      }
     }
 
 
@@ -194,9 +217,9 @@ export default defineComponent({
             backgroundColor: color.value,
           } as StyleValue,
           on: {
-            click: () => propsRef.persistent.value ? (() => null) : close()
+            click: () => propsRef.persistent.value ? (() => null) : close(),
           },
-          onClick: () => { propsRef.persistent.value ? (() => null) : close() }
+          onClick: () => { propsRef.persistent.value ? (() => null) : close() },
         }) : null,
         propsRef.modelValue.value ? h('div', {
           class: 'modal-contents',
@@ -207,8 +230,16 @@ export default defineComponent({
             borderTopRightRadius: propsRef.borderTopRadius ? propsRef.borderTopRadius.value : propsRef.borderTopRightRadius.value,
             backgroundColor: propsRef.dark.value ? propsRef.darkContentsColor.value : propsRef.contentsColor.value,
             color: propsRef.dark.value ? 'white' : 'black',
-            bottom: `${contentsBottomPositionTransition.value}px`,
-          } as StyleValue
+            bottom: `${contentsBottomDistance.value}px`,
+          } as StyleValue,
+          on: {
+            touchstart: touchStart,
+            touchmove: touchMove,
+            touchend: closeCheck,
+          },
+          onTouchstart: touchStart,
+          onTouchmove: touchMove,
+          onTouchend: closeCheck,
         }, [
           !propsRef.noTip.value ? h('div', {
             class: 'modal-contents-chip-wrapper'

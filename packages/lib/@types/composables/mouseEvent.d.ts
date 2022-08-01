@@ -5,9 +5,9 @@
 export declare function useMouseEvent(): {
     mousePosition: import("vue-demi").Ref<{
         isMouseDown: boolean;
-        distance: number;
-        x: number;
-        y: number;
+        mouseDistance: number;
+        mouseX: number;
+        mouseY: number;
     }>;
 };
 //# sourceMappingURL=mouseEvent.d.ts.map
