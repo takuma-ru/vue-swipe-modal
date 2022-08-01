@@ -41,6 +41,9 @@ export const useTouchEvent = () => {
       touchPosition.value.touchY = payload.touches[0].pageY
 
       touchPosition.value.touchDistance = touchPosition.value.touchStart - touchPosition.value.touchY
+      if (touchPosition.value.touchDistance > 0) {
+        touchPosition.value.touchDistance = 0
+      }
     }
   }
 
