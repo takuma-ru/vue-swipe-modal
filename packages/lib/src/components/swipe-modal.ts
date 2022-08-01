@@ -9,7 +9,7 @@ import {
   onBeforeMount,
   install,
 } from 'vue-demi'
-import { useTransition } from '@vueuse/core'
+import { useCssVar, useTransition } from '@vueuse/core'
 import * as CSS from 'csstype'
 
 /* import h, { slot } from '../scripts/h-demi' */
@@ -121,6 +121,11 @@ export default defineComponent({
       set: (value: any) => context.emit('update:modelValue', value),
     })
     const contentsBottomPositionTransitionDuration = ref(250)
+
+    /* -- css var -- */
+    const el = ref(null)
+    const tipColor = useCssVar('--tip-color', el)
+    tipColor.value = propsRef.tipColor.value
 
     /* -- transition -- */
     const backgroundColor = ref([
@@ -265,9 +270,6 @@ export default defineComponent({
           },
             h('div', {
               class: 'modal-contents-chip',
-              style: {
-                '--tip-color': propsRef.tipColor.value,
-              } as StyleValue,
             })
           ) : null,
           context.slots.default?.()/* オプショナルチェーン */
