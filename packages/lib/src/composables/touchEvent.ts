@@ -21,6 +21,9 @@ export const useTouchEvent = () => {
     touchY: 0
   })
 
+  /**
+   * touchPosition初期化
+   */
   const initTouchPosition = () => {
     touchPosition.value = {
       isTouch: false,
@@ -31,11 +34,19 @@ export const useTouchEvent = () => {
     }
   }
 
+  /**
+   * 画面をタッチした位置を取得し、記録する関数
+   * @param payload TouchEvent
+   */
   const touchStart = (payload: TouchEvent) => {
-    touchPosition.value.touchStart = payload.touches[0].pageY
     touchPosition.value.isTouch = true
+    touchPosition.value.touchStart = payload.touches[0].pageY
   }
 
+  /**
+   * タッチして画面上を動かした距離を算出し、記録する関数
+   * @param payload TouchEvent
+   */
   const touchMove = (payload: TouchEvent) => {
     if (touchPosition.value.isTouch) {
       touchPosition.value.touchY = payload.touches[0].pageY
@@ -47,6 +58,9 @@ export const useTouchEvent = () => {
     }
   }
 
+  /**
+   * 画面にタッチしているかどうかのフラグを折る
+   */
   const touchEnd = () => {
     touchPosition.value.isTouch = false
   }

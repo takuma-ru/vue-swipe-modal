@@ -100,6 +100,10 @@ export default defineComponent({
     /* -- composables -- */
     const {
       mousePosition,
+      initMousePosition,
+      mouseDown,
+      mouseMove,
+      mouseUp,
     } = useMouseEvent()
     const {
       touchPosition,
@@ -141,7 +145,7 @@ export default defineComponent({
     })
 
     const contentsBottomDistance = computed(() => {
-      const distance = contentsBottomPositionTransition.value + touchPosition.value.touchDistance
+      const distance = contentsBottomPositionTransition.value + (Math.abs(touchPosition.value.touchDistance) > Math.abs(mousePosition.value.mouseDistance) ? touchPosition.value.touchDistance : mousePosition.value.mouseDistance )
       return distance
     })
 
@@ -165,7 +169,7 @@ export default defineComponent({
 
     const close = () => {
       // console.log('close')
-      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value) - touchPosition.value.touchDistance
+      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value) - (Math.abs(touchPosition.value.touchDistance) > Math.abs(mousePosition.value.mouseDistance) ? touchPosition.value.touchDistance : mousePosition.value.mouseDistance )
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
         parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
@@ -173,18 +177,27 @@ export default defineComponent({
         0,
       ]
       setTimeout(() => {
-        mousePosition.value.isMouseDown = false
+        initMousePosition()
         initTouchPosition()
         init()
       }, contentsBottomPositionTransitionDuration.value)
     }
 
-    const closeCheck = () => {
+    const onTouchEnd = () => {
       touchEnd()
       if (-1 * touchPosition.value.touchDistance > toPixel(propsRef.contentsHeight.value) / 8) {
         close()
       } else {
         touchPosition.value.touchDistance = 0
+      }
+    }
+
+    const onMouseUp = () => {
+      mouseUp()
+      if (-1 * mousePosition.value.mouseDistance > toPixel(propsRef.contentsHeight.value) / 8) {
+        close()
+      } else {
+        mousePosition.value.mouseDistance = 0
       }
     }
 
@@ -198,18 +211,18 @@ export default defineComponent({
 
 
     /* -- life cycle -- */
-    onBeforeMount(async () => {
-    })
-
-
-    onMounted(async () => {
-    })
 
 
     /* -- element -- */
     return () => (
       h('div', {
         class: 'swipe-modal-takumaru-vue-swipe-modal',
+        on: {
+          mousemove: mouseMove,
+          mouseup: onMouseUp,
+        },
+        onMousemove: mouseMove,
+        onMouseup: onMouseUp,
       }, [
         propsRef.modelValue.value ? h('div', {
           class: 'modal-background',
@@ -217,8 +230,10 @@ export default defineComponent({
             backgroundColor: color.value,
           } as StyleValue,
           on: {
+            onMouseup: () => propsRef.persistent.value ? (() => null) : close(),
             click: () => propsRef.persistent.value ? (() => null) : close(),
           },
+          onMouseup: () => { propsRef.persistent.value ? (() => null) : close() },
           onClick: () => { propsRef.persistent.value ? (() => null) : close() },
         }) : null,
         propsRef.modelValue.value ? h('div', {
@@ -235,20 +250,24 @@ export default defineComponent({
           on: {
             touchstart: touchStart,
             touchmove: touchMove,
-            touchend: closeCheck,
+            touchend: onTouchEnd,
           },
           onTouchstart: touchStart,
           onTouchmove: touchMove,
-          onTouchend: closeCheck,
+          onTouchend: onTouchEnd,
         }, [
           !propsRef.noTip.value ? h('div', {
-            class: 'modal-contents-chip-wrapper'
+            class: 'modal-contents-chip-wrapper',
+            on: {
+              mousedown: mouseDown,
+            },
+            onMousedown: mouseDown,
           },
             h('div', {
               class: 'modal-contents-chip',
               style: {
                 '--tip-color': propsRef.tipColor.value,
-              }
+              } as StyleValue,
             })
           ) : null,
           context.slots.default?.()/* オプショナルチェーン */
