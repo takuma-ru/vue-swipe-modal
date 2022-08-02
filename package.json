@@ -3,7 +3,8 @@
   "version": "4.0.0-alpha.0",
   "private": true,
   "workspaces": [
-    "packages/**"
+    "packages/**",
+    "docs/**"
   ],
   "scripts": {
     "dev:2": "yarn switch:2 && yarn workspace vue2 dev",
