@@ -4,12 +4,13 @@ import {
   h,
   ref,
   toRefs,
-  onMounted,
   watch,
-  onBeforeMount,
   install,
 } from 'vue-demi'
-import { useCssVar, useTransition } from '@vueuse/core'
+import {
+  useCssVar,
+  useTransition
+} from '@vueuse/core'
 import * as CSS from 'csstype'
 
 /* import h, { slot } from '../scripts/h-demi' */
@@ -148,7 +149,6 @@ export default defineComponent({
       duration: contentsBottomPositionTransitionDuration.value,
       transition: [0.25, 0.8, 0.25, 1],
     })
-
     const contentsBottomDistance = computed(() => {
       const distance = contentsBottomPositionTransition.value + (Math.abs(touchPosition.value.touchDistance) > Math.abs(mousePosition.value.mouseDistance) ? touchPosition.value.touchDistance : mousePosition.value.mouseDistance )
       return distance
@@ -262,15 +262,16 @@ export default defineComponent({
           onTouchend: onTouchEnd,
         }, [
           !propsRef.noTip.value ? h('div', {
-            class: 'modal-contents-chip-wrapper',
-            on: {
-              mousedown: mouseDown,
-            },
-            onMousedown: mouseDown,
-          },
-            h('div', {
-              class: 'modal-contents-chip',
-            })
+              class: 'modal-contents-chip-wrapper',
+              on: {
+                mousedown: mouseDown,
+              },
+              onMousedown: mouseDown,
+            },[
+              h('div', {
+                class: 'modal-contents-chip',
+              })
+            ]
           ) : null,
           context.slots.default?.()/* オプショナルチェーン */
         ]) : null,
