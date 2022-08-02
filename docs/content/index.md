@@ -1,9 +1,8 @@
-# Nuxt Content
+# About Content v2
 
-This page corresponds to the `/` route of your website. You can delete it or create another file in the `content/` directory.
-
-Try to navigate to [/about](/about). These 2 pages are rendered by the `pages/[...slug].vue` component.
-
+::code-block
 ---
-
-Look at the [Content documentation](https://content.nuxtjs.org/) to learn more.
+type: cmd
+---
+yarn add @takuma-ru/vue-swipe-modal@^4.0.0
+::
