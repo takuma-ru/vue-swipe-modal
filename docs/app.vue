@@ -7,12 +7,19 @@
 <style lang="scss">
 html {
   background-color: $white-darken-1;
+  color: $black;
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
 
+/* @media (prefers-color-scheme: dark) {
+  html {
+    background-color: $black-darken-2;
+    color: $white;
+  }
+} */
+
 body {
   margin: 0px;
-  color: $black;
 }
 
 h1, h2, h3, h4, p {
