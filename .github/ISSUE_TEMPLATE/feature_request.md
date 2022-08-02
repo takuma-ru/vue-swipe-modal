@@ -8,7 +8,7 @@ assignees: takuma-ru
 ---
 
 ### Want to Achieve
-vue3、nuxt3、Composition APIをサポートする。
+<!-- Issueの概要 -->
 
 ### ToDo
 - [ ] text
