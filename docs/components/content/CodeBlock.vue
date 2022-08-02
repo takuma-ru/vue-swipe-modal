@@ -27,7 +27,7 @@ defineProps({
     color: $black-lighten-2;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 0.8em 0.8em 0em 0em;
+    border-radius: 0.5em 0.5em 0em 0em;
     /* border: 2px solid $black-darken-1; */
     background-color: $black-lighten-1;
   }
@@ -37,7 +37,7 @@ defineProps({
     padding: 1em;
     margin: 0px;
 
-    border-radius: 0em 0em 0.8em 0.8em;
+    border-radius: 0em 0em 0.5em 0.5em;
     background-color: $black;
     overflow: auto;
 
