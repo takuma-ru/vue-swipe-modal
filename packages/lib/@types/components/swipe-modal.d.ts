@@ -58,7 +58,7 @@ declare const _default: import("vue-demi").DefineComponent<{
     };
 }, () => import("vue-demi").VNode<import("vue-demi").RendererNode, import("vue-demi").RendererElement, {
     [key: string]: any;
-}>, unknown, {}, {}, import("vue-demi").ComponentOptionsMixin, import("vue-demi").ComponentOptionsMixin, "update:modelValue"[], "update:modelValue", import("vue-demi").VNodeProps & import("vue-demi").AllowedComponentProps & import("vue-demi").ComponentCustomProps, Readonly<import("vue-demi").ExtractPropTypes<{
+}>, unknown, {}, {}, import("vue-demi").ComponentOptionsMixin, import("vue-demi").ComponentOptionsMixin, ("update:modelValue" | "open" | "close")[], "update:modelValue" | "close" | "open", import("vue-demi").VNodeProps & import("vue-demi").AllowedComponentProps & import("vue-demi").ComponentCustomProps, Readonly<import("vue-demi").ExtractPropTypes<{
     modelValue: {
         type: BooleanConstructor;
         default: boolean;
@@ -117,6 +117,8 @@ declare const _default: import("vue-demi").DefineComponent<{
     };
 }>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
+    onOpen?: ((...args: any[]) => any) | undefined;
+    onClose?: ((...args: any[]) => any) | undefined;
 }, {
     modelValue: boolean;
     dark: boolean;

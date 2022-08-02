@@ -123,11 +123,17 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 
 ## Props
 
-#### Modal General
+#### General
 | Variable | Type | default | Details |
 | --- | --- | --- | --- |
 | **v-model** | Boolean | `false` | Control the opening and closing |
 | **dark** | Boolean | `false` | Dark mode |
+
+#### Emit
+| Function | Type | Details |
+| --- | --- | --- |
+| **@open** | Void | Function to execute when a modal is opened |
+| **@close** | Void | Function to execute when the modal closes |
 
 #### Background
 | Variable | Type | default | Details |

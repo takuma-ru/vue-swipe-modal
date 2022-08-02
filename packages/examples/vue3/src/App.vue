@@ -7,6 +7,7 @@
       v-model="modal"
       contents-height="50vh"
       border-top-radius="16px"
+      @close="close()"
     >
       <p>contents</p>
     </swipe-modal>
@@ -22,6 +23,10 @@ const modal = ref(false)
 
 const open = () => {
   modal.value = true
+}
+
+const close = () => {
+  console.log('close swipe-modal')
 }
 
 </script>

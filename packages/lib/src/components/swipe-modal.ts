@@ -95,7 +95,7 @@ export default defineComponent({
     },
   },
 
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'open', 'close'],
 
   setup(props, context) {
     /* -- composables -- */
@@ -163,6 +163,7 @@ export default defineComponent({
 
     const open = () => {
       // console.log('open')
+      context.emit('open')
       contentsBottomPosition.value = 0
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
@@ -185,6 +186,7 @@ export default defineComponent({
         initMousePosition()
         initTouchPosition()
         init()
+        context.emit('close')
       }, contentsBottomPositionTransitionDuration.value)
     }
 

@@ -1,6 +1,6 @@
 # @takuma-ru/vue-swpie-modal
 
-![featureGraphicImage](https://user-images.githubusercontent.com/49429291/182005490-2e0631ca-8271-48e6-9282-25df81ba0f8f.png)
+![featureGraphic](https://user-images.githubusercontent.com/49429291/182005490-2e0631ca-8271-48e6-9282-25df81ba0f8f.png)
 
 ## Description
 Modal window that can be swiped to close.（Swipeable Bottom Sheet）
@@ -123,11 +123,17 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 
 ## Props
 
-#### Modal General
+#### General
 | Variable | Type | default | Details |
 | --- | --- | --- | --- |
 | **v-model** | Boolean | `false` | Control the opening and closing |
 | **dark** | Boolean | `false` | Dark mode |
+
+#### Emit
+| Function | Type | Details |
+| --- | --- | --- |
+| **@open** | Void | Function to execute when a modal is opened |
+| **@close** | Void | Function to execute when the modal closes |
 
 #### Background
 | Variable | Type | default | Details |
