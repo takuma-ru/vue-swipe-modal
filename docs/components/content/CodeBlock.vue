@@ -63,6 +63,7 @@ defineProps({
     color: $green;
     font-weight: 400;
     font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+    overflow: auto;
 
     &[type = "cmd"] {
       &::before {

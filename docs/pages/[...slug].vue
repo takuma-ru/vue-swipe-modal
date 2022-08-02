@@ -11,18 +11,17 @@
 </template>
 
 <style lang="scss">
-
 .contents {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 256px calc(100% - 256px);
 
   position: relative;
-  max-width: calc(100vw - (2 * 48px));
+  margin: 0px 10vmin;
 }
 
 main {
   position: relative;
-  max-width: calc(100% - 64px);
+  max-width: 100%;
   margin: 32px 16px;
 }
 </style>

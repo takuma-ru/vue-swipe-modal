@@ -17,6 +17,7 @@ header {
 
   position: relative;
   height: 64px;
+  padding: 0px 32px;
 
   .title {
     display: grid;
@@ -39,7 +40,7 @@ header {
 
     margin: 0px;
     border: none;
-    background-color: #CBCAC7;
+    background-color: $black-lighten-2;
   }
 }
 
