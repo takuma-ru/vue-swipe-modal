@@ -2,14 +2,20 @@
   <!-- 一行で表さないと表示が崩れる -->
   <div class="code-block">
     <div class="type">
-      <span>
-        {{ directory }}
+      <span class="directory">
+        <Icon
+          v-if="directory"
+          size="14px"
+        >
+          draft
+        </Icon>
+        &nbsp;{{ directory }}
       </span>
       <span>
         {{ type }}
       </span>
     </div>
-    <pre @mouseenter="isShowCopyButton = true" @mouseleave="isShowCopyButton = false"><code id="slot" :type="type"><Markdown unwrap="p" /></code><div v-if="isShowCopyButton" @click="copy()" class="copy-button"><span class="material-symbols-rounded">content_copy</span></div></pre>
+    <pre @mouseenter="isShowCopyButton = true" @mouseleave="isShowCopyButton = false"><code id="slot" :type="type"><Markdown unwrap="p" /></code><div v-if="isShowCopyButton" @click="copy()" class="copy-button"><Icon size="1em">content_copy</Icon></div></pre>
   </div>
 </template>
 
@@ -25,7 +31,7 @@ defineProps({
   },
   directory: {
     type: String,
-    default: ''
+    default: null
   },
 })
 
@@ -55,6 +61,11 @@ const copy = () => {
     border-radius: 0.5em 0.5em 0em 0em;
     /* border: 2px solid $black-darken-1; */
     background-color: $black-lighten-1;
+
+    .directory {
+      display: flex;
+      align-content: center;
+    }
   }
 
   pre {
@@ -101,7 +112,6 @@ const copy = () => {
         left: 50%;
         transform: translate(-50%, -50%);
 
-        font-size: 1em;
         color: $black-lighten-1;
       }
     }

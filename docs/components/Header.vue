@@ -15,9 +15,11 @@ header {
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
 
-  position: relative;
+  position: fixed;
+  width: calc(100vw - 20vmin - 64px);
   height: 64px;
   padding: 0px 32px;
+  margin: 0px 10vmin;
 
   .title {
     display: grid;
@@ -40,7 +42,12 @@ header {
 
     margin: 0px;
     border: none;
+
     background-color: $black-lighten-2;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: $black-darken-1;
+    }
   }
 }
 

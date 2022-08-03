@@ -1,6 +1,10 @@
 <template>
-  <div :color-mode="colorMode">
-    <NuxtPage />
+  <div id="app" :color-mode="colorMode">
+    <Header />
+    <div class="contents">
+      <Nav />
+      <NuxtPage />
+    </div>
   </div>
 </template>
 
@@ -29,62 +33,41 @@ html {
   html {
     background-color: $black-darken-2;
     color: $white;
+
+    p {
+      color: $white-darken-2;
+    }
   }
 }
 
 body {
   margin: 0px;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $black-lighten-1;
+    border-radius: 6px;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    background-clip: padding-box;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
 }
 
-h1, h2, h3, h4, p {
-  margin: 0px;
-}
+.contents {
+  display: grid;
+  grid-template-columns: 256px calc(100% - 256px);
 
-h1 {
   position: relative;
-  padding-bottom: 0.25em;
-  margin-bottom: 0.5em;
-
-  &::before {
-    content: '';
-    position: absolute;
-    height: 1px;
-    width: 100%;
-    bottom: 0px;
-
-    background-color: $black-lighten-2;
-  }
-}
-
-h2, h3, h4 {
-  position: relative;
-
-  &:hover {
-    &::before {
-      content: '#';
-      position: absolute;
-      left: -1em;
-      @media (prefers-color-scheme: dark) {
-        color: $black-lighten-1;
-      }
-    }
-  }
-
-  a {
-    color: white;
-    text-decoration: none;
-  }
-}
-
-p {
-  padding-bottom: 0.5em;
-}
-
-ul {
-  margin: 0.5em 0px;
-}
-
-.material-symbols-rounded {
-  color: $white;
+  height: calc(100vh - 64px);
+  padding-top: 64px;
+  margin: 0px 10vmin;
 }
 </style>
