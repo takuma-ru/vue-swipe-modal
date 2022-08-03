@@ -13,4 +13,12 @@ export default defineNuxtConfig({
       },
     },
   },
+  meta: {
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,500,0,0',
+      },
+    ],
+  },
 })

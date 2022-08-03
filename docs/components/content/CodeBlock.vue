@@ -2,30 +2,55 @@
   <!-- 一行で表さないと表示が崩れる -->
   <div class="code-block">
     <div class="type">
-      {{ type }}
+      <span>
+        {{ directory }}
+      </span>
+      <span>
+        {{ type }}
+      </span>
     </div>
-    <pre><code :type="type"><Markdown unwrap="p" /></code></pre>
+    <pre @mouseenter="isShowCopyButton = true" @mouseleave="isShowCopyButton = false"><code id="slot" :type="type"><Markdown unwrap="p" /></code><div v-if="isShowCopyButton" @click="copy()" class="copy-button"><span class="material-symbols-rounded">content_copy</span></div></pre>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref, useSlots } from 'vue';
+
+const slot = useSlots()
+
 defineProps({
   type: {
     type: String,
     default: 'md'
   },
+  directory: {
+    type: String,
+    default: ''
+  },
 })
+
+const isShowCopyButton = ref(false)
+
+const copy = () => {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(document.getElementById('slot').textContent);
+  }
+}
+
 </script>
 
 <style lang="scss">
 .code-block {
-  margin: 8px 0px;
+  margin: 16px 0px;
 
   .type {
-    padding: 0.4em 16px;
+    display: flex;
+    justify-content: space-between;
+
+    padding: 0.8em 16px;
 
     color: $black-lighten-2;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     border-radius: 0.5em 0.5em 0em 0em;
     /* border: 2px solid $black-darken-1; */
@@ -33,7 +58,8 @@ defineProps({
   }
 
   pre {
-    height: auto;
+    position: relative;
+    height: 100%;
     padding: 1em;
     margin: 0px;
 
@@ -54,6 +80,30 @@ defineProps({
 
     &::-webkit-scrollbar-thumb {
       background-color: $black-lighten-1;
+    }
+
+    .copy-button {
+      position: absolute;
+      width: auto;
+      height: 2em;
+      right: 1em;
+      top: 0.8em;
+
+      text-align: center;
+      border-radius: 0.4em;
+      background-color: $black-darken-1;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+
+      span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        font-size: 1em;
+        color: $black-lighten-1;
+      }
     }
   }
 

@@ -1,8 +1,22 @@
 <template>
-  <div>
+  <div :color-mode="colorMode">
     <NuxtPage />
   </div>
 </template>
+
+<script lang="ts" setup>
+import { onMounted } from 'vue';
+import { useDarkModeStore } from './store/darkMode.js';
+
+const {
+  colorMode,
+  setSystemColorMode,
+} = useDarkModeStore()
+
+onMounted(() => {
+  setSystemColorMode()
+})
+</script>
 
 <style lang="scss">
 html {
@@ -68,5 +82,9 @@ p {
 
 ul {
   margin: 0.5em 0px;
+}
+
+.material-symbols-rounded {
+  color: $white;
 }
 </style>
