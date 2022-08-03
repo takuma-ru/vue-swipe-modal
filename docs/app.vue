@@ -61,6 +61,10 @@ body {
   }
 }
 
+h1, h2, h3, h4, p {
+  margin: 0px;
+}
+
 .contents {
   display: grid;
   grid-template-columns: 256px calc(100% - 256px);

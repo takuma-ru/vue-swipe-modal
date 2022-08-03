@@ -53,7 +53,12 @@ plugins: \[
 ### 4. Done!
 You can use the `<swipe-modal>` tag in the vue file.
 
+::alert
+---
+type: warn
+---
 Make sure to add the `<no-ssr>` tag at that time.
+::
 
 ::code-block
 ---
