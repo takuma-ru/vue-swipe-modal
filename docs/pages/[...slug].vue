@@ -4,6 +4,14 @@
   </main>
 </template>
 
+<script lang="ts" setup>
+import { useColorStore } from '../store/color';
+
+const {
+  cssColor
+} = useColorStore()
+</script>
+
 <style lang="scss">
 main {
   position: relative;
@@ -47,11 +55,7 @@ main {
       width: 100%;
       bottom: 0px;
 
-      background-color: $black-lighten-2;
-
-      @media (prefers-color-scheme: dark) {
-        background-color: $black-darken-1;
-      }
+      background-color: v-bind(cssColor('theme', 'text'));
     }
   }
 
@@ -65,19 +69,13 @@ main {
         content: '#';
         position: absolute;
         left: -1em;
-        @media (prefers-color-scheme: dark) {
-          color: $black-lighten-1;
-        }
+        color: v-bind(cssColor('theme', 'text'));
       }
     }
 
     a {
-      color: $black;
+      color: v-bind(cssColor('theme', 'text'));
       text-decoration: none;
-
-      @media (prefers-color-scheme: dark) {
-        color: $white;
-      }
     }
   }
 

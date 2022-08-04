@@ -11,33 +11,39 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import { useDarkModeStore } from './store/darkMode.js';
+import { useColorStore } from './store/color.js';
 
 const {
   colorMode,
-  setSystemColorMode,
+  setDark,
+  setLight
 } = useDarkModeStore()
 
-onMounted(() => {
-  setSystemColorMode()
+const {
+  color,
+  cssColor,
+  setDarkTheme,
+  setLightTheme,
+} = useColorStore()
+
+onBeforeMount(() => {
+  console.log('setSystemColorMode', window.matchMedia('(prefers-color-scheme: dark)').matches)
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setDark()
+    setDarkTheme()
+  } else {
+    setLight()
+    setLightTheme()
+  }
 })
+
 </script>
 
 <style lang="scss">
-html {
-  background-color: $white-darken-1;
-  color: $black;
+#app {
+  background-color: v-bind(cssColor('theme', 'background'));
+  color: v-bind(cssColor('theme', 'text'));
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    background-color: $black-darken-2;
-    color: $white;
-
-    p {
-      color: $white-darken-2;
-    }
-  }
 }
 
 body {
@@ -63,6 +69,10 @@ body {
 
 h1, h2, h3, h4, p {
   margin: 0px;
+}
+
+hr {
+  background-color: v-bind(cssColor('theme', 'text'));
 }
 
 .contents {

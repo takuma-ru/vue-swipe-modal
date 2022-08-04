@@ -4,6 +4,10 @@
       <img src="https://user-images.githubusercontent.com/49429291/182005504-0567f54a-80e3-4a31-ba5b-740db91b5190.png" alt="">
       <h3>@takumaru/vue-swipe-modal</h3>
     </div>
+    <div></div>
+    <div class="icons">
+      <Color />
+    </div>
     <hr>
   </header>
 </template>
@@ -32,6 +36,10 @@ header {
     cursor: pointer;
   }
 
+  .icons {
+    justify-self: end;
+  }
+
   img {
     height: 56px;
   }
@@ -44,13 +52,6 @@ header {
 
     margin: 0px;
     border: none;
-
-    background-color: $black-lighten-2;
-
-    @media (prefers-color-scheme: dark) {
-      background-color: $black-darken-1;
-    }
   }
 }
-
 </style>

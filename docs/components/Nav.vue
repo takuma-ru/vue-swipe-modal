@@ -26,6 +26,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useColorStore } from '../store/color';
+
 type NavLinksType = Array<{
   name: string
   icon: string
@@ -34,6 +36,13 @@ type NavLinksType = Array<{
     link: string
   }>
 }>
+
+/* -- store -- */
+const {
+  cssColor
+} = useColorStore()
+
+/* -- variables -- */
 const route = useRoute()
 
 const nowPath = computed(() => {
@@ -101,24 +110,16 @@ nav {
       }
 
       a {
-        color: $black-darken-2;
-        cursor: pointer;
+        color: v-bind(cssColor('theme', 'text'));
         text-decoration: none;
-
-        @media (prefers-color-scheme: dark) {
-          color: $white-darken-2;
-        }
+        cursor: pointer;
       }
     }
 
     a {
-      color: $black-darken-2;
-      cursor: pointer;
+      color: v-bind(cssColor('theme', 'text'));
       text-decoration: none;
-
-      @media (prefers-color-scheme: dark) {
-        color: $white-darken-2;
-      }
+      cursor: pointer;
     }
   }
 }

@@ -20,7 +20,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, useSlots } from 'vue';
 
 const slot = useSlots()
 
