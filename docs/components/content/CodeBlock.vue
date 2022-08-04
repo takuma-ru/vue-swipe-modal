@@ -1,5 +1,4 @@
 <template>
-  <!-- 一行で表さないと表示が崩れる -->
   <div class="code-block">
     <div class="type">
       <span class="directory">
@@ -15,6 +14,7 @@
         {{ type }}
       </span>
     </div>
+    <!-- 一行で表さないと表示が崩れる -->
     <pre @mouseenter="isShowCopyButton = true" @mouseleave="isShowCopyButton = false"><code id="slot" :type="type"><Markdown unwrap="p" /></code><div v-if="isShowCopyButton" @click="copy()" class="copy-button"><Icon size="1em">content_copy</Icon></div></pre>
   </div>
 </template>

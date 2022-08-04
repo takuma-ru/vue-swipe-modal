@@ -16,9 +16,9 @@ header {
   grid-template-columns: 1fr 1fr 1fr;
 
   position: fixed;
-  width: calc(100vw - 20vmin - 64px);
+  z-index: 10;
+  width: calc(100vw - 20vmin);
   height: 64px;
-  padding: 0px 32px;
   margin: 0px 10vmin;
 
   .title {
@@ -28,6 +28,8 @@ header {
     grid-template-columns: auto auto;
 
     height: 100%;
+
+    cursor: pointer;
   }
 
   img {

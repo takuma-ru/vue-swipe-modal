@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav v-show="nowPath !== '/'">
     <div
       v-for="group in navLinks"
       :key="group.name"
@@ -13,7 +13,7 @@
         v-for="link in group.links"
         :key="link.name"
       >
-        <div class="link">
+        <div :class="link.link === nowPath ? 'link-select' : 'link'">
           <nuxt-link
             :to="link.link"
           >
@@ -26,8 +26,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-
 type NavLinksType = Array<{
   name: string
   icon: string
@@ -36,14 +34,20 @@ type NavLinksType = Array<{
     link: string
   }>
 }>
+const route = useRoute()
+
+const nowPath = computed(() => {
+  return route.path
+})
 
 const navLinks = ref<NavLinksType>([
   {
     name: 'Get started',
     icon: 'start',
     links: [
-      { name: 'vue2.x', link: '/started/vue2' },
-      { name: 'vue3.x', link: '/started/vue3' },
+      { name: 'index', link: '/started' },
+      { name: '2.x', link: '/started/vue2' },
+      { name: '3.x', link: '/started/vue3' },
       { name: 'nuxt2.x', link: '/started/nuxt2' },
     ]
   },
@@ -51,9 +55,16 @@ const navLinks = ref<NavLinksType>([
     name: 'Docs',
     icon: 'description',
     links: [
-      { name: 'Index', link: '/docs' },
+      { name: 'index', link: '/docs' },
     ]
   },
+  {
+    name: 'Demo',
+    icon: 'terminal',
+    links: [
+      { name: 'index', link: '/demo' },
+    ]
+  }
 ])
 </script>
 
@@ -71,6 +82,34 @@ nav {
   .link {
     margin: 1em 0px;
     padding-left: 2em;
+
+    &-select {
+      position: relative;
+      margin: 1em 0px;
+      padding-left: 2em;
+
+      &::before {
+        content: '';
+
+        position: absolute;
+        width: 4px;
+        height: 100%;
+        left: 1em;
+
+        border-radius: 2px;
+        background-color: $green;
+      }
+
+      a {
+        color: $black-darken-2;
+        cursor: pointer;
+        text-decoration: none;
+
+        @media (prefers-color-scheme: dark) {
+          color: $white-darken-2;
+        }
+      }
+    }
 
     a {
       color: $black-darken-2;

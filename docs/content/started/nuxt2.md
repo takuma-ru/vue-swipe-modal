@@ -23,10 +23,12 @@ Write the following code in the file you created.
 type: js
 directory: '@/plugins/swipe-modal.js'
 ---
+```
 import Vue from 'vue'
 import swipeModal from '@takuma-ru/vue-swipe-modal'
-<br>
+
 Vue.component('swipe-modal', swipeModal)
+```
 ::
 
 <br>
@@ -42,7 +44,7 @@ directory: '@/nuxt.config.js | .ts'
 ...
 <br>
 plugins: \[
-  &nbsp;&nbsp;{ src: './plugins/swipe-modal.js', mode: 'client' },
+  &nbsp;&nbsp;{ src: '@/plugins/swipe-modal.js', mode: 'client' },
 ],
 <br>
 ...

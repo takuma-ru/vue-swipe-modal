@@ -1,6 +1,6 @@
 <template>
   <main>
-    <ContentDoc class="main" />
+    <ContentDoc style="height: 100%;" />
   </main>
 </template>
 
