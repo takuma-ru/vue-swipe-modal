@@ -26,16 +26,17 @@ const {
   setLightTheme,
 } = useColorStore()
 
-onBeforeMount(() => {
-  console.log('setSystemColorMode', window.matchMedia('(prefers-color-scheme: dark)').matches)
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+if (process.client){
+  const windowColorMode = await window.matchMedia('(prefers-color-scheme: dark)').matches
+  console.log(colorMode.value)
+  if (windowColorMode) {
     setDark()
     setDarkTheme()
-  } else {
+  } else if (!windowColorMode) {
     setLight()
     setLightTheme()
   }
-})
+}
 
 </script>
 

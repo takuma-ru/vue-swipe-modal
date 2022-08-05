@@ -125,6 +125,5 @@ const cssColor = (color: Ref<ColorsInterface>) => (
   PayloadThird?:  1 | 2,
 ) => {
   const returnColor = PayloadThird ? color.value[payloadFirst][payloadSecond][PayloadThird] : color.value[payloadFirst][payloadSecond]
-  console.log(returnColor)
   return returnColor
 }

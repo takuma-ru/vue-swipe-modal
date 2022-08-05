@@ -10,6 +10,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useColorStore } from '../../store/color';
+
 defineProps({
   icon: {
     type: String,
@@ -20,10 +22,16 @@ defineProps({
     default: '24px'
   }
 })
+
+const {
+  cssColor
+} = useColorStore()
 </script>
 
 <style lang="scss" scoped>
 .material-symbols-rounded {
-  color: $white;
+  color: v-bind(cssColor('theme', 'text'));
+
+  user-select: none
 }
 </style>

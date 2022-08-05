@@ -11,9 +11,11 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: [
-    '@nuxt/content',
-  ],
+  loadingIndicator: {
+    name: './assets/loadingIndicator.html',
+  },
+
+  modules: [ '@nuxt/content' ],
 
   vite: {
     css: {
