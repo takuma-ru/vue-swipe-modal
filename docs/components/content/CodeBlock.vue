@@ -15,7 +15,7 @@
       </span>
     </div>
     <!-- 一行で表さないと表示が崩れる -->
-    <pre @mouseenter="isShowCopyButton = true" @mouseleave="isShowCopyButton = false"><code id="slot" :type="type"><Markdown unwrap="p" /></code><div v-if="isShowCopyButton" @click="copy()" class="copy-button"><Icon size="1em">content_copy</Icon></div></pre>
+    <pre @mouseenter="isShowCopyButton = true" @mouseleave="isShowCopyButton = false"><code :id="thisId" :type="type"><Markdown unwrap="p" /></code><div v-if="isShowCopyButton" @click="copy()" class="copy-button"><Icon size="1em">content_copy</Icon></div></pre>
   </div>
 </template>
 
@@ -23,7 +23,7 @@
 
 const slot = useSlots()
 
-defineProps({
+const props = defineProps({
   type: {
     type: String,
     default: 'md'
@@ -35,10 +35,16 @@ defineProps({
 })
 
 const isShowCopyButton = ref(false)
+const thisId = ref('')
+
+onMounted(() => {
+  thisId.value = 'code-' + Math.random().toString(32).substring(2)
+})
 
 const copy = () => {
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(document.getElementById('slot').textContent);
+    console.log(thisId)
+    navigator.clipboard.writeText(document.getElementById(thisId.value).textContent);
   }
 }
 
