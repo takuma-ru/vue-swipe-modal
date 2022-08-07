@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div id="app">
     <button @click="open()">open</button>
     {{ modal }}
 
     <swipe-modal
       v-model="modal"
-      contents-height="50vh"
+      contents-height="100%"
       border-top-radius="16px"
       @close="close()"
     >
@@ -32,6 +32,11 @@ const close = () => {
 </script>
 
 <style scoped>
+#app {
+  height: 100vh;
+  padding: 0;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
