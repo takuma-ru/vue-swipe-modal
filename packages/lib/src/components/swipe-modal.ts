@@ -164,6 +164,7 @@ export default defineComponent({
     const open = () => {
       // console.log('open')
       context.emit('open')
+      document.documentElement.style.overflowY = 'hidden'
       contentsBottomPosition.value = 0
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
