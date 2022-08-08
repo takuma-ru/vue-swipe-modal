@@ -6,7 +6,6 @@ import {
   toRefs,
   watch,
   install,
-  onMounted,
 } from 'vue-demi'
 import {
   useCssVar,
@@ -145,7 +144,7 @@ export default defineComponent({
       return `rgba(${r}, ${g}, ${b}, ${a})`
     })
 
-    const contentsBottomPosition = ref(0)
+    const contentsBottomPosition = ref(-1 * toPixel(propsRef.contentsHeight.value))
     const contentsBottomPositionTransition = useTransition(contentsBottomPosition, {
       duration: contentsBottomPositionTransitionDuration.value,
       transition: [0.25, 0.8, 0.25, 1],
@@ -220,9 +219,6 @@ export default defineComponent({
 
 
     /* -- life cycle -- */
-    onMounted(() => {
-      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value)
-    })
 
 
     /* -- element -- */
