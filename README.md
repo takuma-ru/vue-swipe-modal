@@ -159,6 +159,6 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 - #### ontents-height supports only "px", "vh", and "vw".
   Contents-height of "%", "vmin", etc. are not supported. We are currently working on a feature to allow use of these values. Please wait a little.
 - #### The behavior of vue2.x may be unstable.
-  This library is based on ![vue-demi](https://github.com/vueuse/vue-demi) and developed in the vue3 environment. Therefore, there is a risk that parts of the library that are not interoperable with vue2.x may not work properly.
+  This library is based on [vue-demi](https://github.com/vueuse/vue-demi) and developed in the vue3 environment. Therefore, there is a risk that parts of the library that are not interoperable with vue2.x may not work properly.
 We are working on a way to address this issue as well. However, it is a very complex issue and will take time to resolve.
 Please use vue3 as much as possible.
