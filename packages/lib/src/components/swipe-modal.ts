@@ -9,7 +9,8 @@ import {
 } from 'vue-demi'
 import {
   useCssVar,
-  useTransition
+  useTransition,
+  useVModel,
 } from '@vueuse/core'
 import * as CSS from 'csstype'
 
@@ -116,11 +117,13 @@ export default defineComponent({
 
 
     /* -- variables -- */
+    const modal = useVModel(props, 'modelValue', context.emit)
+
     const propsRef = toRefs(props)
-    const modal = computed({
+    /* const modal = computed({
       get: () => propsRef.modelValue.value,
       set: (value: any) => context.emit('update:modelValue', value),
-    })
+    }) */
     const contentsBottomPositionTransitionDuration = ref(250)
 
     /* -- css var -- */
