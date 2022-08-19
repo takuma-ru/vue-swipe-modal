@@ -45,7 +45,6 @@
 </template>
 
 <script lang="ts">
-import { useTransition } from '@vueuse/core';
 import {
   computed,
   defineComponent,

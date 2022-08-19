@@ -1,5 +1,5 @@
 /**
- * タッチ座標検出関数
+ * タッチ座標検出関数群
  * @returns touchPosition
  */
 export declare const useTouchEvent: () => {
