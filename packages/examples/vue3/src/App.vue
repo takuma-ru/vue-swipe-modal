@@ -5,7 +5,7 @@
 
     <swipe-modal
       v-model="modal"
-      contents-height="50vh"
+      contents-height="50vmax"
       border-top-radius="16px"
       @close="close()"
     >

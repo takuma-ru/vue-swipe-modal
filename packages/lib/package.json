@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "private": false,
   "description": "Swipeable Bottom Sheet library for vue2 and vue3",
   "license": "MIT",

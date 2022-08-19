@@ -120,11 +120,10 @@ export default defineComponent({
     const modal = useVModel(props, 'modelValue', context.emit)
 
     const propsRef = toRefs(props)
-    /* const modal = computed({
-      get: () => propsRef.modelValue.value,
-      set: (value: any) => context.emit('update:modelValue', value),
-    }) */
-    const contentsBottomPositionTransitionDuration = ref(250)
+
+    const swipeModal = ref<Element>()
+
+    const contentsBottomPositionTransitionDuration = ref(280)
 
     /* -- css var -- */
     const el = ref(null)
@@ -147,7 +146,7 @@ export default defineComponent({
       return `rgba(${r}, ${g}, ${b}, ${a})`
     })
 
-    const contentsBottomPosition = ref(-1 * toPixel(propsRef.contentsHeight.value))
+    const contentsBottomPosition = ref(-1 * toPixel(propsRef.contentsHeight.value, swipeModal))
     const contentsBottomPositionTransition = useTransition(contentsBottomPosition, {
       duration: contentsBottomPositionTransitionDuration.value,
       transition: [0.25, 0.8, 0.25, 1],
@@ -165,7 +164,6 @@ export default defineComponent({
     }
 
     const open = () => {
-      // console.log('open')
       context.emit('open')
       document.documentElement.style.overflowY = 'hidden'
       contentsBottomPosition.value = 0
@@ -179,7 +177,7 @@ export default defineComponent({
 
     const close = () => {
       // console.log('close')
-      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value) - (Math.abs(touchPosition.value.touchDistance) > Math.abs(mousePosition.value.mouseDistance) ? touchPosition.value.touchDistance : mousePosition.value.mouseDistance )
+      contentsBottomPosition.value = -1 * toPixel(propsRef.contentsHeight.value, swipeModal) - (Math.abs(touchPosition.value.touchDistance) > Math.abs(mousePosition.value.mouseDistance) ? touchPosition.value.touchDistance : mousePosition.value.mouseDistance )
       backgroundColor.value = [
         parseInt(propsRef.backgroundColor.value.slice(1, 3), 16),
         parseInt(propsRef.backgroundColor.value.slice(3, 5), 16),
@@ -196,7 +194,7 @@ export default defineComponent({
 
     const onTouchEnd = () => {
       touchEnd()
-      if (-1 * touchPosition.value.touchDistance > toPixel(propsRef.contentsHeight.value) / 8) {
+      if (-1 * touchPosition.value.touchDistance > toPixel(propsRef.contentsHeight.value, swipeModal) / 8) {
         close()
       } else {
         touchPosition.value.touchDistance = 0
@@ -205,7 +203,7 @@ export default defineComponent({
 
     const onMouseUp = () => {
       mouseUp()
-      if (-1 * mousePosition.value.mouseDistance > toPixel(propsRef.contentsHeight.value) / 8) {
+      if (-1 * mousePosition.value.mouseDistance > toPixel(propsRef.contentsHeight.value, swipeModal) / 8) {
         close()
       } else {
         mousePosition.value.mouseDistance = 0
@@ -248,6 +246,7 @@ export default defineComponent({
           onClick: () => { propsRef.persistent.value ? (() => null) : close() },
         }) : null,
         propsRef.modelValue.value ? h('div', {
+          ref: swipeModal,
           class: 'modal-contents',
           style: {
             width: propsRef.contentsWidth.value,
