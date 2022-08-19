@@ -16,14 +16,4 @@ export default defineNuxtConfig({
   },
 
   modules: [ '@nuxt/content' ],
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@import "@/assets/styles/theme.scss";',
-        },
-      },
-    },
-  },
 })

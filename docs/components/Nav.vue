@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useColorStore } from '../store/color';
+import { useColorStore } from '../store/colorStore';
 
 type NavLinksType = Array<{
   name: string
@@ -39,7 +39,7 @@ type NavLinksType = Array<{
 
 /* -- store -- */
 const {
-  cssColor
+  color
 } = useColorStore()
 
 /* -- variables -- */
@@ -106,18 +106,18 @@ nav {
         left: 1em;
 
         border-radius: 2px;
-        background-color: $green;
+        background-color: v-bind('color.green.default');
       }
 
       a {
-        color: v-bind(cssColor('theme', 'text'));
+        color: v-bind('color.theme.text');
         text-decoration: none;
         cursor: pointer;
       }
     }
 
     a {
-      color: v-bind(cssColor('theme', 'text'));
+      color: v-bind('color.theme.text');
       text-decoration: none;
       cursor: pointer;
     }

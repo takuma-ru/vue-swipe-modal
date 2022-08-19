@@ -6,7 +6,7 @@
     </div>
     <div></div>
     <div class="icons">
-      <Color />
+      <ColorModeButton />
     </div>
     <hr>
   </header>

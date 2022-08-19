@@ -1,14 +1,14 @@
 <template>
   <main>
-    <ContentDoc style="height: 100%;" />
+    <ContentDoc style="min-height: calc(100% - 32px); display: flex; flex-direction: column; padding-bottom: 32px" />
   </main>
 </template>
 
 <script lang="ts" setup>
-import { useColorStore } from '../store/color';
+import { useColorStore } from '../store/colorStore';
 
 const {
-  cssColor
+  color
 } = useColorStore()
 </script>
 
@@ -16,8 +16,7 @@ const {
 main {
   position: relative;
   max-width: 100%;
-  padding-bottom: 32px;
-  margin: 0px 16px;
+  padding: 0px 16px;
   margin-top: 32px;
 
   overflow-y: scroll;
@@ -27,7 +26,7 @@ main {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $black-lighten-1;
+    background: v-bind('color.black.lighten[1]');
     border-radius: 4px;
     border-right: 4px solid transparent;
     border-left: 4px solid transparent;
@@ -55,7 +54,7 @@ main {
       width: 100%;
       bottom: 0px;
 
-      background-color: v-bind(cssColor('theme', 'text'));
+      background-color: v-bind('color.theme.text');
     }
   }
 
@@ -69,12 +68,12 @@ main {
         content: '#';
         position: absolute;
         left: -1em;
-        color: v-bind(cssColor('theme', 'text'));
+        color: v-bind('color.theme.text');
       }
     }
 
     a {
-      color: v-bind(cssColor('theme', 'text'));
+      color: v-bind('color.theme.text');
       text-decoration: none;
     }
   }
@@ -90,7 +89,7 @@ main {
   code {
     position: relative;
 
-    color: $black-lighten-2;
+    color: v-bind('color.black.lighten[2]');
     font-weight: 400;
     font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
     overflow: auto;

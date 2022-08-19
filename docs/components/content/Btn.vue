@@ -2,107 +2,105 @@
   <button
     id="Button"
     :disabled="disabled"
-    :style="{
-      backgroundColor: ''
-    }"
-    :size="size"
+    :size="!isIcon && size"
     :fab="fab"
-    :icon="iconMode"
-    @click=""
+    :icon="isIcon"
+    @click="click()"
   >
-    <div
-      class="text"
-      :style="`
-        --color: ${textColor}
-      `"
-    >
+    <div class="text">
       <Icon
         v-if="icon"
-        text
+        :color="!isIcon ? dependsLuminanceColor(props.color) : null"
         size="24px"
-        :icon="icon"
-      />
+        :fill="props.iconProps?.fill"
+        :wght="props.iconProps?.wght"
+        :grad="props.iconProps?.grad"
+        :opsz="props.iconProps?.opsz"
+        :style="!isIcon && 'margin-right: 0.4rem'"
+      >
+        {{ icon }}
+      </Icon>
       <Markdown unwrap="p" />
     </div>
   </button>
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  icon: {
-    type: String,
-    default: null,
-  },
-  color: {
-    type: String,
-    default: 'primary',
-  },
-  textColor: {
-    type: String,
-    default: 'black',
-  },
-  size: {
-    type: String,
-    default: 'normal',
-    validator: (value: string) => {
-      return ['small', 'normal', 'large'].includes(value)
-    },
-  },
-  fab: {
-    type: Boolean,
-    default: false,
-  },
-  iconMode: {
-    type: Boolean,
-    default: false,
-  },
-  to: {
-    type: String,
-    default: null,
-  },
+import { useColorStore } from '~~/store/colorStore'
+import { dependsLuminanceColor } from '../../composables/utils/dependsLuminanceColor'
+import { IIconProps } from './components/Icon.vue'
+
+/* -- type, interface -- */
+interface IEmits {
+  (e: 'click'): void
+}
+
+interface IProps {
+  disabled?: boolean
+  icon?: string
+  iconProps?: IIconProps
+  color?: string
+  size?: 'small' | 'normal' | 'large'
+  fab?: boolean
+  isIcon?: boolean
+  to?: string
+}
+
+/* -- props, emit -- */
+const props = withDefaults(defineProps<IProps>(), {
+  color: '#5498ff',
+  size: 'normal'
 })
 
+const emit = defineEmits<IEmits>()
+
+/* -- store -- */
+const {
+  color
+} = useColorStore()
+
+/* -- state -- */
+
+/* -- variable(ref, reactive, computed) -- */
+
+/* -- function -- */
+const click = () => {
+  props.to ? navigateTo(props.to) : emit('click')
+}
+
+/* -- watch -- */
+/* -- life cycle -- */
 
 </script>
 
 <style lang="scss" scoped>
-button {
+#Button {
   position: relative;
   width: auto;
   height: 100%;
 
   border: none;
-  border-radius: 0.4em;
-  background-color: $green;
+  border-radius: 8px;
+  background-color: v-bind('props.color');
   cursor: pointer;
   outline: none;
   -webkit-tap-highlight-color:rgba(0,0,0,0);
 
   .text {
-    --color: $white;
     display: inline-flex;
     position: relative;
     z-index: 1;
-    margin: 0rem 1rem;
+    height: 24px;
+    margin: 0rem 0.4em;
 
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--color);
+    font-size: 16px;
+    font-weight: 500;
+    color: v-bind('dependsLuminanceColor(props.color)');
 
     justify-content: center;
     align-items: center;
     vertical-align: middle;
-
-    svg {
-      path {
-        fill: var(--color);
-      }
-    }
   }
 
   &:hover::before {
@@ -141,7 +139,7 @@ button {
       left: 0px;
 
       border-radius: 8px;
-      background-color: $black-lighten-2;
+      background-color: v-bind('color.black.lighten[2]');
     }
   }
 
@@ -166,10 +164,17 @@ button {
     }
   }
 
-  &[icon] {
+  &[icon = true] {
+    width: 40px;
+    height: 40px;
+
+    background-color: transparent;
+
     .text {
       height: calc(100% - 16px);
+
       padding: 0px;
+      margin: 0px;
     }
   }
 
@@ -180,7 +185,7 @@ button {
 
   &[size = "normal"] {
     width: auto;
-    height: 36px;
+    height: 40px;
   }
 
   &[size = "large"] {

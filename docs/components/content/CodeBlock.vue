@@ -20,6 +20,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useColorStore } from '~~/store/colorStore';
+
 
 const slot = useSlots()
 
@@ -33,6 +35,10 @@ const props = defineProps({
     default: null
   },
 })
+
+const {
+  color
+} = useColorStore()
 
 const isShowCopyButton = ref(false)
 const thisId = ref('')
@@ -60,12 +66,11 @@ const copy = () => {
 
     padding: 0.8em 16px;
 
-    color: $black-lighten-2;
+    color: v-bind('color.black.lighten[2]');
     font-size: 12px;
     font-weight: 600;
     border-radius: 0.5em 0.5em 0em 0em;
-    /* border: 2px solid $black-darken-1; */
-    background-color: $black-lighten-1;
+    background-color: v-bind('color.black.lighten[1]');
 
     .directory {
       display: flex;
@@ -80,7 +85,7 @@ const copy = () => {
     margin: 0px;
 
     border-radius: 0em 0em 0.5em 0.5em;
-    background-color: $black;
+    background-color: v-bind('color.black.default');
     overflow: auto;
 
     &::-webkit-scrollbar {
@@ -95,7 +100,7 @@ const copy = () => {
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: $black-lighten-1;
+      background-color: v-bind('color.black.lighten[1]');
     }
 
     .copy-button {
@@ -107,7 +112,7 @@ const copy = () => {
 
       text-align: center;
       border-radius: 0.4em;
-      background-color: $black-darken-1;
+      background-color: v-bind('color.black.darken[1]');
       aspect-ratio: 1 / 1;
       cursor: pointer;
 
@@ -117,7 +122,7 @@ const copy = () => {
         left: 50%;
         transform: translate(-50%, -50%);
 
-        color: $black-lighten-1;
+        color: v-bind('color.black.lighten[1]');
       }
     }
   }
@@ -125,7 +130,7 @@ const copy = () => {
   code {
     position: relative;
 
-    color: $black-lighten-2;
+    color: v-bind('color.black.lighten[2]');
     font-weight: 400;
     font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
     overflow: auto;
@@ -134,7 +139,7 @@ const copy = () => {
       &::before {
         content: '>';
         font-weight: 600;
-        color: $green;
+        color: v-bind('color.green.default');
         margin-right: 0.8em;
       }
     }

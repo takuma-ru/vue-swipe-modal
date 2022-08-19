@@ -1,21 +1,23 @@
 <template>
   <div class="color-mode">
-  <Icon @click="click()">{{ colorMode === 'dark' ? 'dark_mode' : 'light_mode' }}</Icon>
+    <Icon @click="click()">
+      {{ colorMode === 'dark' ? 'dark_mode' : 'light_mode' }}
+    </Icon>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useDarkModeStore } from '../store/darkMode';
-import { useColorStore } from '../store/color';
+import { useColorModeStore } from '../store/colorModeStore'
+import { useColorStore } from '../store/colorStore'
 
 const {
   colorMode,
-  switchMode,
-} = useDarkModeStore()
+  switchMode
+} = useColorModeStore()
 
 const {
   setDarkTheme,
-  setLightTheme,
+  setLightTheme
 } = useColorStore()
 
 const click = () => {
@@ -31,6 +33,8 @@ const click = () => {
 
 <style scoped>
 .color-mode {
+  height: 24px;
+
   cursor: pointer;
 }
 </style>

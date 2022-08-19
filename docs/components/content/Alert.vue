@@ -1,14 +1,3 @@
-<script lang="ts" setup>
-import { PropType } from 'vue'
-
-defineProps({
-  type: {
-    type: String as PropType<'warn' | 'err' | 'suc'>,
-    default: 'warn'
-  }
-})
-</script>
-
 <template>
   <div :class="`alert-${type}`">
     <Icon
@@ -19,6 +8,27 @@ defineProps({
     <Markdown unwrap="p" />
   </div>
 </template>
+
+<script lang="ts" setup>
+import { useColorStore } from '../../store/colorStore'
+import { PropType } from 'vue'
+import { useColorModeStore } from '~~/store/colorModeStore';
+
+defineProps({
+  type: {
+    type: String as PropType<'warn' | 'err' | 'suc'>,
+    default: 'warn'
+  }
+})
+
+const {
+  colorMode
+} = useColorModeStore()
+
+const {
+  color
+} = useColorStore()
+</script>
 
 <style lang="scss" scoped>
 .alert {
@@ -35,11 +45,7 @@ defineProps({
 
   &-warn {
     @extend #{$element};
-    background-color: $yellow-lighten-1;
-
-    @media (prefers-color-scheme: dark) {
-      background-color: $yellow-darken-2;
-    }
+    background-color: v-bind('colorMode === "dark" ? color.yellow.darken[2] : color.yellow.default[1]');
   }
 }
 

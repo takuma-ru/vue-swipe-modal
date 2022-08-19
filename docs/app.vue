@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :color-mode="colorMode">
+  <div id="app">
     <Header />
     <div class="contents">
       <Nav />
@@ -10,40 +10,27 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import { useDarkModeStore } from './store/darkMode.js';
-import { useColorStore } from './store/color.js';
+import { useColorModeStore } from './store/colorModeStore'
+import { useColorStore } from './store/colorStore'
 
 const {
-  colorMode,
-  setDark,
-  setLight
-} = useDarkModeStore()
+  setSytemMode
+} = useColorModeStore()
 
 const {
   color,
-  cssColor,
   setDarkTheme,
   setLightTheme,
 } = useColorStore()
 
-if (process.client){
-  const windowColorMode = await window.matchMedia('(prefers-color-scheme: dark)').matches
-  console.log(colorMode.value)
-  if (windowColorMode) {
-    setDark()
-    setDarkTheme()
-  } else if (!windowColorMode) {
-    setLight()
-    setLightTheme()
-  }
-}
+setSytemMode()
 
 </script>
 
 <style lang="scss">
 #app {
-  background-color: v-bind(cssColor('theme', 'background'));
-  color: v-bind(cssColor('theme', 'text'));
+  background-color: v-bind('color.theme.background');
+  color: v-bind('color.theme.text');
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
 
@@ -55,7 +42,7 @@ body {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $black-lighten-1;
+    background: v-bind('color.black.lighten[1]');
     border-radius: 6px;
     border-right: 4px solid transparent;
     border-left: 4px solid transparent;
@@ -73,7 +60,7 @@ h1, h2, h3, h4, p {
 }
 
 hr {
-  background-color: v-bind(cssColor('theme', 'text'));
+  background-color: v-bind('color.theme.text');
 }
 
 .contents {
