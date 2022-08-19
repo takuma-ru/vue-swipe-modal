@@ -1,5 +1,5 @@
 /**
- * マウス座標検出関数
+ * マウス座標検出関数群
  * @returns touchPosition
  */
 export declare function useMouseEvent(): {

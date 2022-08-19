@@ -209,4 +209,4 @@ declare const _default: import("vue-demi").DefineComponent<{
     darkContentsColor: string;
 }>;
 export default _default;
-//# sourceMappingURL=swipeModalVue2.vue.d.ts.map
+//# sourceMappingURL=swipeModal.vue.d.ts.map
