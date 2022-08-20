@@ -63,6 +63,7 @@ const navLinks = ref<NavLinksType>([
       { name: '2.x', link: '/started/vue2' },
       { name: '3.x', link: '/started/vue3' },
       { name: 'nuxt2.x', link: '/started/nuxt2' },
+      { name: 'nuxt3.x', link: '/started/nuxt3' },
     ]
   },
   {
@@ -106,7 +107,7 @@ nav {
         content: '';
 
         position: absolute;
-        width: 4px;
+        width: 8px;
         height: 100%;
         left: 1em;
 
