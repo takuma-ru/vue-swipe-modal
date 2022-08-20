@@ -1,5 +1,8 @@
-# Get started - Nuxt.js 2.x
+---
+title: 'Get Started for nuxt3｜@takuma-ru/vue-swipe-modal'
+---
 
+# Get started - Nuxt.js 2.x
 
 ### 1. Install
 This library works with "@vue-composition-api", so it should be installed together.

@@ -56,8 +56,8 @@ main {
       &::before {
         content: '#';
         position: absolute;
-        left: -1em;
-        color: v-bind('color.theme.text');
+        left: -1rem;
+        color: v-bind('color.theme.subText');
       }
     }
 

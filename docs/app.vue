@@ -53,7 +53,7 @@ getThisDisplaySize()
   position: relative;
   height: calc(100vh - 64px);
   padding-top: 64px;
-  margin: 0px v-bind('isMobileMixin("0px", "192px")');
+  margin: 0px v-bind('isMobileMixin("0px", "10vw")');
 }
 
 body {

@@ -5,6 +5,7 @@
         <Icon
           v-if="filename"
           size="14px"
+          :color="color.white.default"
         >
           draft
         </Icon>
@@ -128,7 +129,7 @@ code {
   font-size: 12px;
   font-weight: 600;
   border-radius: 0.5em 0.5em 0em 0em;
-  background-color: v-bind('color.black.lighten[1]');
+  background-color: v-bind('color.black.darken[1]');
 
   .directory {
     display: flex;
