@@ -4,12 +4,9 @@
 ### 1. Install
 This library works with "@vue-composition-api", so it should be installed together.
 
-::code-block
----
-type: cmd
----
+```cmd
 yarn add @takuma-ru/vue-swipe-modal@^4.0.0 @vue/composition-api
-::
+```
 
 <br>
 
@@ -18,37 +15,27 @@ Create a plugins folder and a file named `swipe-modal.js`.
 
 Write the following code in the file you created.
 
-::code-block
----
-type: js
-directory: '@/plugins/swipe-modal.js'
----
-```
+```js [@/plugins/swipe-modal.js]
 import Vue from 'vue'
 import swipeModal from '@takuma-ru/vue-swipe-modal'
 
 Vue.component('swipe-modal', swipeModal)
 ```
-::
 
 <br>
 
 ### 3. Update nuxt.config
 Add the following code to the item named "plugins\[]".
 
-::code-block
----
-type: js
-directory: '@/nuxt.config.js | .ts'
----
+```js [@/nuxt.config.js | .ts]
 ...
-<br>
-plugins: \[
-  &nbsp;&nbsp;{ src: '@/plugins/swipe-modal.js', mode: 'client' },
+
+plugins: [
+    { src: '@/plugins/swipe-modal.js', mode: 'client' },
 ],
-<br>
+
 ...
-::
+```
 
 <br>
 
@@ -62,12 +49,7 @@ type: warn
 Make sure to add the `<no-ssr>` tag at that time.
 ::
 
-::code-block
----
-type: vue
-directory: 'vue file'
----
-```
+```vue [.vue file]
 <template>
   <div>
     <button @click="modal = true">open</button>
@@ -95,4 +77,3 @@ export default defineComponent({
 })
 </script>
 ```
-::

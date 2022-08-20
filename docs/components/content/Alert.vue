@@ -2,6 +2,8 @@
   <div :class="`alert-${type}`">
     <Icon
       style="margin-right: 0.5em"
+      size="28px"
+      :color="color.black.default"
     >
       {{ type === 'warn' ? 'warning' : type === 'err' ? 'error' : 'info' }}
     </Icon>
@@ -45,7 +47,8 @@ const {
 
   &-warn {
     @extend #{$element};
-    background-color: v-bind('colorMode === "dark" ? color.yellow.darken[2] : color.yellow.default[1]');
+    background-color: v-bind('color.yellow.default');
+    color: v-bind('color.black.default');
   }
 }
 

@@ -85,14 +85,5 @@ main {
   ul {
     margin: 0.5em 0px;
   }
-
-  code {
-    position: relative;
-
-    color: v-bind('color.black.lighten[2]');
-    font-weight: 400;
-    font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-    overflow: auto;
-  }
 }
 </style>
