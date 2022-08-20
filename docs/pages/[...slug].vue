@@ -54,7 +54,7 @@ main {
       width: 100%;
       bottom: 0px;
 
-      background-color: v-bind('color.theme.text');
+      background-color: v-bind('color.theme.lighten[1]');
     }
   }
 
