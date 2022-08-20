@@ -122,7 +122,7 @@ code {
   display: flex;
   justify-content: space-between;
 
-  padding: 0.8em 16px;
+  padding: 1em 16px;
 
   color: v-bind('color.black.lighten[2]');
   font-size: 12px;

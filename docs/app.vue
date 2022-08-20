@@ -12,9 +12,14 @@
 import { onMounted } from 'vue';
 import { useColorModeStore } from './store/colorModeStore'
 import { useColorStore } from './store/colorStore'
+import { useDeviceStatusStore } from './store/deviceStatusStore';
 
 const {
   setSytemMode
+} = useColorModeStore()
+
+const {
+  colorMode
 } = useColorModeStore()
 
 const {
@@ -23,7 +28,14 @@ const {
   setLightTheme,
 } = useColorStore()
 
+const {
+  isMobile,
+  isMobileMixin,
+  getThisDisplaySize
+} = useDeviceStatusStore()
+
 setSytemMode()
+getThisDisplaySize()
 
 </script>
 
@@ -34,6 +46,16 @@ setSytemMode()
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
 
+.contents {
+  display: grid;
+  grid-template-columns: v-bind('isMobileMixin("100%", "256px calc(100% - 256px)")');
+
+  position: relative;
+  height: calc(100vh - 64px);
+  padding-top: 64px;
+  margin: 0px v-bind('isMobileMixin("0px", "192px")');
+}
+
 body {
   margin: 0px;
 
@@ -42,7 +64,7 @@ body {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: v-bind('color.black.lighten[1]');
+    background: v-bind('color.black.lighten[2]');
     border-radius: 6px;
     border-right: 4px solid transparent;
     border-left: 4px solid transparent;
@@ -53,23 +75,5 @@ body {
     margin-top: 4px;
     margin-bottom: 4px;
   }
-}
-
-h1, h2, h3, h4, p {
-  margin: 0px;
-}
-
-hr {
-  background-color: v-bind('color.theme.text');
-}
-
-.contents {
-  display: grid;
-  grid-template-columns: 256px calc(100% - 256px);
-
-  position: relative;
-  height: calc(100vh - 64px);
-  padding-top: 64px;
-  margin: 0px 10vmin;
 }
 </style>

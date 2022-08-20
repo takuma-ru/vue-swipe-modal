@@ -1,5 +1,5 @@
 <template>
-  <nav v-show="nowPath !== '/'">
+  <nav v-show="nowPath !== '/' && !isMobile()">
     <div
       v-for="group in navLinks"
       :key="group.name"
@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts" setup>
+import { useDeviceStatusStore } from '~~/store/deviceStatusStore';
 import { useColorStore } from '../store/colorStore';
 
 type NavLinksType = Array<{
@@ -41,6 +42,10 @@ type NavLinksType = Array<{
 const {
   color
 } = useColorStore()
+
+const {
+  isMobile
+} = useDeviceStatusStore()
 
 /* -- variables -- */
 const route = useRoute()

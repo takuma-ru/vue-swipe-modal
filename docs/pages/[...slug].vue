@@ -5,7 +5,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useColorModeStore } from '~~/store/colorModeStore';
 import { useColorStore } from '../store/colorStore';
+
+const {
+  colorMode
+} = useColorModeStore()
 
 const {
   color
@@ -22,40 +27,24 @@ main {
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: v-bind('color.black.lighten[1]');
-    border-radius: 4px;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
+    background: v-bind('color.black.lighten[2]');
+    border-radius: 2px;
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
     background-clip: padding-box;
   }
 
   &::-webkit-scrollbar-track {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
 
   h1, h2, h3, h4, p {
     margin: 0px;
-  }
-
-  h1 {
-    position: relative;
-    padding-bottom: 0.25em;
-    margin-bottom: 0.5em;
-
-    &::before {
-      content: '';
-      position: absolute;
-      height: 1px;
-      width: 100%;
-      bottom: 0px;
-
-      background-color: v-bind('color.theme.lighten[1]');
-    }
   }
 
   h2, h3, h4 {
