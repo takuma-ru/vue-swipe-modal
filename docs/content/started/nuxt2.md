@@ -28,7 +28,7 @@ Vue.component('swipe-modal', swipeModal)
 ---
 
 ### 3. Update nuxt.config
-Add the following code to the item named "plugins\[]".
+Add the following code to the item named `plugins[]`.
 
 
 ```ts{}[@/nuxt.config.js | .ts]
@@ -57,10 +57,10 @@ Make sure to add the `<no-ssr>` tag at that time.
 ```vue{}[.vue file]
 <template>
   <div>
-    <button @click="modal = true">open</button>
+    <button @click="isModal = true">open</button>
     <no-ssr>
       <swipe-modal
-        v-model="modal"
+        v-model="isModal"
         contents-height="50vh"
         border-top-radius="16px"
       >
@@ -75,9 +75,9 @@ import { computed, defineComponent, reactive, ref } from '@nuxtjs/composition-ap
 
 export default defineComponent({
   setup(props) {
-    const modal = ref(true)
+    const isModal = ref(true)
 
-    return { modal }
+    return { isModal }
   },
 })
 </script>

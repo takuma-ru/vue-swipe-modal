@@ -83,45 +83,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-pre {
-  position: relative;
-  height: 100%;
-  padding: 2em;
-  margin: 0px;
-
-  border-radius: 0em 0em 0.5em 0.5em;
-  background-color: v-bind('color.black.default');
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent;
-    margin: 1em;
-    border-radius: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: v-bind('color.black.lighten[1]');
-  }
-}
-
-code {
-  position: relative;
-
-  color: v-bind('color.black.lighten[2]');
-  font-weight: 400;
-  font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-
-  .line {
-    display: block;
-    min-height: 1.5rem;
-  }
-}
-
 .type {
   display: flex;
   justify-content: space-between;
@@ -141,7 +102,8 @@ code {
 }
 
 .code {
-  margin: 1em 0em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
 }
 
 .code-block {
@@ -185,7 +147,44 @@ code {
       color: v-bind('color.black.lighten[1]');
     }
   }
-
 }
 
+pre {
+  position: relative;
+  height: 100%;
+  padding: 1em 2em;
+  margin: 0px;
+
+  border-radius: 0em 0em 0.5em 0.5em;
+  background-color: v-bind('color.black.default');
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    margin: 1em;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: v-bind('color.black.lighten[1]');
+  }
+}
+
+code {
+  position: relative;
+
+  color: v-bind('color.black.lighten[2]');
+  font-weight: 400;
+  font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
+
+  .line {
+    display: block;
+    min-height: 1.5rem;
+  }
+}
 </style>
