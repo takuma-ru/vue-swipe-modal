@@ -71,7 +71,7 @@ Make sure to add the `<no-ssr>` tag at that time.
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   setup(props) {

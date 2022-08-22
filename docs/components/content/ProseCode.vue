@@ -92,7 +92,7 @@ onMounted(() => {
   color: v-bind('color.black.lighten[2]');
   font-size: 12px;
   font-weight: 600;
-  border-radius: 0.5em 0.5em 0em 0em;
+  border-radius: 1em 1em 0em 0em;
   background-color: v-bind('color.black.darken[1]');
 
   .directory {
@@ -155,7 +155,7 @@ pre {
   padding: 1em 2em;
   margin: 0px;
 
-  border-radius: 0em 0em 0.5em 0.5em;
+  border-radius: 0em 0em 1em 1em;
   background-color: v-bind('color.black.default');
   overflow: auto;
 
