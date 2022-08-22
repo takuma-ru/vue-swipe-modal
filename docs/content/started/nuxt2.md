@@ -18,7 +18,7 @@ Create a plugins folder and a file named `swipe-modal.js`.
 
 Write the following code in the file you created.
 
-```js [@/plugins/swipe-modal.js]
+```js{1}[@/plugins/swipe-modal.js]
 import Vue from 'vue'
 import swipeModal from '@takuma-ru/vue-swipe-modal'
 
@@ -30,15 +30,17 @@ Vue.component('swipe-modal', swipeModal)
 ### 3. Update nuxt.config
 Add the following code to the item named "plugins\[]".
 
-```js [@/nuxt.config.js | .ts]
+
+```ts{}[@/nuxt.config.js | .ts]
 ...
 
 plugins: [
-    { src: '@/plugins/swipe-modal.js', mode: 'client' },
+  { src: '@/plugins/swipe-modal.js', mode: 'client' },
 ],
 
 ...
 ```
+
 
 ---
 
@@ -52,7 +54,7 @@ type: warn
 Make sure to add the `<no-ssr>` tag at that time.
 ::
 
-```vue [.vue file]
+```vue{}[.vue file]
 <template>
   <div>
     <button @click="modal = true">open</button>

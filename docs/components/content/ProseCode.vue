@@ -53,9 +53,8 @@ interface IProps {
 const props =  withDefaults(defineProps<IProps>(), {
   code: '',
   language: null,
-  filename:  null
+  filename:  null,
 })
-
 
 /* -- store -- */
 const {
@@ -116,7 +115,11 @@ code {
   color: v-bind('color.black.lighten[2]');
   font-weight: 400;
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
-  overflow: auto;
+
+  .line {
+    display: block;
+    min-height: 1.5rem;
+  }
 }
 
 .type {
@@ -147,10 +150,15 @@ code {
   &[type = "cmd"] {
     code {
       &::before {
+        position: absolute;
         content: '>';
         font-weight: 600;
         color: v-bind('color.green.default');
-        margin-right: 0.8em;
+        margin-right: 0.5rem;
+      }
+
+      .line {
+        margin-left: 1.5rem;
       }
     }
   }

@@ -17,4 +17,11 @@ export default defineNuxtConfig({
   },
 
   modules: [ '@nuxt/content' ],
+
+  content: {
+    highlight: {
+      theme: 'dark-plus',
+      preload: ['html', 'css', 'ts', 'js', 'vue','r', 'cmd']
+    }
+  },
 })
