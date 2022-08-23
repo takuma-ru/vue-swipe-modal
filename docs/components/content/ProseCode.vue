@@ -68,7 +68,6 @@ const thisId = ref('')
 /* -- function -- */
 const copy = () => {
   if (navigator.clipboard) {
-    console.log(thisId)
     navigator.clipboard.writeText(document.getElementById(thisId.value).textContent);
   }
 }
@@ -130,7 +129,7 @@ onMounted(() => {
     width: auto;
     height: 2em;
     right: 1em;
-    top: 1em;
+    top: 0.5em;
 
     text-align: center;
     border-radius: 0.4em;

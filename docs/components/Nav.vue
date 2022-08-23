@@ -5,8 +5,16 @@
       :key="group.name"
     >
       <div class="group-name">
-        <Icon size="12px" style="margin-right: 1em">{{ group.icon }}</Icon>
-        <h3>{{ group.name }}</h3>
+        <Icon
+          size="20px"
+          :color="color.theme.subText"
+          style="margin-right: 0.5em"
+        >
+          {{ group.icon }}
+        </Icon>
+        <h3>
+          {{ group.name }}
+        </h3>
       </div>
 
       <div
@@ -59,7 +67,6 @@ const navLinks = ref<NavLinksType>([
     name: 'Get started',
     icon: 'start',
     links: [
-      { name: 'index', link: '/started' },
       { name: '2.x', link: '/started/vue2' },
       { name: '3.x', link: '/started/vue3' },
       { name: 'nuxt2.x', link: '/started/nuxt2' },
@@ -67,8 +74,8 @@ const navLinks = ref<NavLinksType>([
     ]
   },
   {
-    name: 'Docs',
-    icon: 'description',
+    name: 'Props',
+    icon: 'variables',
     links: [
       { name: 'index', link: '/docs' },
     ]

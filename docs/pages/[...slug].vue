@@ -1,6 +1,13 @@
 <template>
   <main>
-    <ContentDoc style="min-height: calc(100% - 32px); display: flex; flex-direction: column; padding-bottom: 32px" />
+    <ContentDoc
+      :style="{
+        minHeight: 'calc(calc(100% - 32px))',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '32px 0px',
+      }"
+    />
   </main>
 </template>
 
@@ -22,7 +29,6 @@ main {
   position: relative;
   max-width: 100%;
   padding: 0px 16px;
-  margin-top: 32px;
 
   overflow-y: scroll;
 
