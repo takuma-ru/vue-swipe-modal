@@ -2,7 +2,7 @@
   <main>
     <ContentDoc
       :style="{
-        minHeight: 'calc(calc(100% - 32px))',
+        minHeight: 'calc(100% - 32px - 32px)',
         display: 'flex',
         flexDirection: 'column',
         padding: '32px 0px',

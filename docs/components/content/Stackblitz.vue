@@ -23,7 +23,7 @@ const {
 
   position: relative;
 
-  display: flex;;
+  display: flex;
 
   background-color: v-bind('color.theme.darken[1]');
   border-radius: 0.8em;
