@@ -16,7 +16,7 @@
         :wght="props.iconProps?.wght"
         :grad="props.iconProps?.grad"
         :opsz="props.iconProps?.opsz"
-        :style="!isIcon && 'margin-right: 0.4rem'"
+        :style="!isIcon && 'margin-right: 0.5rem'"
       >
         {{ icon }}
       </Icon>
@@ -91,7 +91,7 @@ const click = () => {
     position: relative;
     z-index: 1;
     height: 24px;
-    margin: 0rem 0.4em;
+    margin: 0rem 1em;
 
     text-align: center;
     font-size: 16px;
@@ -184,7 +184,7 @@ const click = () => {
   }
 
   &[size = "normal"] {
-    width: auto;
+    width: fit-content;
     height: 40px;
   }
 

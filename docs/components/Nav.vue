@@ -75,9 +75,9 @@ const navLinks = ref<NavLinksType>([
   },
   {
     name: 'Props',
-    icon: 'variables',
+    icon: 'format_list_bulleted',
     links: [
-      { name: 'index', link: '/docs' },
+      { name: 'index', link: '/props' },
     ]
   },
   {
