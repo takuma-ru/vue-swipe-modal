@@ -15,8 +15,8 @@ export interface IIconProps {
   wght?: number
   grad?: number
   opsz?: number
-
 }
+
 /* -- props, emit -- */
 /* -- store -- */
 const {

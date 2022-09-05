@@ -37,8 +37,8 @@ main {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: v-bind('color.black.lighten[2]');
-    border-radius: 2px;
+    background: v-bind('colorMode === "light" ? color.black.lighten[2] : color.black.lighten[1]');
+    border-radius: 3.75px;
     border-right: 2px solid transparent;
     border-left: 2px solid transparent;
     background-clip: padding-box;

@@ -1,7 +1,0 @@
-# Documentation
-
-developing
-
-::Btn
-button
-::

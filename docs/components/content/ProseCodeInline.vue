@@ -5,7 +5,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useColorModeStore } from '~~/store/colorModeStore';
 import { useColorStore } from '~~/store/colorStore';
+
+const {
+  colorMode
+} = useColorModeStore()
 
 const {
   color
@@ -17,9 +22,10 @@ const {
   padding: 0.2em 0.4em;
   margin: 0px 0.25em;
 
-  color: v-bind('color.white.darken[2]');
+  color: v-bind('color.theme.text');
+  font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
   font-size: 0.8em;
   border-radius: 0.4em;
-  background-color: #2B2B2B91;
+  background-color: v-bind('colorMode === "light" ? "#00000030" : "#FFFFFF30"');
 }
 </style>

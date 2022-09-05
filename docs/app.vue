@@ -43,7 +43,6 @@ getThisDisplaySize()
 #app {
   background-color: v-bind('color.theme.background');
   color: v-bind('color.theme.text');
-  font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;
 }
 
 .contents {
