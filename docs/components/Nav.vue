@@ -119,17 +119,6 @@ nav {
 
   overflow: auto;
 
-  &::before {
-    content: '';
-    position: absolute;
-    width: calc(256px - 32px);
-    height: 2em;
-    margin-top: auto;
-    margin-bottom: 0%;
-
-    background-image: linear-gradient(#00000000, v-bind('color.theme.background'));
-  }
-
   &::-webkit-scrollbar {
     width: 8px;
   }
