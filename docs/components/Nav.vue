@@ -83,20 +83,20 @@ const navLinks = ref<NavLinksType>([
     icon: 'format_list_bulleted',
     links: [
       { name: 'index', link: '/props' },
-      { name: 'contents-height', link: '/props/contents-height' },
-      { name: 'contents-width', link: '/props/contents-width' },
+      { name: 'background-color', link: '/props/backgroundcolor' },
+      { name: 'border-top-left-radius', link: '/props/bordertopleftradius' },
+      { name: 'border-top-radius', link: '/props/bordertopradius' },
+      { name: 'border-top-right-radius', link: '/props/bordertoprightradius' },
+      { name: 'contents-color', link: '/props/contentscolor' },
+      { name: 'contents-height', link: '/props/contentsheight' },
+      { name: 'contents-width', link: '/props/contentswidth' },
+      { name: 'dark-contents-color', link: '/props/darkcontentscolor' },
       { name: 'dark', link: '/props/dark' },
-      { name: 'v-modal', link: '/props/v-modal' },
-      { name: 'persistent', link: '/props/persistent' },
-      { name: 'background-color', link: '/props/background-color' },
       { name: 'fullscreen', link: '/props/fullscreen' },
-      { name: 'no-tip', link: '/props/no-tip' },
-      { name: 'border-top-radius', link: '/props/border-top-radius' },
-      { name: 'border-top-left-radius', link: '/props/border-top-left-radius' },
-      { name: 'border-top-right-radius', link: '/props/border-top-right-radius' },
-      { name: 'contents-color', link: '/props/contents-color' },
-      { name: 'tip-color', link: '/props/tip-color' },
-      { name: 'dark-contents-color', link: '/props/dark-contents-color' },
+      { name: 'no-tip', link: '/props/notip' },
+      { name: 'persistent', link: '/props/persistent' },
+      { name: 'tip-color', link: '/props/tipcolor' },
+      { name: 'v-modal', link: '/props/vmodal' },
     ]
   },
   {
@@ -124,7 +124,8 @@ nav {
     position: absolute;
     width: calc(256px - 32px);
     height: 2em;
-    bottom: 0%;
+    margin-top: auto;
+    margin-bottom: 0%;
 
     background-image: linear-gradient(#00000000, v-bind('color.theme.background'));
   }
