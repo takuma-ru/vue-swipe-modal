@@ -3,17 +3,25 @@
   "version": "4.0.0-alpha.0",
   "private": true,
   "workspaces": [
-    "packages/**"
+    "packages/**",
+    "docs/**"
   ],
   "scripts": {
     "dev:2": "yarn switch:2 && yarn workspace vue2 dev",
     "dev:3": "yarn switch:3 && yarn workspace vue3 dev",
+    "dev:docs": "yarn docs dev",
+
     "build:lib": "yarn workspace @takuma-ru/vue-swipe-modal build",
+    "build:docs": "yarn docs build",
+
     "publish:lib": "yarn workspace @takuma-ru/vue-swipe-modal publish:lib",
+
     "switch:2" : "yarn workspace @takuma-ru/vue-swipe-modal switch:2",
     "switch:3" : "yarn workspace @takuma-ru/vue-swipe-modal switch:3",
+
     "vue2": "yarn workspace vue2",
     "vue3": "yarn workspace vue3",
-    "lib": "yarn workspace @takuma-ru/vue-swipe-modal"
+    "lib": "yarn workspace @takuma-ru/vue-swipe-modal",
+    "docs": "yarn workspace docs"
   }
 }
