@@ -30,7 +30,7 @@ main {
   max-width: 100%;
   padding: 0px 16px;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 8px;

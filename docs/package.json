@@ -9,7 +9,7 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@nuxt/content": "latest",
+    "@nuxt/content": "^2.1.0",
     "nuxt": "^3.0.0-rc.8",
     "sass": "^1.54.0"
   }

@@ -7,7 +7,10 @@
     >
       {{ type === 'warn' ? 'warning' : type === 'err' ? 'error' : 'info' }}
     </Icon>
-    <Markdown unwrap="p" />
+    <ContentSlot
+      :use="$slots.default"
+      unwrap="p"
+    />
   </div>
 </template>
 

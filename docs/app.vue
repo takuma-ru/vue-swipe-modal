@@ -58,6 +58,8 @@ getThisDisplaySize()
 body {
   margin: 0px;
 
+  font-family: Inter, sans-serif;
+
   &::-webkit-scrollbar {
     width: 12px;
   }

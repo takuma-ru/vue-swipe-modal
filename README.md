@@ -19,7 +19,7 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 ```
 
 # 2. How to use
-[vue2]()
+[vue2]() <br>
 [vue3]()
 [nuxt2]()
 [nuxt3]()

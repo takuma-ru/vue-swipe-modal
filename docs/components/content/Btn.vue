@@ -2,6 +2,7 @@
   <button
     id="Button"
     :disabled="disabled"
+    :outlined="outlined"
     :size="!isIcon && size"
     :fab="fab"
     :icon="isIcon"
@@ -10,7 +11,7 @@
     <div class="text">
       <Icon
         v-if="icon"
-        :color="!isIcon ? dependsLuminanceColor(props.color) : null"
+        :color="outlined ? color : !isIcon ? dependsLuminanceColor(props.color) : null"
         size="24px"
         :fill="props.iconProps?.fill"
         :wght="props.iconProps?.wght"
@@ -20,7 +21,10 @@
       >
         {{ icon }}
       </Icon>
-      <Markdown unwrap="p" />
+      <ContentSlot
+        :use="$slots.default"
+        unwrap="p"
+      />
     </div>
   </button>
 </template>
@@ -37,6 +41,7 @@ interface IEmits {
 
 interface IProps {
   disabled?: boolean
+  outlined?: boolean
   icon?: string
   iconProps?: IIconProps
   color?: string
@@ -155,6 +160,16 @@ const click = () => {
 
     border-radius: 8px;
     background-color: #CCCCCC00;
+  }
+
+  &[outlined = true] {
+    background-color: transparent;
+    border: solid 2px v-bind('props.color');
+
+    .text {
+      font-weight: bold;
+      color: v-bind('props.color');
+    }
   }
 
   &[fab] {

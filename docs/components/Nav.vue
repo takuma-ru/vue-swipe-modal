@@ -154,7 +154,7 @@ nav {
         content: '';
 
         position: absolute;
-        width: 8px;
+        width: 4px;
         height: 100%;
         left: 1em;
 
