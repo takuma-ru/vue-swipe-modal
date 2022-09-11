@@ -3236,6 +3236,11 @@ markdown-table@^3.0.0:
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-3.0.2.tgz#9b59eb2c1b22fe71954a65ff512887065a7bb57c"
   integrity sha512-y8j3a5/DkJCmS5x4dMCQL+OR0+2EAq3DOtio1COSHsmW2BGXnNCK3v12hJt1LrUz5iZH5g0LmuYOjDdI+czghA==
 
+material-symbols@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/material-symbols/-/material-symbols-0.2.10.tgz#fa95b3cc5f5912dcb63edf6c64855ea73bc1b845"
+  integrity sha512-oOi7M5JpJK+v1kSnOVUl1QeoMyk3zLT8ixYUUVCWxQnoZhNM/pr+JXza+Qmw4mzcERPifXPy+lmsiyKTOovh8Q==
+
 mdast-squeeze-paragraphs@^5.0.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/mdast-squeeze-paragraphs/-/mdast-squeeze-paragraphs-5.2.0.tgz#23440cea3586a1cb70771f98971d4f8bf1dbb36b"
