@@ -19,10 +19,10 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 ```
 
 # 2. How to use
-[vue2]() <br>
-[vue3]()
-[nuxt2]()
-[nuxt3]()
+[vue2](https://vue-swipe-modal-docs.takumaru.dev/started/vue2) <br>
+[vue3](https://vue-swipe-modal-docs.takumaru.dev/started/vue3) <br>
+[nuxt2](https://vue-swipe-modal-docs.takumaru.dev/started/nuxt2) <br>
+[nuxt3](https://vue-swipe-modal-docs.takumaru.dev/started/nuxt3) <br>
 
 ## Props
-[Prop description page]()
+[Prop description page](https://vue-swipe-modal-docs.takumaru.dev/props)
