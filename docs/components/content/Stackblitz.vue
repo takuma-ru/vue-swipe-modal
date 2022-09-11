@@ -1,6 +1,6 @@
 <template>
 <div class="code-sandbox">
-  <iframe :src="`https://stackblitz.com/edit/vue-ygmzzp?ctl=1&embed=1&file=src/App.vue&hideExplorer=1&hideNavigation=1&theme=${colorMode}&view=preview`"></iframe>
+  <iframe :src="`https://stackblitz.com/edit//vitejs-vite-dqxc2g?embed=1&file=src/App.vue&hideExplorer=1&hideNavigation=1&theme=${colorMode}&view=preview`"></iframe>
 </div>
 </template>
 

@@ -99,7 +99,7 @@ const {
         position: absolute;
         top: -1.3em;
 
-        font-size: 0.6em;
+        font-size: 0.5em;
         font-weight: 400;
         color: v-bind('color.theme.subText');
       }

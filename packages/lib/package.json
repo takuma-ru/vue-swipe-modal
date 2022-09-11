@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "private": false,
   "description": "Swipeable Bottom Sheet library for vue2 and vue3",
   "license": "MIT",
@@ -29,7 +29,7 @@
     "url": "https://github.com/takuma-ru/vue-swipe-modal/issues",
     "email": "kcattdev@gmail.com"
   },
-  "homepage": "https://vue-swipe-modal-vue2.vercel.app",
+  "homepage": "https://vue-swipe-modal-docs.takumaru.dev",
   "main": "./dist/swipe-modal.umd.js",
   "module": "./dist/swipe-modal.es.js",
   "exports": {
@@ -68,7 +68,6 @@
     "vue2": "npm:vue@^2.6.14"
   },
   "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.1",
     "vue": "^2.0.0 || ^3.0.0"
   },
   "peerDependenciesMeta": {
