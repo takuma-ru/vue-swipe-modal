@@ -1,5 +1,6 @@
 <template>
   <header>
+    <MobileNav />
     <div class="title">
       <img @click="navigateTo('/')" src="https://user-images.githubusercontent.com/49429291/182005504-0567f54a-80e3-4a31-ba5b-740db91b5190.png" alt="">
       <h3 @click="navigateTo('/')">vue-swipe-modal</h3>
@@ -38,7 +39,7 @@ header {
   display: grid;
   justify-content: space-between;
   align-items: center;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
 
   position: fixed;
   z-index: 10;
