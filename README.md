@@ -18,7 +18,7 @@ Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 ```
 
-# 2. How to use
+### 2. How to use
 - [vue2](https://vue-swipe-modal-docs.takumaru.dev/started/vue2) <br>
 - [vue3](https://vue-swipe-modal-docs.takumaru.dev/started/vue3) <br>
 - [nuxt2](https://vue-swipe-modal-docs.takumaru.dev/started/nuxt2) <br>
