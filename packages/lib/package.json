@@ -1,6 +1,6 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "version": "4.0.6",
+  "version": "5.0.0",
   "private": false,
   "description": "Swipeable Bottom Sheet library for vue2 and vue3",
   "license": "MIT",
@@ -49,7 +49,8 @@
     "publish:lib": "yarn build && npm publish --access=public",
     "switch:2": "vue-demi-switch 2 vue2",
     "switch:3": "vue-demi-switch 3",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "major": "yarn version --major"
   },
   "dependencies": {
     "@vueuse/core": "8.9.4",
