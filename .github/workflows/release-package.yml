@@ -33,8 +33,8 @@ jobs:
         id: current-version
         run: |
           set -x
-          current-version=$(npm info @takuma-ru/vue-swipe-modal version)
-          echo "::set-output name=current-version::${current-version}"
+          version=$(npm info @takuma-ru/vue-swipe-modal version)
+          echo "::set-output name=current-version::${version}"
 
       - name: set new package version (major)
         if: ${{ steps.branch-name.outputs.branch-name == 'major' }}
