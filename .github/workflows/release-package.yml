@@ -27,7 +27,9 @@ jobs:
       - name: get branch name
         id: branch-name
         run: |
-          echo "::set-output name=branch-name::${GITHUB_REF#refs/heads/}"
+          set -x
+          branch=$(echo ${{ github.ref_name }})
+          echo "::set-output name=branch-name::${branch}"
 
       - name: get current package version
         id: current-version
