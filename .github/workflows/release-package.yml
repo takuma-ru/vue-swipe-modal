@@ -24,6 +24,9 @@ jobs:
           node-version: 16
           registry-url: "https://npm.pkg.github.com"
 
+      - name: install
+        run: yarn install --immutable --immutable-cache --check-cache
+
       - name: get branch name
         id: branch-name
         run: |
