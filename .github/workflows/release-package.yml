@@ -56,6 +56,7 @@ jobs:
         with:
           node-version: 16
           registry-url: "https://registry.npmjs.org"
+          scope: '@takuma-ru'
 
       - name: set new package version (major)
         if: ${{ needs.publish-setup.outputs.branch-name == 'release/major' }}
