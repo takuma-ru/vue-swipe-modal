@@ -69,7 +69,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    if: ${{ steps.branch-name.outputs.branch-name != 'release/test' }}
+    if: ${{ needs.publish-setup.outputs.branch-name != 'release/test' }}
 
     steps:
       - name: checkout

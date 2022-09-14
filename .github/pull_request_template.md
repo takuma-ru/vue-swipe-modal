@@ -6,7 +6,7 @@ unknown
 ## 実装内容(Implementation Details)
 <!-- 実装した内容をチェックボックス形式で記述 -->
 <!-- Description of implemented contents in check box format -->
-- [] unknown
+- [ ] unknown
 
 ## Issues
 <!-- このプルリクエストに関連するIssue番号(#XX) -->
