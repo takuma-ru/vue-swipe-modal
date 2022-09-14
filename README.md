@@ -1,4 +1,4 @@
-# @takuma-ru/vue-swpie-modal
+# @takuma-ru/vue-swipe-modal
 
 ![featureGraphic](https://user-images.githubusercontent.com/49429291/182005490-2e0631ca-8271-48e6-9282-25df81ba0f8f.png)
 

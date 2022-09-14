@@ -2,7 +2,7 @@
 title: 'Get Started for vue3｜@takuma-ru/vue-swipe-modal'
 ---
 
-# Get started - Vue.js 2.7 and Vuejs 3.x
+# Get started - Vue.js 2.7 and Vue.js 3.x
 
 ### 1. Install
 ```cmd

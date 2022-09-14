@@ -15,7 +15,7 @@
         to="/started/vue3"
         style="margin: 0.5em 0em"
       >
-        Get Start
+        Get Started
       </Btn>
       <Btn
         outlined
