@@ -16,10 +16,10 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: "https://npm.pkg.github.com"
@@ -27,8 +27,7 @@ jobs:
       - name: get branch name
         id: branch-name
         run: |
-          branch-name=$(echo ${{ github.ref_name }})
-          echo "::set-output name=branch-name::${branch-name}"
+          echo "::set-output name=branch-name::${GITHUB_REF#refs/heads/}"
 
       - name: get current package version
         id: current-version
