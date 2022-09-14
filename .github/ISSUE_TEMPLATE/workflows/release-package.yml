@@ -3,16 +3,16 @@ name: Relese Npm Package
 on:
   push:
     branches:
-      - release/**
+      - 'release/**'
 
 jobs:
   publish-setup:
     name: publish-setup
     runs-on: ubuntu-latest
 
-    #outputs:
-    #  branch-name: ${{ steps.branch-name.outputs.branch-name }}
-    #  current-version: ${{ steps.current-version.outputs.current-version }}
+    outputs:
+      branch-name: ${{ steps.branch-name.outputs.branch-name }}
+      currentversion: ${{ steps.current-version.outputs.current-version }}
 
     steps:
       - name: checkout
