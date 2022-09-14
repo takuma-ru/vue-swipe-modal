@@ -59,19 +59,19 @@ jobs:
           scope: '@takuma-ru'
 
       - name: set new package version (major)
-        if: ${{ steps.branch-name.outputs.branch-name == 'release/major' }}
+        if: ${{ needs.publish-setup.outputs.branch-name == 'release/major' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:major
 
       - name: set new package version (minor)
-        if: ${{ steps.branch-name.outputs.branch-name == 'release/minor' }}
+        if: ${{ needs.publish-setup.outputs.branch-name == 'release/minor' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:minor
 
       - name: set new package version (patch)
-        if: ${{ steps.branch-name.outputs.branch-name == 'release/patch' }}
+        if: ${{ needs.publish-setup.outputs.branch-name == 'release/patch' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
