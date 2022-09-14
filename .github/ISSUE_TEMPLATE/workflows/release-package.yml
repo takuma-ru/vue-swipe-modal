@@ -1,0 +1,45 @@
+name: Relese Npm Package
+
+on:
+  push:
+    branches:
+      - release/**
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+
+    outputs:
+      branch: ${{ steps.branch.outputs.branch }}
+      current-version: ${{ steps.current-version.outputs.current-version }}
+      new-version: ${{  }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: get branch name
+        id: branch
+        run: |
+          branch=$(echo ${{ github.base_ref }})
+          echo "::set-output name=branch::${branch}"
+
+      - name: get current package version
+        id: current-version
+        run: |
+          version=$(yarn info @takuma-ru/vue-swipe-modal version)
+          echo "::set-output name=current-version::${version}"
+
+      - name: set new package version
+        if: ${{ steps.branch.outputs.branch == 'release/' }}
+        id: new-version
+        run: |
+          version=$(echo "${{ steps.current-version.outputs.current-version +  }}" | bc -l)
+          echo "::set-output name=new-version::${version}"
