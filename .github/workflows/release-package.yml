@@ -38,6 +38,48 @@ jobs:
           version=$(npm info @takuma-ru/vue-swipe-modal version)
           echo "::set-output name=current-version::${version}"
 
+  publish-npm-package:
+    name: publish-npm-package
+    needs: publish-setup
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    if: ${{ needs.publish-setup.outputs.branch-name != 'release/test' }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"
+
+      - name: set new package version (major)
+        if: ${{ needs.publish-setup.outputs.branch-name == 'release/major' }}
+        run: |
+          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:major
+
+      - name: set new package version (minor)
+        if: ${{ needs.publish-setup.outputs.branch-name == 'release/minor' }}
+        run: |
+          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:minor
+
+      - name: set new package version (patch)
+        if: ${{ needs.publish-setup.outputs.branch-name == 'release/patch' }}
+        run: |
+          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:patch
+
+      - name: publish package
+        run: yarn install --immutable --immutable-cache --check-cache && yarn publish:lib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   publish-github-package:
     name: publish-github-package
     needs: publish-setup
@@ -80,45 +122,3 @@ jobs:
         run: yarn install --immutable --immutable-cache --check-cache && yarn publish:lib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-npm-package:
-    name: publish-npm-package
-    needs: publish-setup
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    if: ${{ needs.publish-setup.outputs.branch-name != 'release/test' }}
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: "https://registry.npmjs.org"
-
-      - name: set new package version (major)
-        if: ${{ needs.publish-setup.outputs.branch-name == 'release/major' }}
-        run: |
-          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
-          yarn lib version-up:major
-
-      - name: set new package version (minor)
-        if: ${{ needs.publish-setup.outputs.branch-name == 'release/minor' }}
-        run: |
-          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
-          yarn lib version-up:minor
-
-      - name: set new package version (patch)
-        if: ${{ needs.publish-setup.outputs.branch-name == 'release/patch' }}
-        run: |
-          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
-          yarn lib version-up:patch
-
-      - name: publish package
-        run: yarn install --immutable --immutable-cache --check-cache && yarn publish:lib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
