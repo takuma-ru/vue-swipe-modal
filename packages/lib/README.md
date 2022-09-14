@@ -1,4 +1,4 @@
-# @takuma-ru/vue-swpie-modal
+# @takuma-ru/vue-swipe-modal
 
 ![featureGraphic](https://user-images.githubusercontent.com/49429291/182005490-2e0631ca-8271-48e6-9282-25df81ba0f8f.png)
 
@@ -14,11 +14,17 @@ Modal window that can be swiped to close.（Swipeable Bottom Sheet）
 
 ## Getting Started
 ### 1. Install
+#### vue2.7, vue3, nuxt3
 ```powershell
 yarn add @takuma-ru/vue-swipe-modal@^4.0.0
 ```
 
-# 2. How to use
+#### vue2, nuxt2
+```powershell
+yarn add @takuma-ru/vue-swipe-modal@^4.0.0 @vue/composition-api
+```
+
+### 2. How to use
 - [vue2](https://vue-swipe-modal-docs.takumaru.dev/started/vue2) <br>
 - [vue3](https://vue-swipe-modal-docs.takumaru.dev/started/vue3) <br>
 - [nuxt2](https://vue-swipe-modal-docs.takumaru.dev/started/nuxt2) <br>
