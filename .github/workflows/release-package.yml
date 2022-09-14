@@ -37,25 +37,25 @@ jobs:
           echo "::set-output name=current-version::${version}"
 
       - name: set new package version (major)
-        if: ${{ steps.branch-name.outputs.branch-name == 'major' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/major' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:major
 
       - name: set new package version (minor)
-        if: ${{ steps.branch-name.outputs.branch-name == 'minor' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/minor' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:minor
 
       - name: set new package version (patch)
-        if: ${{ steps.branch-name.outputs.branch-name == 'patch' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/patch' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
 
       - name: set new package version (test)
-        if: ${{ steps.branch-name.outputs.branch-name == 'test' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/test' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
@@ -67,7 +67,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    if: ${{ needs.publish-setup.outputs.branch-name != 'test' }}
+    if: ${{ false }}
 
     steps:
       - name: checkout
