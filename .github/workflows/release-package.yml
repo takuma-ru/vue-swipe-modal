@@ -54,6 +54,12 @@ jobs:
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
 
+      - name: set new package version (test)
+        if: ${{ steps.branch.outputs.branch == 'test' }}
+        run: |
+          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:patch
+
   publish-package:
     name: publish-package
     needs: publish-setup
@@ -61,6 +67,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+    if: ${{ needs.publish-setup.outputs.branch != 'test' }}
 
     steps:
       - name: checkout
