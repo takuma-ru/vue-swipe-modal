@@ -61,19 +61,19 @@ jobs:
       - name: set new package version (major)
         if: ${{ needs.publish-setup.outputs.branch-name == 'release/major' }}
         run: |
-          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:major
 
       - name: set new package version (minor)
         if: ${{ needs.publish-setup.outputs.branch-name == 'release/minor' }}
         run: |
-          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:minor
 
       - name: set new package version (patch)
         if: ${{ needs.publish-setup.outputs.branch-name == 'release/patch' }}
         run: |
-          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version --new-version ${{ needs.publish-setup.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
 
       - name: publish package
