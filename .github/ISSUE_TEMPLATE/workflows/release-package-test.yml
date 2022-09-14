@@ -1,8 +1,0 @@
-name: Relese Npm Package
-
-on:
-  push:
-    branches:
-      - 'release/**'
-
-jobs:
