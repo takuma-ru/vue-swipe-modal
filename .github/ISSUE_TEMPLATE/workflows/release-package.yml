@@ -72,5 +72,5 @@ jobs:
 
       - name: publish package
         run: yarn install --immutable --immutable-cache --check-cache && yarn publish:lib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #env:
+          #NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
