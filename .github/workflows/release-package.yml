@@ -32,7 +32,7 @@ jobs:
       - name: get current package version
         id: current-version
         run: |
-          current-version=$(yarn info @takuma-ru/vue-swipe-modal version)
+          current-version=${yarn info @takuma-ru/vue-swipe-modal version}
           echo "::set-output name=current-version::${current-version}"
 
       - name: set new package version (major)
