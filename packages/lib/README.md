@@ -32,6 +32,3 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0 @vue/composition-api
 
 ## Props
 [Prop description page](https://vue-swipe-modal-docs.takumaru.dev/props)
-
-## License
-[MIT - Copyright (c) 2022 takuma-ru](https://github.com/takuma-ru/vue-swipe-modal/blob/main/LICENSE.md)

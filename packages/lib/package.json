@@ -36,8 +36,7 @@
   "types": "@types/components/swipe-modal.d.ts",
   "files": [
     "dist/*",
-    "@types/*",
-    "LICENSE.md"
+    "@types/*"
   ],
   "sideEffects": false,
   "type": "module",
