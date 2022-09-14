@@ -50,7 +50,9 @@
     "switch:2": "vue-demi-switch 2 vue2",
     "switch:3": "vue-demi-switch 3",
     "preview": "vite preview",
-    "major": "yarn version --major"
+    "version-up:major": "yarn version --major",
+    "version-up:minor": "yarn version --minor",
+    "version-up:patch": "yarn version --patch"
   },
   "dependencies": {
     "@vueuse/core": "8.9.4",
