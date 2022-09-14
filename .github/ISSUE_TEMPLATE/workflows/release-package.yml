@@ -6,7 +6,7 @@ on:
       - release/**
 
 jobs:
-  setup:
+  publish-setup:
     name: setup
     runs-on: ubuntu-latest
 
@@ -54,7 +54,7 @@ jobs:
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
 
-  publish:
+  publish-package:
     name: publish
     needs: setup
     runs-on: ubuntu-latest
