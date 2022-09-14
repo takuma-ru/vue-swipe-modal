@@ -6,30 +6,29 @@ on:
       - release/**
 
 jobs:
-  release:
-    name: release
+  setup:
+    name: setup
     runs-on: ubuntu-latest
 
     outputs:
-      branch: ${{ steps.branch.outputs.branch }}
+      branch-name: ${{ steps.branch-name.outputs.branch-name }}
       current-version: ${{ steps.current-version.outputs.current-version }}
-      new-version: ${{  }}
 
     steps:
       - name: checkout
         uses: actions/checkout@v3
 
-      - name: setup-node
+      - name: setup node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: "https://npm.pkg.github.com"
 
       - name: get branch name
-        id: branch
+        id: branch-name
         run: |
-          branch=$(echo ${{ github.base_ref }})
-          echo "::set-output name=branch::${branch}"
+          branch-name=$(echo ${{ github.base_ref#release/ }})
+          echo "::set-output name=branch::${branch-name}"
 
       - name: get current package version
         id: current-version
@@ -37,9 +36,41 @@ jobs:
           version=$(yarn info @takuma-ru/vue-swipe-modal version)
           echo "::set-output name=current-version::${version}"
 
-      - name: set new package version
-        if: ${{ steps.branch.outputs.branch == 'release/' }}
-        id: new-version
+      - name: set new package version (major)
+        if: ${{ steps.branch.outputs.branch == 'major' }}
         run: |
-          version=$(echo "${{ steps.current-version.outputs.current-version +  }}" | bc -l)
-          echo "::set-output name=new-version::${version}"
+          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:major
+
+      - name: set new package version (minor)
+        if: ${{ steps.branch.outputs.branch == 'minor' }}
+        run: |
+          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:minor
+
+      - name: set new package version (patch)
+        if: ${{ steps.branch.outputs.branch == 'patch' }}
+        run: |
+          yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
+          yarn lib version-up:patch
+
+  publish:
+    name: publish
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://npm.pkg.github.com"
+          scope: '@takuma-ru'
+
+      - name: publish package
+        run: yarn install --immutable --immutable-cache --check-cache && yarn publish:lib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

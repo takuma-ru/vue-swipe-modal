@@ -18,9 +18,6 @@
     "sheet",
     "pwa"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:takuma-ru/vue-swipe-modal.git"
@@ -50,9 +47,9 @@
     "switch:2": "vue-demi-switch 2 vue2",
     "switch:3": "vue-demi-switch 3",
     "preview": "vite preview",
-    "version-up:major": "yarn version --new-version 4.0.8 && yarn version --major",
-    "version-up:minor": "yarn version --minor",
-    "version-up:patch": "yarn version --patch"
+    "version-up:major": "yarn version --major --no-git-tag-version --no-commit-hooks",
+    "version-up:minor": "yarn version --minor --no-git-tag-version --no-commit-hooks",
+    "version-up:patch": "yarn version --patch --no-git-tag-version --no-commit-hooks"
   },
   "dependencies": {
     "@vueuse/core": "8.9.4",
