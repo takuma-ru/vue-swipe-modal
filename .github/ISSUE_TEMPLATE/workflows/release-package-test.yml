@@ -53,24 +53,3 @@ jobs:
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
-
-  publish-package:
-    name: publish-package
-    needs: setup
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: "https://npm.pkg.github.com"
-          scope: '@takuma-ru'
-
-      - name: publish package
-        run: yarn install --immutable --immutable-cache --check-cache && yarn publish:lib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
