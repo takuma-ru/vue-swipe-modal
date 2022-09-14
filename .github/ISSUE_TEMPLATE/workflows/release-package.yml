@@ -28,13 +28,13 @@ jobs:
         id: branch-name
         run: |
           branch-name=$(echo ${{ github.base_ref#release/ }})
-          echo "::set-output name=branch::${branch-name}"
+          echo "::set-output name=branch-name::${branch-name}"
 
       - name: get current package version
         id: current-version
         run: |
-          version=$(yarn info @takuma-ru/vue-swipe-modal version)
-          echo "::set-output name=current-version::${version}"
+          current-version=$(yarn info @takuma-ru/vue-swipe-modal version)
+          echo "::set-output name=current-version::${current-version}"
 
       - name: set new package version (major)
         if: ${{ steps.branch.outputs.branch == 'major' }}
