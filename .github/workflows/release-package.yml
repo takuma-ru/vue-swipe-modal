@@ -56,8 +56,11 @@ jobs:
 
   publish-package:
     name: publish-package
-    needs: setup
+    needs: publish-setup
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: checkout
