@@ -12,7 +12,7 @@ jobs:
 
     outputs:
       branch-name: ${{ steps.branch-name.outputs.branch-name }}
-      currentversion: ${{ steps.current-version.outputs.current-version }}
+      current-version: ${{ steps.current-version.outputs.current-version }}
 
     steps:
       - name: checkout
@@ -22,40 +22,42 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://registry.npmjs.org"
 
       - name: get branch name
         id: branch-name
         run: |
-          branch-name=$(echo ${{ github.ref_name#release/ }})
-          echo "::set-output name=branch-name::${branch-name}"
+          set -x
+          branch=$(echo ${{ github.ref_name }})
+          echo "::set-output name=branch-name::${branch}"
 
       - name: get current package version
         id: current-version
         run: |
-          current-version=$(yarn info @takuma-ru/vue-swipe-modal version)
-          echo "::set-output name=current-version::${current-version}"
+          set -x
+          version=$(npm info @takuma-ru/vue-swipe-modal version)
+          echo "::set-output name=current-version::${version}"
 
       - name: set new package version (major)
-        if: ${{ steps.branch-name.outputs.branch-name == 'major' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/major' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:major
 
       - name: set new package version (minor)
-        if: ${{ steps.branch-name.outputs.branch-name == 'minor' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/minor' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:minor
 
       - name: set new package version (patch)
-        if: ${{ steps.branch-name.outputs.branch-name == 'patch' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/patch' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
 
       - name: set new package version (test)
-        if: ${{ steps.branch-name.outputs.branch-name == 'test' }}
+        if: ${{ steps.branch-name.outputs.branch-name == 'release/test' }}
         run: |
           yarn lib version --new-version ${{ steps.current-version.outputs.current-version }} --no-git-tag-version --no-commit-hooks
           yarn lib version-up:patch
@@ -67,7 +69,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    if: ${{ needs.publish-setup.outputs.branch-name != 'test' }}
+    if: ${{ false }}
 
     steps:
       - name: checkout
