@@ -40,4 +40,5 @@ yarn add @takuma-ru/vue-swipe-modal@^4.0.0 @vue/composition-api
 <img height="128px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt="JetBrains Logo (Main) logo.">
 This library is being developed using webstorm in cooperation with JetBrains.<br>
 The license is granted under the name JetBrains OSS development license.<br>
+
 **We sincerely thank JetBrains for their cooperation.**
