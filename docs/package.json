@@ -9,9 +9,9 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@nuxt/content": "^2.1.1",
+    "@nuxt/content": "^2.2.0",
     "material-symbols": "^0.2.10",
-    "nuxt": "^3.0.0-rc.10",
+    "nuxt": "^3.0.0-rc.12",
     "sass": "^1.54.0"
   }
 }
