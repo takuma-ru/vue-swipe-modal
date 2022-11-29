@@ -34,7 +34,7 @@
 import { useColorStore } from '~~/store/colorStore';
 import { useDeviceStatusStore } from '~~/store/deviceStatusStore';
 
-useMeta({
+definePageMeta({
   title: '@takuma-ru/vue-swipe-modal'
 })
 
