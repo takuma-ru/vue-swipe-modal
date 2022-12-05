@@ -11,10 +11,9 @@ export default defineNuxtConfig({
     },
   },
 
-
-  loadingIndicator: {
+  /* loadingIndicator: {
     name: './assets/loadingIndicator.html',
-  },
+  }, */
 
   modules: [ '@nuxt/content' ],
 

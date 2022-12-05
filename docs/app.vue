@@ -5,14 +5,17 @@
       <Nav />
       <NuxtPage />
     </div>
+    <NuxtLoading ref="loading" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import 'material-symbols';
 import { useColorModeStore } from './store/colorModeStore'
 import { useColorStore } from './store/colorStore'
 import { useDeviceStatusStore } from './store/deviceStatusStore';
+
+const nuxtApp = useNuxtApp()
 
 const {
   setSytemMode
@@ -34,9 +37,18 @@ const {
   getThisDisplaySize
 } = useDeviceStatusStore()
 
+const loading = ref()
+
 setSytemMode()
 getThisDisplaySize()
 
+nuxtApp.hook('page:start', () => {
+  loading.value.start()
+})
+nuxtApp.hook('page:finish', () => {
+  loading.value.finish()
+  window.scrollTo(0, 0)
+})
 </script>
 
 <style lang="scss">
