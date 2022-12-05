@@ -147,7 +147,7 @@ const navLinks = ref<NavLinksType>([
   nav {
     position: fixed;
     width: 256px - 32px;
-    height: 100vh;
+    height: calc(100vh - 64px);
     padding: 32px 16px;
 
     top: 0px;

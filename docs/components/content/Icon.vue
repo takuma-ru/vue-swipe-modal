@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import 'material-symbols';
 import { useColorStore } from '../../store/colorStore'
 
 /* -- type, interface -- */
