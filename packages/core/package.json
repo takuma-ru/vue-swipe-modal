@@ -53,8 +53,9 @@
     "publish:major": "pnpm build && pnpm dlx release-it major --ci",
     "publish:minor": "pnpm build && pnpm dlx release-it minor --ci",
     "publish:patch": "pnpm build && pnpm dlx release-it patch --ci",
-    "publish:beta": "pnpm build && pnpm dlx release-it major --preRelease=beta --ci",
-    "publish:alpha": "pnpm build && pnpm dlx release-it major --preRelease=alpha --ci",
+    "publish:major-beta": "pnpm build && pnpm dlx release-it major --preRelease=beta --ci",
+    "publish:minor-beta": "pnpm build && pnpm dlx release-it minor --preRelease=beta --ci",
+    "publish:patch-beta": "pnpm build && pnpm dlx release-it patch --preRelease=beta --ci",
     "publish:prerelease": "pnpm build && pnpm dlx release-it prerelease --ci"
   },
   "dependencies": {
