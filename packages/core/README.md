@@ -1,18 +1,37 @@
-# Vue 3 + TypeScript + Vite
+# @takuma-ru/vue-swipe-modal
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+![featureGraphic](https://user-images.githubusercontent.com/49429291/182005490-2e0631ca-8271-48e6-9282-25df81ba0f8f.png)
+![npm](https://img.shields.io/npm/dt/@takuma-ru/vue-swipe-modal?style=flat-square)
+![npm bundle size (scoped)](https://img.shields.io/bundlephobia/min/@takuma-ru/vue-swipe-modal?style=flat-square)
 
-## Recommended IDE Setup
+## Description
+Modal window that can be swiped to close.（Swipeable Bottom Sheet）<br>
+<br>
+⚠️ WARN ⚠️<br>
+Due to the eol of vue2, vue2 is no longer supported. vue2 can be used with `v4.0.7` or earlier, but we are not responsible for any problems that may occur.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Type Support For `.vue` Imports in TS
+## DEMO
+[Directory]()
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Getting Started
+### 1. Install
+#### vue3
+```shell
+yarn add @takuma-ru/vue-swipe-modal@^5.0.0
+```
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+#### vue2 (deprecated)
+```shell
+yarn add @takuma-ru/vue-swipe-modal@^4.0.0 @vue/composition-api
+```
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+### 2. How to use
+#### [For vue2](https://vue-swipe-modal-docs.takumaru.dev/started/vue2) <br>
+#### [For vue3](https://vue-swipe-modal-docs.takumaru.dev/started/vue3) <br>
+
+## Props
+[Prop description page](https://vue-swipe-modal-docs.takumaru.dev/props)
+
+## License
+[MIT - Copyright (c) 2023 takuma-ru](https://github.com/takuma-ru/vue-swipe-modal/blob/main/LICENSE.md)
