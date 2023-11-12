@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true, // ファイル保存時に自動整形を行うようにする
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッターを「prettier」にする
+  "editor.tabSize": 2, // タブサイズを半角スペース二つにする
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": true // stylelintの自動整形を行うようにする
+  },
+  "stylelint.validate": ["css", "scss", "vue"], // stylelintの自動整形の対象ファイルを設定を行うようにする
+  "files.eol": "\n" // 改行コードを指定
+}
