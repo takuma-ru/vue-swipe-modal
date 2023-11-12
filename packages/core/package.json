@@ -1,7 +1,7 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
   "private": false,
-  "version": "4.0.7",
+  "version": "5.0.0-beta.0",
   "description": "Swipeable Bottom Sheet library for vue2 and vue3",
   "license": "MIT",
   "author": "takuma-ru <kcattdev@gmail.com> (https://github.com/takuma-ru/)",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:takuma-ru/vue-swipe-modal.git"
+    "url": "git+ssh://git@github.com/takuma-ru/vue-swipe-modal.git"
   },
   "bugs": {
     "url": "https://github.com/takuma-ru/vue-swipe-modal/issues",
@@ -56,7 +56,8 @@
     "publish:major-beta": "pnpm build && pnpm dlx release-it major --preRelease=beta --ci",
     "publish:minor-beta": "pnpm build && pnpm dlx release-it minor --preRelease=beta --ci",
     "publish:patch-beta": "pnpm build && pnpm dlx release-it patch --preRelease=beta --ci",
-    "publish:prerelease": "pnpm build && pnpm dlx release-it prerelease --ci"
+    "publish:prerelease": "pnpm build && pnpm dlx release-it prerelease --ci",
+    "publish:major-beta:no-ci": "pnpm build && pnpm dlx release-it major --preRelease=beta"
   },
   "dependencies": {
     "@vueuse/core": "^10.6.0",
