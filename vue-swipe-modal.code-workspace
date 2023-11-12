@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "📄 docs",
+      "path": "docs"
+    },
+    {
+      "name": "📦 core",
+      "path": "packages/core"
+    }
+  ],
+  "settings": {
+    "cSpell.words": []
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

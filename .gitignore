@@ -2,26 +2,50 @@
 logs
 *.log
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
+# Dependency directory
+**/node_modules/**
+_node_modules
+.pnp.cjs
+
+# Coverage directory used by tools like istanbul
+coverage
+
+.tmp
+_docpress
+
+lib
 dist
-dist-ssr
-*.local
+tsconfig.tsbuildinfo
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-*.afdesign
+# Visual Studio Code configs
+# .vscode/
 
-*.nuxt
+# JetBrains IDEs
+.idea/
+
+# pnpm uses npm for publishing a new version with
+# dependencies bundled but the npm lockfile is not needed
+# because pnpm use pnpm for installation
+package-lock.json
+
+__package_previews__
+.store
+
+privatePackages/store
+
+## Verdaccio storage
+storage
+
+yarn.lock
+
+RELEASE.md
+
+.jest-cache
+.verdaccio-cache
+.turbo
+
+## custom modules-dir fixture
+__fixtures__/custom-modules-dir/**/fake_modules/
+__fixtures__/custom-modules-dir/cache/
+__fixtures__/custom-modules-dir/patches/
