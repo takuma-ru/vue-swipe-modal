@@ -11,4 +11,4 @@ module.exports = {
     commitMessage: ":bookmark: release @takuma-ru/vue-swipe-modal@${version}",
   },
   plugins: {},
-};
+}

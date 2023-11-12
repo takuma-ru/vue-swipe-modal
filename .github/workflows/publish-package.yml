@@ -89,19 +89,9 @@ jobs:
         run: pnpm vsm publish:patch
         if: steps.minor.conclusion == 'skipped' && contains(toJSON(github.event.commits.*.message), '🚀 patch')
 
-      - name: Beta release
-        id: beta
-        run: pnpm vsm publish:beta
-        if: steps.patch.conclusion == 'skipped' && contains(toJSON(github.event.commits.*.message), '🚀 beta')
-
-      - name: Prerelease
-        id: prerelease
-        run: pnpm vsm publish:prerelease
-        if: steps.beta.conclusion == 'skipped' && contains(toJSON(github.event.commits.*.message), '🚀 prerelease')
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
-        if: steps.major.conclusion == 'success' || steps.minor.conclusion == 'success' || steps.patch.conclusion == 'success' || steps.beta.conclusion == 'success'
+        if: steps.major.conclusion == 'success' || steps.minor.conclusion == 'success' || steps.patch.conclusion == 'success'
         with:
           title: "Update package.json"
           draft: false

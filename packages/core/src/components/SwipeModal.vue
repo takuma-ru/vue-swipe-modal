@@ -14,7 +14,10 @@
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
     >
-      <slot v-if="isDragHandle" name="drag-handle">
+      <slot
+        v-if="isDragHandle"
+        name="drag-handle"
+      >
         <div :class="$style['swipe-modal-drag-handle']" />
       </slot>
     </div>
@@ -22,7 +25,10 @@
       <slot />
     </div>
   </dialog>
-  <slot v-if="isBackdrop" name="backdrop">
+  <slot
+    v-if="isBackdrop"
+    name="backdrop"
+  >
     <div
       v-show="modelValue"
       ref="backdropRef"
@@ -33,23 +39,23 @@
 </template>
 
 <script setup lang="ts">
-import { HTMLAttributes, computed, ref, watch } from "vue";
-import { useElementBounding } from "@vueuse/core";
+import { HTMLAttributes, computed, ref, watch } from "vue"
+import { useElementBounding } from "@vueuse/core"
 
 // -- props, emits --
 
 type PropsType = {
-  modelValue: boolean;
-  isDragHandle?: boolean;
-  isBackdrop?: boolean;
-  isPersistent?: boolean;
-  isScrollLock?: boolean;
-  class?: HTMLAttributes["class"];
-};
+  modelValue: boolean
+  isDragHandle?: boolean
+  isBackdrop?: boolean
+  isPersistent?: boolean
+  isScrollLock?: boolean
+  class?: HTMLAttributes["class"]
+}
 
 type EmitType = {
-  (e: "update:modelValue", value: boolean): void;
-};
+  (e: "update:modelValue", value: boolean): void
+}
 
 const props = withDefaults(defineProps<PropsType>(), {
   isDragHandle: true,
@@ -57,9 +63,9 @@ const props = withDefaults(defineProps<PropsType>(), {
   isPersistent: false,
   isScrollLock: true,
   class: undefined,
-});
+})
 
-const emit = defineEmits<EmitType>();
+const emit = defineEmits<EmitType>()
 
 // -- variables --
 
@@ -69,25 +75,25 @@ const emit = defineEmits<EmitType>();
 const modelValue = computed({
   get: () => props.modelValue,
   set: (value) => {
-    emit("update:modelValue", value);
+    emit("update:modelValue", value)
   },
-});
+})
 
-const modalRef = ref<HTMLElement | null>(null);
-const backdropRef = ref<HTMLElement | null>(null);
-const isMouseDown = ref(false);
-const movementAmountY = ref(0);
-const startPositionY = ref(0);
+const modalRef = ref<HTMLElement | null>(null)
+const backdropRef = ref<HTMLElement | null>(null)
+const isMouseDown = ref(false)
+const movementAmountY = ref(0)
+const startPositionY = ref(0)
 
-const { height: panelRefHeight } = useElementBounding(modalRef);
+const { height: panelRefHeight } = useElementBounding(modalRef)
 
 const bottom = computed(() => {
-  if (!props.modelValue) return "-100%";
+  if (!props.modelValue) return "-100%"
 
-  if (movementAmountY.value < 0) return `${movementAmountY.value}px`;
+  if (movementAmountY.value < 0) return `${movementAmountY.value}px`
 
-  return "0%";
-});
+  return "0%"
+})
 
 // -- functions --
 
@@ -95,78 +101,78 @@ const bottom = computed(() => {
  * バックドロップをクリックしたときの処理
  */
 const handleClickBackdrop = () => {
-  if (props.isPersistent) return;
+  if (props.isPersistent) return
 
-  modelValue.value = false;
-};
+  modelValue.value = false
+}
 
 /**
  * ドラッグ開始時の処理
  */
 const handleMouseDown = (e: MouseEvent) => {
-  startPositionY.value = e.y;
-  isMouseDown.value = true;
-};
+  startPositionY.value = e.y
+  isMouseDown.value = true
+}
 
 /**
  * ドラッグ終了時の処理
  */
 const handleMouseUp = () => {
-  isMouseDown.value = false;
+  isMouseDown.value = false
 
-  if (props.isPersistent) return cancelAnim();
+  if (props.isPersistent) return cancelAnim()
 
   if (-movementAmountY.value > panelRefHeight.value / 4)
-    return (modelValue.value = false);
+    return (modelValue.value = false)
 
-  if (movementAmountY.value < 0) return cancelAnim();
-};
+  if (movementAmountY.value < 0) return cancelAnim()
+}
 
 /**
  * ドラッグ中の処理
  */
 const handleMouseMove = (e: MouseEvent) => {
-  if (!isMouseDown.value) return;
+  if (!isMouseDown.value) return
 
-  movementAmountY.value = startPositionY.value - e.y;
-};
+  movementAmountY.value = startPositionY.value - e.y
+}
 
 /**
  * スワイプ開始時の処理
  */
 const handleTouchStart = (e: TouchEvent) => {
-  startPositionY.value = e.touches[0].clientY;
-  isMouseDown.value = true;
-};
+  startPositionY.value = e.touches[0].clientY
+  isMouseDown.value = true
+}
 
 /**
  * スワイプ中の処理
  */
 const handleTouchMove = (e: TouchEvent) => {
-  if (!isMouseDown.value) return;
+  if (!isMouseDown.value) return
 
-  movementAmountY.value = startPositionY.value - e.touches[0].clientY;
-};
+  movementAmountY.value = startPositionY.value - e.touches[0].clientY
+}
 
 /**
  * スワイプ終了時の処理
  */
 const handleTouchEnd = () => {
-  isMouseDown.value = false;
+  isMouseDown.value = false
 
-  if (props.isPersistent) return cancelAnim();
+  if (props.isPersistent) return cancelAnim()
 
   if (-movementAmountY.value > panelRefHeight.value / 4)
-    return (modelValue.value = false);
+    return (modelValue.value = false)
 
-  if (movementAmountY.value < 0) return cancelAnim();
-};
+  if (movementAmountY.value < 0) return cancelAnim()
+}
 
 /**
  * スワイプしたが閉じる判定の閾値に達しなかったときのアニメーション
  */
 const cancelAnim = () => {
-  if (!modalRef.value) return;
+  if (!modalRef.value) return
 
   modalRef.value.animate(
     [
@@ -178,20 +184,20 @@ const cancelAnim = () => {
     {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }
+    },
   ).onfinish = () => {
-    movementAmountY.value = 0;
-  };
-};
+    movementAmountY.value = 0
+  }
+}
 
 /**
  * モーダルを開くときのアニメーション
  */
 const handleOpenModal = () => {
-  if (!modalRef.value) return;
+  if (!modalRef.value) return
 
-  modalRef.value.style.removeProperty("display");
-  setPageScrollable("hidden");
+  modalRef.value.style.removeProperty("display")
+  setPageScrollable("hidden")
 
   modalRef.value.animate(
     [
@@ -203,8 +209,8 @@ const handleOpenModal = () => {
     {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }
-  );
+    },
+  )
 
   if (backdropRef.value) {
     backdropRef.value.animate(
@@ -215,18 +221,18 @@ const handleOpenModal = () => {
       {
         duration: 300,
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-      }
-    );
+      },
+    )
   }
-};
+}
 
 /**
  * モーダルを閉じるときのアニメーション
  */
 const handleCloseModal = () => {
-  if (!modalRef.value) return;
+  if (!modalRef.value) return
 
-  const duration = 300;
+  const duration = 300
 
   if (backdropRef.value) {
     backdropRef.value.animate(
@@ -237,8 +243,8 @@ const handleCloseModal = () => {
       {
         duration,
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-      }
-    );
+      },
+    )
   }
 
   const closeAnim = modalRef.value.animate(
@@ -252,51 +258,51 @@ const handleCloseModal = () => {
       duration,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
       fill: "forwards",
-    }
-  );
+    },
+  )
 
   closeAnim.onfinish = () => {
-    movementAmountY.value = 0;
-    modelValue.value = false;
-    closeAnim.cancel();
-    setPageScrollable("auto");
-    modalRef.value?.style.setProperty("display", "none");
-  };
-};
+    movementAmountY.value = 0
+    modelValue.value = false
+    closeAnim.cancel()
+    setPageScrollable("auto")
+    modalRef.value?.style.setProperty("display", "none")
+  }
+}
 
 /**
  * 背景がスクロールできるかどうかを制御する
  */
 const setPageScrollable = (scrollable: "auto" | "hidden") => {
-  if (!props.isScrollLock) return;
+  if (!props.isScrollLock) return
 
-  let dv = window;
-  let xOffset, yOffset, de;
+  let dv = window
+  let xOffset, yOffset, de
   if (document.defaultView) {
-    dv = document.defaultView;
-    xOffset = dv.pageXOffset;
-    yOffset = dv.pageYOffset;
+    dv = document.defaultView
+    xOffset = dv.pageXOffset
+    yOffset = dv.pageYOffset
   } else {
-    de = document.documentElement;
-    xOffset = de.scrollLeft;
-    yOffset = de.scrollTop;
+    de = document.documentElement
+    xOffset = de.scrollLeft
+    yOffset = de.scrollTop
   }
-  document.documentElement.style.overflow = scrollable;
+  document.documentElement.style.overflow = scrollable
   document.documentElement.style.overscrollBehaviorY =
-    scrollable === "auto" ? "auto" : "none";
-  dv.scrollTo(xOffset, yOffset);
-};
+    scrollable === "auto" ? "auto" : "none"
+  dv.scrollTo(xOffset, yOffset)
+}
 
 // -- life cycle --
 
 watch(
   () => modelValue.value,
   (value) => {
-    if (value) handleOpenModal();
+    if (value) handleOpenModal()
 
-    if (!value) handleCloseModal();
-  }
-);
+    if (!value) handleCloseModal()
+  },
+)
 </script>
 
 <style module lang="scss">
