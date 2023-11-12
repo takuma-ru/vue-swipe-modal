@@ -1,8 +1,26 @@
 {
   "name": "@takuma-ru/vue-swipe-modal",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/vueSwipeModal.umd.cjs",
+  "module": "./dist/vueSwipeModal.js",
+  "exports": {
+    "import": "./dist/vueSwipeModal.js",
+    "require": "./dist/vueSwipeModal.cjs",
+    "types": "./@types/main.d.ts"
+  },
+  "types": "./@types/main.d.ts",
+  "files": [
+    "dist/*",
+    "@types/*",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",

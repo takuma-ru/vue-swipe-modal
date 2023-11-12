@@ -8,6 +8,28 @@ importers:
 
   .: {}
 
+  demo/vue:
+    dependencies:
+      '@takuma-ru/vue-swipe-modal':
+        specifier: workspace:*
+        version: link:../../packages/core
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.8(typescript@5.2.2)
+    devDependencies:
+      '@vitejs/plugin-vue':
+        specifier: ^4.2.3
+        version: 4.4.1(vite@4.5.0)(vue@3.3.8)
+      typescript:
+        specifier: ^5.0.2
+        version: 5.2.2
+      vite:
+        specifier: ^4.4.5
+        version: 4.5.0(sass@1.69.5)
+      vue-tsc:
+        specifier: ^1.8.5
+        version: 1.8.22(typescript@5.2.2)
+
   packages/core:
     dependencies:
       '@vueuse/core':

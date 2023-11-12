@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "vsm": "pnpm -F \"@takuma-ru/vue-swipe-modal\""
+    "vsm": "pnpm -F \"@takuma-ru/vue-swipe-modal\"",
+    "demo": "pnpm -F \"demo\""
   },
   "packageManager": "pnpm@8.10.2",
   "engines": {

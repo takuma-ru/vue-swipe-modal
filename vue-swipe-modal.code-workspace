@@ -11,6 +11,10 @@
     {
       "name": "📦 core",
       "path": "packages/core"
+    },
+    {
+      "name": "🧪 demo",
+      "path": "demo/vue"
     }
   ],
   "settings": {
