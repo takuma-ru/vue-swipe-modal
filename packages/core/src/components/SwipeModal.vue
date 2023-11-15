@@ -1,7 +1,11 @@
 <template>
   <dialog
     ref="modalRef"
-    :class="[props.class, $style['swipe-modal']]"
+    :class="[
+      props.class,
+      !props.class && $style['default-modal-style'],
+      $style['swipe-modal'],
+    ]"
     :open="modelValue"
     @close="modelValue = false"
   >
@@ -319,6 +323,21 @@ watch(
   > .panel {
     position: relative;
     overflow: auto;
+  }
+}
+
+.default-modal-style {
+  box-sizing: border-box;
+  width: 100%;
+  height: 50dvh;
+  color: white;
+  background-color: #1d1b20;
+  border-radius: 1rem 1rem 0 0;
+
+  @media (prefers-color-scheme: light) {
+    color: black;
+    background-color: #f7f2fa;
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 37%);
   }
 }
 
