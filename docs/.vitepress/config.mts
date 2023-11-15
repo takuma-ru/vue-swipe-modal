@@ -42,6 +42,10 @@ export default defineConfig({
             text: "Properties",
             link: "/documents/properties",
           },
+          {
+            text: "Custom style",
+            link: "/documents/custom-style",
+          },
         ],
       },
     ],

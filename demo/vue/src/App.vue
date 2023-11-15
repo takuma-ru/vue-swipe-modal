@@ -53,7 +53,6 @@ const array = computed(() => {
     :is-drag-handle="props.isDragHandle"
     :is-persistent="props.isPersistent"
     :is-scroll-lock="props.isScrollLock"
-    :class="$style['modal-panel']"
   >
     <button @click="isOpen = false">close modal</button>
     <p v-for="item in array" :key="item">
@@ -76,7 +75,7 @@ html {
 .modal-panel {
   box-sizing: border-box;
   width: 100%;
-  height: 50dvh;
+  height: 80dvh;
   color: white;
   background-color: #1d1b20;
   border-radius: 1rem 1rem 0 0;
