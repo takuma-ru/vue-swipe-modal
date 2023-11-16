@@ -51,7 +51,7 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
-    "lint:type-check": "tsc -p . --noEmit && vue-tsc --noEmit",
+    "lint:type-check": "tsc -p . && vue-tsc",
     "lint:css": "stylelint \"**/*.vue\"",
     "format": "prettier -w src/*.{ts,vue} && prettier -w src/**/*.{ts,vue}",
     "format:css": "stylelint \"**/*.vue\" --fix",
