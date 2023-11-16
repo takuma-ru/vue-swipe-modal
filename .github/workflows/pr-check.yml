@@ -131,4 +131,4 @@ jobs:
       - name: Build check
         run: pnpm vsm build
       - name: Publish check
-        run: pnpm vsm publish --dry-run
+        run: pnpm vsm publish --dry-run --no-git-checks
