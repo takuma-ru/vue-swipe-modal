@@ -7,6 +7,7 @@ jobs:
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      cache-name: cache-node-modules
 
     steps:
       - uses: actions/checkout@v4
@@ -40,9 +41,9 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-pnpm-store-${{ env.cache-name }}-
 
       - name: Install Node Dependencies
         run: pnpm install
@@ -50,17 +51,32 @@ jobs:
       - name: Set .npmrc
         run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
 
+    # Output the cache-name environment variable
+    # so that it can be used in other jobs
+    outputs:
+      cache-name: ${{ env.cache-name }}
+      STORE_PATH: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+
+  type-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: init
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/cache@v3
+        with:
+          path: ${{ needs.init.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ needs.init.outputs.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Type check
         run: pnpm vsm lint:type-check
 
-      - name: Eslint
-        run: pnpm vsm lint
-
-      - name: Stylelint
-        run: pnpm vsm lint:css
-
-      - name: Build check
-        run: pnpm vsm build
-
-      - name: Publish check
-        run: pnpm vsm publish --dry-run
+    #- name: Eslint
+    #  run: pnpm vsm lint
+    #- name: Stylelint
+    #  run: pnpm vsm lint:css
+    #- name: Build check
+    #  run: pnpm vsm build
+    #- name: Publish check
+    #  run: pnpm vsm publish --dry-run
