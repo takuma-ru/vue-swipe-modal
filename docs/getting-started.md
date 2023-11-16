@@ -69,3 +69,10 @@ const isOpen = ref(false)
 }
 </style>
 ```
+
+<iframe
+  width="100%"
+  height="500px"
+  src="https://stackblitz.com/edit/vitejs-vite-dqxc2g?embed=1&file=README.md&hideExplorer=1&view=preview"
+  style="border: none; border-radius: 8px; overflow:hidden;"
+></iframe>
