@@ -71,11 +71,64 @@ jobs:
       - name: Type check
         run: pnpm vsm lint:type-check
 
-    #- name: Eslint
-    #  run: pnpm vsm lint
-    #- name: Stylelint
-    #  run: pnpm vsm lint:css
-    #- name: Build check
-    #  run: pnpm vsm build
-    #- name: Publish check
-    #  run: pnpm vsm publish --dry-run
+  eslint-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: init
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-pnpm-store-${{ needs.init.outputs.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: ESlint check
+        run: pnpm vsm lint
+
+  stylelint-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: init
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-pnpm-store-${{ needs.init.outputs.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Stylelint check
+        run: pnpm vsm lint:css
+
+  build-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: init
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-pnpm-store-${{ needs.init.outputs.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Build check
+        run: pnpm vsm build
+
+  publish-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [init, build-check]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v2
+      - uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-pnpm-store-${{ needs.init.outputs.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - name: Build check
+        run: pnpm vsm build
+      - name: Publish check
+        run: pnpm vsm publish --dry-run
