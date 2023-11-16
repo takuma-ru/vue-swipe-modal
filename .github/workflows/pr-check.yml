@@ -1,0 +1,66 @@
+name: PR Check
+on: [pull_request]
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set git config
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.9.2
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install Node Dependencies
+        run: pnpm install
+
+      - name: Set .npmrc
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+
+      - name: Type check
+        run: pnpm vsm lint:type-check
+
+      - name: Eslint
+        run: pnpm vsm lint
+
+      - name: Stylelint
+        run: pnpm vsm lint:css
+
+      - name: Build check
+        run: pnpm vsm build
+
+      - name: Publish check
+        run: pnpm vsm publish --dry-run
