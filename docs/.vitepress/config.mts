@@ -58,14 +58,14 @@ export default defineConfig({
 
     sidebar: [
       {
-        items: [
-          {
-            text: "Getting Started",
-            link: "/getting-started",
-          },
-        ],
+        text: "Getting Started",
+        link: "/getting-started",
       },
       {
+        text: "Playground",
+        link: "/playground",
+      },
+      /* {
         text: "Tutorial",
         items: [
           {
@@ -77,7 +77,7 @@ export default defineConfig({
             link: "/tutorial/advanced-usage",
           },
         ],
-      },
+      }, */
       {
         text: "Documents",
         items: [

@@ -116,12 +116,18 @@ If undefined, the style of the library default state is applied.
 <template>
   <SwipeModal
     v-model="isOpen"
-    :class="/* class name */"
+    :class="$style['/* class name */']"
   >
     modal content
   </SwipeModal>
 </template>
 ```
+
+::: warning
+**Scoped CSS** is not supported!<br>
+Please use **Module CSS** instead: .....<br>
+(A solution to this problem is currently under consideration.)
+:::
 
 ::: details Style to be applied when nothing is specified for class
 The style of the material is designed to fit the Material 3.

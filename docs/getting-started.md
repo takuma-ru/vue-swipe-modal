@@ -47,12 +47,12 @@ const isOpen = ref(false)
 
 <template>
   <button @click="isOpen = true">Open modal</button>
-  <SwipeModal v-model="isOpen" class="modal">
+  <SwipeModal v-model="isOpen" :class="$style.modal">
     Modal content
   </SwipeModal>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss" module>
 .modal {
   box-sizing: border-box;
   width: 100%;
@@ -73,6 +73,6 @@ const isOpen = ref(false)
 <iframe
   width="100%"
   height="500px"
-  src="https://stackblitz.com/edit/vitejs-vite-dqxc2g?embed=1&file=README.md&hideExplorer=1&view=preview"
+  src="https://stackblitz.com/edit/vitejs-vite-dqxc2g?embed=1&file=README.md&hideExplorer=1&hideNavigation=1&view=preview"
   style="border: none; border-radius: 8px; overflow:hidden;"
 ></iframe>

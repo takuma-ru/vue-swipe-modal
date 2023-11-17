@@ -5,12 +5,23 @@
 <template>
   <SwipeModal
     v-model="isOpen"
-    class="/* custom class name */"
+    :class="$style['/* class name */']"
   >
     modal content
   </SwipeModal>
 </template>
+
+<style module>
+./* class name */ {
+  /* custom style */
+}
+</style>
 ```
+::: warning
+**Scoped CSS** is not supported!<br>
+Please use **Module CSS** instead: .....<br>
+(A solution to this problem is currently under consideration.)
+:::
 
 ## DragHandle
 ```vue{3-5}
@@ -21,6 +32,12 @@
     </template>
   </SwipeModal>
 </template>
+
+<style module> or <style scoped>
+./* class name */ {
+  /* custom style */
+}
+</style>
 ```
 
 ## Backdrop
@@ -32,4 +49,9 @@
     </template>
   </SwipeModal>
 </template>
+
+<style module> or <style scoped>
+./* class name */ {
+  /* custom style */
+}
 ```
