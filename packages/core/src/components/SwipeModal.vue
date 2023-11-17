@@ -29,17 +29,16 @@
       <slot />
     </div>
   </dialog>
-  <slot
-    v-if="isBackdrop"
-    name="backdrop"
+  <div
+    v-if="isBackdrop && modelValue"
+    ref="backdropRef"
+    :class="$style['wipe-modal-backdrop-wrapper']"
+    @click="handleClickBackdrop"
   >
-    <div
-      v-show="modelValue"
-      ref="backdropRef"
-      :class="$style['swipe-modal-backdrop']"
-      @click="handleClickBackdrop"
-    />
-  </slot>
+    <slot name="backdrop">
+      <div :class="$style['swipe-modal-backdrop']" />
+    </slot>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -364,10 +363,15 @@ watch(
   transform: translateX(-50%);
 }
 
-.swipe-modal-backdrop {
+.wipe-modal-backdrop-wrapper {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.swipe-modal-backdrop {
   width: 100%;
   height: 100%;
   background-color: rgb(0 0 0 / 50%);

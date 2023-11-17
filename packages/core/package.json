@@ -49,6 +49,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "build:watch": "vue-tsc --watch & vite build --watch",
     "preview": "vite preview",
     "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
     "lint:type-check": "tsc -p . && vue-tsc",
