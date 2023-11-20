@@ -49,7 +49,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "build:watch": "vue-tsc --watch & vite build --watch",
+    "build:watch": "vite build --watch",
     "preview": "vite preview",
     "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
     "lint:type-check": "tsc -p . && vue-tsc",
@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.6.0",
+    "unimport": "^3.5.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {

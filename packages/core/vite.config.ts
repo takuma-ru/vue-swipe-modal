@@ -1,10 +1,22 @@
 import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js"
+import unimport from "unimport/unplugin"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), cssInjectedByJsPlugin()],
+  plugins: [
+    vue(),
+    cssInjectedByJsPlugin(),
+    unimport.vite({
+      presets: ["vue", "@vueuse/core"],
+      imports: [{ name: "default", as: "Vue", from: "vue" }],
+      dts: true,
+      addons: {
+        vueTemplate: true,
+      },
+    }),
+  ],
 
   build: {
     outDir: "./dist",
