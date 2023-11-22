@@ -42,8 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { HTMLAttributes, computed, ref, watch } from "vue"
-import { useElementBounding } from "@vueuse/core"
+import { HTMLAttributes } from "vue"
 
 // -- props, emits --
 
@@ -82,11 +81,26 @@ const modelValue = computed({
   },
 })
 
-const modalRef = ref<HTMLElement | null>(null)
-const backdropRef = ref<HTMLElement | null>(null)
-const isMouseDown = ref(false)
-const movementAmountY = ref(0)
-const startPositionY = ref(0)
+/**
+ * dialog element /<dialog> の ref
+ */
+const modalRef = ref<HTMLDialogElement | null>(null)
+/**
+ * backdrop element /<div> の ref
+ */
+const backdropRef = ref<HTMLDivElement | null>(null)
+/**
+ * 画面タップ中 or 左クリックが押下中かどうか
+ */
+const isMouseDown = ref<boolean>(false)
+/**
+ * スワイプ中 or ドラッグ中の移動量
+ */
+const movementAmountY = ref<number>(0)
+/**
+ * スワイプ or ドラッグ開始時の Y 座標
+ */
+const startPositionY = ref<number>(0)
 
 const { height: panelRefHeight } = useElementBounding(modalRef)
 
