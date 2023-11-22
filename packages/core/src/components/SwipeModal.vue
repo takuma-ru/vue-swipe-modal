@@ -102,15 +102,9 @@ const movementAmountY = ref<number>(0)
  */
 const startPositionY = ref<number>(0)
 
-const { height: panelRefHeight } = useElementBounding(modalRef)
+const bottom = ref<string>("100%")
 
-const bottom = computed(() => {
-  if (!props.modelValue) return "-100%"
-
-  if (movementAmountY.value < 0) return `${movementAmountY.value}px`
-
-  return "0%"
-})
+const { height: modalRefHeight } = useElementBounding(modalRef)
 
 // -- functions --
 
@@ -139,7 +133,7 @@ const handleMouseUp = () => {
 
   if (props.isPersistent) return cancelAnim()
 
-  if (-movementAmountY.value > panelRefHeight.value / 4)
+  if (-movementAmountY.value > modalRefHeight.value / 4)
     return (modelValue.value = false)
 
   if (movementAmountY.value < 0) return cancelAnim()
@@ -152,12 +146,20 @@ const handleMouseMove = (e: MouseEvent) => {
   if (!isMouseDown.value) return
 
   movementAmountY.value = startPositionY.value - e.y
+
+  if (movementAmountY.value > 0) return
+
+  modalRef.value?.style.setProperty("user-select", "none")
+
+  return (bottom.value = `calc(0% + ${movementAmountY.value}px)`)
 }
 
 /**
  * スワイプ開始時の処理
  */
 const handleTouchStart = (e: TouchEvent) => {
+  modalRef.value?.style.removeProperty("user-select")
+
   startPositionY.value = e.touches[0].clientY
   isMouseDown.value = true
 }
@@ -169,6 +171,10 @@ const handleTouchMove = (e: TouchEvent) => {
   if (!isMouseDown.value) return
 
   movementAmountY.value = startPositionY.value - e.touches[0].clientY
+
+  if (movementAmountY.value > 0) return
+
+  return (bottom.value = `calc(0% + ${movementAmountY.value}px)`)
 }
 
 /**
@@ -179,10 +185,20 @@ const handleTouchEnd = () => {
 
   if (props.isPersistent) return cancelAnim()
 
-  if (-movementAmountY.value > panelRefHeight.value / 4)
+  if (-movementAmountY.value > modalRefHeight.value / 4)
     return (modelValue.value = false)
 
   if (movementAmountY.value < 0) return cancelAnim()
+}
+
+/**
+ * 変数の初期化
+ */
+const initVariables = () => {
+  isMouseDown.value = false
+  movementAmountY.value = 0
+  startPositionY.value = 0
+  bottom.value = "-100%"
 }
 
 /**
@@ -204,6 +220,7 @@ const cancelAnim = () => {
     },
   ).onfinish = () => {
     movementAmountY.value = 0
+    bottom.value = "0%"
   }
 }
 
@@ -216,7 +233,7 @@ const handleOpenModal = () => {
   modalRef.value.style.removeProperty("display")
   setPageScrollable("hidden")
 
-  modalRef.value.animate(
+  const modalAnim = modalRef.value.animate(
     [
       {
         bottom: "-100%",
@@ -228,6 +245,12 @@ const handleOpenModal = () => {
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     },
   )
+
+  modalAnim.onfinish = () => {
+    movementAmountY.value = 0
+    bottom.value = "0%"
+    modalAnim.cancel()
+  }
 
   if (backdropRef.value) {
     backdropRef.value.animate(
@@ -268,7 +291,7 @@ const handleCloseModal = () => {
     [
       { bottom: `${movementAmountY.value}px` },
       {
-        bottom: `-${panelRefHeight.value}px`,
+        bottom: `-${modalRefHeight.value}px`,
       },
     ],
     {
@@ -279,8 +302,7 @@ const handleCloseModal = () => {
   )
 
   closeAnim.onfinish = () => {
-    movementAmountY.value = 0
-    modelValue.value = false
+    initVariables()
     closeAnim.cancel()
     setPageScrollable("auto")
     modalRef.value?.style.setProperty("display", "none")
