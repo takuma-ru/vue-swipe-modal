@@ -1,23 +1,39 @@
 import { HTMLAttributes } from "vue";
 type PropsType = {
-    modelValue: boolean;
-    snapPoint?: string;
     class?: HTMLAttributes["class"];
+    isBackdrop?: boolean;
+    isDragHandle?: boolean;
+    isPersistent?: boolean;
+    isScrollLock?: boolean;
+    modelValue?: boolean;
+    snapPoint?: string;
 };
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<PropsType>, {
+    class: undefined;
+    isBackdrop: boolean;
+    isDragHandle: boolean;
+    isPersistent: boolean;
+    isScrollLock: boolean;
     modelValue: boolean;
     snapPoint: undefined;
-    class: undefined;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (value: boolean) => void;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<globalThis.ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<PropsType>, {
+    class: undefined;
+    isBackdrop: boolean;
+    isDragHandle: boolean;
+    isPersistent: boolean;
+    isScrollLock: boolean;
     modelValue: boolean;
     snapPoint: undefined;
-    class: undefined;
 }>>> & {
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }, {
     class: any;
+    isBackdrop: boolean;
+    isDragHandle: boolean;
+    isPersistent: boolean;
+    isScrollLock: boolean;
     modelValue: boolean;
     snapPoint: string;
 }, {}>, {

@@ -5,11 +5,12 @@
       props.class ? props.class : $style['default-modal-style'],
       $style['swipe-modal'],
     ]"
-    @click="vModel = false"
+    @click="handleClickDialog"
   >
     <div
       tabindex="-1"
-      @click="(event) => event.stopPropagation()"
+      :class="$style['swipe-modal-content']"
+      @click="handleClickContent"
     >
       <div
         :class="$style['swipe-modal-drag-handle-wrapper']"
@@ -44,7 +45,10 @@
         "
         @touchend="handlePointerUp"
       >
-        <slot name="drag-handle">
+        <slot
+          v-if="isDragHandle"
+          name="drag-handle"
+        >
           <div :class="$style['swipe-modal-drag-handle']" />
         </slot>
       </div>
@@ -60,9 +64,13 @@ import { HTMLAttributes } from "vue"
 
 // types
 type PropsType = {
-  modelValue: boolean
-  snapPoint?: string
   class?: HTMLAttributes["class"]
+  isBackdrop?: boolean
+  isDragHandle?: boolean
+  isPersistent?: boolean
+  isScrollLock?: boolean
+  modelValue?: boolean
+  snapPoint?: string
 }
 
 type EmitsType = {
@@ -70,9 +78,13 @@ type EmitsType = {
 }
 
 const props = withDefaults(defineProps<PropsType>(), {
+  class: undefined,
+  isBackdrop: true,
+  isDragHandle: true,
+  isPersistent: false,
+  isScrollLock: true,
   modelValue: false,
   snapPoint: undefined,
-  class: undefined,
 })
 
 const emit = defineEmits<EmitsType>()
@@ -94,12 +106,27 @@ const vModel = useVModel(props, "modelValue", emit)
  */
 const bottom = ref<string>("-100%")
 
+/**
+ * ドラッグハンドルをクリック中かどうか
+ */
 const isMouseDown = ref<boolean>(false)
 
+/**
+ * ドラッグ開始時のポインターの位置
+ */
 const startPositionY = ref<number>(0)
 
+/**
+ * ドラッグ開始位置からの移動量
+ */
 const movementAmountY = ref<number>(0)
 
+/**
+ * モーダルの配置位置の状態
+ * - `full`: モーダルが全画面表示されている状態
+ * - `snap`: モーダルがスナップポイントまで表示されている状態
+ * - `close`: モーダルが閉じられている状態
+ */
 const positionStatus = ref<"full" | "snap" | "close">("close")
 
 // functions
@@ -166,8 +193,6 @@ const handlePointerMove = ({
 const handlePointerUp = () => {
   isMouseDown.value = false
 
-  // if (props.isPersistent) return cancelAnim()
-
   modalRef.value?.style.removeProperty("user-select")
 
   // 移動量が 36px より大きいの場合、アクションを起こす
@@ -177,12 +202,14 @@ const handlePointerUp = () => {
       switch (positionStatus.value) {
         case "full":
           // snapPoint が指定されている場合は snapPoint までアニメーション
-          if (props.snapPoint) {
-            return moveToSnapPointAnim()
-          }
+          if (props.snapPoint) return moveToSnapPointAnim()
+
+          if (props.isPersistent) return cancelAnim()
 
           return (vModel.value = false)
         case "snap":
+          if (props.isPersistent) return cancelAnim()
+
           return (vModel.value = false)
         default:
           return
@@ -203,7 +230,9 @@ const handlePointerUp = () => {
   return cancelAnim()
 }
 
-// アクションを起こさず、移動が開始させる前の位置までアニメーション
+/**
+ * アクションを起こさず、移動が開始させる前の位置までアニメーション
+ */
 const cancelAnim = () => {
   if (!modalRef.value) return
 
@@ -235,7 +264,9 @@ const cancelAnim = () => {
   }
 }
 
-// 現在のモーダルの配置位置から snapPoint までアニメーション
+/**
+ * 現在のモーダルの配置位置から snapPoint までアニメーション
+ */
 const moveToSnapPointAnim = () => {
   if (!modalRef.value) return
 
@@ -259,7 +290,9 @@ const moveToSnapPointAnim = () => {
   }
 }
 
-// 現在のモーダルの配置位置からフルスクリーン表示までアニメーション
+/**
+ * 現在のモーダルの配置位置からフルスクリーン表示までアニメーション
+ */
 const moveToFullScreenAnim = () => {
   if (!modalRef.value) return
 
@@ -281,14 +314,34 @@ const moveToFullScreenAnim = () => {
   }
 }
 
+const handleClickDialog = (event: MouseEvent) => {
+  if (!props.isBackdrop) return
+
+  if (event.target !== event.currentTarget) return
+
+  if (props.isPersistent) return cancelAnim()
+
+  vModel.value = false
+}
+
+const handleClickContent = (event: MouseEvent) => {
+  event.stopPropagation()
+}
+
 /**
  * モーダルを開く
  */
 const handleOpenModal = () => {
   if (!modalRef.value) return
 
-  // dialog tag をモーダルとして開く
-  modalRef.value.showModal()
+  if (props.isBackdrop) {
+    // dialog tag をモーダルとして開く
+    modalRef.value.showModal()
+  } else {
+    // dialog tag をトーストとして開く
+    modalRef.value.show()
+  }
+
   modalRef.value?.style.setProperty("visibility", "visible")
 
   modalRef.value.animate([{ opacity: 0 }, { opacity: 1 }], {
@@ -313,10 +366,13 @@ const handleOpenModal = () => {
   ).onfinish = () => {
     positionStatus.value = props.snapPoint ? "snap" : "full"
     bottom.value = `calc(${props.snapPoint} - 100%)`
-    setPageScrollable("hidden")
+    if (props.isScrollLock) setPageScrollable("hidden")
   }
 }
 
+/**
+ * モーダルを閉じる
+ */
 const handleCloseModal = () => {
   if (!modalRef.value) return
 
@@ -346,15 +402,20 @@ const handleCloseModal = () => {
     modalRef.value?.close()
     modalRef.value?.style.setProperty("display", "initial")
     modalRef.value?.style.setProperty("visibility", "hidden")
-    setPageScrollable("auto")
+
+    setPageScrollable("reset")
   }
 }
 
 /**
  * 背景がスクロールできるかどうかを制御する
  */
-const setPageScrollable = (scrollable: "auto" | "hidden") => {
-  // if (!props.isScrollLock) return
+const setPageScrollable = (scrollable: "auto" | "hidden" | "reset") => {
+  if (scrollable === "reset") {
+    document.documentElement.style.removeProperty("overflow")
+    document.documentElement.style.removeProperty("overscroll-behavior-y")
+    return
+  }
 
   let dv = window
   let xOffset, yOffset, de
@@ -374,6 +435,7 @@ const setPageScrollable = (scrollable: "auto" | "hidden") => {
 }
 
 // watch
+// モーダルの表示状態を監視し、表示状態が変化したらモーダルを開くか閉じる
 watch(
   () => vModel.value,
   (value) => {
@@ -390,6 +452,7 @@ onMounted(() => {
   if (!modalRef.value) return
 
   if (!vModel.value) {
+    // モーダル内のエレメントを取得できるように display を none を無効化
     modalRef.value?.style.setProperty("display", "initial")
     modalRef.value?.style.setProperty("visibility", "hidden")
   }
@@ -421,6 +484,11 @@ onMounted(() => {
     max-height: calc(100% - 36px);
     overflow: scroll;
   }
+}
+
+.swipe-modal-content {
+  width: 100%;
+  height: 100%;
 }
 
 .default-modal-style {

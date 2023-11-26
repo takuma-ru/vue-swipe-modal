@@ -71,6 +71,10 @@ const array = computed(() => {
   <SwipeModal
     v-model="isOpen"
     :snap-point="`${(contentRef?.getBoundingClientRect().height || 0) + 36}px`"
+    :is-backdrop="props.isBackdrop"
+    :is-drag-handle="props.isDragHandle"
+    :is-persistent="props.isPersistent"
+    :is-scroll-lock="props.isScrollLock"
   >
     <!-- <p
       v-for="item in array"

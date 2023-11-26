@@ -25,8 +25,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }, {
     class: any;
-    isDragHandle: boolean;
     isBackdrop: boolean;
+    isDragHandle: boolean;
     isPersistent: boolean;
     isScrollLock: boolean;
 }, {}>, {

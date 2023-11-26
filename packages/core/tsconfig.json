@@ -22,7 +22,7 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "./unimport.d.ts"
+    "unimport.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
