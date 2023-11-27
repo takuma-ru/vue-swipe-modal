@@ -10,7 +10,6 @@ export default defineConfig({
     cssInjectedByJsPlugin(),
     unimport.vite({
       presets: ["vue", "@vueuse/core"],
-      imports: [{ name: "default", as: "Vue", from: "vue" }],
       dts: true,
       addons: {
         vueTemplate: true,
