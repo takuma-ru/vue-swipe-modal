@@ -57,6 +57,7 @@
     "format": "prettier -w src/*.{ts,vue} && prettier -w src/**/*.{ts,vue}",
     "format:css": "stylelint \"**/*.vue\" --fix",
     "fix": "pnpm format && pnpm format:css && pnpm lint",
+    "gen:unimport-type": "node ./.scripts/genUnimportType.js",
     "publish:major": "pnpm build && pnpm dlx release-it major --ci",
     "publish:minor": "pnpm build && pnpm dlx release-it minor --ci",
     "publish:patch": "pnpm build && pnpm dlx release-it patch --ci",
@@ -69,6 +70,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.6.0",
+    "consola": "^3.2.3",
     "unimport": "^3.5.0",
     "vue": "^3.3.4"
   },
