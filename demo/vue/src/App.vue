@@ -53,6 +53,7 @@ const array = computed(() => {
     :is-drag-handle="props.isDragHandle"
     :is-persistent="props.isPersistent"
     :is-scroll-lock="props.isScrollLock"
+    position="25%"
   >
     <button @click="isOpen = false">close modal</button>
     <p v-for="item in array" :key="item">

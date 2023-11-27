@@ -114,7 +114,7 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-pnpm-store-${{ needs.init.outputs.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Build check
-        run: pnpm vsm build
+        run: pnpm vsm gen:unimport-type && pnpm vsm build
 
   publish-check:
     runs-on: ubuntu-latest
