@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue"
-import SwipeModal from "./components/NewSwipeModal.vue"
+import SwipeModal from "../components/NewSwipeModal.vue"
 
 const isOpen = ref(false)
 
@@ -19,7 +18,7 @@ const array = computed(() => {
 </script>
 
 <template>
-  <button @click="isOpen = !isOpen">open modal</button>
+  <button @click="isOpen = true">open modal</button>
   <p>
     {{ isOpen }}
   </p>
@@ -76,12 +75,6 @@ const array = computed(() => {
     :is-persistent="props.isPersistent"
     :is-scroll-lock="props.isScrollLock"
   >
-    <!-- <p
-      v-for="item in array"
-      :key="item"
-    >
-      {{ item }}
-    </p> -->
     <div
       ref="contentRef"
       :style="{
@@ -98,6 +91,12 @@ const array = computed(() => {
       <h3>Red line is this element's area.</h3>
       height is auto.
     </div>
+    <p
+      v-for="item in array"
+      :key="item"
+    >
+      {{ item }}
+    </p>
   </SwipeModal>
 </template>
 

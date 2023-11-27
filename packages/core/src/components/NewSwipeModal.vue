@@ -64,12 +64,47 @@ import { HTMLAttributes } from "vue"
 
 // types
 type PropsType = {
+  /**
+   * Unique class of panel section.
+   *
+   * @default undefined
+   */
   class?: HTMLAttributes["class"]
+  /**
+   * Whether to display the backdrop.
+   *
+   * @default true
+   */
   isBackdrop?: boolean
+  /**
+   * Whether to display the drag handle.
+   *
+   * @default true
+   */
   isDragHandle?: boolean
+  /**
+   * Whether to disable swipe and back drop click events.
+   *
+   * @default false
+   */
   isPersistent?: boolean
+  /**
+   * Whether to disable scroll of the background.
+   *
+   *  @default true
+   */
   isScrollLock?: boolean
+  /**
+   * Whether to display the modal.  = `v-model`
+   *
+   * @default false
+   */
   modelValue?: boolean
+  /**
+   * Modal upper edge position.
+   *
+   * @default undefined
+   */
   snapPoint?: string
 }
 
@@ -195,7 +230,7 @@ const handlePointerUp = () => {
 
   modalRef.value?.style.removeProperty("user-select")
 
-  // 移動量が 36px より大きいの場合、アクションを起こす
+  // 移動量が abs(36px) より大きいの場合、アクションを起こす
   if (Math.abs(movementAmountY.value) > 36) {
     // 下方向にドラッグした場合
     if (movementAmountY.value < 0) {
@@ -479,16 +514,16 @@ onMounted(() => {
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
   }
-
-  > .panel {
-    max-height: calc(100% - 36px);
-    overflow: scroll;
-  }
 }
 
 .swipe-modal-content {
   width: 100%;
   height: 100%;
+
+  > .panel {
+    max-height: calc(100dvh - 36px);
+    overflow-y: scroll;
+  }
 }
 
 .default-modal-style {
