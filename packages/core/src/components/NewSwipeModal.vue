@@ -400,7 +400,7 @@ const handleOpenModal = () => {
     },
   ).onfinish = () => {
     positionStatus.value = props.snapPoint ? "snap" : "full"
-    bottom.value = `calc(${props.snapPoint} - 100%)`
+    bottom.value = props.snapPoint ? `calc(${props.snapPoint} - 100%)` : "0%"
     if (props.isScrollLock) setPageScrollable("hidden")
   }
 }
