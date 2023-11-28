@@ -57,11 +57,7 @@ const array = computed(() => {
 
   <SwipeModal
     v-model="isOpen"
-    :snap-point="
-      getPropsValue('isSnapPoint')
-        ? `${(contentRef?.getBoundingClientRect().height || 0) + 36}px`
-        : undefined
-    "
+    :snap-point="getPropsValue('isSnapPoint') ? 'content' : undefined"
     :is-backdrop="getPropsValue('isBackdrop')"
     :is-drag-handle="getPropsValue('isDragHandle')"
     :is-persistent="getPropsValue('isPersistent')"

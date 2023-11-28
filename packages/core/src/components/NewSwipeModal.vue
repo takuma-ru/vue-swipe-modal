@@ -17,14 +17,14 @@
         @mousedown="
           (e) =>
             handlePointerDown({
-              MouseEvent: e,
+              mouseEvent: e,
               eventType: 'mouse',
             })
         "
         @mousemove="
           (e) =>
             handlePointerMove({
-              MouseEvent: e,
+              mouseEvent: e,
               eventType: 'mouse',
             })
         "
@@ -32,14 +32,14 @@
         @touchstart="
           (e) =>
             handlePointerDown({
-              TouchEvent: e,
+              touchEvent: e,
               eventType: 'touch',
             })
         "
         @touchmove="
           (e) =>
             handlePointerMove({
-              TouchEvent: e,
+              touchEvent: e,
               eventType: 'touch',
             })
         "
@@ -52,7 +52,10 @@
           <div :class="$style['swipe-modal-drag-handle']" />
         </slot>
       </div>
-      <div :class="$style['panel']">
+      <div
+        ref="panelRef"
+        :class="$style['panel']"
+      >
         <slot />
       </div>
     </div>
@@ -103,9 +106,13 @@ type PropsType = {
   /**
    * Modal upper edge position.
    *
+   * - `auto`: Automatically calculates the display position based on the height of the content in the modal.
+   * - `String` : [\<length>](https://developer.mozilla.org/ja/docs/Web/CSS/length) data type
+   *
    * @default undefined
    */
-  snapPoint?: string
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  snapPoint?: "auto" | String
 }
 
 type EmitsType = {
@@ -130,6 +137,11 @@ const emit = defineEmits<EmitsType>()
  * dialog element の ref
  */
 const modalRef = ref<HTMLDialogElement | null>(null)
+
+/**
+ * モーダルのコンテンツ部分の ref
+ */
+const panelRef = ref<HTMLDivElement | null>(null)
 
 /**
  * 双方向バインディング用変数
@@ -164,22 +176,36 @@ const movementAmountY = ref<number>(0)
  */
 const positionStatus = ref<"full" | "snap" | "close">("close")
 
+/**
+ * snapPoint が指定されている場合のモーダルの配置位置
+ */
+const snapPointPosition = computed(() => {
+  if (!props.snapPoint) return `0px`
+
+  if (props.snapPoint === "content") {
+    const panelRefHeight = panelRef.value?.getBoundingClientRect().height || 0
+    return `calc(${panelRefHeight}px + 36px - 100%)`
+  }
+
+  return `calc(${props.snapPoint} - 100%)`
+})
+
 // functions
 
 /**
  * ドラッグ開始時の処理
  */
 const handlePointerDown = ({
-  MouseEvent,
-  TouchEvent,
+  mouseEvent,
+  touchEvent,
   eventType,
 }:
-  | { MouseEvent: MouseEvent; TouchEvent?: never; eventType: "mouse" }
-  | { MouseEvent?: never; TouchEvent: TouchEvent; eventType: "touch" }) => {
+  | { mouseEvent: MouseEvent; touchEvent?: never; eventType: "mouse" }
+  | { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" }) => {
   if (eventType === "mouse") {
-    startPositionY.value = MouseEvent.y
+    startPositionY.value = mouseEvent.y
   } else {
-    startPositionY.value = TouchEvent.touches[0].clientY
+    startPositionY.value = touchEvent.touches[0].clientY
   }
 
   isMouseDown.value = true
@@ -189,19 +215,19 @@ const handlePointerDown = ({
  * ドラッグ中の処理
  */
 const handlePointerMove = ({
-  MouseEvent,
-  TouchEvent,
+  mouseEvent,
+  touchEvent,
   eventType,
 }:
-  | { MouseEvent: MouseEvent; TouchEvent?: never; eventType: "mouse" }
-  | { MouseEvent?: never; TouchEvent: TouchEvent; eventType: "touch" }) => {
+  | { mouseEvent: MouseEvent; touchEvent?: never; eventType: "mouse" }
+  | { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" }) => {
   if (!isMouseDown.value) return
 
   //ドラッグ開始位置からの移動量を計算
   if (eventType === "mouse") {
-    movementAmountY.value = startPositionY.value - MouseEvent.y
+    movementAmountY.value = startPositionY.value - mouseEvent.y
   } else {
-    movementAmountY.value = startPositionY.value - TouchEvent.touches[0].clientY
+    movementAmountY.value = startPositionY.value - touchEvent.touches[0].clientY
   }
 
   // モーダルが最大限まで開いている場合は、上方向へのドラッグは無効
@@ -215,7 +241,7 @@ const handlePointerMove = ({
 
   // モーダルの位置をポインターの位置に合わせて更新（snapの場合）
   if (positionStatus.value === "snap") {
-    return (bottom.value = `calc(calc(${props.snapPoint} - 100%) + ${movementAmountY.value}px)`)
+    return (bottom.value = `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`)
   }
 
   // モーダルの位置をポインターの位置に合わせて更新
@@ -273,7 +299,7 @@ const cancelAnim = () => {
 
   const calcToPositionBottom = () => {
     if (positionStatus.value === "snap") {
-      return props.snapPoint ? `calc(${props.snapPoint} - 100%)` : "0%"
+      return props.snapPoint ? snapPointPosition.value : "0%"
     }
     if (positionStatus.value === "full") {
       return "0%"
@@ -311,7 +337,7 @@ const moveToSnapPointAnim = () => {
     [
       { bottom: bottom.value },
       {
-        bottom: `calc(${props.snapPoint} - 100%)`,
+        bottom: snapPointPosition.value,
       },
     ],
     {
@@ -320,7 +346,7 @@ const moveToSnapPointAnim = () => {
     },
   ).onfinish = () => {
     movementAmountY.value = 0
-    bottom.value = `calc(${props.snapPoint} - 100%)`
+    bottom.value = snapPointPosition.value
     positionStatus.value = "snap"
   }
 }
@@ -391,7 +417,7 @@ const handleOpenModal = () => {
         bottom: "-100%",
       },
       {
-        bottom: props.snapPoint ? `calc(${props.snapPoint} - 100%)` : "0%",
+        bottom: snapPointPosition.value,
       },
     ],
     {
@@ -400,7 +426,7 @@ const handleOpenModal = () => {
     },
   ).onfinish = () => {
     positionStatus.value = props.snapPoint ? "snap" : "full"
-    bottom.value = props.snapPoint ? `calc(${props.snapPoint} - 100%)` : "0%"
+    bottom.value = snapPointPosition.value
     if (props.isScrollLock) setPageScrollable("hidden")
   }
 }
@@ -482,14 +508,26 @@ watch(
   },
 )
 
+// props の isScrollLock を監視し、スクロールロックの状態を変更する
+watch(
+  () => props.isScrollLock,
+  (value) => {
+    if (value) {
+      setPageScrollable("hidden")
+    } else {
+      setPageScrollable("auto")
+    }
+  },
+)
+
 // life cycle
 onMounted(() => {
   if (!modalRef.value) return
 
   if (!vModel.value) {
     // モーダル内のエレメントを取得できるように display を none を無効化
-    modalRef.value?.style.setProperty("display", "initial")
-    modalRef.value?.style.setProperty("visibility", "hidden")
+    modalRef.value.style.setProperty("display", "initial")
+    modalRef.value.style.setProperty("visibility", "hidden")
   }
 })
 </script>
