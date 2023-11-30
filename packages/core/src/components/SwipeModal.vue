@@ -1,19 +1,16 @@
 <template>
   <dialog
     ref="modalRef"
-    :class="[
-      props.class ? props.class : $style['default-modal-style'],
-      $style['swipe-modal'],
-    ]"
+    class="swipe-modal modal-style"
     @click="handleClickDialog"
   >
     <div
       tabindex="-1"
-      :class="$style['swipe-modal-content']"
+      class="swipe-modal-content"
       @click="handleClickContent"
     >
       <div
-        :class="$style['swipe-modal-drag-handle-wrapper']"
+        class="swipe-modal-drag-handle-wrapper"
         @mousedown="
           (e) =>
             handlePointerDown({
@@ -49,12 +46,12 @@
           v-if="isDragHandle"
           name="drag-handle"
         >
-          <div :class="$style['swipe-modal-drag-handle']" />
+          <div class="swipe-modal-drag-handle" />
         </slot>
       </div>
       <div
         ref="panelRef"
-        :class="$style['panel']"
+        class="panel"
       >
         <slot />
       </div>
@@ -182,7 +179,7 @@ const positionStatus = ref<"full" | "snap" | "close">("close")
 const snapPointPosition = computed(() => {
   if (!props.snapPoint) return `0px`
 
-  if (props.snapPoint === "content") {
+  if (props.snapPoint === "auto") {
     const panelRefHeight = panelRef.value?.getBoundingClientRect().height || 0
     return `calc(${panelRefHeight}px + 36px - 100%)`
   }
@@ -532,7 +529,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .swipe-modal {
   position: fixed;
   top: auto;
@@ -564,7 +561,7 @@ onMounted(() => {
   }
 }
 
-.default-modal-style {
+.modal-style {
   box-sizing: border-box;
   width: 100%;
   color: white;
