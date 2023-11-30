@@ -60,16 +60,8 @@
 </template>
 
 <script lang="ts" setup>
-import { HTMLAttributes } from "vue"
-
 // types
 type PropsType = {
-  /**
-   * Unique class of panel section.
-   *
-   * @default undefined
-   */
-  class?: HTMLAttributes["class"]
   /**
    * Whether to display the backdrop.
    *
@@ -82,6 +74,12 @@ type PropsType = {
    * @default true
    */
   isDragHandle?: boolean
+  /**
+   * Whether to display the modal in full screen.
+   *
+   * @default true
+   */
+  isFullScreen?: boolean
   /**
    * Whether to disable swipe and back drop click events.
    *
@@ -117,9 +115,9 @@ type EmitsType = {
 }
 
 const props = withDefaults(defineProps<PropsType>(), {
-  class: undefined,
   isBackdrop: true,
   isDragHandle: true,
+  isFullScreen: true,
   isPersistent: false,
   isScrollLock: true,
   modelValue: false,
@@ -234,6 +232,9 @@ const handlePointerMove = ({
   )
     return
 
+  // フルスクリーンで表示させない場合は、上方向へのドラッグは無効
+  if (!props.isFullScreen && movementAmountY.value > 0) return
+
   modalRef.value?.style.setProperty("user-select", "none")
 
   // モーダルの位置をポインターの位置に合わせて更新（snapの場合）
@@ -277,6 +278,8 @@ const handlePointerUp = () => {
     // 上方向にドラッグした場合
     switch (positionStatus.value) {
       case "snap":
+        if (!props.isFullScreen) return cancelAnim()
+
         // snapPoint からドラッグされていた場合、フルスクリーン表示までアニメーション
         return moveToFullScreenAnim()
       default:

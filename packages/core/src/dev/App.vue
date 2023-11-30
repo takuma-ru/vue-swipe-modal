@@ -10,6 +10,7 @@ const props = ref<
     name:
       | "isBackdrop"
       | "isDragHandle"
+      | "isFullScreen"
       | "isPersistent"
       | "isScrollLock"
       | "isSnapPoint"
@@ -18,6 +19,7 @@ const props = ref<
 >([
   { name: "isBackdrop", value: true },
   { name: "isDragHandle", value: true },
+  { name: "isFullScreen", value: true },
   { name: "isPersistent", value: false },
   { name: "isScrollLock", value: true },
   { name: "isSnapPoint", value: true },
@@ -70,6 +72,7 @@ const array = computed(() => {
       v-model="isOpen"
       :snap-point="getPropsValue('isSnapPoint') ? 'auto' : undefined"
       :is-backdrop="getPropsValue('isBackdrop')"
+      :is-full-screen="getPropsValue('isFullScreen')"
       :is-drag-handle="getPropsValue('isDragHandle')"
       :is-persistent="getPropsValue('isPersistent')"
       :is-scroll-lock="getPropsValue('isScrollLock')"
@@ -106,7 +109,7 @@ html {
 :deep(.modal-style) {
   box-sizing: border-box;
   color: white;
-  background-color: rgb(47 23 84);
+  background-color: #1d1b20;
   border-radius: 1rem 1rem 0 0;
 
   @media (prefers-color-scheme: light) {
