@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "vue-swipe-modal"
   text: "Swipeable Bottom Sheet library for vue2 and vue3"
-  tagline: My great project tagline
+  tagline: Can be swiped closed, like the Bottom Sheet provided by Google
   image:
     src: https://user-images.githubusercontent.com/49429291/182005504-0567f54a-80e3-4a31-ba5b-740db91b5190.png
     alt: vue-swipe-modal-logo
@@ -16,9 +16,5 @@ hero:
     - theme: alt
       text: Properties
       link: /documents/properties
-
-features:
-  - title: Swipeable
-    details: Can be swiped closed, like the Bottom Sheet provided by Google
 ---
 

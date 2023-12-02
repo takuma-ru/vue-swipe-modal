@@ -56,6 +56,11 @@ export default defineConfig({
       { text: "Documents", link: "/documents/properties.md" },
     ],
 
+    footer: {
+      message: "Released under the MIT License.",
+      copyright: "Copyright © 2023-present takuma-ru",
+    },
+
     sidebar: [
       {
         text: "Introduction",

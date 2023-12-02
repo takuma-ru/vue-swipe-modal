@@ -47,16 +47,19 @@ const isOpen = ref(false)
 
 <template>
   <button @click="isOpen = true">Open modal</button>
-  <SwipeModal v-model="isOpen" :class="$style.modal">
+  <SwipeModal
+    v-model="isOpen"
+    snapPoint="auto"
+  >
+    <button @click="isOpen = false">Close modal</button>
     Modal content
   </SwipeModal>
 </template>
 
-<style lang="scss" module>
-.modal {
+<style lang="scss" scoped>
+:deep(.modal-style) {
   box-sizing: border-box;
   width: 100%;
-  height: 50dvh;
   color: white;
   background-color: #1d1b20;
   border-radius: 1rem 1rem 0 0;

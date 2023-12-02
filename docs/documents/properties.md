@@ -19,6 +19,27 @@ Controls the opening and closing of the modal.
 </template>
 ```
 
+## isBackdrop
+Flag whether modal backdrops should be displayed or not.
+
+| name      |                        |
+| --------- | ---------------------- |
+| attribute | `is-backdrop`          |
+| type      | `boolean \| undefined` |
+| default   | `true`                 |
+
+```vue{4}
+<template>
+  <SwipeModal
+    v-model="isOpen"
+    :is-backdrop="/* boolean */"
+  >
+    modal content
+  </SwipeModal>
+</template>
+```
+
+
 ## isDragHandle
 A flag to indicate whether or not the "DragHandle" should be displayed at the top of the modal to indicate that it can be swiped to close.
 
@@ -41,12 +62,12 @@ A flag to indicate whether or not the "DragHandle" should be displayed at the to
 
 ![img](/imgs/properties/is-drag-handle.png)
 
-## isBackdrop
-Flag whether modal backdrops should be displayed or not.
+## isFullScreen
+Flag to indicate whether the modal should be displayed in full screen or not.
 
 | name      |                        |
 | --------- | ---------------------- |
-| attribute | `is-backdrop`          |
+| attribute | `is-full-screen`       |
 | type      | `boolean \| undefined` |
 | default   | `true`                 |
 
@@ -54,7 +75,7 @@ Flag whether modal backdrops should be displayed or not.
 <template>
   <SwipeModal
     v-model="isOpen"
-    :is-backdrop="/* boolean */"
+    :is-full-screen="/* boolean */"
   >
     modal content
   </SwipeModal>
@@ -102,61 +123,125 @@ Flag to indicate whether the modal background should not be scrolled (= fixed sc
 </template>
 ```
 
-## class
-Can specify a class to be applied to the panel portion of the modal.<br>
-If undefined, the style of the library default state is applied.
+## snapPoint
+Modal upper edge position.
+Specifies how far up on the screen the modal will open (= modal height).
 
-| name      |                                        |
-| --------- | -------------------------------------- |
-| attribute | `class`                                |
-| type      | `HTMLAttributes["class"] \| undefined` |
-| default   | `undefined`                            |
+| name      |                    |
+| --------- | ------------------ |
+| attribute | `snap-point`       |
+| type      | `"auto" \| String` |
+| default   | `undefined`        |
 
 ```vue{4}
 <template>
   <SwipeModal
     v-model="isOpen"
-    :class="$style['/* class name */']"
+    :snap-point="/* auto or String */"
   >
     modal content
   </SwipeModal>
 </template>
 ```
 
-::: warning
-**Scoped CSS** is not supported!<br>
-Please use **Module CSS** instead: .....<br>
-(A solution to this problem is currently under consideration.)
-:::
+- `undefined`
 
-::: details Style to be applied when nothing is specified for class
-The style of the material is designed to fit the Material 3.
-```scss
-.default-modal-style {
-  box-sizing: border-box;
-  width: 100%;
-  height: 50dvh;
-  color: white;
-  background-color: #1d1b20;
-  border-radius: 1rem 1rem 0 0;
+  Open the modal in full screen (`100dvh`).
 
-  @media (prefers-color-scheme: light) {
-    color: black;
-    background-color: #f7f2fa;
-    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 37%);
-  }
-}
-```
-:::
+- `"auto"`
+
+  If "auto" is specified, the height of the element in the modal (the element written in `<SwipeModal>`) is automatically obtained and the modal is opened to that height.
+
+  If the element is larger than the screen, the modal will be displayed in full screen.
+
+  ::: details Click me to view the code
+  ```vue{4}
+  <template>
+    <SwipeModal
+      v-model="isOpen"
+      snap-point="auto"
+    >
+      <div class="modal-content">
+        <button @click="isOpen = false">close modal</button>
+        <h3>Red line is this element's area.</h3>
+        height is auto.
+      </div>
+    </SwipeModal>
+  </template>
+  ```
+  :::
+
+- other (`String`)
+
+  You can specify the same value as the CSS [\<length>](https://developer.mozilla.org/ja/docs/Web/CSS/length) data type
+
+  Examples : `100px`, `50dvh`, `10em`.
+
+  ::: details Click me to view the code
+  ```vue{4}
+  <template>
+    <SwipeModal
+      v-model="isOpen"
+      snap-point="50dvh"
+    >
+      <div class="modal-content">
+        <button @click="isOpen = false">close modal</button>
+        <h3>Red line is this element's area.</h3>
+        height is auto.
+      </div>
+    </SwipeModal>
+  </template>
+  ```
+  :::
 
 ## .d.ts
 ```ts
 type PropsType = {
-  modelValue: boolean
-  isDragHandle?: boolean
+ /**
+   * Whether to display the backdrop.
+   *
+   * @default true
+   */
   isBackdrop?: boolean
+  /**
+   * Whether to display the drag handle.
+   *
+   * @default true
+   */
+  isDragHandle?: boolean
+  /**
+   * Whether to display the modal in full screen.
+   *
+   * @default true
+   */
+  isFullScreen?: boolean
+  /**
+   * Whether to disable swipe and back drop click events.
+   *
+   * @default false
+   */
   isPersistent?: boolean
+  /**
+   * Whether to disable scroll of the background.
+   *
+   *  @default true
+   */
   isScrollLock?: boolean
-  class?: HTMLAttributes["class"]
+  /**
+   * Whether to display the modal.  = `v-model`
+   *
+   * @default false
+   */
+  modelValue?: boolean
+  /**
+   * Modal upper edge position.
+   *
+   * - `auto`: Automatically calculates the display position based on the height of the content in the modal.
+   * - `String` : [\<length>](https://developer.mozilla.org/ja/docs/Web/CSS/length) data type
+   *
+   * @default undefined
+   */
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  snapPoint?: "auto" | String
 }
 ```

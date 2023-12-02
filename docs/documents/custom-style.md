@@ -1,26 +1,26 @@
 # Custom style
 
 ## Panel
-```vue{4}
+Override the style using `:deep()` functionality provided by Vue.
+
+```vue{10-12}
 <template>
-  <SwipeModal
-    v-model="isOpen"
-    :class="$style['/* class name */']"
-  >
-    modal content
-  </SwipeModal>
+  <main>
+    <SwipeModal v-model="isOpen">
+      modal content
+    </SwipeModal>
+  </main>
 </template>
 
-<style module>
-./* class name */ {
+<style scoped>
+:deep(.modal-style) {
   /* custom style */
 }
 </style>
 ```
-::: warning
-**Scoped CSS** is not supported!<br>
-Please use **Module CSS** instead: .....<br>
-(A solution to this problem is currently under consideration.)
+::: danger
+Do not specify `height`.
+Modal height must be specified with [`snapPoint`](/documents/properties.html#snappoint) prop.
 :::
 
 ## DragHandle
