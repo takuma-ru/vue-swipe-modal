@@ -12,7 +12,11 @@ Due to the eol of vue2, vue2 is no longer supported. vue2 can be used with `v4.0
 
 
 ## DEMO
-[Directory]()
+[Directory](https://github.com/takuma-ru/vue-swipe-modal/tree/main/demo/vue)
+
+## Document Page
+
+[vue-swipe-modal-docs.takumaru.dev](https://vue-swipe-modal-docs.takumaru.dev/)
 
 ## Getting Started
 ### 1. Install
