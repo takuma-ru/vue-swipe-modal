@@ -77,7 +77,7 @@ jobs:
         run: pnpm install
 
       - name: Set .npmrc
-        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > packages/core/.npmrc
 
       - name: Create release branch
         id: create_branch
