@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "stylelint-rscss/config",
+    "stylelint-config-standard-scss",
+    "stylelint-config-recess-order",
+    "stylelint-prettier/recommended",
+    "stylelint-config-recommended-vue/scss"
+  ],
+  "rules": {
+    "string-quotes": "double",
+    "property-no-vendor-prefix": [
+      true,
+      { "ignoreProperties": ["backdrop-filter"] }
+    ]
+  }
+}

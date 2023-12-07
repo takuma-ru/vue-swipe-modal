@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "📄 docs",
+      "path": "docs"
+    },
+    {
+      "name": "📦 core",
+      "path": "packages/core"
+    },
+    {
+      "name": "🧪 demo",
+      "path": "demo/vue"
+    }
+  ],
+  "settings": {
+    "cSpell.words": []
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

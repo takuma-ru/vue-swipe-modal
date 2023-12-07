@@ -1,17 +1,17 @@
 {
   "name": "docs",
   "version": "1.0.0",
-  "private": true,
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "dev": "vitepress dev --port 3271",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
   },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
-    "@nuxt/content": "^2.2.0",
-    "material-symbols": "^0.2.10",
-    "nuxt": "^3.0.0",
-    "sass": "^1.54.0"
+    "vitepress": "1.0.0-rc.25"
   }
 }
