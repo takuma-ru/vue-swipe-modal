@@ -1,10 +1,19 @@
-name: release @takuma-ru/vue-swipe-modal package
+name: Release @takuma-ru/vue-swipe-modal package
+
+run-name: Release ${{ inputs.releaseLevel }} version
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - packages/core/**
+  workflow_dispatch:
+    inputs:
+      releaseLevel:
+        description: 'Release level'
+        required: true
+        default: 'patch(0.0.X)'
+        type: choice
+        options:
+        - major(X.0.0)
+        - minor(0.X.0)
+        - patch(0.0.X)
 
 jobs:
   release:
@@ -70,6 +79,7 @@ jobs:
         id: create_branch
         run: |
           git checkout -b release
+          git commit --allow-empty -m "empty-commit"
           git push --set-upstream origin release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,17 +87,17 @@ jobs:
       - name: Major release
         id: major
         run: pnpm vsm publish:major
-        if: contains(toJSON(github.event.commits.*.message), '🚀 major')
+        if: contains(inputs.releaseLevel, 'major(X.0.0)')
 
       - name: Minor release
         id: minor
         run: pnpm vsm publish:minor
-        if: steps.major.conclusion == 'skipped' && contains(toJSON(github.event.commits.*.message), '🚀 minor')
+        if: steps.major.conclusion == 'skipped' && contains(inputs.releaseLevel, 'minor(0.X.0)')
 
       - name: Patch release
         id: patch
         run: pnpm vsm publish:patch
-        if: steps.minor.conclusion == 'skipped' && contains(toJSON(github.event.commits.*.message), '🚀 patch')
+        if: steps.minor.conclusion == 'skipped' && contains(inputs.releaseLevel, 'patch(0.0.X)')
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
