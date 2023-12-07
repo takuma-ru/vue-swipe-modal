@@ -77,14 +77,21 @@ jobs:
       - name: Set .npmrc
         run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
 
+      - uses: actions/github-script@v6
+        id: github-script
+        with:
+          script: |
+            core.info(JSON.stringify(context.payload))
+
       - name: Create release branch
         id: create_branch
         run: |
-          git checkout -b release
+          git checkout -b release/${ID}
           git commit --allow-empty -m "empty-commit"
-          git push --set-upstream origin release
+          git push --set-upstream origin release/${ID}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ID: ${{ steps.github-script.workflow_run.id }}
 
       - name: Major release
         id: major
@@ -108,5 +115,7 @@ jobs:
           title: "Update package.json"
           draft: false
           base: main
-          branch: release
+          branch: release/${ID}
           assignees: "${{ github.actor }}"
+        env:
+          ID: ${{ steps.github-script.workflow_run.id }}
