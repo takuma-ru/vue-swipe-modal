@@ -28,13 +28,13 @@ Modal height must be specified with [`snapPoint`](/documents/properties.html#sna
 <template>
   <SwipeModal v-model="isOpen">
     <template v-slot:drag-handle>
-      <div class="/* custom drag-handle class name */" />
+      <div class="custom-drag-handle-class-name" />
     </template>
   </SwipeModal>
 </template>
 
-<style module> or <style scoped>
-./* class name */ {
+<style scoped>
+.custom-drag-handle-class-name {
   /* custom style */
 }
 </style>
@@ -45,13 +45,14 @@ Modal height must be specified with [`snapPoint`](/documents/properties.html#sna
 <template>
   <SwipeModal v-model="isOpen">
     <template v-slot:backdrop>
-      <div class="/* custom backdrop class name */" />
+      <div class="custom-backdrop-class-name" />
     </template>
   </SwipeModal>
 </template>
 
-<style module> or <style scoped>
-./* class name */ {
+<style scoped>
+.custom-backdrop-class-name {
   /* custom style */
 }
+</style>
 ```

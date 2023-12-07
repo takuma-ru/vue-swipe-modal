@@ -101,10 +101,10 @@ export default defineConfig({
           },
         ],
       },
-      /* {
+      {
         text: "Roadmap",
         link: "/roadmap",
-      }, */
+      },
     ],
 
     socialLinks: [
