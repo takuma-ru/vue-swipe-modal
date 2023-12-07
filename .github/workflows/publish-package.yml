@@ -82,9 +82,9 @@ jobs:
       - name: Create release branch
         id: create_branch
         run: |
-          git checkout -b release/${ID}
+          git checkout -b release
           git commit --allow-empty -m "empty-commit"
-          git push --set-upstream origin release/${ID}
+          git push --set-upstream origin release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ID: ${{ github.run_id }}
@@ -111,5 +111,5 @@ jobs:
           title: "Update package.json"
           draft: false
           base: main
-          branch: "release/${{ github.run_id }}"
+          branch: release
           assignees: "${{ github.actor }}"
