@@ -14,6 +14,10 @@ on:
         - major(X.0.0)
         - minor(0.X.0)
         - patch(0.0.X)
+      isBeta:
+        description: 'Is beta release (exp: X.0.0-beta.X)'
+        required: false
+        type: boolean
 
 jobs:
   release:
@@ -83,30 +87,43 @@ jobs:
         id: create_branch
         run: |
           git checkout -b release
-          git commit --allow-empty -m "empty-commit"
           git push --set-upstream origin release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ID: ${{ github.run_id }}
 
       - name: Major release
         id: major
         run: pnpm vsm publish:major
-        if: contains(inputs.releaseLevel, 'major(X.0.0)')
+        if: contains(inputs.releaseLevel, 'major(X.0.0)') && contains(inputs.isBeta, 'false')
+
+      - name: Major Beta release
+        id: major-beta
+        run: pnpm vsm publish:major-beta
+        if: contains(inputs.releaseLevel, 'major(X.0.0)') && contains(inputs.isBeta, 'true')
 
       - name: Minor release
         id: minor
         run: pnpm vsm publish:minor
-        if: steps.major.conclusion == 'skipped' && contains(inputs.releaseLevel, 'minor(0.X.0)')
+        if: contains(inputs.releaseLevel, 'minor(0.X.0)') && contains(inputs.isBeta, 'false')
+
+      - name: Minor Beta release
+        id: minor-beta
+        run: pnpm vsm publish:minor-beta
+        if: contains(inputs.releaseLevel, 'minor(0.X.0)') && contains(inputs.isBeta, 'true')
 
       - name: Patch release
         id: patch
         run: pnpm vsm publish:patch
-        if: steps.minor.conclusion == 'skipped' && contains(inputs.releaseLevel, 'patch(0.0.X)')
+        if: contains(inputs.releaseLevel, 'patch(0.0.X)') && contains(inputs.isBeta, 'false')
+
+      - name: Patch Beta release
+        id: patch-beta
+        run: pnpm vsm publish:patch-beta
+        if: contains(inputs.releaseLevel, 'patch(0.0.X)') && contains(inputs.isBeta, 'true')
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
-        if: steps.major.conclusion == 'success' || steps.minor.conclusion == 'success' || steps.patch.conclusion == 'success'
+        if: steps.major.conclusion == 'success' || steps.minor.conclusion == 'success' || steps.patch.conclusion == 'success' || steps.major-beta.conclusion == 'success' || steps.minor-beta.conclusion == 'success' || steps.patch-beta.conclusion == 'success'
         with:
           title: "Update package.json"
           draft: false
