@@ -1,11 +1,4 @@
-import { HTMLAttributes } from "vue";
 type PropsType = {
-    /**
-     * Unique class of panel section.
-     *
-     * @default undefined
-     */
-    class?: HTMLAttributes["class"];
     /**
      * Whether to display the backdrop.
      *
@@ -18,6 +11,12 @@ type PropsType = {
      * @default true
      */
     isDragHandle?: boolean;
+    /**
+     * Whether to display the modal in full screen.
+     *
+     * @default true
+     */
+    isFullScreen?: boolean;
     /**
      * Whether to disable swipe and back drop click events.
      *
@@ -47,9 +46,9 @@ type PropsType = {
     snapPoint?: "auto" | String;
 };
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<PropsType>, {
-    class: undefined;
     isBackdrop: boolean;
     isDragHandle: boolean;
+    isFullScreen: boolean;
     isPersistent: boolean;
     isScrollLock: boolean;
     modelValue: boolean;
@@ -57,9 +56,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (value: boolean) => void;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<globalThis.ExtractPropTypes<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<PropsType>, {
-    class: undefined;
     isBackdrop: boolean;
     isDragHandle: boolean;
+    isFullScreen: boolean;
     isPersistent: boolean;
     isScrollLock: boolean;
     modelValue: boolean;
@@ -67,9 +66,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }>>> & {
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }, {
-    class: any;
     isBackdrop: boolean;
     isDragHandle: boolean;
+    isFullScreen: boolean;
     isPersistent: boolean;
     isScrollLock: boolean;
     modelValue: boolean;
