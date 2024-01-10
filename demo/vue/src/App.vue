@@ -1,15 +1,36 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { ref, computed } from "vue";
 import { SwipeModal } from "@takuma-ru/vue-swipe-modal";
 
 const isOpen = ref(false);
 
-const props = reactive({
-  isDragHandle: true,
-  isBackdrop: true,
-  isPersistent: false,
-  isScrollLock: true,
-});
+const contentRef = ref<HTMLDivElement | null>(null);
+
+const props = ref<
+  Array<{
+    name:
+      | "isBackdrop"
+      | "isDragHandle"
+      | "isFullScreen"
+      | "isPersistent"
+      | "isScrollLock"
+      | "isSnapPoint";
+    value: boolean;
+  }>
+>([
+  { name: "isBackdrop", value: true },
+  { name: "isDragHandle", value: true },
+  { name: "isFullScreen", value: true },
+  { name: "isPersistent", value: false },
+  { name: "isScrollLock", value: true },
+  { name: "isSnapPoint", value: true },
+]);
+
+const getPropsValue = (propName: (typeof props.value)[number]["name"]) => {
+  const prop = props.value.find((prop) => prop.name === propName);
+
+  return prop?.value;
+};
 
 const array = computed(() => {
   return [...Array(100)].map((_, i) => i);
@@ -17,66 +38,75 @@ const array = computed(() => {
 </script>
 
 <template>
-  <button @click="isOpen = !isOpen">open modal</button>
-  <p>
-    {{ isOpen }}
-  </p>
+  <main>
+    <button @click="isOpen = true">open modal</button>
+    <p>
+      {{ isOpen }}
+    </p>
 
-  <div class="props-list">
-    <div>
-      <input v-model="props.isBackdrop" class="checkbox" type="checkbox" />
-      <label for="checkbox">isBackdrop</label>
+    <div class="props-list">
+      <template v-for="prop in props" :key="prop">
+        <div>
+          <input v-model="prop.value" class="checkbox" type="checkbox" />
+          <label for="checkbox">{{ prop.name }}</label>
+        </div>
+      </template>
     </div>
-    <div>
-      <input v-model="props.isDragHandle" class="checkbox" type="checkbox" />
-      <label for="checkbox">isDragHandle</label>
-    </div>
-    <div>
-      <input v-model="props.isPersistent" class="checkbox" type="checkbox" />
-      <label for="checkbox">isPersistent</label>
-    </div>
-    <div>
-      <input v-model="props.isScrollLock" class="checkbox" type="checkbox" />
-      <label for="checkbox">isScrollLock</label>
-    </div>
-  </div>
 
-  <p v-for="item in array" :key="item">
-    {{ item }}
-  </p>
-
-  <button @click="isOpen = !isOpen">open modal</button>
-
-  <SwipeModal
-    v-model="isOpen"
-    :is-backdrop="props.isBackdrop"
-    :is-drag-handle="props.isDragHandle"
-    :is-persistent="props.isPersistent"
-    :is-scroll-lock="props.isScrollLock"
-    position="25%"
-  >
-    <button @click="isOpen = false">close modal</button>
     <p v-for="item in array" :key="item">
       {{ item }}
     </p>
-  </SwipeModal>
+
+    <button @click="isOpen = !isOpen">open modal</button>
+
+    <SwipeModal
+      v-model="isOpen"
+      :snap-point="getPropsValue('isSnapPoint') ? 'auto' : undefined"
+      :is-backdrop="getPropsValue('isBackdrop')"
+      :is-full-screen="getPropsValue('isFullScreen')"
+      :is-drag-handle="getPropsValue('isDragHandle')"
+      :is-persistent="getPropsValue('isPersistent')"
+      :is-scroll-lock="getPropsValue('isScrollLock')"
+    >
+      <div ref="contentRef" class="modal-content">
+        <button @click="isOpen = false">close modal</button>
+        <h3>Red line is this element's area.</h3>
+        height is auto.
+      </div>
+    </SwipeModal>
+  </main>
 </template>
 
-<style module lang="scss">
+<style scoped lang="scss">
 html {
   margin: 0;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
+}
 .props-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.modal-panel {
+:deep(.modal-style) {
   box-sizing: border-box;
-  width: 100%;
-  height: 80dvh;
   color: white;
   background-color: #1d1b20;
   border-radius: 1rem 1rem 0 0;
@@ -86,5 +116,15 @@ html {
     background-color: #f7f2fa;
     box-shadow: 0 1px 4px 0 rgb(0 0 0 / 37%);
   }
+}
+
+.modal-content {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  outline: 1px solid red;
+  outline-offset: -1px;
 }
 </style>
