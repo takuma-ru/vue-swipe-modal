@@ -1,0 +1,37 @@
+name: Add/Update/Fix Document page
+title: \U0001F4DD xxx
+description: Documentation-related issues, etc.
+labels: [":memo: documentation"]
+
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue type
+      description: What is the problem?
+      multiple: false
+      options:
+        - "Add"
+        - "Update"
+        - "Fix"
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: Please describe your request in detail.
+      placeholder: |
+        Please describe your request in detail.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+      placeholder: |
+        Add any other context about the problem here.
+    validations:
+      required: false

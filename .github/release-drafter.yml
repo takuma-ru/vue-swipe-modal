@@ -1,0 +1,80 @@
+name-template: "Release $RESOLVED_VERSION"
+tag-template: "$RESOLVED_VERSION"
+
+categories:
+  - title: "✨ Features"
+    labels:
+      - ":sparkles: feature"
+  - title: "🛠️ Enhancement"
+    labels:
+      - ":hammer_and_wrench: enhancement"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - ":bug: bug"
+  - title: "🧰 Maintenance"
+    label: "chore"
+  - title: "📝 Update Documentation"
+    labels:
+      - ":memo: documentation"
+  - title: "♻️ Refactoring"
+    labels:
+      - ":recycle: refactor"
+
+change-template: "- $TITLE @$AUTHOR ([#$NUMBER]($URL))"
+
+change-title-escapes: '\<*_&'
+
+template: |
+  ## Changes
+
+  $CHANGES
+
+autolabeler:
+  - label: ":sparkles: feature"
+    branch:
+      - "/^feat(ure)?[/-].+/"
+  - label: ":bug: bug"
+    branch:
+      - "/^fix[/-].+/"
+  - label: ":recycle: refactor"
+    branch:
+      - "/(refactor|refactoring)[/-].+/"
+  - label: ":memo: documentation"
+    branch:
+      - "/doc(umentation)[/-].+/"
+    files:
+      - "*.md"
+  - label: ":hammer_and_wrench: enhancement"
+    branch:
+      - "/(enhancement|improve)[/-].+/"
+  - label: ":rocket: release"
+    branch:
+      - "/^release[/-].+/"
+  - label: ":package: core feature"
+    files:
+      - "packages/auto-story-generator/**/*.ts"
+  - label: ":package: lit"
+    files:
+      - "packages/auto-story-generator/src/presets/lit/**/*.ts"
+      - "demo/lit/*"
+      - "demo/lit/**/*"
+  - label: ":package: react"
+    files:
+      - "packages/auto-story-generator/src/presets/react/**/*.ts"
+      - "demo/react/*"
+      - "demo/react/**/*"
+  - label: ":package: vue"
+    files:
+      - "packages/auto-story-generator/src/presets/vue/**/*.ts"
+      - "demo/vue/*"
+      - "demo/vue/**/*"
+  - label: ":package: angular"
+    files:
+      - "packages/auto-story-generator/src/presets/angular/**/*.ts"
+      - "demo/angular/*"
+      - "demo/angular/**/*"
+  - label: ":package: svelte"
+    files:
+      - "packages/auto-story-generator/src/presets/svelte/**/*.ts"
+      - "demo/svelte/*"
+      - "demo/svelte/**/*"

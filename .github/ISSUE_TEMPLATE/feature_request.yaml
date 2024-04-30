@@ -1,0 +1,21 @@
+name: Feature request
+description: Adding new features and improving the functionality of existing features
+title: "\U0001F6E0️ xxx"
+labels: [":hammer_and_wrench:enhancement"]
+
+body:
+  - type: textarea
+    attributes:
+      label: Describe the improve feature
+      description: What is the feature you want to improve?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature here.
+      placeholder: |
+        Add any other context about the feature here.
+    validations:
+      required: false

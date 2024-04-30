@@ -1,4 +1,4 @@
-name: Release @takuma-ru/vue-swipe-modal package
+name: Release @takuma-ru/auto-story-generator package
 
 run-name: Release ${{ inputs.releaseLevel }} version
 
@@ -8,14 +8,15 @@ on:
       releaseLevel:
         description: "Release level"
         required: true
-        default: "patch(0.0.X)"
+        default: patch
         type: choice
         options:
-          - major(X.0.0)
-          - minor(0.X.0)
-          - patch(0.0.X)
+          - major
+          - minor
+          - patch
+          - prerelease
       isBeta:
-        description: "Is beta release (exp: X.0.0-beta.X)"
+        description: "Is beta release (exp: X.X.X-beta.0)"
         required: false
         type: boolean
 
@@ -33,6 +34,7 @@ jobs:
       repository-projects: write
       security-events: write
       statuses: write
+      id-token: write
     environment:
       name: Publish
     env:
@@ -47,8 +49,8 @@ jobs:
 
       - name: Set git config
         run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -60,7 +62,7 @@ jobs:
         name: Install pnpm
         id: pnpm-install
         with:
-          version: 8.9.2
+          version: 8.14.1
           run_install: false
 
       - name: Get pnpm store directory
@@ -69,64 +71,107 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+      # - uses: actions/cache@v3
+      #   name: Setup pnpm cache
+      #   with:
+      #     path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pnpm-store-
 
       - name: Install Node Dependencies
         run: pnpm install
 
       - name: Set .npmrc
-        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > packages/core/.npmrc
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > packages/auto-story-generator/.npmrc
 
-      - name: Create release branch
-        id: create_branch
+      - name: Set beta value
+        id: beta
         run: |
-          git checkout -b release
-          git push --set-upstream origin release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if [[ "${{ inputs.isBeta }}" == "true" ]]; then
+            echo "beta=beta" >> $GITHUB_OUTPUT
+          else
+            echo "beta=" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Major release
-        id: major
-        run: pnpm vsm publish:major
-        if: contains(inputs.releaseLevel, 'major(X.0.0)') && contains(inputs.isBeta, 'false')
-
-      - name: Major Beta release
-        id: major-beta
-        run: pnpm vsm publish:major-beta
-        if: contains(inputs.releaseLevel, 'major(X.0.0)') && contains(inputs.isBeta, 'true')
-
-      - name: Minor release
-        id: minor
-        run: pnpm vsm publish:minor
-        if: contains(inputs.releaseLevel, 'minor(0.X.0)') && contains(inputs.isBeta, 'false')
-
-      - name: Minor Beta release
-        id: minor-beta
-        run: pnpm vsm publish:minor-beta
-        if: contains(inputs.releaseLevel, 'minor(0.X.0)') && contains(inputs.isBeta, 'true')
-
-      - name: Patch release
-        id: patch
-        run: pnpm vsm publish:patch
-        if: contains(inputs.releaseLevel, 'patch(0.0.X)') && contains(inputs.isBeta, 'false')
-
-      - name: Patch Beta release
-        id: patch-beta
-        run: pnpm vsm publish:patch-beta
-        if: contains(inputs.releaseLevel, 'patch(0.0.X)') && contains(inputs.isBeta, 'true')
+      - name: Release
+        id: release
+        run: |
+          OUTPUT=$(node ./.scripts/release.cjs ${{ inputs.releaseLevel }} ${{ steps.beta.outputs.beta }})
+          LAST_LINE=$(echo "$OUTPUT" | tail -n 1)
+          echo "branchName=$LAST_LINE" >> $GITHUB_OUTPUT
+        shell: bash
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        if: steps.major.conclusion == 'success' || steps.minor.conclusion == 'success' || steps.patch.conclusion == 'success' || steps.major-beta.conclusion == 'success' || steps.minor-beta.conclusion == 'success' || steps.patch-beta.conclusion == 'success'
+        uses: peter-evans/create-pull-request@v6
+        if: steps.release.outcome == 'success'
         with:
-          title: "Update package.json"
+          title: ":bookmark: Update package.json"
           draft: false
           base: main
-          branch: release
+          branch: ${{ steps.release.outputs.branchName }}
           assignees: "${{ github.actor }}"
+
+  create-github-release:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    environment:
+      name: Publish
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "package.json"
+          registry-url: "https://registry.npmjs.org/"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8.14.1
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      # - uses: actions/cache@v3
+      #   name: Setup pnpm cache
+      #   with:
+      #     path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pnpm-store-
+
+      - name: Install Node Dependencies
+        run: pnpm install
+
+      - name: Get Current package info
+        id: get-package-info
+        run: |
+          echo "PACKAGE_VERSION=$(pnpm view @takuma-ru/auto-story-generator version)" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        id: create-release
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: ${{ steps.get-package-info.outputs.PACKAGE_VERSION }}
+          prerelease: ${{ contains(steps.get-package-info.outputs.PACKAGE_VERSION, '-beta') }}

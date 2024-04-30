@@ -1,0 +1,41 @@
+name: Bug report
+description: Create a report to help us improve
+title: ":bug: xxx"
+labels: [":bug: bug"]
+assignees: takuma-ru
+
+body:
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: What happened when you did what?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: Please describe in as much detail as possible the steps you took to generate that bug.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Terminal Info
+      description: please complete the following information
+      value: |
+        - OS: <!-- macOS -->
+        - Browser: <!-- Chrome, Safari -->
+        - Version: <!-- 119 -->
+        - Library version: <!-- 0.1.0 -->
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+      placeholder: |
+        Add any other context about the problem here.
+    validations:
+      required: false

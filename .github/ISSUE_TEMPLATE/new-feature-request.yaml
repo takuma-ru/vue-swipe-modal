@@ -1,0 +1,21 @@
+name: NEW Feature request
+description: Want to add a completely new feature
+title: ":sparkles: xxx"
+labels: [":sparkles: feature"]
+
+body:
+  - type: textarea
+    attributes:
+      label: Describe the NEW feature
+      description: What is the feature you want to add?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature here.
+      placeholder: |
+        Add any other context about the feature here.
+    validations:
+      required: false
