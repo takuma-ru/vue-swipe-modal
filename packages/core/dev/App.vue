@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SwipeModal from "../components/SwipeModal.vue"
+import { ref, computed } from "vue"
+import SwipeModal from "../src/components/SwipeModal.vue"
 
 const isOpen = ref(false)
 
