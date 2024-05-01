@@ -60,6 +60,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useVModel } from "@vueuse/core"
+import { ref, computed, watch, onMounted } from "vue"
+
 // types
 type PropsType = {
   /**

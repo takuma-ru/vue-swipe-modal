@@ -48,7 +48,7 @@
   },
   "scripts": {
     "dev": "vite --port 3270",
-    "build": "vue-tsc && vite build",
+    "build": "pnpm gen:unimport-type && vue-tsc && vite build",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
     "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
@@ -57,16 +57,7 @@
     "format": "prettier -w src/*.{ts,vue} && prettier -w src/**/*.{ts,vue}",
     "format:css": "stylelint \"**/*.vue\" --fix",
     "fix": "pnpm format && pnpm format:css && pnpm lint",
-    "gen:unimport-type": "node ./.scripts/genUnimportType.js",
-    "publish:major": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it major --ci",
-    "publish:minor": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it minor --ci",
-    "publish:patch": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it patch --ci",
-    "publish:major-beta": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it major --preRelease=beta --ci",
-    "publish:minor-beta": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it minor --preRelease=beta --ci",
-    "publish:patch-beta": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it patch --preRelease=beta --ci",
-    "publish:prerelease": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it prerelease --ci",
-    "publish:major-beta:no-ci": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it major --preRelease=beta",
-    "publish:prerelease:no-ci": "pnpm gen:unimport-type && pnpm build && pnpm dlx release-it prerelease"
+    "gen:unimport-type": "node ./.scripts/genUnimportType.js"
   },
   "dependencies": {
     "@vueuse/core": "^10.6.0",
@@ -92,9 +83,9 @@
     "stylelint-config-standard-scss": "^11.1.0",
     "stylelint-prettier": "^4.0.2",
     "stylelint-rscss": "^0.4.0",
-    "typescript": "^5.3.3",
-    "vite": "^4.5.2",
-    "vite-plugin-css-injected-by-js": "^3.3.0",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
     "vue-tsc": "^1.8.5"
   },
   "peerDependencies": {
