@@ -1,4 +1,4 @@
-name: Release @takuma-ru/auto-story-generator package
+name: Release @takuma-ru/vue-swipe-modal package
 
 run-name: Release ${{ inputs.releaseLevel }} version
 
@@ -83,7 +83,7 @@ jobs:
         run: pnpm install
 
       - name: Set .npmrc
-        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > packages/auto-story-generator/.npmrc
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > packages/core/.npmrc
 
       - name: Set beta value
         id: beta
@@ -165,7 +165,7 @@ jobs:
       - name: Get Current package info
         id: get-package-info
         run: |
-          echo "PACKAGE_VERSION=$(pnpm view @takuma-ru/auto-story-generator version)" >> $GITHUB_OUTPUT
+          echo "PACKAGE_VERSION=$(pnpm view @takuma-ru/vue-swipe-modal version)" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         id: create-release
