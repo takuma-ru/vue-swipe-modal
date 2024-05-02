@@ -33,7 +33,7 @@ function getPropsValue(propName: (typeof props.value)[number]["name"]) {
 }
 
 const array = computed(() => {
-	return [...Array(100)].map((_, i) => i);
+	return [ ...Array(100) ].map((_, i) => i);
 });
 </script>
 

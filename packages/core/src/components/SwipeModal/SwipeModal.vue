@@ -308,7 +308,10 @@ function handleOpenModal() {
 
 	modalRef.value?.style.setProperty("visibility", "visible");
 
-	modalRef.value.animate([{ opacity: 0 }, { opacity: 1 }], {
+	modalRef.value.animate([
+		{ opacity: 0 },
+		{ opacity: 1 },
+	], {
 		duration: 200,
 		pseudoElement: "::backdrop",
 		easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
@@ -342,7 +345,10 @@ function handleCloseModal() {
 	if (!modalRef.value)
 		return;
 
-	modalRef.value.animate([{ opacity: 1 }, { opacity: 0 }], {
+	modalRef.value.animate([
+		{ opacity: 1 },
+		{ opacity: 0 },
+	], {
 		duration: 300,
 		pseudoElement: "::backdrop",
 		easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
