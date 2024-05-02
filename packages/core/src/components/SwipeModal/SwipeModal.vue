@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useVModel } from "@vueuse/core"
-import { computed, onMounted, ref, watch } from "vue"
-import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types"
+import { useVModel } from "@vueuse/core";
+import { computed, onMounted, ref, watch } from "vue";
+import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
 
 const props = withDefaults(defineProps<SwipeModalProps>(), {
 	isBackdrop: true,
@@ -11,46 +11,46 @@ const props = withDefaults(defineProps<SwipeModalProps>(), {
 	isScrollLock: true,
 	modelValue: false,
 	snapPoint: undefined,
-})
+});
 
-const emit = defineEmits<SwipeModalEmits>()
+const emit = defineEmits<SwipeModalEmits>();
 
 // variables
 
 /**
  * dialog element の ref
  */
-const modalRef = ref<HTMLDialogElement | null>(null)
+const modalRef = ref<HTMLDialogElement | null>(null);
 
 /**
  * モーダルのコンテンツ部分の ref
  */
-const panelRef = ref<HTMLDivElement | null>(null)
+const panelRef = ref<HTMLDivElement | null>(null);
 
 /**
  * 双方向バインディング用変数
  */
-const vModel = useVModel(props, "modelValue", emit)
+const vModel = useVModel(props, "modelValue", emit);
 
 /**
  * モーダルの配置位置
  */
-const bottom = ref<string>("-100%")
+const bottom = ref<string>("-100%");
 
 /**
  * ドラッグハンドルをクリック中かどうか
  */
-const isMouseDown = ref<boolean>(false)
+const isMouseDown = ref<boolean>(false);
 
 /**
  * ドラッグ開始時のポインターの位置
  */
-const startPositionY = ref<number>(0)
+const startPositionY = ref<number>(0);
 
 /**
  * ドラッグ開始位置からの移動量
  */
-const movementAmountY = ref<number>(0)
+const movementAmountY = ref<number>(0);
 
 /**
  * モーダルの配置位置の状態
@@ -58,22 +58,22 @@ const movementAmountY = ref<number>(0)
  * - `snap`: モーダルがスナップポイントまで表示されている状態
  * - `close`: モーダルが閉じられている状態
  */
-const positionStatus = ref<"full" | "snap" | "close">("close")
+const positionStatus = ref<"full" | "snap" | "close">("close");
 
 /**
  * snapPoint が指定されている場合のモーダルの配置位置
  */
 const snapPointPosition = computed(() => {
 	if (!props.snapPoint)
-		return `0px`
+		return `0px`;
 
 	if (props.snapPoint === "auto") {
-		const panelRefHeight = panelRef.value?.getBoundingClientRect().height || 0
-		return `calc(${panelRefHeight}px + 36px - 100%)`
+		const panelRefHeight = panelRef.value?.getBoundingClientRect().height || 0;
+		return `calc(${panelRefHeight}px + 36px - 100%)`;
 	}
 
-	return `calc(${props.snapPoint} - 100%)`
-})
+	return `calc(${props.snapPoint} - 100%)`;
+});
 
 // functions
 
@@ -85,13 +85,13 @@ function handlePointerDown({
 	touchEvent,
 	eventType,
 }:
-	| { mouseEvent: MouseEvent, touchEvent?: never, eventType: "mouse" }
-	| { mouseEvent?: never, touchEvent: TouchEvent, eventType: "touch" }) {
+	| { mouseEvent: MouseEvent; touchEvent?: never; eventType: "mouse" }
+	| { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" }) {
 	if (eventType === "mouse")
-		startPositionY.value = mouseEvent.y
-	else startPositionY.value = touchEvent.touches[0].clientY
+		startPositionY.value = mouseEvent.y;
+	else startPositionY.value = touchEvent.touches[0].clientY;
 
-	isMouseDown.value = true
+	isMouseDown.value = true;
 }
 
 /**
@@ -102,18 +102,18 @@ function handlePointerMove({
 	touchEvent,
 	eventType,
 }:
-	| { mouseEvent: MouseEvent, touchEvent?: never, eventType: "mouse" }
-	| { mouseEvent?: never, touchEvent: TouchEvent, eventType: "touch" }) {
+	| { mouseEvent: MouseEvent; touchEvent?: never; eventType: "mouse" }
+	| { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" }) {
 	if (!isMouseDown.value)
-		return
+		return;
 
 	// ドラッグ開始位置からの移動量を計算
 	if (eventType === "mouse") {
-		movementAmountY.value = startPositionY.value - mouseEvent.y
+		movementAmountY.value = startPositionY.value - mouseEvent.y;
 	}
 	else {
 		movementAmountY.value
-      = startPositionY.value - touchEvent.touches[0].clientY
+      = startPositionY.value - touchEvent.touches[0].clientY;
 	}
 
 	// モーダルが最大限まで開いている場合は、上方向へのドラッグは無効
@@ -121,29 +121,29 @@ function handlePointerMove({
 		(movementAmountY.value > 0 && positionStatus.value === "full")
 		|| (modalRef.value?.getBoundingClientRect().top || 0) < 0
 	)
-		return
+		return;
 
 	// フルスクリーンで表示させない場合は、上方向へのドラッグは無効
 	if (!props.isFullScreen && movementAmountY.value > 0)
-		return
+		return;
 
-	modalRef.value?.style.setProperty("user-select", "none")
+	modalRef.value?.style.setProperty("user-select", "none");
 
 	// モーダルの位置をポインターの位置に合わせて更新（snapの場合）
 	if (positionStatus.value === "snap")
-		return (bottom.value = `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`)
+		return (bottom.value = `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`);
 
 	// モーダルの位置をポインターの位置に合わせて更新
-	return (bottom.value = `calc(0% + ${movementAmountY.value}px)`)
+	return (bottom.value = `calc(0% + ${movementAmountY.value}px)`);
 }
 
 /**
  * ドラッグ終了時の処理
  */
 function handlePointerUp() {
-	isMouseDown.value = false
+	isMouseDown.value = false;
 
-	modalRef.value?.style.removeProperty("user-select")
+	modalRef.value?.style.removeProperty("user-select");
 
 	// 移動量が abs(36px) より大きいの場合、アクションを起こす
 	if (Math.abs(movementAmountY.value) > 36) {
@@ -153,19 +153,19 @@ function handlePointerUp() {
 				case "full":
 					// snapPoint が指定されている場合は snapPoint までアニメーション
 					if (props.snapPoint)
-						return moveToSnapPointAnim()
+						return moveToSnapPointAnim();
 
 					if (props.isPersistent)
-						return cancelAnim()
+						return cancelAnim();
 
-					return (vModel.value = false)
+					return (vModel.value = false);
 				case "snap":
 					if (props.isPersistent)
-						return cancelAnim()
+						return cancelAnim();
 
-					return (vModel.value = false)
+					return (vModel.value = false);
 				default:
-					return
+					return;
 			}
 		}
 
@@ -173,17 +173,17 @@ function handlePointerUp() {
 		switch (positionStatus.value) {
 			case "snap":
 				if (!props.isFullScreen)
-					return cancelAnim()
+					return cancelAnim();
 
 				// snapPoint からドラッグされていた場合、フルスクリーン表示までアニメーション
-				return moveToFullScreenAnim()
+				return moveToFullScreenAnim();
 			default:
-				return
+				return;
 		}
 	}
 
 	// 移動量が 36px 以下の場合、元の表示位置まで戻る
-	return cancelAnim()
+	return cancelAnim();
 }
 
 /**
@@ -191,17 +191,17 @@ function handlePointerUp() {
  */
 function cancelAnim() {
 	if (!modalRef.value)
-		return
+		return;
 
 	const calcToPositionBottom = () => {
 		if (positionStatus.value === "snap")
-			return props.snapPoint ? snapPointPosition.value : "0%"
+			return props.snapPoint ? snapPointPosition.value : "0%";
 
 		if (positionStatus.value === "full")
-			return "0%"
+			return "0%";
 
-		return "-100%"
-	}
+		return "-100%";
+	};
 
 	modalRef.value.animate(
 		[
@@ -215,9 +215,9 @@ function cancelAnim() {
 			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 		},
 	).onfinish = () => {
-		movementAmountY.value = 0
-		bottom.value = calcToPositionBottom()
-	}
+		movementAmountY.value = 0;
+		bottom.value = calcToPositionBottom();
+	};
 }
 
 /**
@@ -225,10 +225,10 @@ function cancelAnim() {
  */
 function moveToSnapPointAnim() {
 	if (!modalRef.value)
-		return
+		return;
 
 	if (!props.snapPoint)
-		return
+		return;
 
 	modalRef.value.animate(
 		[
@@ -242,10 +242,10 @@ function moveToSnapPointAnim() {
 			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 		},
 	).onfinish = () => {
-		movementAmountY.value = 0
-		bottom.value = snapPointPosition.value
-		positionStatus.value = "snap"
-	}
+		movementAmountY.value = 0;
+		bottom.value = snapPointPosition.value;
+		positionStatus.value = "snap";
+	};
 }
 
 /**
@@ -253,7 +253,7 @@ function moveToSnapPointAnim() {
  */
 function moveToFullScreenAnim() {
 	if (!modalRef.value)
-		return
+		return;
 
 	modalRef.value.animate(
 		[
@@ -267,27 +267,27 @@ function moveToFullScreenAnim() {
 			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 		},
 	).onfinish = () => {
-		movementAmountY.value = 0
-		bottom.value = "0%"
-		positionStatus.value = "full"
-	}
+		movementAmountY.value = 0;
+		bottom.value = "0%";
+		positionStatus.value = "full";
+	};
 }
 
 function handleClickDialog(event: MouseEvent) {
 	if (!props.isBackdrop)
-		return
+		return;
 
 	if (event.target !== event.currentTarget)
-		return
+		return;
 
 	if (props.isPersistent)
-		return cancelAnim()
+		return cancelAnim();
 
-	vModel.value = false
+	vModel.value = false;
 }
 
 function handleClickContent(event: MouseEvent) {
-	event.stopPropagation()
+	event.stopPropagation();
 }
 
 /**
@@ -295,24 +295,24 @@ function handleClickContent(event: MouseEvent) {
  */
 function handleOpenModal() {
 	if (!modalRef.value)
-		return
+		return;
 
 	if (props.isBackdrop) {
 		// dialog tag をモーダルとして開く
-		modalRef.value.showModal()
+		modalRef.value.showModal();
 	}
 	else {
 		// dialog tag をトーストとして開く
-		modalRef.value.show()
+		modalRef.value.show();
 	}
 
-	modalRef.value?.style.setProperty("visibility", "visible")
+	modalRef.value?.style.setProperty("visibility", "visible");
 
 	modalRef.value.animate([{ opacity: 0 }, { opacity: 1 }], {
 		duration: 200,
 		pseudoElement: "::backdrop",
 		easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-	})
+	});
 
 	modalRef.value.animate(
 		[
@@ -328,11 +328,11 @@ function handleOpenModal() {
 			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 		},
 	).onfinish = () => {
-		positionStatus.value = props.snapPoint ? "snap" : "full"
-		bottom.value = snapPointPosition.value
+		positionStatus.value = props.snapPoint ? "snap" : "full";
+		bottom.value = snapPointPosition.value;
 		if (props.isScrollLock)
-			setPageScrollable("hidden")
-	}
+			setPageScrollable("hidden");
+	};
 }
 
 /**
@@ -340,13 +340,13 @@ function handleOpenModal() {
  */
 function handleCloseModal() {
 	if (!modalRef.value)
-		return
+		return;
 
 	modalRef.value.animate([{ opacity: 1 }, { opacity: 0 }], {
 		duration: 300,
 		pseudoElement: "::backdrop",
 		easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-	})
+	});
 
 	modalRef.value.animate(
 		[
@@ -362,15 +362,15 @@ function handleCloseModal() {
 			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 		},
 	).onfinish = () => {
-		bottom.value = "-100%"
-		positionStatus.value = "close"
-		isMouseDown.value = false
-		modalRef.value?.close()
-		modalRef.value?.style.setProperty("display", "initial")
-		modalRef.value?.style.setProperty("visibility", "hidden")
+		bottom.value = "-100%";
+		positionStatus.value = "close";
+		isMouseDown.value = false;
+		modalRef.value?.close();
+		modalRef.value?.style.setProperty("display", "initial");
+		modalRef.value?.style.setProperty("visibility", "hidden");
 
-		setPageScrollable("reset")
-	}
+		setPageScrollable("reset");
+	};
 }
 
 /**
@@ -378,27 +378,27 @@ function handleCloseModal() {
  */
 function setPageScrollable(scrollable: "auto" | "hidden" | "reset") {
 	if (scrollable === "reset") {
-		document.documentElement.style.removeProperty("overflow")
-		document.documentElement.style.removeProperty("overscroll-behavior-y")
-		return
+		document.documentElement.style.removeProperty("overflow");
+		document.documentElement.style.removeProperty("overscroll-behavior-y");
+		return;
 	}
 
-	let dv = window
-	let xOffset, yOffset, de
+	let dv = window;
+	let xOffset, yOffset, de;
 	if (document.defaultView) {
-		dv = document.defaultView
-		xOffset = dv.scrollX
-		yOffset = dv.scrollY
+		dv = document.defaultView;
+		xOffset = dv.scrollX;
+		yOffset = dv.scrollY;
 	}
 	else {
-		de = document.documentElement
-		xOffset = de.scrollLeft
-		yOffset = de.scrollTop
+		de = document.documentElement;
+		xOffset = de.scrollLeft;
+		yOffset = de.scrollTop;
 	}
-	document.documentElement.style.overflow = scrollable
+	document.documentElement.style.overflow = scrollable;
 	document.documentElement.style.overscrollBehaviorY
-    = scrollable === "auto" ? "auto" : "none"
-	dv.scrollTo(xOffset, yOffset)
+    = scrollable === "auto" ? "auto" : "none";
+	dv.scrollTo(xOffset, yOffset);
 }
 
 // watch
@@ -407,32 +407,32 @@ watch(
 	() => vModel.value,
 	(value) => {
 		if (value)
-			handleOpenModal()
-		else handleCloseModal()
+			handleOpenModal();
+		else handleCloseModal();
 	},
-)
+);
 
 // props の isScrollLock を監視し、スクロールロックの状態を変更する
 watch(
 	() => props.isScrollLock,
 	(value) => {
 		if (value)
-			setPageScrollable("hidden")
-		else setPageScrollable("auto")
+			setPageScrollable("hidden");
+		else setPageScrollable("auto");
 	},
-)
+);
 
 // life cycle
 onMounted(() => {
 	if (!modalRef.value)
-		return
+		return;
 
 	if (!vModel.value) {
 		// モーダル内のエレメントを取得できるように display を none を無効化
-		modalRef.value.style.setProperty("display", "initial")
-		modalRef.value.style.setProperty("visibility", "hidden")
+		modalRef.value.style.setProperty("display", "initial");
+		modalRef.value.style.setProperty("visibility", "hidden");
 	}
-})
+});
 </script>
 
 <template>
@@ -556,4 +556,3 @@ onMounted(() => {
 	transform: translateX(-50%);
 }
 </style>
-./SwipeModal.types

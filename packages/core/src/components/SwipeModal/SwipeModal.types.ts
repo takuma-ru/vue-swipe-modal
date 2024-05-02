@@ -5,37 +5,37 @@ export interface SwipeModalProps {
 	 *
 	 * @default true
 	 */
-	isBackdrop?: boolean
+	isBackdrop?: boolean;
 	/**
 	 * Whether to display the drag handle.
 	 *
 	 * @default true
 	 */
-	isDragHandle?: boolean
+	isDragHandle?: boolean;
 	/**
 	 * Whether to display the modal in full screen.
 	 *
 	 * @default true
 	 */
-	isFullScreen?: boolean
+	isFullScreen?: boolean;
 	/**
 	 * Whether to disable swipe and back drop click events.
 	 *
 	 * @default false
 	 */
-	isPersistent?: boolean
+	isPersistent?: boolean;
 	/**
 	 * Whether to disable scroll of the background.
 	 *
 	 *  @default true
 	 */
-	isScrollLock?: boolean
+	isScrollLock?: boolean;
 	/**
 	 * Whether to display the modal.  = `v-model`
 	 *
 	 * @default false
 	 */
-	modelValue?: boolean
+	modelValue?: boolean;
 	/**
 	 * Modal upper edge position.
 	 *
@@ -45,9 +45,9 @@ export interface SwipeModalProps {
 	 * @default undefined
 	 */
 	// eslint-disable-next-line ts/ban-types
-	snapPoint?: "auto" | String
+	snapPoint?: "auto" | String;
 }
 
 export interface SwipeModalEmits {
-	(e: "update:modelValue", value: boolean): void
+	(e: "update:modelValue", value: boolean): void;
 }

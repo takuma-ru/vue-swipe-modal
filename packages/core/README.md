@@ -33,10 +33,10 @@ Import and use the modal with the vue file you want to use.
 
 ```vue
 <script lang="ts" setup>
-import { ref } from "vue"
-import { SwipeModal } from "@takuma-ru/vue-swipe-modal"
+import { ref } from "vue";
+import { SwipeModal } from "@takuma-ru/vue-swipe-modal";
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 </script>
 
 <template>

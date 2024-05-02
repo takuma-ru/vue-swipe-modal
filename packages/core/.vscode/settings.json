@@ -32,7 +32,7 @@
 		{ "rule": "*-dangle", "severity": "off" },
 		{ "rule": "*-newline", "severity": "off" },
 		{ "rule": "*quotes", "severity": "off" },
-		{ "rule": "*semi", "severity": "off" }
+		{ "rule": "*semi", "severity": "default" }
 	],
 
 	// Enable eslint for all supported languages

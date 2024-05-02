@@ -1,4 +1,4 @@
-import antfu from "@antfu/eslint-config"
+import antfu from "@antfu/eslint-config";
 
 export default antfu({
 	ignores: ["@types/**"],
@@ -8,8 +8,9 @@ export default antfu({
 	},
 	stylistic: {
 		indent: "tab",
+		semi: true,
 		quotes: "double",
 	},
 	typescript: true,
 	vue: true,
-})
+});

@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { computed, ref } from "vue"
-import SwipeModal from "../src/components/SwipeModal/SwipeModal.vue"
+import { computed, ref } from "vue";
+import SwipeModal from "../src/components/SwipeModal/SwipeModal.vue";
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 
-const contentRef = ref<HTMLDivElement | null>(null)
+const contentRef = ref<HTMLDivElement | null>(null);
 
 const props = ref<
-  Array<{
-  	name:
-  		| "isBackdrop"
-  		| "isDragHandle"
-  		| "isFullScreen"
-  		| "isPersistent"
-  		| "isScrollLock"
-  		| "isSnapPoint"
-  	value: boolean
-  }>
+Array<{
+	name:
+		| "isBackdrop"
+		| "isDragHandle"
+		| "isFullScreen"
+		| "isPersistent"
+		| "isScrollLock"
+		| "isSnapPoint";
+	value: boolean;
+}>
 >([
 	{ name: "isBackdrop", value: true },
 	{ name: "isDragHandle", value: true },
@@ -24,17 +24,17 @@ const props = ref<
 	{ name: "isPersistent", value: false },
 	{ name: "isScrollLock", value: true },
 	{ name: "isSnapPoint", value: true },
-])
+]);
 
 function getPropsValue(propName: (typeof props.value)[number]["name"]) {
-	const prop = props.value.find(prop => prop.name === propName)
+	const prop = props.value.find(prop => prop.name === propName);
 
-	return prop?.value
+	return prop?.value;
 }
 
 const array = computed(() => {
-	return [...Array(100)].map((_, i) => i)
-})
+	return [...Array(100)].map((_, i) => i);
+});
 </script>
 
 <template>

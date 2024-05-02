@@ -29,15 +29,14 @@
 		"pwa"
 	],
 	"exports": {
-		"types": "./@types/main.d.ts",
+		"types": "./dist/main.d.ts",
 		"import": "./dist/vueSwipeModal.js",
 		"require": "./dist/vueSwipeModal.cjs"
 	},
 	"main": "./dist/vueSwipeModal.umd.cjs",
 	"module": "./dist/vueSwipeModal.js",
-	"types": "./@types/main.d.ts",
+	"types": "./dist/main.d.ts",
 	"files": [
-		"@types/*",
 		"LICENSE.md",
 		"README.md",
 		"dist/*"
@@ -48,12 +47,11 @@
 	},
 	"scripts": {
 		"dev": "vite --port 3270",
-		"build": "pnpm gen:unimport-type && vue-tsc && vite build",
+		"build": "vite build",
 		"build:watch": "vite build --watch",
 		"preview": "vite preview",
 		"lint": "eslint .",
-		"lint:type-check": "tsc -p . && vue-tsc",
-		"gen:unimport-type": "node ./.scripts/genUnimportType.js"
+		"lint:type-check": "tsc -p . && vue-tsc"
 	},
 	"peerDependencies": {
 		"vue": "^3.0.0"
@@ -61,7 +59,6 @@
 	"dependencies": {
 		"@vueuse/core": "^10.6.0",
 		"consola": "^3.2.3",
-		"unimport": "^3.5.0",
 		"vue": "^3.3.4"
 	},
 	"devDependencies": {
@@ -81,6 +78,7 @@
 		"typescript": "^5.4.5",
 		"vite": "^5.2.10",
 		"vite-plugin-css-injected-by-js": "^3.5.1",
+		"vite-plugin-dts": "^3.9.0",
 		"vue-tsc": "^1.8.5"
 	}
 }

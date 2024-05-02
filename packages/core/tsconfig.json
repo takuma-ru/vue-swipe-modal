@@ -9,7 +9,6 @@
 		"resolveJsonModule": true,
 		"strict": true,
 		"declaration": true,
-		"declarationDir": "./@types",
 		"declarationMap": true,
 		"emitDeclarationOnly": true,
 		"sourceMap": true,
@@ -22,7 +21,6 @@
 		"src/**/*.ts",
 		"src/**/*.d.ts",
 		"src/**/*.tsx",
-		"src/**/*.vue",
-		"./unimport.d.ts"
+		"src/**/*.vue"
 	]
 }
