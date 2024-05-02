@@ -1,6 +1,6 @@
+import fs from "node:fs"
 import { createUnimport } from "unimport"
 import { consola } from "consola"
-import fs from "fs"
 
 consola.start("Start Generating unimport types...")
 

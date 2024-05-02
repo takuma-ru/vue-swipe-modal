@@ -1,2 +1,2 @@
-import "./style.css";
-//# sourceMappingURL=dev-main.d.ts.map
+import './style.css'
+// # sourceMappingURL=dev-main.d.ts.map
