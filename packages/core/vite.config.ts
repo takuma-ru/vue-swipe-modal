@@ -5,7 +5,11 @@ import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [ vue(), cssInjectedByJsPlugin(), dts({ rollupTypes: true }) ],
+	plugins: [
+		vue(),
+		cssInjectedByJsPlugin(),
+		dts({ rollupTypes: true }),
+	],
 
 	build: {
 		outDir: "./dist",
@@ -14,7 +18,11 @@ export default defineConfig({
 			entry: "src/main.ts",
 			name: "@takuma-ru/vue-swipe-modal",
 			fileName: "vueSwipeModal",
-			formats: [ "es", "cjs", "umd" ],
+			formats: [
+				"es",
+				"cjs",
+				"umd",
+			],
 		},
 		rollupOptions: {
 			external: [ "vue" ],

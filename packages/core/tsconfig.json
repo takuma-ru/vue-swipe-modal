@@ -8,10 +8,10 @@
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"strict": true,
+		"noEmit": true,
 		"esModuleInterop": true,
 		"isolatedModules": true,
-		"skipLibCheck": true,
-		"noEmit": true
+		"skipLibCheck": true
 	},
 	"references": [{ "path": "./tsconfig.node.json" }],
 	"include": [
