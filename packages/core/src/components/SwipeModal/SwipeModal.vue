@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useVModel } from "@vueuse/core";
 import { computed, onMounted, ref, watch } from "vue";
+import { usePointerEvent } from "../../hooks/usePointerEvent";
+import { useModalAnim } from "../../hooks/useModalAnim";
 import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
 
 const props = withDefaults(defineProps<SwipeModalProps>(), {
@@ -38,16 +40,6 @@ const vModel = useVModel(props, "modelValue", emit);
 const bottom = ref<string>("-100%");
 
 /**
- * ドラッグハンドルをクリック中かどうか
- */
-const isMouseDown = ref<boolean>(false);
-
-/**
- * ドラッグ開始時のポインターの位置
- */
-const startPositionY = ref<number>(0);
-
-/**
  * ドラッグ開始位置からの移動量
  */
 const movementAmountY = ref<number>(0);
@@ -75,205 +67,75 @@ const snapPointPosition = computed(() => {
 	return `calc(${props.snapPoint} - 100%)`;
 });
 
+const {
+	cancelAnim,
+	moveToSnapPointAnim,
+	moveToFullScreenAnim,
+} = useModalAnim({
+	bottom,
+	positionStatus,
+	props,
+	snapPointPosition,
+	movementAmountY,
+	refs: {
+		modalRef,
+	},
+});
+
+const {
+	isMouseDown,
+	handlePointerDown,
+	handlePointerMove,
+	handlePointerUp,
+} = usePointerEvent({
+	vModel,
+	bottom,
+	positionStatus,
+	props,
+	snapPointPosition,
+	movementAmountY,
+	refs: {
+		modalRef,
+		panelRef,
+	},
+	useModalAnim: {
+		moveToSnapPointAnim,
+		moveToFullScreenAnim,
+		cancelAnim,
+	},
+});
+
 // functions
 
 /**
- * ドラッグ開始時の処理
+ * 背景がスクロールできるかどうかを制御する
  */
-function handlePointerDown({
-	mouseEvent,
-	touchEvent,
-	eventType,
-}:
-	| { mouseEvent: MouseEvent; touchEvent?: never; eventType: "mouse" }
-	| { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" }) {
-	if (eventType === "mouse")
-		startPositionY.value = mouseEvent.y;
-	else startPositionY.value = touchEvent.touches[0].clientY;
-
-	isMouseDown.value = true;
-}
-
-/**
- * ドラッグ中の処理
- */
-function handlePointerMove({
-	mouseEvent,
-	touchEvent,
-	eventType,
-}:
-	| { mouseEvent: MouseEvent; touchEvent?: never; eventType: "mouse" }
-	| { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" }) {
-	if (!isMouseDown.value)
+const setPageScrollable = (scrollable: "auto" | "hidden" | "reset") => {
+	if (scrollable === "reset") {
+		document.documentElement.style.removeProperty("overflow");
+		document.documentElement.style.removeProperty("overscroll-behavior-y");
 		return;
+	}
 
-	// ドラッグ開始位置からの移動量を計算
-	if (eventType === "mouse") {
-		movementAmountY.value = startPositionY.value - mouseEvent.y;
+	let dv = window;
+	let xOffset, yOffset, de;
+	if (document.defaultView) {
+		dv = document.defaultView;
+		xOffset = dv.scrollX;
+		yOffset = dv.scrollY;
 	}
 	else {
-		movementAmountY.value
-      = startPositionY.value - touchEvent.touches[0].clientY;
+		de = document.documentElement;
+		xOffset = de.scrollLeft;
+		yOffset = de.scrollTop;
 	}
+	document.documentElement.style.overflow = scrollable;
+	document.documentElement.style.overscrollBehaviorY
+    = scrollable === "auto" ? "auto" : "none";
+	dv.scrollTo(xOffset, yOffset);
+};
 
-	// モーダルが最大限まで開いている場合は、上方向へのドラッグは無効
-	if (
-		(movementAmountY.value > 0 && positionStatus.value === "full")
-		|| (modalRef.value?.getBoundingClientRect().top || 0) < 0
-	)
-		return;
-
-	// フルスクリーンで表示させない場合は、上方向へのドラッグは無効
-	if (!props.isFullScreen && movementAmountY.value > 0)
-		return;
-
-	modalRef.value?.style.setProperty("user-select", "none");
-
-	// モーダルの位置をポインターの位置に合わせて更新（snapの場合）
-	if (positionStatus.value === "snap")
-		return (bottom.value = `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`);
-
-	// モーダルの位置をポインターの位置に合わせて更新
-	return (bottom.value = `calc(0% + ${movementAmountY.value}px)`);
-}
-
-/**
- * ドラッグ終了時の処理
- */
-function handlePointerUp() {
-	isMouseDown.value = false;
-
-	modalRef.value?.style.removeProperty("user-select");
-
-	// 移動量が abs(36px) より大きいの場合、アクションを起こす
-	if (Math.abs(movementAmountY.value) > 36) {
-		// 下方向にドラッグした場合
-		if (movementAmountY.value < 0) {
-			switch (positionStatus.value) {
-				case "full":
-					// snapPoint が指定されている場合は snapPoint までアニメーション
-					if (props.snapPoint)
-						return moveToSnapPointAnim();
-
-					if (props.isPersistent)
-						return cancelAnim();
-
-					return (vModel.value = false);
-				case "snap":
-					if (props.isPersistent)
-						return cancelAnim();
-
-					return (vModel.value = false);
-				default:
-					return;
-			}
-		}
-
-		// 上方向にドラッグした場合
-		switch (positionStatus.value) {
-			case "snap":
-				if (!props.isFullScreen)
-					return cancelAnim();
-
-				// snapPoint からドラッグされていた場合、フルスクリーン表示までアニメーション
-				return moveToFullScreenAnim();
-			default:
-				return;
-		}
-	}
-
-	// 移動量が 36px 以下の場合、元の表示位置まで戻る
-	return cancelAnim();
-}
-
-/**
- * アクションを起こさず、移動が開始させる前の位置までアニメーション
- */
-function cancelAnim() {
-	if (!modalRef.value)
-		return;
-
-	const calcToPositionBottom = () => {
-		if (positionStatus.value === "snap")
-			return props.snapPoint ? snapPointPosition.value : "0%";
-
-		if (positionStatus.value === "full")
-			return "0%";
-
-		return "-100%";
-	};
-
-	modalRef.value.animate(
-		[
-			{ bottom: bottom.value },
-			{
-				bottom: calcToPositionBottom(),
-			},
-		],
-		{
-			duration: 300,
-			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-		},
-	).onfinish = () => {
-		movementAmountY.value = 0;
-		bottom.value = calcToPositionBottom();
-	};
-}
-
-/**
- * 現在のモーダルの配置位置から snapPoint までアニメーション
- */
-function moveToSnapPointAnim() {
-	if (!modalRef.value)
-		return;
-
-	if (!props.snapPoint)
-		return;
-
-	modalRef.value.animate(
-		[
-			{ bottom: bottom.value },
-			{
-				bottom: snapPointPosition.value,
-			},
-		],
-		{
-			duration: 300,
-			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-		},
-	).onfinish = () => {
-		movementAmountY.value = 0;
-		bottom.value = snapPointPosition.value;
-		positionStatus.value = "snap";
-	};
-}
-
-/**
- * 現在のモーダルの配置位置からフルスクリーン表示までアニメーション
- */
-function moveToFullScreenAnim() {
-	if (!modalRef.value)
-		return;
-
-	modalRef.value.animate(
-		[
-			{ bottom: bottom.value },
-			{
-				bottom: "0%",
-			},
-		],
-		{
-			duration: 300,
-			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-		},
-	).onfinish = () => {
-		movementAmountY.value = 0;
-		bottom.value = "0%";
-		positionStatus.value = "full";
-	};
-}
-
-function handleClickDialog(event: MouseEvent) {
+const handleClickDialog = (event: MouseEvent) => {
 	if (!props.isBackdrop)
 		return;
 
@@ -284,16 +146,16 @@ function handleClickDialog(event: MouseEvent) {
 		return cancelAnim();
 
 	vModel.value = false;
-}
+};
 
-function handleClickContent(event: MouseEvent) {
+const handleClickContent = (event: MouseEvent) => {
 	event.stopPropagation();
-}
+};
 
 /**
  * モーダルを開く
  */
-function handleOpenModal() {
+const handleOpenModal = () => {
 	if (!modalRef.value)
 		return;
 
@@ -336,12 +198,12 @@ function handleOpenModal() {
 		if (props.isScrollLock)
 			setPageScrollable("hidden");
 	};
-}
+};
 
 /**
  * モーダルを閉じる
  */
-function handleCloseModal() {
+const handleCloseModal = () => {
 	if (!modalRef.value)
 		return;
 
@@ -377,35 +239,7 @@ function handleCloseModal() {
 
 		setPageScrollable("reset");
 	};
-}
-
-/**
- * 背景がスクロールできるかどうかを制御する
- */
-function setPageScrollable(scrollable: "auto" | "hidden" | "reset") {
-	if (scrollable === "reset") {
-		document.documentElement.style.removeProperty("overflow");
-		document.documentElement.style.removeProperty("overscroll-behavior-y");
-		return;
-	}
-
-	let dv = window;
-	let xOffset, yOffset, de;
-	if (document.defaultView) {
-		dv = document.defaultView;
-		xOffset = dv.scrollX;
-		yOffset = dv.scrollY;
-	}
-	else {
-		de = document.documentElement;
-		xOffset = de.scrollLeft;
-		yOffset = de.scrollTop;
-	}
-	document.documentElement.style.overflow = scrollable;
-	document.documentElement.style.overscrollBehaviorY
-    = scrollable === "auto" ? "auto" : "none";
-	dv.scrollTo(xOffset, yOffset);
-}
+};
 
 // watch
 // モーダルの表示状態を監視し、表示状態が変化したらモーダルを開くか閉じる

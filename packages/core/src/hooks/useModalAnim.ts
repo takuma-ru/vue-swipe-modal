@@ -1,0 +1,118 @@
+import type { ComputedRef, Ref } from "vue";
+import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
+
+interface UseModalAnimProps {
+	bottom: Ref<string>;
+	movementAmountY: Ref<number>;
+	props: SwipeModalProps;
+
+	positionStatus: Ref<"full" | "snap" | "close">;
+	snapPointPosition: ComputedRef<string>;
+	refs: {
+		modalRef: Ref<HTMLDialogElement | null>;
+	};
+}
+
+export const useModalAnim = ({
+	bottom,
+	positionStatus,
+	props,
+	snapPointPosition,
+	movementAmountY,
+	refs: {
+		modalRef,
+	},
+}: UseModalAnimProps) => {
+	/**
+	 * アクションを起こさず、移動が開始させる前の位置までアニメーション
+	 */
+	const cancelAnim = () => {
+		if (!modalRef.value)
+			return;
+
+		const calcToPositionBottom = () => {
+			if (positionStatus.value === "snap")
+				return props.snapPoint ? snapPointPosition.value : "0%";
+
+			if (positionStatus.value === "full")
+				return "0%";
+
+			return "-100%";
+		};
+
+		modalRef.value.animate(
+			[
+				{ bottom: bottom.value },
+				{
+					bottom: calcToPositionBottom(),
+				},
+			],
+			{
+				duration: 300,
+				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+			},
+		).onfinish = () => {
+			movementAmountY.value = 0;
+			bottom.value = calcToPositionBottom();
+		};
+	};
+
+	/**
+	 * 現在のモーダルの配置位置から snapPoint までアニメーション
+	 */
+	const moveToSnapPointAnim = () => {
+		if (!modalRef.value)
+			return;
+
+		if (!props.snapPoint)
+			return;
+
+		modalRef.value.animate(
+			[
+				{ bottom: bottom.value },
+				{
+					bottom: snapPointPosition.value,
+				},
+			],
+			{
+				duration: 300,
+				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+			},
+		).onfinish = () => {
+			movementAmountY.value = 0;
+			bottom.value = snapPointPosition.value;
+			positionStatus.value = "snap";
+		};
+	};
+
+	/**
+	 * 現在のモーダルの配置位置からフルスクリーン表示までアニメーション
+	 */
+	const moveToFullScreenAnim = () => {
+		if (!modalRef.value)
+			return;
+
+		modalRef.value.animate(
+			[
+				{ bottom: bottom.value },
+				{
+					bottom: "0%",
+				},
+			],
+			{
+				duration: 300,
+				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+			},
+		).onfinish = () => {
+			movementAmountY.value = 0;
+			bottom.value = "0%";
+			positionStatus.value = "full";
+		};
+	};
+
+	return {
+		cancelAnim,
+		moveToSnapPointAnim,
+		moveToFullScreenAnim,
+	};
+};

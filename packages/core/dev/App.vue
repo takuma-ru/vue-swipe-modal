@@ -26,11 +26,11 @@ Array<{
 	{ name: "isSnapPoint", value: true },
 ]);
 
-function getPropsValue(propName: (typeof props.value)[number]["name"]) {
+const getPropsValue = (propName: (typeof props.value)[number]["name"]) => {
 	const prop = props.value.find(prop => prop.name === propName);
 
 	return prop?.value;
-}
+};
 
 const array = computed(() => {
 	return [ ...Array(100) ].map((_, i) => i);
