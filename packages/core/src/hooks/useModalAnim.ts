@@ -4,7 +4,6 @@ import { useCssVar } from "./useCssVar";
 
 interface UseModalAnimProps {
 	scopeName: string;
-	movementAmountY: Ref<number>;
 	props: SwipeModalProps;
 	positionStatus: Ref<"full" | "snap" | "close">;
 	snapPointPosition: ComputedRef<string>;
@@ -18,7 +17,6 @@ export const useModalAnim = ({
 	positionStatus,
 	props,
 	snapPointPosition,
-	movementAmountY,
 	refs: {
 		modalRef,
 	},
@@ -57,7 +55,10 @@ export const useModalAnim = ({
 				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 			},
 		).onfinish = () => {
-			movementAmountY.value = 0;
+			setCssVar({
+				name: "movementAmountY",
+				value: "0",
+			});
 			setCssVar({
 				name: "bottom",
 				value: calcToPositionBottom(),
@@ -87,7 +88,10 @@ export const useModalAnim = ({
 				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 			},
 		).onfinish = () => {
-			movementAmountY.value = 0;
+			setCssVar({
+				name: "movementAmountY",
+				value: "0",
+			});
 			setCssVar({
 				name: "bottom",
 				value: snapPointPosition.value,
@@ -115,7 +119,10 @@ export const useModalAnim = ({
 				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 			},
 		).onfinish = () => {
-			movementAmountY.value = 0;
+			setCssVar({
+				name: "movementAmountY",
+				value: "0",
+			});
 			setCssVar({
 				name: "bottom",
 				value: "0%",

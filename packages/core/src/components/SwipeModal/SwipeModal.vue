@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useVModel } from "@vueuse/core";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { usePointerEvent } from "../../hooks/usePointerEvent";
 import { useModalAnim } from "../../hooks/useModalAnim";
 import { useCssVar } from "../../hooks/useCssVar";
@@ -25,13 +25,9 @@ const scopeName = Math.random().toString(36).substring(2) + Math.random().toStri
 const {
 	getCssVar,
 	setCssVar,
+	removeCssVar,
 } = useCssVar({
 	scopeName,
-});
-
-setCssVar({
-	name: "bottom",
-	value: "-100%",
 });
 
 /**
@@ -48,11 +44,6 @@ const panelRef = ref<HTMLDivElement | null>(null);
  * 双方向バインディング用変数
  */
 const vModel = useVModel(props, "modelValue", emit);
-
-/**
- * ドラッグ開始位置からの移動量
- */
-const movementAmountY = ref<number>(0);
 
 /**
  * モーダルの配置位置の状態
@@ -86,7 +77,6 @@ const {
 	positionStatus,
 	props,
 	snapPointPosition,
-	movementAmountY,
 	refs: {
 		modalRef,
 	},
@@ -103,7 +93,6 @@ const {
 	positionStatus,
 	props,
 	snapPointPosition,
-	movementAmountY,
 	refs: {
 		modalRef,
 		panelRef,
@@ -278,18 +267,33 @@ watch(
 	},
 );
 
-// life cycle
+// life cycle\
+setCssVar({
+	name: "bottom",
+	value: "-100%",
+});
+
+setCssVar({
+	name: "movementAmountY",
+	value: "0",
+});
+
 onMounted(() => {
 	if (!modalRef.value)
 		return;
 
-	modalRef.value?.style.setProperty("bottom", `var(--${scopeName}-bottom)`);
+	modalRef.value.style.setProperty("bottom", `var(--${scopeName}-bottom)`);
 
 	if (!vModel.value) {
 		// モーダル内のエレメントを取得できるように display を none を無効化
 		modalRef.value.style.setProperty("display", "initial");
 		modalRef.value.style.setProperty("visibility", "hidden");
 	}
+});
+
+onUnmounted(() => {
+	removeCssVar("bottom");
+	removeCssVar("movementAmountY");
 });
 </script>
 

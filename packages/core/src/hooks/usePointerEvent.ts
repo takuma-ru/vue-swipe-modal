@@ -7,7 +7,6 @@ import { useCssVar } from "./useCssVar";
 interface UsePointerEventParameter {
 	scopeName: string;
 	positionStatus: Ref<"full" | "snap" | "close">;
-	movementAmountY: Ref<number>;
 	props: SwipeModalProps;
 	snapPointPosition: ComputedRef<string>;
 
@@ -27,13 +26,13 @@ export const usePointerEvent = ({
 	scopeName,
 	positionStatus,
 	props,
-	movementAmountY,
 	snapPointPosition,
 	refs: { modalRef },
 	vModel,
 	useModalAnim: { moveToSnapPointAnim, moveToFullScreenAnim, cancelAnim },
 }: UsePointerEventParameter) => {
 	const {
+		getCssVar,
 		setCssVar,
 	} = useCssVar({ scopeName });
 
@@ -77,22 +76,27 @@ export const usePointerEvent = ({
 
 		// ドラッグ開始位置からの移動量を計算
 		if (eventType === "mouse") {
-			movementAmountY.value = startPositionY.value - mouseEvent.y;
+			setCssVar({
+				name: "movementAmountY",
+				value: (startPositionY.value - mouseEvent.y).toString(),
+			});
 		}
 		else {
-			movementAmountY.value
-      = startPositionY.value - touchEvent.touches[0].clientY;
+			setCssVar({
+				name: "movementAmountY",
+				value: (startPositionY.value - touchEvent.touches[0].clientY).toString(),
+			});
 		}
 
 		// モーダルが最大限まで開いている場合は、上方向へのドラッグは無効
 		if (
-			(movementAmountY.value > 0 && positionStatus.value === "full")
+			(Number(getCssVar("movementAmountY")) > 0 && positionStatus.value === "full")
 			|| (modalRef.value?.getBoundingClientRect().top || 0) < 0
 		)
 			return;
 
 		// フルスクリーンで表示させない場合は、上方向へのドラッグは無効
-		if (!props.isFullScreen && movementAmountY.value > 0)
+		if (!props.isFullScreen && Number(getCssVar("movementAmountY")) > 0)
 			return;
 
 		modalRef.value?.style.setProperty("user-select", "none");
@@ -101,7 +105,7 @@ export const usePointerEvent = ({
 		if (positionStatus.value === "snap") {
 			setCssVar({
 				name: "bottom",
-				value: `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`,
+				value: `calc(${snapPointPosition.value} + ${getCssVar("movementAmountY")}px)`,
 			});
 
 			return;
@@ -110,7 +114,7 @@ export const usePointerEvent = ({
 		// モーダルの位置をポインターの位置に合わせて更新
 		setCssVar({
 			name: "bottom",
-			value: `calc(0% + ${movementAmountY.value}px)`,
+			value: `calc(0% + ${getCssVar("movementAmountY")}px)`,
 		});
 	};
 
@@ -123,9 +127,9 @@ export const usePointerEvent = ({
 		modalRef.value?.style.removeProperty("user-select");
 
 		// 移動量が abs(36px) より大きいの場合、アクションを起こす
-		if (Math.abs(movementAmountY.value) > 36) {
+		if (Math.abs(Number(getCssVar("movementAmountY"))) > 36) {
 		// 下方向にドラッグした場合
-			if (movementAmountY.value < 0) {
+			if (Number(getCssVar("movementAmountY")) < 0) {
 				switch (positionStatus.value) {
 					case "full":
 					// snapPoint が指定されている場合は snapPoint までアニメーション

@@ -25,8 +25,13 @@ export const useCssVar = ({ scopeName }: UseCssVarParameter) => {
 		);
 	};
 
+	const removeCssVar = (name: CssVarName) => {
+		document.documentElement.style.removeProperty(`--${scopeName}-${name}`);
+	};
+
 	return {
 		setCssVar,
 		getCssVar,
+		removeCssVar,
 	};
 };
