@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { SwipeModal } from "@takuma-ru/vue-swipe-modal";
+import { SwipeModal } from "@takuma-ru/vue-swipe-modal"
 
 const isOpen = ref(false);
 

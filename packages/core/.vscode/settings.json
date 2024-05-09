@@ -1,12 +1,56 @@
 {
-  "editor.formatOnSave": true, // ファイル保存時に自動整形を行うようにする
-  "editor.defaultFormatter": "esbenp.prettier-vscode", // デフォルトのフォーマッターを「prettier」にする
-  "editor.tabSize": 2, // タブサイズを半角スペース二つにする
-  "editor.codeActionsOnSave": {
-    "source.fixAll.stylelint": "explicit",
-    "source.addMissingImports": "explicit"
-  },
-  "stylelint.validate": ["css", "scss", "vue"], // stylelintの自動整形の対象ファイルを設定を行うようにする
-  "files.eol": "\n", // 改行コードを指定
-  "cSpell.words": ["consola", "Unimport"]
+	// Enable the ESlint flat config support
+	"eslint.experimental.useFlatConfig": true,
+
+	// Disable the default formatter, use eslint instead
+	"prettier.enable": false,
+	"css.validate": false,
+	"less.validate": false,
+	"scss.validate": false,
+
+	"editor.tabSize": 2,
+	"editor.formatOnSave": false,
+	"files.eol": "\n",
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+
+	// Auto fix
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.stylelint": "explicit",
+		"source.organizeImports": "never",
+		"source.addMissingImports": "explicit"
+	},
+
+	// Silent the stylistic rules in you IDE, but still auto fix them
+	"eslint.rules.customizations": [
+		{ "rule": "style/*", "severity": "off" },
+		{ "rule": "format/*", "severity": "off" },
+		{ "rule": "*-indent", "severity": "off" },
+		{ "rule": "*-spacing", "severity": "off" },
+		{ "rule": "*-spaces", "severity": "off" },
+		{ "rule": "*-order", "severity": "off" },
+		{ "rule": "*-dangle", "severity": "off" },
+		{ "rule": "*-newline", "severity": "off" },
+		{ "rule": "*quotes", "severity": "off" },
+		{ "rule": "*semi", "severity": "default" }
+	],
+
+	// Enable eslint for all supported languages
+	"eslint.validate": [
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"html",
+		"markdown",
+		"json",
+		"jsonc",
+		"yaml",
+		"toml",
+		"gql",
+		"graphql"
+	],
+
+	"stylelint.validate": ["css", "vue"]
 }

@@ -1,94 +1,84 @@
 {
-  "name": "@takuma-ru/vue-swipe-modal",
-  "private": false,
-  "version": "5.0.2-beta.0",
-  "description": "Swipeable Bottom Sheet library for vue2 and vue3",
-  "license": "MIT",
-  "author": "takuma-ru <kcattdev@gmail.com> (https://github.com/takuma-ru/)",
-  "keywords": [
-    "vue",
-    "vue.js",
-    "nuxt",
-    "nuxt.js",
-    "swipe",
-    "swipeble",
-    "modal",
-    "dialog",
-    "bottom sheet",
-    "sheet",
-    "pwa"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/takuma-ru/vue-swipe-modal.git"
-  },
-  "bugs": {
-    "url": "https://github.com/takuma-ru/vue-swipe-modal/issues",
-    "email": "kcattdev@gmail.com"
-  },
-  "homepage": "https://vue-swipe-modal-docs.takumaru.dev",
-  "type": "module",
-  "main": "./dist/vueSwipeModal.umd.cjs",
-  "module": "./dist/vueSwipeModal.js",
-  "exports": {
-    "import": "./dist/vueSwipeModal.js",
-    "require": "./dist/vueSwipeModal.cjs",
-    "types": "./@types/main.d.ts"
-  },
-  "types": "./@types/main.d.ts",
-  "files": [
-    "dist/*",
-    "@types/*",
-    "LICENSE.md",
-    "README.md"
-  ],
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "scripts": {
-    "dev": "vite --port 3270",
-    "build": "pnpm gen:unimport-type && vue-tsc && vite build",
-    "build:watch": "vite build --watch",
-    "preview": "vite preview",
-    "lint": "eslint --fix src/*.{ts,vue} && eslint --fix src/**/*.{ts,vue}",
-    "lint:type-check": "tsc -p . && vue-tsc",
-    "lint:css": "stylelint \"**/*.vue\"",
-    "format": "prettier -w src/*.{ts,vue} && prettier -w src/**/*.{ts,vue}",
-    "format:css": "stylelint \"**/*.vue\" --fix",
-    "fix": "pnpm format && pnpm format:css && pnpm lint",
-    "gen:unimport-type": "node ./.scripts/genUnimportType.js"
-  },
-  "dependencies": {
-    "@vueuse/core": "^10.6.0",
-    "consola": "^3.2.3",
-    "unimport": "^3.5.0",
-    "vue": "^3.3.4"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "@vitejs/plugin-vue": "^4.4.1",
-    "@vue/eslint-config-prettier": "^8.0.0",
-    "@vue/eslint-config-typescript": "^12.0.0",
-    "eslint": "^8.53.0",
-    "eslint-plugin-vue": "^9.18.1",
-    "prettier": "^3.0.3",
-    "sass": "^1.69.5",
-    "stylelint": "^15.11.0",
-    "stylelint-config-prettier": "^9.0.5",
-    "stylelint-config-recess-order": "^4.3.0",
-    "stylelint-config-recommended-scss": "^13.1.0",
-    "stylelint-config-recommended-vue": "^1.5.0",
-    "stylelint-config-standard-scss": "^11.1.0",
-    "stylelint-prettier": "^4.0.2",
-    "stylelint-rscss": "^0.4.0",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.10",
-    "vite-plugin-css-injected-by-js": "^3.5.1",
-    "vue-tsc": "^1.8.5"
-  },
-  "peerDependencies": {
-    "vue": "^3.0.0"
-  }
+	"name": "@takuma-ru/vue-swipe-modal",
+	"type": "module",
+	"version": "5.0.2-beta.0",
+	"private": false,
+	"description": "Swipeable Bottom Sheet library for vue2 and vue3",
+	"author": "takuma-ru <kcattdev@gmail.com> (https://github.com/takuma-ru/)",
+	"license": "MIT",
+	"homepage": "https://vue-swipe-modal-docs.takumaru.dev",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/takuma-ru/vue-swipe-modal.git"
+	},
+	"bugs": {
+		"url": "https://github.com/takuma-ru/vue-swipe-modal/issues",
+		"email": "kcattdev@gmail.com"
+	},
+	"keywords": [
+		"vue",
+		"vue.js",
+		"nuxt",
+		"nuxt.js",
+		"swipe",
+		"swipeble",
+		"modal",
+		"dialog",
+		"bottom sheet",
+		"sheet",
+		"pwa"
+	],
+	"exports": {
+		"types": "./dist/main.d.ts",
+		"import": "./dist/vueSwipeModal.js",
+		"require": "./dist/vueSwipeModal.cjs"
+	},
+	"main": "./dist/vueSwipeModal.umd.cjs",
+	"module": "./dist/vueSwipeModal.js",
+	"types": "./dist/main.d.ts",
+	"files": [
+		"LICENSE.md",
+		"README.md",
+		"dist/*"
+	],
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"scripts": {
+		"dev": "vite --port 3270",
+		"build": "vite build",
+		"build:watch": "vite build --watch",
+		"preview": "vite preview",
+		"lint": "eslint .",
+		"lint:type-check": "tsc -p . && vue-tsc"
+	},
+	"peerDependencies": {
+		"vue": "^3.0.0"
+	},
+	"dependencies": {
+		"@vueuse/core": "^10.6.0",
+		"consola": "^3.2.3",
+		"vue": "^3.3.4"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "^2.16.1",
+		"@vitejs/plugin-vue": "^4.4.1",
+		"eslint": "^8.53.0",
+		"eslint-plugin-format": "^0.1.1",
+		"sass": "^1.69.5",
+		"stylelint": "^15.11.0",
+		"stylelint-config-prettier": "^9.0.5",
+		"stylelint-config-recess-order": "^4.3.0",
+		"stylelint-config-recommended-scss": "^13.1.0",
+		"stylelint-config-recommended-vue": "^1.5.0",
+		"stylelint-config-standard-scss": "^11.1.0",
+		"stylelint-prettier": "^4.0.2",
+		"stylelint-rscss": "^0.4.0",
+		"typescript": "^5.4.5",
+		"vite": "^5.2.10",
+		"vite-plugin-css-injected-by-js": "^3.5.1",
+		"vite-plugin-dts": "^3.9.0",
+		"vue-tsc": "^1.8.5"
+	}
 }
