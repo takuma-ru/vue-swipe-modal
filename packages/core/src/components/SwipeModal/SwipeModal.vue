@@ -53,30 +53,12 @@ const vModel = useVModel(props, "modelValue", emit);
  */
 const positionStatus = ref<"full" | "snap" | "close">("close");
 
-/**
- * snapPoint が指定されている場合のモーダルの配置位置
- */
-const snapPointPosition = computed(() => {
-	if (!props.snapPoint)
-		return `0px`;
-
-	if (props.snapPoint === "auto") {
-		const panelRefHeight = panelRef.value?.getBoundingClientRect().height || 0;
-		return `calc(${panelRefHeight}px + 36px - 100%)`;
-	}
-
-	return `calc(${props.snapPoint} - 100%)`;
-});
-
 const {
 	cancelAnim,
-	moveToSnapPointAnim,
-	moveToFullScreenAnim,
 } = useModalAnim({
 	scopeName,
 	positionStatus,
 	props,
-	snapPointPosition,
 	refs: {
 		modalRef,
 	},
@@ -92,15 +74,9 @@ const {
 	scopeName,
 	positionStatus,
 	props,
-	snapPointPosition,
 	refs: {
 		modalRef,
 		panelRef,
-	},
-	useModalAnim: {
-		moveToSnapPointAnim,
-		moveToFullScreenAnim,
-		cancelAnim,
 	},
 });
 
@@ -184,7 +160,7 @@ const handleOpenModal = () => {
 				bottom: "-100%",
 			},
 			{
-				bottom: snapPointPosition.value,
+				bottom: getCssVar("snapPointPosition"),
 			},
 		],
 		{
@@ -195,7 +171,7 @@ const handleOpenModal = () => {
 		positionStatus.value = props.snapPoint ? "snap" : "full";
 		setCssVar({
 			name: "bottom",
-			value: snapPointPosition.value,
+			value: getCssVar("snapPointPosition"),
 		});
 		if (props.isScrollLock)
 			setPageScrollable("hidden");
@@ -267,6 +243,29 @@ watch(
 	},
 );
 
+// snapPoint が指定されている場合のモーダルの配置位置
+watch([ () => props.snapPoint, () => panelRef.value ], ([ newSnapPoint, newPanelRef ]) => {
+	let cssVarValue;
+
+	if (!newSnapPoint) {
+		cssVarValue = "0px";
+	}
+	else if (newSnapPoint === "auto") {
+		const panelRefHeight = newPanelRef?.getBoundingClientRect().height || 0;
+		cssVarValue = `calc(${panelRefHeight}px + 36px - 100%)`;
+	}
+	else {
+		cssVarValue = `calc(${newSnapPoint} - 100%)`;
+	}
+
+	setCssVar({
+		name: "snapPointPosition",
+		value: cssVarValue,
+	});
+}, {
+	immediate: true,
+});
+
 // life cycle\
 setCssVar({
 	name: "bottom",
@@ -294,6 +293,7 @@ onMounted(() => {
 onUnmounted(() => {
 	removeCssVar("bottom");
 	removeCssVar("movementAmountY");
+	removeCssVar("snapPointPosition");
 });
 </script>
 

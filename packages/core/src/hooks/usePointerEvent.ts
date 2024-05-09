@@ -1,20 +1,18 @@
 import type { ComputedRef, Ref, WritableComputedRef } from "vue";
 import { ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
-import type { useModalAnim } from "./useModalAnim";
+import { useModalAnim } from "./useModalAnim";
 import { useCssVar } from "./useCssVar";
 
 interface UsePointerEventParameter {
 	scopeName: string;
 	positionStatus: Ref<"full" | "snap" | "close">;
 	props: SwipeModalProps;
-	snapPointPosition: ComputedRef<string>;
 
 	refs: {
 		modalRef: Ref<HTMLDialogElement | null>;
 		panelRef: Ref<HTMLDivElement | null>;
 	};
-	useModalAnim: ReturnType<typeof useModalAnim>;
 	vModel: WritableComputedRef<boolean>;
 }
 
@@ -26,15 +24,26 @@ export const usePointerEvent = ({
 	scopeName,
 	positionStatus,
 	props,
-	snapPointPosition,
 	refs: { modalRef },
 	vModel,
-	useModalAnim: { moveToSnapPointAnim, moveToFullScreenAnim, cancelAnim },
 }: UsePointerEventParameter) => {
 	const {
 		getCssVar,
 		setCssVar,
 	} = useCssVar({ scopeName });
+
+	const {
+		cancelAnim,
+		moveToSnapPointAnim,
+		moveToFullScreenAnim,
+	} = useModalAnim({
+		scopeName,
+		positionStatus,
+		props,
+		refs: {
+			modalRef,
+		},
+	});
 
 	/**
 	 * ドラッグハンドルをクリック中かどうか
@@ -105,7 +114,7 @@ export const usePointerEvent = ({
 		if (positionStatus.value === "snap") {
 			setCssVar({
 				name: "bottom",
-				value: `calc(${snapPointPosition.value} + ${getCssVar("movementAmountY")}px)`,
+				value: `calc(${getCssVar("snapPointPosition")} + ${getCssVar("movementAmountY")}px)`,
 			});
 
 			return;

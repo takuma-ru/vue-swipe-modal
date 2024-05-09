@@ -6,7 +6,6 @@ interface UseModalAnimProps {
 	scopeName: string;
 	props: SwipeModalProps;
 	positionStatus: Ref<"full" | "snap" | "close">;
-	snapPointPosition: ComputedRef<string>;
 	refs: {
 		modalRef: Ref<HTMLDialogElement | null>;
 	};
@@ -16,7 +15,6 @@ export const useModalAnim = ({
 	scopeName,
 	positionStatus,
 	props,
-	snapPointPosition,
 	refs: {
 		modalRef,
 	},
@@ -35,7 +33,7 @@ export const useModalAnim = ({
 
 		const calcToPositionBottom = () => {
 			if (positionStatus.value === "snap")
-				return props.snapPoint ? snapPointPosition.value : "0%";
+				return props.snapPoint ? getCssVar("snapPointPosition") : "0%";
 
 			if (positionStatus.value === "full")
 				return "0%";
@@ -80,7 +78,7 @@ export const useModalAnim = ({
 			[
 				{ bottom: getCssVar("bottom") },
 				{
-					bottom: snapPointPosition.value,
+					bottom: getCssVar("snapPointPosition"),
 				},
 			],
 			{
@@ -94,7 +92,7 @@ export const useModalAnim = ({
 			});
 			setCssVar({
 				name: "bottom",
-				value: snapPointPosition.value,
+				value: getCssVar("snapPointPosition"),
 			});
 			positionStatus.value = "snap";
 		};
