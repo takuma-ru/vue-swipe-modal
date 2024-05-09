@@ -119,14 +119,18 @@ const handleOpenModal = () => {
 
 	modalRef.value?.style.setProperty("visibility", "visible");
 
-	modalRef.value.animate([
-		{ opacity: 0 },
-		{ opacity: 1 },
-	], {
-		duration: 200,
-		pseudoElement: "::backdrop",
-		easing: ANIMATION_EASING,
-	});
+	const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
+
+	if (!isFirefox) {
+		modalRef.value.animate([
+			{ opacity: 0 },
+			{ opacity: 1 },
+		], {
+			duration: 200,
+			pseudoElement: "::backdrop",
+			easing: ANIMATION_EASING,
+		});
+	}
 
 	modalRef.value.animate(
 		[
@@ -161,14 +165,18 @@ const handleCloseModal = () => {
 	if (!modalRef.value)
 		return;
 
-	modalRef.value.animate([
-		{ opacity: 1 },
-		{ opacity: 0 },
-	], {
-		duration: 300,
-		pseudoElement: "::backdrop",
-		easing: ANIMATION_EASING,
-	});
+	const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
+
+	if (!isFirefox) {
+		modalRef.value.animate([
+			{ opacity: 1 },
+			{ opacity: 0 },
+		], {
+			duration: 300,
+			pseudoElement: "::backdrop",
+			easing: ANIMATION_EASING,
+		});
+	}
 
 	modalRef.value.animate(
 		[
