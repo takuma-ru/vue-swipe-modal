@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref, WritableComputedRef } from "vue";
+import type { Ref, WritableComputedRef } from "vue";
 import { ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
 import { useModalAnim } from "./useModalAnim";

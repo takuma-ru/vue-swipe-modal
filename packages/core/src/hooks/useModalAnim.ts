@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref } from "vue";
+import type { Ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
 import { ANIMATION_EASING } from "../constants";
 import { useCssVar } from "./useCssVar";

@@ -20,6 +20,7 @@ export default antfu({
 			{ arraysInArrays: false },
 		],
 		"style/array-bracket-newline": [ "error", { multiline: true, minItems: 3 } ],
+		"no-unused-vars": "error",
 	},
 	typescript: true,
 	vue: true,

@@ -17,7 +17,7 @@ export const useCssVar = ({ scopeName }: UseCssVarParameter) => {
 	};
 
 	const setCssVar = ({ name, value, fallback }: SetCssVarParameter) => {
-	  document.documentElement.style.setProperty(`--${scopeName}-${name}`, value);
+		document.documentElement.style.setProperty(`--${scopeName}-${name}`, value);
 
 		fallback?.(
 			name,
