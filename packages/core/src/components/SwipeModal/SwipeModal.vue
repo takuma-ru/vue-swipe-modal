@@ -3,6 +3,7 @@ import { useVModel } from "@vueuse/core";
 import { computed, onMounted, ref, watch } from "vue";
 import { usePointerEvent } from "../../hooks/usePointerEvent";
 import { useModalAnim } from "../../hooks/useModalAnim";
+import { useCssVar } from "../../hooks/useCssVar";
 import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
 
 const props = withDefaults(defineProps<SwipeModalProps>(), {
@@ -19,6 +20,20 @@ const emit = defineEmits<SwipeModalEmits>();
 
 // variables
 
+const scopeName = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+
+const {
+	getCssVar,
+	setCssVar,
+} = useCssVar({
+	scopeName,
+});
+
+setCssVar({
+	name: "bottom",
+	value: "-100%",
+});
+
 /**
  * dialog element の ref
  */
@@ -33,11 +48,6 @@ const panelRef = ref<HTMLDivElement | null>(null);
  * 双方向バインディング用変数
  */
 const vModel = useVModel(props, "modelValue", emit);
-
-/**
- * モーダルの配置位置
- */
-const bottom = ref<string>("-100%");
 
 /**
  * ドラッグ開始位置からの移動量
@@ -72,7 +82,7 @@ const {
 	moveToSnapPointAnim,
 	moveToFullScreenAnim,
 } = useModalAnim({
-	bottom,
+	scopeName,
 	positionStatus,
 	props,
 	snapPointPosition,
@@ -89,7 +99,7 @@ const {
 	handlePointerUp,
 } = usePointerEvent({
 	vModel,
-	bottom,
+	scopeName,
 	positionStatus,
 	props,
 	snapPointPosition,
@@ -194,7 +204,10 @@ const handleOpenModal = () => {
 		},
 	).onfinish = () => {
 		positionStatus.value = props.snapPoint ? "snap" : "full";
-		bottom.value = snapPointPosition.value;
+		setCssVar({
+			name: "bottom",
+			value: snapPointPosition.value,
+		});
 		if (props.isScrollLock)
 			setPageScrollable("hidden");
 	};
@@ -219,7 +232,7 @@ const handleCloseModal = () => {
 	modalRef.value.animate(
 		[
 			{
-				bottom: bottom.value,
+				bottom: getCssVar("bottom"),
 			},
 			{
 				bottom: "-100%",
@@ -230,7 +243,10 @@ const handleCloseModal = () => {
 			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
 		},
 	).onfinish = () => {
-		bottom.value = "-100%";
+		setCssVar({
+			name: "bottom",
+			value: "-100%",
+		});
 		positionStatus.value = "close";
 		isMouseDown.value = false;
 		modalRef.value?.close();
@@ -266,6 +282,8 @@ watch(
 onMounted(() => {
 	if (!modalRef.value)
 		return;
+
+	modalRef.value?.style.setProperty("bottom", `var(--${scopeName}-bottom)`);
 
 	if (!vModel.value) {
 		// モーダル内のエレメントを取得できるように display を none を無効化
@@ -330,7 +348,6 @@ onMounted(() => {
 .swipe-modal {
 	position: fixed;
 	top: auto;
-	bottom: v-bind("bottom");
 	box-sizing: border-box;
 	width: 100vw;
 	max-width: 100vw;

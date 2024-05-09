@@ -2,9 +2,10 @@ import type { ComputedRef, Ref, WritableComputedRef } from "vue";
 import { ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
 import type { useModalAnim } from "./useModalAnim";
+import { useCssVar } from "./useCssVar";
 
 interface UsePointerEventParameter {
-	bottom: Ref<string>;
+	scopeName: string;
 	positionStatus: Ref<"full" | "snap" | "close">;
 	movementAmountY: Ref<number>;
 	props: SwipeModalProps;
@@ -23,7 +24,7 @@ type handlePointerDownParameter =
 	| { mouseEvent?: never; touchEvent: TouchEvent; eventType: "touch" };
 
 export const usePointerEvent = ({
-	bottom,
+	scopeName,
 	positionStatus,
 	props,
 	movementAmountY,
@@ -32,6 +33,10 @@ export const usePointerEvent = ({
 	vModel,
 	useModalAnim: { moveToSnapPointAnim, moveToFullScreenAnim, cancelAnim },
 }: UsePointerEventParameter) => {
+	const {
+		setCssVar,
+	} = useCssVar({ scopeName });
+
 	/**
 	 * ドラッグハンドルをクリック中かどうか
 	 */
@@ -93,11 +98,20 @@ export const usePointerEvent = ({
 		modalRef.value?.style.setProperty("user-select", "none");
 
 		// モーダルの位置をポインターの位置に合わせて更新（snapの場合）
-		if (positionStatus.value === "snap")
-			return (bottom.value = `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`);
+		if (positionStatus.value === "snap") {
+			setCssVar({
+				name: "bottom",
+				value: `calc(${snapPointPosition.value} + ${movementAmountY.value}px)`,
+			});
+
+			return;
+		}
 
 		// モーダルの位置をポインターの位置に合わせて更新
-		return (bottom.value = `calc(0% + ${movementAmountY.value}px)`);
+		setCssVar({
+			name: "bottom",
+			value: `calc(0% + ${movementAmountY.value}px)`,
+		});
 	};
 
 	/**

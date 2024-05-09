@@ -1,11 +1,11 @@
 import type { ComputedRef, Ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
+import { useCssVar } from "./useCssVar";
 
 interface UseModalAnimProps {
-	bottom: Ref<string>;
+	scopeName: string;
 	movementAmountY: Ref<number>;
 	props: SwipeModalProps;
-
 	positionStatus: Ref<"full" | "snap" | "close">;
 	snapPointPosition: ComputedRef<string>;
 	refs: {
@@ -14,7 +14,7 @@ interface UseModalAnimProps {
 }
 
 export const useModalAnim = ({
-	bottom,
+	scopeName,
 	positionStatus,
 	props,
 	snapPointPosition,
@@ -23,6 +23,11 @@ export const useModalAnim = ({
 		modalRef,
 	},
 }: UseModalAnimProps) => {
+	const {
+		getCssVar,
+		setCssVar,
+	} = useCssVar({ scopeName });
+
 	/**
 	 * アクションを起こさず、移動が開始させる前の位置までアニメーション
 	 */
@@ -42,7 +47,7 @@ export const useModalAnim = ({
 
 		modalRef.value.animate(
 			[
-				{ bottom: bottom.value },
+				{ bottom: getCssVar("bottom") },
 				{
 					bottom: calcToPositionBottom(),
 				},
@@ -53,7 +58,10 @@ export const useModalAnim = ({
 			},
 		).onfinish = () => {
 			movementAmountY.value = 0;
-			bottom.value = calcToPositionBottom();
+			setCssVar({
+				name: "bottom",
+				value: calcToPositionBottom(),
+			});
 		};
 	};
 
@@ -69,7 +77,7 @@ export const useModalAnim = ({
 
 		modalRef.value.animate(
 			[
-				{ bottom: bottom.value },
+				{ bottom: getCssVar("bottom") },
 				{
 					bottom: snapPointPosition.value,
 				},
@@ -80,7 +88,10 @@ export const useModalAnim = ({
 			},
 		).onfinish = () => {
 			movementAmountY.value = 0;
-			bottom.value = snapPointPosition.value;
+			setCssVar({
+				name: "bottom",
+				value: snapPointPosition.value,
+			});
 			positionStatus.value = "snap";
 		};
 	};
@@ -94,7 +105,7 @@ export const useModalAnim = ({
 
 		modalRef.value.animate(
 			[
-				{ bottom: bottom.value },
+				{ bottom: getCssVar("bottom") },
 				{
 					bottom: "0%",
 				},
@@ -105,7 +116,10 @@ export const useModalAnim = ({
 			},
 		).onfinish = () => {
 			movementAmountY.value = 0;
-			bottom.value = "0%";
+			setCssVar({
+				name: "bottom",
+				value: "0%",
+			});
 			positionStatus.value = "full";
 		};
 	};
