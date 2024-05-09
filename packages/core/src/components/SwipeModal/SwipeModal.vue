@@ -268,6 +268,10 @@ onMounted(() => {
 
 	modalRef.value.style.setProperty("bottom", `var(--${scopeName}-bottom)`);
 
+	modalRef.value.addEventListener("cancel", () => {
+		vModel.value = false;
+	});
+
 	if (!vModel.value) {
 		// モーダル内のエレメントを取得できるように display を none を無効化
 		modalRef.value.style.setProperty("display", "initial");
@@ -279,6 +283,9 @@ onUnmounted(() => {
 	removeCssVar("bottom");
 	removeCssVar("movementAmountY");
 	removeCssVar("snapPointPosition");
+
+	if (modalRef.value)
+		modalRef.value.removeEventListener("cancel", () => {});
 });
 </script>
 
