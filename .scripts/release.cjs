@@ -8,7 +8,7 @@ const packageJsonPath = path.join(
   __dirname,
   "..",
   "packages",
-  "auto-story-generator",
+  "core",
   "package.json"
 );
 
@@ -20,7 +20,9 @@ try {
   const branchName = `release/${new Date()
     .toISOString()
     .replace(/[-:.]/g, "")}`;
-  execSync(`git switch -c ${branchName}`);
+
+  execSync(`git fetch origin main`);
+  execSync(`git switch -c ${branchName} main`);
   execSync(`git push --set-upstream origin ${branchName}`);
 
   console.log("[Result] Branch name:", branchName);
