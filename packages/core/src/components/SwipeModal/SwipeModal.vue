@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { useVModel } from "@vueuse/core";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { usePointerEvent } from "../../hooks/usePointerEvent";
 import { useModalAnim } from "../../hooks/useModalAnim";
 import { useCssVar } from "../../hooks/useCssVar";
+import { ANIMATION_EASING } from "../../constants";
 import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
 
 const props = withDefaults(defineProps<SwipeModalProps>(), {
@@ -151,7 +152,7 @@ const handleOpenModal = () => {
 	], {
 		duration: 200,
 		pseudoElement: "::backdrop",
-		easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+		easing: ANIMATION_EASING,
 	});
 
 	modalRef.value.animate(
@@ -165,14 +166,16 @@ const handleOpenModal = () => {
 		],
 		{
 			duration: 300,
-			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+			easing: ANIMATION_EASING,
 		},
 	).onfinish = () => {
 		positionStatus.value = props.snapPoint ? "snap" : "full";
+
 		setCssVar({
 			name: "bottom",
 			value: getCssVar("snapPointPosition"),
 		});
+
 		if (props.isScrollLock)
 			setPageScrollable("hidden");
 	};
@@ -191,7 +194,7 @@ const handleCloseModal = () => {
 	], {
 		duration: 300,
 		pseudoElement: "::backdrop",
-		easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+		easing: ANIMATION_EASING,
 	});
 
 	modalRef.value.animate(
@@ -205,13 +208,14 @@ const handleCloseModal = () => {
 		],
 		{
 			duration: 300,
-			easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+			easing: ANIMATION_EASING,
 		},
 	).onfinish = () => {
 		setCssVar({
 			name: "bottom",
 			value: "-100%",
 		});
+
 		positionStatus.value = "close";
 		isMouseDown.value = false;
 		modalRef.value?.close();

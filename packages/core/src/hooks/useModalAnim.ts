@@ -1,5 +1,6 @@
 import type { ComputedRef, Ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
+import { ANIMATION_EASING } from "../constants";
 import { useCssVar } from "./useCssVar";
 
 interface UseModalAnimProps {
@@ -50,7 +51,7 @@ export const useModalAnim = ({
 			],
 			{
 				duration: 300,
-				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+				easing: ANIMATION_EASING,
 			},
 		).onfinish = () => {
 			setCssVar({
@@ -83,7 +84,7 @@ export const useModalAnim = ({
 			],
 			{
 				duration: 300,
-				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+				easing: ANIMATION_EASING,
 			},
 		).onfinish = () => {
 			setCssVar({
@@ -114,7 +115,7 @@ export const useModalAnim = ({
 			],
 			{
 				duration: 300,
-				easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+				easing: ANIMATION_EASING,
 			},
 		).onfinish = () => {
 			setCssVar({
