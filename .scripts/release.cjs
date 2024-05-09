@@ -94,7 +94,7 @@ try {
   console.group("Build the package");
   console.info("Building the package");
 
-  execSync("pnpm asg build", { stdio: "inherit" });
+  execSync("pnpm vsm build", { stdio: "inherit" });
 
   console.log("[Result] Package built successfully");
   console.groupEnd();
