@@ -9,7 +9,9 @@
     "p:react": "pnpm -C packages/react",
     "p:svelte": "pnpm -C packages/svelte",
     "p:vue": "pnpm -C packages/vue",
-    "c:eslint": "pnpm -C config/eslint"
+
+    "c:eslint": "pnpm -C config/eslint",
+    "c:stylelint": "pnpm -C config/stylelint"
   },
   "engines": {
     "pnpm": "9.1.0",

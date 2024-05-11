@@ -31,11 +31,16 @@
     {
       "name": "c: eslint",
       "path": "config/eslint"
+    },
+    {
+      "name": "c: stylelint",
+      "path": "config/stylelint"
     }
   ],
   "settings": {
 
     // https://github.com/antfu/eslint-config?tab=readme-ov-file#vs-code-support-auto-fix-on-save
+
     // Enable the ESlint flat config support
     // (remove this if your ESLint extension above v3.0.5)
     "eslint.experimental.useFlatConfig": true,
@@ -47,6 +52,7 @@
     // Auto fix
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "explicit",
       "source.organizeImports": "never"
     },
 
@@ -82,6 +88,15 @@
       "astro"
     ],
 
+    "stylelint.validate": ["css", "scss", "cecss"],
+
+
+    "emmet.includeLanguages": {
+      "cecss": "scss"
+    },
+    "emmet.syntaxProfiles": {
+      "cecss": "scss"
+    },
     "files.associations": {
       "*.cecss": "scss"
     },
