@@ -1,38 +1,91 @@
 {
   "folders": [
     {
-      "name": "./",
+      "name": ".",
       "path": "."
     },
     {
-      "name": "📦 web-bottom-sheet",
+      "name": "p: wbs",
       "path": "packages/web-bottom-sheet"
     },
     {
-      "name": "📦 core",
+      "name": "p: core",
       "path": "packages/core"
     },
     {
-      "name": "📦 angular",
+      "name": "p: angular",
       "path": "packages/angular"
     },
     {
-      "name": "📦 react",
+      "name": "p: react",
       "path": "packages/react"
     },
     {
-      "name": "📦 svelte",
+      "name": "p: svelte",
       "path": "packages/svelte"
     },
     {
-      "name": "📦 vue",
+      "name": "p: vue",
       "path": "packages/vue"
+    },
+    {
+      "name": "c: eslint",
+      "path": "config/eslint"
     }
   ],
   "settings": {
+
+    // https://github.com/antfu/eslint-config?tab=readme-ov-file#vs-code-support-auto-fix-on-save
+    // Enable the ESlint flat config support
+    // (remove this if your ESLint extension above v3.0.5)
+    "eslint.experimental.useFlatConfig": true,
+
+    // Disable the default formatter, use eslint instead
+    "prettier.enable": false,
+    "editor.formatOnSave": false,
+
+    // Auto fix
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.organizeImports": "never"
+    },
+
+    // Silent the stylistic rules in you IDE, but still auto fix them
+    "eslint.rules.customizations": [
+      { "rule": "style/*", "severity": "off" },
+      { "rule": "format/*", "severity": "off" },
+      { "rule": "*-indent", "severity": "off" },
+      { "rule": "*-spacing", "severity": "off" },
+      { "rule": "*-spaces", "severity": "off" },
+      { "rule": "*-order", "severity": "off" },
+      { "rule": "*-dangle", "severity": "off" },
+      { "rule": "*-newline", "severity": "off" },
+      { "rule": "*quotes", "severity": "off" },
+      { "rule": "*semi", "severity": "off" }
+    ],
+
+    // Enable eslint for all supported languages
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "html",
+      "markdown",
+      "json",
+      "jsonc",
+      "yaml",
+      "toml",
+      "gql",
+      "graphql",
+      "astro"
+    ],
+
     "files.associations": {
       "*.cecss": "scss"
     },
-    "cSpell.words": ["cecss"]
+
+    "cSpell.words": ["antfu", "cecss"]
   }
 }

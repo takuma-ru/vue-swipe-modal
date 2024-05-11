@@ -8,7 +8,8 @@
     "p:angular": "pnpm -C packages/angular",
     "p:react": "pnpm -C packages/react",
     "p:svelte": "pnpm -C packages/svelte",
-    "p:vue": "pnpm -C packages/vue"
+    "p:vue": "pnpm -C packages/vue",
+    "c:eslint": "pnpm -C config/eslint"
   },
   "engines": {
     "pnpm": "9.1.0",

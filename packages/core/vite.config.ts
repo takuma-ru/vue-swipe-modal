@@ -1,4 +1,4 @@
-import { defineConfig, type Plugin } from "vite";
+import { type Plugin, defineConfig } from "vite";
 import { convertScssToCss } from "./src/utils/convertScssToCss";
 
 const litScssToJs = (): Plugin => {
@@ -14,7 +14,7 @@ const litScssToJs = (): Plugin => {
 };
 
 export default defineConfig({
-  plugins: [litScssToJs()],
+  plugins: [ litScssToJs() ],
 
   build: {
     outDir: "./dist",
@@ -22,7 +22,11 @@ export default defineConfig({
       entry: "src/main.ts",
       name: "core",
       fileName: "core",
-      formats: ["es", "cjs", "umd"],
+      formats: [
+        "es",
+        "cjs",
+        "umd",
+      ],
     },
     rollupOptions: {
       external: /^lit/,

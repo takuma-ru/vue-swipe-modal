@@ -1,0 +1,14 @@
+{
+  "name": "@config/eslint",
+  "private": false,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@antfu/eslint-config": "^2.17.0",
+    "eslint": "^9.2.0"
+  }
+}
