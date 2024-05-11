@@ -1,26 +1,32 @@
 import { type CSSResultArray, LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
+import { createRef, ref } from "lit/directives/ref.js";
 import { resetCss } from "../styles/resetCss";
 import styles from "./web-bottom-sheet.cecss";
 
 export interface WebBottomSheetProps {
-  label?: string;
+  open: boolean;
 }
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {
   static readonly styles: CSSResultArray = [ resetCss, styles ];
 
-  @property({ attribute: "label", type: String })
-  label?: WebBottomSheetProps["label"] = undefined;
+  modalRef = createRef<HTMLDialogElement>();
+
+  @property({ attribute: "open", type: Boolean })
+  open: WebBottomSheetProps["open"] = false;
 
   render() {
     return html`
-      <div class="web-bottom-sheet">
-        <h1>web-bottom-sheet</h1>
+      <dialog
+        ${ref(this.modalRef)}
+        class="web-bottom-sheet"
+        ?open="${this.open}"
+      >
         <slot></slot>
-      </div>
+      </dialog>
     `;
   }
 }
