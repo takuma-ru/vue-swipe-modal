@@ -48,6 +48,9 @@
     // Disable the default formatter, use eslint instead
     "prettier.enable": false,
     "editor.formatOnSave": false,
+    "editor.tabSize": 2,
+    "files.eol": "\n",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
 
     // Auto fix
     "editor.codeActionsOnSave": {

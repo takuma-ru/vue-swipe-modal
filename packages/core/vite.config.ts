@@ -1,17 +1,5 @@
-import { type Plugin, defineConfig } from "vite";
-import { convertScssToCss } from "./src/utils/convertScssToCss";
-
-const litScssToJs = (): Plugin => {
-  return {
-    name: "litScssToJs",
-    async transform(code, id) {
-      if (id.endsWith(".cecss")) {
-        const result = await convertScssToCss(code);
-        return result;
-      }
-    },
-  };
-};
+import { defineConfig } from "vite";
+import { litScssToJs } from "./.scripts/litScssToJs";
 
 export default defineConfig({
   plugins: [ litScssToJs() ],
