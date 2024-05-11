@@ -1,0 +1,5 @@
+.web-bottom-sheet {
+  h1 {
+    color: royalblue;
+  }
+}

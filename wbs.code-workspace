@@ -28,5 +28,11 @@
       "name": "📦 vue",
       "path": "packages/vue"
     }
-  ]
+  ],
+  "settings": {
+    "files.associations": {
+      "*.cecss": "scss"
+    },
+    "cSpell.words": ["cecss"]
+  }
 }

@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "p:core": "pnpm -C packages/core",
+    "p:wbs": "pnpm -C packages/web-bottom-sheets",
+    "p:angular": "pnpm -C packages/angular",
+    "p:react": "pnpm -C packages/react",
+    "p:svelte": "pnpm -C packages/svelte",
+    "p:vue": "pnpm -C packages/vue"
   },
   "engines": {
     "pnpm": "9.1.0",
