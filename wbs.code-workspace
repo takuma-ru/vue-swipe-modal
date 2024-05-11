@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "name": "./",
+      "path": "."
+    },
+    {
+      "name": "📦 web-bottom-sheet",
+      "path": "packages/web-bottom-sheet"
+    },
+    {
+      "name": "📦 core",
+      "path": "packages/core"
+    },
+    {
+      "name": "📦 angular",
+      "path": "packages/angular"
+    },
+    {
+      "name": "📦 react",
+      "path": "packages/react"
+    },
+    {
+      "name": "📦 svelte",
+      "path": "packages/svelte"
+    },
+    {
+      "name": "📦 vue",
+      "path": "packages/vue"
+    }
+  ]
+}

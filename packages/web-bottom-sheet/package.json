@@ -1,5 +1,6 @@
 {
-  "name": "core",
+  "name": "@takuma-ru/web-bottom-sheet",
+  "private": false,
   "version": "0.0.0",
   "description": "",
   "scripts": {
