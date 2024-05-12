@@ -18,11 +18,11 @@ export class WebBottomSheet extends LitElement {
   @property({ attribute: "open", type: Boolean })
   open: WebBottomSheetProps["open"] = false;
 
-  render() {
+  protected render() {
     return html`
       <dialog
         ${ref(this.modalRef)}
-        class="web-bottom-sheet"
+        class="web-bottom-sheet default-style"
         ?open="${this.open}"
       >
         <slot></slot>

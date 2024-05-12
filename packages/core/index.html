@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Lit + TS</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+
+  <body>
+    <button id="button">open</button>
+
+    <web-bottom-sheet>
+      <h1>Web Bottom Sheet</h1>
+      <p>
+        This is a web component that mimics the native bottom sheet. It is
+        implemented using Lit and TypeScript.
+      </p>
+    </web-bottom-sheet>
+
+    <script>
+      const button = document.getElementById("button");
+      const sheet = document.querySelector("web-bottom-sheet");
+
+      button.addEventListener("click", () => {
+        sheet.open = !sheet.open;
+      });
+    </script>
+  </body>
+</html>
