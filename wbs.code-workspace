@@ -104,6 +104,8 @@
       "*.cecss": "scss"
     },
 
-    "cSpell.words": ["antfu", "cecss"]
+    "cSpell.words": ["antfu", "cecss"],
+
+    "terminal.integrated.cwd": "${workspaceFolder}"
   }
 }
