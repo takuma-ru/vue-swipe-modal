@@ -6,6 +6,7 @@ export default defineConfig({
 
   build: {
     outDir: "./dist",
+    minify: true,
     lib: {
       entry: "src/main.ts",
       name: "core",

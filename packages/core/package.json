@@ -3,6 +3,13 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
+  "main": "./dist/core.umd.cjs",
+  "module": "./dist/core.js",
+  "files": [
+    "dist/*",
+    "types/*",
+    "wca/*"
+  ],
   "scripts": {
     "dev": "vite --port 3122",
     "build": "tsc && vite build",

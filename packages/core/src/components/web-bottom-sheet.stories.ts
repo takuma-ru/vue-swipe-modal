@@ -14,7 +14,7 @@ const meta = {
     <web-bottom-sheet
       ?open="${args.open}"
     >
-    vum-button
+      <h1>Bottom sheet</h1>
     </web-bottom-sheet>`;
   },
   argTypes: {},
