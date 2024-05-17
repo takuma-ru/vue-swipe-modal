@@ -4,10 +4,10 @@ import { customElement, property } from "lit/decorators.js";
 
 import { createRef, ref } from "lit/directives/ref.js";
 import { resetCss } from "../styles/resetCss";
-import { ModalAnimator } from "../classes/ModalAnimator";
-import { PointerEventProcessor } from "../classes/PointerEventProcessor";
 import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
-import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
+import { ModalAnimator } from "./classes/ModalAnimator";
+import { PointerEventProcessor } from "./classes/PointerEventProcessor";
+import { WebBottomSheetSingleton } from "./singletons/WebBottomSheetSingleton";
 import styles from "./web-bottom-sheet.cecss";
 
 export interface WebBottomSheetProps {
@@ -107,6 +107,18 @@ export class WebBottomSheet extends LitElement {
         @touchmove=${(event: TouchEvent) => {
           this.pointerEventProcessor.onMove({
             type: "touch",
+            event,
+          });
+        }}
+        @mousedown=${(event: MouseEvent) => {
+          this.pointerEventProcessor.onDown({
+            type: "mouse",
+            event,
+          });
+        }}
+        @mousemove=${(event: MouseEvent) => {
+          this.pointerEventProcessor.onMove({
+            type: "mouse",
             event,
           });
         }}

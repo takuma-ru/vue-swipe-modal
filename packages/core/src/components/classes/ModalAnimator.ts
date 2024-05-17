@@ -1,7 +1,7 @@
 import type { Ref } from "lit/directives/ref.js";
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
-import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
-import type { WebBottomSheetProps } from "../components/web-bottom-sheet.ce";
+import { calcSnapPointPosition } from "../../utils/calcSnapPointPosition";
+import type { WebBottomSheetProps } from "../web-bottom-sheet.ce";
 
 export class ModalAnimator {
   private modalRef: Ref<HTMLDialogElement>["value"];
