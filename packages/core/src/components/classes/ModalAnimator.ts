@@ -47,7 +47,7 @@ export class ModalAnimator {
     }).onfinish = () => {
       this.modalRef?.style.removeProperty("will-change");
 
-      webBottomSheetSingleton.updatePositionStatus(this.snapPoint === "auto" ? "snap" : "full");
+      webBottomSheetSingleton.updatePositionStatus(this.snapPoint ? "snap" : "full");
       webBottomSheetSingleton.updateBottomValue(webBottomSheetSingleton.snapPointPosition);
     };
   }

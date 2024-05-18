@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "vite --port 3122",
     "build": "tsc && vite build",
+    "build:watch": "vite build --watch",
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:style": "stylelint \"**/*.{cecss,css,scss,sass}\" --ignore-path .gitignore",
