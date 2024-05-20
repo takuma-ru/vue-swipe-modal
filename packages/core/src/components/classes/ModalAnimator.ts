@@ -1,77 +1,144 @@
-import type { Ref } from "lit/directives/ref.js";
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 import { calcSnapPointPosition } from "../../utils/calcSnapPointPosition";
-import type { WebBottomSheetProps } from "../web-bottom-sheet.ce";
 
 export class ModalAnimator {
-  private modalRef: Ref<HTMLDialogElement>["value"];
-  private panelRef: Ref<HTMLDivElement>["value"] | undefined;
-  private snapPoint: WebBottomSheetProps["snapPoint"] = "auto";
+  singleton: WebBottomSheetSingleton;
 
-  constructor({
-    modalRef,
-    panelRef,
-    snapPoint,
-  }:
-    {
-      modalRef: Ref<HTMLDialogElement>["value"];
-      panelRef: Ref<HTMLDivElement>["value"];
-      snapPoint: WebBottomSheetProps["snapPoint"];
-    },
-  ) {
-    this.modalRef = modalRef;
-    this.panelRef = panelRef;
-    this.snapPoint = snapPoint;
+  constructor() {
+    this.singleton = new WebBottomSheetSingleton();
   }
 
   open() {
-    if (!this.modalRef)
+    if (!this.singleton.modalRef?.value) {
       return;
+    }
 
-    const webBottomSheetSingleton = new WebBottomSheetSingleton();
+    const singleton = new WebBottomSheetSingleton();
 
-    this.modalRef.style.setProperty("will-change", "bottom");
-    this.modalRef.showModal();
+    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+    this.singleton.modalRef.value.showModal();
 
-    calcSnapPointPosition({
-      snapPoint: this.snapPoint,
-      panelRef: this.panelRef,
-    });
+    calcSnapPointPosition();
 
-    this.modalRef.animate([
+    this.singleton.modalRef.value.animate([
       { bottom: "-100%" },
-      { bottom: webBottomSheetSingleton.snapPointPosition },
+      { bottom: singleton.snapPointPosition },
     ], {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.modalRef?.style.removeProperty("will-change");
+      this.singleton.modalRef?.value?.style.removeProperty("will-change");
 
-      webBottomSheetSingleton.updatePositionStatus(this.snapPoint ? "snap" : "full");
-      webBottomSheetSingleton.updateBottomValue(webBottomSheetSingleton.snapPointPosition);
+      singleton.updatePositionStatus(this.singleton.props.snapPoint ? "snap" : "full");
+
+      singleton.updateBottomValue(singleton.snapPointPosition);
     };
   }
 
   close() {
-    if (!this.modalRef)
+    if (!this.singleton.modalRef?.value) {
       return;
+    }
 
-    const webBottomSheetSingleton = new WebBottomSheetSingleton();
+    const singleton = new WebBottomSheetSingleton();
 
-    this.modalRef.style.setProperty("will-change", "bottom");
+    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
 
-    this.modalRef.animate([
-      { bottom: webBottomSheetSingleton.bottom },
+    this.singleton.modalRef.value.animate([
+      { bottom: singleton.bottom },
       { bottom: "-100%" },
     ], {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.modalRef?.close();
-      this.modalRef?.style.removeProperty("will-change");
+      this.singleton.modalRef?.value?.close();
+      this.singleton.modalRef?.value?.style.removeProperty("will-change");
 
-      webBottomSheetSingleton.updateSnapPointPosition("close");
-      webBottomSheetSingleton.updateBottomValue("-100%");
+      singleton.updateSnapPointPosition("close");
+      singleton.updateBottomValue("-100%");
+    };
+  }
+
+  cancel() {
+    if (!this.singleton.modalRef?.value) {
+      return;
+    }
+
+    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+
+    const calcToPositionBottom = () => {
+      switch (this.singleton.positionStatus) {
+        case "snap": {
+          return this.singleton.props.snapPoint ? this.singleton.snapPointPosition : "0%";
+        }
+        case "full": {
+          return "0%";
+        }
+        default: {
+          return "-100%";
+        }
+      }
+    };
+
+    this.singleton.modalRef.value.animate([
+      { bottom: this.singleton.bottom },
+      { bottom: calcToPositionBottom() },
+    ], {
+      duration: 300,
+      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+    }).onfinish = () => {
+      this.singleton.modalRef?.value?.style.removeProperty("will-change");
+
+      this.singleton.updateMovementAmountY(0);
+      this.singleton.updateBottomValue(calcToPositionBottom());
+    };
+  }
+
+  moveToSnapPoint() {
+    if (!this.singleton.modalRef?.value) {
+      return;
+    }
+
+    if (!this.singleton.props.snapPoint) {
+      return;
+    }
+
+    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+
+    this.singleton.modalRef.value.animate([
+      { bottom: this.singleton.bottom },
+      { bottom: this.singleton.snapPointPosition },
+    ], {
+      duration: 300,
+      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+    }).onfinish = () => {
+      this.singleton.modalRef?.value?.style.removeProperty("will-change");
+
+      this.singleton.updateMovementAmountY(0);
+      this.singleton.updateBottomValue(this.singleton.snapPointPosition);
+      this.singleton.updatePositionStatus("snap");
+    };
+  }
+
+  moveToFull() {
+    if (!this.singleton.modalRef?.value) {
+      return;
+    }
+
+    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+
+    this.singleton.modalRef.value.animate([
+      { bottom: this.singleton.bottom },
+      { bottom: "0%" },
+    ], {
+      duration: 300,
+      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+    }).onfinish = () => {
+      this.singleton.modalRef?.value?.style.removeProperty("will-change");
+
+      this.singleton.updateMovementAmountY(0);
+      this.singleton.updateBottomValue("0%");
+      this.singleton.updatePositionStatus("full");
     };
   }
 }

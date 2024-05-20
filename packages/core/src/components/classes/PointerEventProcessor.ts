@@ -1,5 +1,5 @@
-import type { Ref } from "lit/directives/ref.js";
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
+import { ModalAnimator } from "./ModalAnimator";
 
 type PointerType = "mouse" | "touch";
 
@@ -13,19 +13,15 @@ type PointerEventParameters
   };
 
 export class PointerEventProcessor {
-  private modalRef: Ref<HTMLDialogElement>["value"];
+  singleton: WebBottomSheetSingleton;
+  modalAnimator: ModalAnimator;
 
   private isDragging: boolean = false;
   private moveStartPositionY: number = 0;
 
-  constructor({
-    modalRef,
-  }:
-    {
-      modalRef: Ref<HTMLDialogElement>["value"];
-    },
-  ) {
-    this.modalRef = modalRef;
+  constructor() {
+    this.singleton = new WebBottomSheetSingleton();
+    this.modalAnimator = new ModalAnimator();
   }
 
   private processSwitcher({
@@ -64,38 +60,85 @@ export class PointerEventProcessor {
   }
 
   onMove(params: PointerEventParameters) {
-    if (!this.isDragging)
+    if (!this.isDragging) {
       return;
-
-    const webBottomSheetSingleton = new WebBottomSheetSingleton();
+    }
 
     this.processSwitcher({
       params,
       mouse: (event) => {
-        webBottomSheetSingleton.updateMovementAmountY(event.y - this.moveStartPositionY);
+        this.singleton.updateMovementAmountY(event.y - this.moveStartPositionY);
       },
       touch: (event) => {
-        webBottomSheetSingleton.updateMovementAmountY(event.touches[0].clientY - this.moveStartPositionY);
+        this.singleton.updateMovementAmountY(event.touches[0].clientY - this.moveStartPositionY);
       },
     });
 
     if (
-      (webBottomSheetSingleton.movementAmountY > 0
-      && webBottomSheetSingleton.positionStatus === "full")
-      || (this.modalRef?.getBoundingClientRect().top || 0) < 0
-    )
-      return;
+      (this.singleton.movementAmountY > 0
+      && this.singleton.positionStatus === "full")
+      || (this.singleton.modalRef?.value?.getBoundingClientRect().top || 0) < 0
+    ) { return; }
 
-    this.modalRef?.style.setProperty("user-select", "none");
+    this.singleton.modalRef?.value?.style.setProperty("user-select", "none");
 
-    if (webBottomSheetSingleton.positionStatus === "snap") {
-      webBottomSheetSingleton.updateBottomValue(`calc(${webBottomSheetSingleton.snapPointPosition} - ${webBottomSheetSingleton.movementAmountY}px)`);
+    if (this.singleton.positionStatus === "snap") {
+      this.singleton.updateBottomValue(`calc(${this.singleton.snapPointPosition} - ${this.singleton.movementAmountY}px)`);
 
       return;
     }
 
-    webBottomSheetSingleton.updateBottomValue(
-      `calc(0% + ${webBottomSheetSingleton.movementAmountY}px)`,
+    this.singleton.updateBottomValue(
+      `calc(0% + ${this.singleton.movementAmountY}px)`,
     );
+  }
+
+  onUp() {
+    this.isDragging = false;
+
+    this.singleton.modalRef?.value?.style.removeProperty("user-select");
+
+    if (Math.abs(this.singleton.movementAmountY) > 36) {
+      switch (this.singleton.positionStatus) {
+        case "full": {
+          if (this.singleton.props.snapPoint) {
+            this.modalAnimator.moveToSnapPoint();
+            break;
+          }
+
+          if (this.singleton.props.isPersistent) {
+            this.modalAnimator.cancel();
+            break;
+          }
+
+          this.singleton.updateProp("open", false);
+          break;
+        }
+        case "snap": {
+          if (this.singleton.props.isPersistent) {
+            this.modalAnimator.cancel();
+            break;
+          }
+
+          this.singleton.updateProp("open", false);
+          break;
+        }
+        default: {
+          return;
+        }
+      }
+    }
+
+    switch (this.singleton.positionStatus) {
+      case "snap": {
+        this.modalAnimator.moveToSnapPoint();
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+
+    return this.modalAnimator.cancel();
   }
 }

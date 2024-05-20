@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
 import type { WebBottomSheetProps } from "./web-bottom-sheet.ce";
 import { WebBottomSheet } from "./web-bottom-sheet.ce";
 
@@ -13,8 +14,14 @@ const meta = {
     return html`
     <web-bottom-sheet
       ?open="${args.open}"
+      ?is-back-drop="${args.isBackdrop}"
+      ?is-drag-handle="${args.isDragHandle}"
+      ?is-full-screen="${args.isFullScreen}"
+      ?is-persistent="${args.isPersistent}"
+      ?is-scroll-lock="${args.isScrollLock}"
+      snap-point="${ifDefined(args.snapPoint as string | "auto")}"
     >
-      <h1>Bottom sheet</h1>
+      <span>Bottom sheet</span>
     </web-bottom-sheet>`;
   },
   argTypes: {},
@@ -27,5 +34,11 @@ type Story = StoryObj<WebBottomSheetProps>;
 export const Primary: Story = {
   args: {
     open: true,
+    isBackdrop: true,
+    isDragHandle: true,
+    isFullScreen: true,
+    isPersistent: false,
+    isScrollLock: true,
+    snapPoint: "auto",
   },
 };

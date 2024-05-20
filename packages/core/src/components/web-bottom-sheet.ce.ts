@@ -61,6 +61,8 @@ export interface WebBottomSheetProps {
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {
+  singleton: WebBottomSheetSingleton;
+
   // === Variables ===
   private modalRef = createRef<HTMLDialogElement>();
   private panelRef = createRef<HTMLDivElement>();
@@ -70,10 +72,27 @@ export class WebBottomSheet extends LitElement {
   // === Props ===
 
   @property({ attribute: "open", type: Boolean })
-  open: WebBottomSheetProps["open"] = false;
+
+  @property({ attribute: "open", type: Boolean })
+  accessor open: WebBottomSheetProps["open"] = false;
 
   @property({ attribute: "snap-point", type: String })
-  snapPoint: WebBottomSheetProps["snapPoint"] = "auto";
+  accessor snapPoint: WebBottomSheetProps["snapPoint"] = undefined;
+
+  @property({ attribute: "is-back-drop", type: Boolean })
+  accessor isBackdrop: WebBottomSheetProps["isBackdrop"] = true;
+
+  @property({ attribute: "is-drag-handle", type: Boolean })
+  accessor isDragHandle: WebBottomSheetProps["isDragHandle"] = true;
+
+  @property({ attribute: "is-full-screen", type: Boolean })
+  accessor isFullScreen: WebBottomSheetProps["isFullScreen"] = true;
+
+  @property({ attribute: "is-persistent", type: Boolean })
+  accessor isPersistent: WebBottomSheetProps["isPersistent"] = false;
+
+  @property({ attribute: "is-scroll-lock", type: Boolean })
+  accessor isScrollLock: WebBottomSheetProps["isScrollLock"] = true;
 
   // === Methods ==
 
@@ -81,12 +100,18 @@ export class WebBottomSheet extends LitElement {
   constructor() {
     super();
 
-    this.pointerEventProcessor = new PointerEventProcessor({
-      modalRef: this.modalRef.value,
-    });
-    this.modalAnimator = new ModalAnimator({
-      modalRef: this.modalRef.value,
-      panelRef: this.panelRef.value,
+    this.pointerEventProcessor = new PointerEventProcessor();
+    this.modalAnimator = new ModalAnimator();
+
+    this.singleton = new WebBottomSheetSingleton();
+
+    this.singleton.setProps({
+      isBackdrop: this.isBackdrop,
+      isDragHandle: this.isDragHandle,
+      isFullScreen: this.isFullScreen,
+      isPersistent: this.isPersistent,
+      isScrollLock: this.isScrollLock,
+      open: this.open,
       snapPoint: this.snapPoint,
     });
   }
@@ -94,43 +119,41 @@ export class WebBottomSheet extends LitElement {
   // === Lifecycle ===
   connectedCallback() {
     super.connectedCallback();
-    calcSnapPointPosition({
-      snapPoint: this.snapPoint,
-      panelRef: this.panelRef?.value,
-    });
+    calcSnapPointPosition();
   }
 
   firstUpdated() {
-    const webBottomSheetSingleton = new WebBottomSheetSingleton();
-
-    this.pointerEventProcessor = new PointerEventProcessor({
-      modalRef: this.modalRef.value,
-    });
-    this.modalAnimator = new ModalAnimator({
-      modalRef: this.modalRef.value,
-      panelRef: this.panelRef.value,
-      snapPoint: this.snapPoint,
-    });
-
-    webBottomSheetSingleton.updateBottomValue("-100%");
-    webBottomSheetSingleton.updateMovementAmountY(0);
+    this.singleton.setModalRef(this.modalRef);
+    this.singleton.setPanelRef(this.panelRef);
+    this.singleton.updateBottomValue("-100%");
+    this.singleton.updateMovementAmountY(0);
+    this.singleton.updateProp("open", this.open);
   }
 
   updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
+    this.singleton.setProps({
+      isBackdrop: this.isBackdrop,
+      isDragHandle: this.isDragHandle,
+      isFullScreen: this.isFullScreen,
+      isPersistent: this.isPersistent,
+      isScrollLock: this.isScrollLock,
+      open: this.open,
+      snapPoint: this.snapPoint,
+    });
 
     if (changedProperties.has("open")) {
-      if (this.open)
+      this.singleton.updateProp("open", this.open);
+      if (this.singleton.props.open) {
         this.modalAnimator.open();
-
-      else this.modalAnimator.close();
+      }
+      else {
+        this.modalAnimator.close();
+      }
     }
 
     if (changedProperties.has("snapPoint") || changedProperties.has("panelRef")) {
-      calcSnapPointPosition({
-        snapPoint: this.snapPoint,
-        panelRef: this.panelRef?.value,
-      });
+      calcSnapPointPosition();
     }
   }
 
@@ -141,34 +164,48 @@ export class WebBottomSheet extends LitElement {
       <dialog
         ${ref(this.modalRef)}
         class="web-bottom-sheet default-style"
-        @touchstart=${(event: TouchEvent) => {
-          this.pointerEventProcessor.onDown({
-            type: "touch",
-            event,
-          });
-        }}
-        @touchmove=${(event: TouchEvent) => {
-          this.pointerEventProcessor.onMove({
-            type: "touch",
-            event,
-          });
-        }}
-        @mousedown=${(event: MouseEvent) => {
-          this.pointerEventProcessor.onDown({
-            type: "mouse",
-            event,
-          });
-        }}
-        @mousemove=${(event: MouseEvent) => {
-          this.pointerEventProcessor.onMove({
-            type: "mouse",
-            event,
-          });
-        }}
       >
-        <div></div>
+        <slot
+          name="drag-handle"
+          @touchstart=${(event: TouchEvent) => {
+            this.pointerEventProcessor.onDown({
+              type: "touch",
+              event,
+            });
+          }}
+          @touchmove=${(event: TouchEvent) => {
+            this.pointerEventProcessor.onMove({
+              type: "touch",
+              event,
+            });
+          }}
+          @touchend=${() => {
+            this.pointerEventProcessor.onUp();
+          }}
+          @mousedown=${(event: MouseEvent) => {
+            this.pointerEventProcessor.onDown({
+              type: "mouse",
+              event,
+            });
+          }}
+          @mousemove=${(event: MouseEvent) => {
+            this.pointerEventProcessor.onMove({
+              type: "mouse",
+              event,
+            });
+          }}
+          @mouseup=${() => {
+            this.pointerEventProcessor.onUp();
+          }}
+        >
+          <div class="default-drag-handle">
+            <div class="default-drag-handle-icon"></div>
+          </div>
+        </slot>
+        </div>
         <div ${ref(this.panelRef)}>
           <slot></slot>
+          ${JSON.stringify(this.singleton.props, null, "\n")}
         </div>
     </dialog>
     `;

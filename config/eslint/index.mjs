@@ -14,6 +14,7 @@ export default antfu({
 			quotes: "double",
 		},
 		rules: {
+			"curly": [ "error", "all" ],
 			"func-style": [ "error", "expression" ],
 			"antfu/top-level-function": "off",
 			"style/array-bracket-spacing": [

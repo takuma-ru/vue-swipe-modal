@@ -1,27 +1,20 @@
-import type { WebBottomSheet } from "../main";
 import { WebBottomSheetSingleton } from "../components/singletons/WebBottomSheetSingleton";
 
-export const calcSnapPointPosition = ({
-  snapPoint,
-  panelRef,
-}: {
-  snapPoint: WebBottomSheet["snapPoint"];
-  panelRef: HTMLDivElement | undefined;
-}) => {
-  const webBottomSheetSingleton = new WebBottomSheetSingleton();
+export const calcSnapPointPosition = () => {
+  const singleton = new WebBottomSheetSingleton();
 
   let snapPointValue: string;
 
-  if (!snapPoint) {
+  if (!singleton.props.snapPoint) {
     snapPointValue = "0px";
   }
-  else if (snapPoint === "auto") {
-    const panelRefHeight = panelRef?.getBoundingClientRect().height || 0;
+  else if (singleton.props.snapPoint === "auto") {
+    const panelRefHeight = singleton.panelRef?.value?.getBoundingClientRect().height || 0;
     snapPointValue = `calc(${panelRefHeight}px + 36px - 100%)`;
   }
   else {
-    snapPointValue = `calc(${snapPoint} - 100%)`;
+    snapPointValue = `calc(${singleton.props.snapPoint} - 100%)`;
   }
 
-  webBottomSheetSingleton.updateSnapPointPosition(snapPointValue);
+  singleton.updateSnapPointPosition(snapPointValue);
 };

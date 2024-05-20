@@ -2,8 +2,9 @@ import process from "node:process";
 import sass from "sass-embedded";
 
 export const convertScssToCss = (scss: string) => {
-  if (scss.includes("id-arn0029fj02jo"))
+  if (scss.includes("id-arn0029fj02jo")) {
     return scss;
+  }
 
   const result = sass.compileString(scss, {
     style: "compressed",
