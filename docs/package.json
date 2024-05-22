@@ -1,0 +1,15 @@
+{
+  "name": "docs",
+  "scripts": {
+    "dev": "vitepress dev --port 3120",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.2.2",
+    "vue": "^3.4.27"
+  },
+  "dependencies": {
+    "remove": "^0.1.5"
+  }
+}

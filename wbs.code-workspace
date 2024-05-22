@@ -5,35 +5,43 @@
       "path": "."
     },
     {
-      "name": "p: wbs",
+      "name": "-------",
+      "path": "a"
+    },
+    {
+      "name": "📦 wbs",
       "path": "packages/web-bottom-sheet"
     },
     {
-      "name": "p: core",
+      "name": "📦 core",
       "path": "packages/core"
     },
     {
-      "name": "p: angular",
+      "name": "📦 angular",
       "path": "packages/angular"
     },
     {
-      "name": "p: react",
+      "name": "📦 react",
       "path": "packages/react"
     },
     {
-      "name": "p: svelte",
+      "name": "📦 svelte",
       "path": "packages/svelte"
     },
     {
-      "name": "p: vue",
+      "name": "📦 vue",
       "path": "packages/vue"
     },
     {
-      "name": "c: eslint",
+      "name": "-------",
+      "path": "b"
+    },
+    {
+      "name": "🔧 eslint",
       "path": "config/eslint"
     },
     {
-      "name": "c: stylelint",
+      "name": "🔧 stylelint",
       "path": "config/stylelint"
     }
   ],
