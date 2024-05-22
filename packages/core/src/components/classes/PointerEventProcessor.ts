@@ -82,7 +82,7 @@ export class PointerEventProcessor {
       return;
     }
 
-    if (!this.singleton.props.isFullscreen && this.singleton.movementAmountY > 0) {
+    if (!this.singleton.props["is-fullscreen"] && this.singleton.movementAmountY > 0) {
       return;
     }
 
@@ -108,12 +108,12 @@ export class PointerEventProcessor {
       if (this.singleton.movementAmountY < 0) {
         switch (this.singleton.positionStatus) {
           case "full": {
-            if (this.singleton.props.snapPoint) {
+            if (this.singleton.props["snap-point"]) {
               this.modalAnimator.moveToSnapPoint();
               return;
             }
 
-            if (this.singleton.props.isPersistent) {
+            if (this.singleton.props["is-persistent"]) {
               this.modalAnimator.cancel();
               return;
             }
@@ -122,7 +122,7 @@ export class PointerEventProcessor {
             return;
           }
           case "snap": {
-            if (this.singleton.props.isPersistent) {
+            if (this.singleton.props["is-persistent"]) {
               this.modalAnimator.cancel();
               return;
             }
@@ -138,7 +138,7 @@ export class PointerEventProcessor {
 
       switch (this.singleton.positionStatus) {
         case "snap": {
-          if (this.singleton.props.isFullscreen) {
+          if (this.singleton.props["is-fullscreen"]) {
             this.modalAnimator.moveToFull();
             return;
           }

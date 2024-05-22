@@ -5,59 +5,11 @@ import { customElement, property } from "lit/decorators.js";
 import { createRef, ref } from "lit/directives/ref.js";
 import { resetCss } from "../styles/resetCss";
 import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
+import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 import { ModalAnimator } from "./classes/ModalAnimator";
 import { PointerEventProcessor } from "./classes/PointerEventProcessor";
 import { WebBottomSheetSingleton } from "./singletons/WebBottomSheetSingleton";
 import styles from "./web-bottom-sheet.cecss";
-
-export interface WebBottomSheetProps {
-  /**
-   * Whether to display the backdrop.
-   *
-   * @default true
-   */
-  isBackdrop?: boolean;
-  /**
-   * Whether to display the drag handle.
-   *
-   * @default true
-   */
-  isDragHandle?: boolean;
-  /**
-   * Whether to display the modal in full screen.
-   *
-   * @default true
-   */
-  isFullscreen?: boolean;
-  /**
-   * Whether to disable swipe and back drop click events.
-   *
-   * @default false
-   */
-  isPersistent?: boolean;
-  /**
-   * Whether to disable scroll of the background.
-   *
-   *  @default true
-   */
-  isScrollLock?: boolean;
-  /**
-   * Whether to display the modal.
-   *
-   * @default false
-   */
-  open?: boolean;
-  /**
-   * Modal upper edge position.
-   *
-   * - `auto`: Automatically calculates the display position based on the height of the content in the modal.
-   * - `String` : [\<length>](https://developer.mozilla.org/ja/docs/Web/CSS/length) data type
-   *
-   * @default undefined
-   */
-  // eslint-disable-next-line ts/ban-types
-  snapPoint?: "auto" | String;
-}
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {
@@ -78,22 +30,22 @@ export class WebBottomSheet extends LitElement {
   accessor open: WebBottomSheetProps["open"] = false;
 
   @property({ attribute: "snap-point", type: String })
-  accessor snapPoint: WebBottomSheetProps["snapPoint"] = undefined;
+  accessor snapPoint: WebBottomSheetProps["snap-point"] = undefined;
 
   @property({ attribute: "is-back-drop", type: Boolean })
-  accessor isBackdrop: WebBottomSheetProps["isBackdrop"] = true;
+  accessor isBackdrop: WebBottomSheetProps["is-backdrop"] = true;
 
   @property({ attribute: "is-drag-handle", type: Boolean })
-  accessor isDragHandle: WebBottomSheetProps["isDragHandle"] = true;
+  accessor isDragHandle: WebBottomSheetProps["is-drag-handle"] = true;
 
   @property({ attribute: "is-fullscreen", type: Boolean })
-  accessor isFullscreen: WebBottomSheetProps["isFullscreen"] = true;
+  accessor isFullscreen: WebBottomSheetProps["is-fullscreen"] = true;
 
   @property({ attribute: "is-persistent", type: Boolean })
-  accessor isPersistent: WebBottomSheetProps["isPersistent"] = false;
+  accessor isPersistent: WebBottomSheetProps["is-persistent"] = false;
 
   @property({ attribute: "is-scroll-lock", type: Boolean })
-  accessor isScrollLock: WebBottomSheetProps["isScrollLock"] = true;
+  accessor isScrollLock: WebBottomSheetProps["is-scroll-lock"] = true;
 
   // === Methods ==
 
@@ -107,13 +59,13 @@ export class WebBottomSheet extends LitElement {
     this.singleton = new WebBottomSheetSingleton();
 
     this.singleton.setProps({
-      isBackdrop: this.isBackdrop,
-      isDragHandle: this.isDragHandle,
-      isFullscreen: this.isFullscreen,
-      isPersistent: this.isPersistent,
-      isScrollLock: this.isScrollLock,
-      open: this.open,
-      snapPoint: this.snapPoint,
+      "is-backdrop": this.isBackdrop,
+      "is-drag-handle": this.isDragHandle,
+      "is-fullscreen": this.isFullscreen,
+      "is-persistent": this.isPersistent,
+      "is-scroll-lock": this.isScrollLock,
+      "open": this.open,
+      "snap-point": this.snapPoint,
     });
   }
 
@@ -184,13 +136,13 @@ export class WebBottomSheet extends LitElement {
   updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
     this.singleton.setProps({
-      isBackdrop: this.isBackdrop,
-      isDragHandle: this.isDragHandle,
-      isFullscreen: this.isFullscreen,
-      isPersistent: this.isPersistent,
-      isScrollLock: this.isScrollLock,
-      open: this.open,
-      snapPoint: this.snapPoint,
+      "is-backdrop": this.isBackdrop,
+      "is-drag-handle": this.isDragHandle,
+      "is-fullscreen": this.isFullscreen,
+      "is-persistent": this.isPersistent,
+      "is-scroll-lock": this.isScrollLock,
+      "open": this.open,
+      "snap-point": this.snapPoint,
     });
 
     if (changedProperties.has("open")) {

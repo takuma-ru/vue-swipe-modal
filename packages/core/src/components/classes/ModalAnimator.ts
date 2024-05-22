@@ -14,7 +14,7 @@ export class ModalAnimator {
       return;
     }
 
-    if (this.singleton.props.isBackdrop) {
+    if (this.singleton.props["is-backdrop"]) {
       this.singleton.modalRef.value.showModal();
     }
     else {
@@ -32,10 +32,10 @@ export class ModalAnimator {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.singleton.updatePositionStatus(this.singleton.props.snapPoint ? "snap" : "full");
+      this.singleton.updatePositionStatus(this.singleton.props["snap-point"] ? "snap" : "full");
       this.singleton.updateBottomValue(this.singleton.snapPointPosition);
 
-      if (this.singleton.props.isScrollLock) {
+      if (this.singleton.props["is-scroll-lock"]) {
         setPageScrollable("hidden");
       }
 
@@ -77,7 +77,7 @@ export class ModalAnimator {
     const calcToPositionBottom = () => {
       switch (this.singleton.positionStatus) {
         case "snap": {
-          return this.singleton.props.snapPoint ? this.singleton.snapPointPosition : "0%";
+          return this.singleton.props["snap-point"] ? this.singleton.snapPointPosition : "0%";
         }
         case "full": {
           return "0%";
@@ -109,7 +109,7 @@ export class ModalAnimator {
       return;
     }
 
-    if (!this.singleton.props.snapPoint) {
+    if (!this.singleton.props["snap-point"]) {
       return;
     }
 

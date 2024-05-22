@@ -1,5 +1,5 @@
 import type { Ref } from "lit/directives/ref.js";
-import type { WebBottomSheetProps } from "../web-bottom-sheet.ce";
+import type { WebBottomSheetProps } from "../../types/web-bottom-sheet.type";
 
 export class WebBottomSheetSingleton {
   static instance: WebBottomSheetSingleton;
@@ -14,7 +14,7 @@ export class WebBottomSheetSingleton {
 
   panelRef: Ref<HTMLDivElement> | undefined;
 
-  props: WebBottomSheetProps = {} as WebBottomSheetProps;
+  props: WebBottomSheetProps = {};
 
   // == state change methods ==
   updateBottomValue(value: typeof this.bottom) {
