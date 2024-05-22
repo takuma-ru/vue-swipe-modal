@@ -1,10 +1,10 @@
 import type { Ref } from "lit/directives/ref.js";
-import { BottomCssVarController } from "../classes/BottomCssVarController";
 import type { WebBottomSheetProps } from "../web-bottom-sheet.ce";
 
 export class WebBottomSheetSingleton {
   static instance: WebBottomSheetSingleton;
 
+  // == state ==
   bottom: string = "-100%";
   movementAmountY: number = 0;
   snapPointPosition: string = "auto";
@@ -16,11 +16,11 @@ export class WebBottomSheetSingleton {
 
   props: WebBottomSheetProps = {} as WebBottomSheetProps;
 
+  // == state change methods ==
   updateBottomValue(value: typeof this.bottom) {
     this.bottom = value;
 
-    const bottomCssVarController = new BottomCssVarController();
-    bottomCssVarController.setBottomCssVar(value);
+    this.modalRef?.value?.style.setProperty("--bottom", value);
   }
 
   updateMovementAmountY(value: typeof this.movementAmountY) {
@@ -47,10 +47,20 @@ export class WebBottomSheetSingleton {
     this.props = value;
   }
 
-  updateProp<Key extends keyof WebBottomSheetProps>(key: Key, value: WebBottomSheetProps[Key]) {
-    this.props[key] = value;
+  // == event methods ==
+  dispatchOnCloseEvent() {
+    this.modalRef?.value?.dispatchEvent(new CustomEvent("on-close", { bubbles: true, composed: true }));
   }
 
+  addWillChangeBottom() {
+    this.modalRef?.value?.style.setProperty("will-change", "bottom");
+  }
+
+  removeWillChangeBottom() {
+    this.modalRef?.value?.style.removeProperty("will-change");
+  }
+
+  // == constructor ==
   constructor() {
     if (WebBottomSheetSingleton.instance) {
       return WebBottomSheetSingleton.instance;

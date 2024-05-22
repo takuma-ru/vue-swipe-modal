@@ -16,7 +16,7 @@ const meta = {
       ?open="${args.open}"
       ?is-back-drop="${args.isBackdrop}"
       ?is-drag-handle="${args.isDragHandle}"
-      ?is-full-screen="${args.isFullScreen}"
+      ?is-fullscreen="${args.isFullscreen}"
       ?is-persistent="${args.isPersistent}"
       ?is-scroll-lock="${args.isScrollLock}"
       snap-point="${ifDefined(args.snapPoint as string | "auto")}"
@@ -36,7 +36,7 @@ export const Primary: Story = {
     open: true,
     isBackdrop: true,
     isDragHandle: true,
-    isFullScreen: true,
+    isFullscreen: true,
     isPersistent: false,
     isScrollLock: true,
     snapPoint: "auto",

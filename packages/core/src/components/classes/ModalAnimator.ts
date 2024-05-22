@@ -1,5 +1,6 @@
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 import { calcSnapPointPosition } from "../../utils/calcSnapPointPosition";
+import { setPageScrollable } from "../../utils/setPageScrollable";
 
 export class ModalAnimator {
   singleton: WebBottomSheetSingleton;
@@ -13,25 +14,32 @@ export class ModalAnimator {
       return;
     }
 
-    const singleton = new WebBottomSheetSingleton();
-
-    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
-    this.singleton.modalRef.value.showModal();
+    if (this.singleton.props.isBackdrop) {
+      this.singleton.modalRef.value.showModal();
+    }
+    else {
+      this.singleton.modalRef.value.show();
+    }
 
     calcSnapPointPosition();
 
+    this.singleton.addWillChangeBottom();
+
     this.singleton.modalRef.value.animate([
       { bottom: "-100%" },
-      { bottom: singleton.snapPointPosition },
+      { bottom: this.singleton.snapPointPosition },
     ], {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.singleton.modalRef?.value?.style.removeProperty("will-change");
+      this.singleton.updatePositionStatus(this.singleton.props.snapPoint ? "snap" : "full");
+      this.singleton.updateBottomValue(this.singleton.snapPointPosition);
 
-      singleton.updatePositionStatus(this.singleton.props.snapPoint ? "snap" : "full");
+      if (this.singleton.props.isScrollLock) {
+        setPageScrollable("hidden");
+      }
 
-      singleton.updateBottomValue(singleton.snapPointPosition);
+      this.singleton.removeWillChangeBottom();
     };
   }
 
@@ -40,22 +48,24 @@ export class ModalAnimator {
       return;
     }
 
-    const singleton = new WebBottomSheetSingleton();
-
-    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+    this.singleton.addWillChangeBottom();
 
     this.singleton.modalRef.value.animate([
-      { bottom: singleton.bottom },
+      { bottom: this.singleton.bottom },
       { bottom: "-100%" },
     ], {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
       this.singleton.modalRef?.value?.close();
-      this.singleton.modalRef?.value?.style.removeProperty("will-change");
 
-      singleton.updateSnapPointPosition("close");
-      singleton.updateBottomValue("-100%");
+      this.singleton.updateSnapPointPosition("auto");
+      this.singleton.updateBottomValue("-100%");
+      this.singleton.updatePositionStatus("close");
+
+      setPageScrollable("reset");
+
+      this.singleton.removeWillChangeBottom();
     };
   }
 
@@ -63,8 +73,6 @@ export class ModalAnimator {
     if (!this.singleton.modalRef?.value) {
       return;
     }
-
-    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
 
     const calcToPositionBottom = () => {
       switch (this.singleton.positionStatus) {
@@ -80,6 +88,8 @@ export class ModalAnimator {
       }
     };
 
+    this.singleton.addWillChangeBottom();
+
     this.singleton.modalRef.value.animate([
       { bottom: this.singleton.bottom },
       { bottom: calcToPositionBottom() },
@@ -87,10 +97,10 @@ export class ModalAnimator {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.singleton.modalRef?.value?.style.removeProperty("will-change");
-
       this.singleton.updateMovementAmountY(0);
       this.singleton.updateBottomValue(calcToPositionBottom());
+
+      this.singleton.removeWillChangeBottom();
     };
   }
 
@@ -103,7 +113,7 @@ export class ModalAnimator {
       return;
     }
 
-    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+    this.singleton.addWillChangeBottom();
 
     this.singleton.modalRef.value.animate([
       { bottom: this.singleton.bottom },
@@ -112,11 +122,11 @@ export class ModalAnimator {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.singleton.modalRef?.value?.style.removeProperty("will-change");
-
       this.singleton.updateMovementAmountY(0);
       this.singleton.updateBottomValue(this.singleton.snapPointPosition);
       this.singleton.updatePositionStatus("snap");
+
+      this.singleton.removeWillChangeBottom();
     };
   }
 
@@ -125,7 +135,7 @@ export class ModalAnimator {
       return;
     }
 
-    this.singleton.modalRef.value.style.setProperty("will-change", "bottom");
+    this.singleton.addWillChangeBottom();
 
     this.singleton.modalRef.value.animate([
       { bottom: this.singleton.bottom },
@@ -134,11 +144,11 @@ export class ModalAnimator {
       duration: 300,
       easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
     }).onfinish = () => {
-      this.singleton.modalRef?.value?.style.removeProperty("will-change");
-
       this.singleton.updateMovementAmountY(0);
       this.singleton.updateBottomValue("0%");
       this.singleton.updatePositionStatus("full");
+
+      this.singleton.removeWillChangeBottom();
     };
   }
 }

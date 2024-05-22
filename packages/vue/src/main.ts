@@ -1,5 +1,4 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import BottomSheet from "./components/BottomSheet.vue";
 
-createApp(App).mount('#app')
+export { BottomSheet };
+export default BottomSheet;

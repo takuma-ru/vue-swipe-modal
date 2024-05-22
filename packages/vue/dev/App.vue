@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import WebBottomSheet from "./components/WebBottomSheet.vue";
+import BottomSheet from "../src/components/BottomSheet.vue"
 import { ref } from "vue";
 
 const isOpen = ref(false);
 </script>
 
 <template>
+  <h1>Vue</h1>
+  <p>isOpen: {{ isOpen }}</p>
   <button @click="isOpen = true">open</button>
 
-  <WebBottomSheet :open="isOpen" snap-point="50%">
+  <BottomSheet :open="isOpen" snap-point="50%" @on-close="isOpen = false">
     <button @click="isOpen = false">close</button>
-  </WebBottomSheet>
+  </BottomSheet>
 </template>
 
 <style scoped>

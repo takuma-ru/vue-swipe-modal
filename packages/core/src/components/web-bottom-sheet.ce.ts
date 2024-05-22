@@ -28,7 +28,7 @@ export interface WebBottomSheetProps {
    *
    * @default true
    */
-  isFullScreen?: boolean;
+  isFullscreen?: boolean;
   /**
    * Whether to disable swipe and back drop click events.
    *
@@ -66,6 +66,7 @@ export class WebBottomSheet extends LitElement {
   // === Variables ===
   private modalRef = createRef<HTMLDialogElement>();
   private panelRef = createRef<HTMLDivElement>();
+  private dragHandleWrapperRef = createRef<HTMLDivElement>();
   private modalAnimator: ModalAnimator;
   private pointerEventProcessor: PointerEventProcessor;
 
@@ -85,8 +86,8 @@ export class WebBottomSheet extends LitElement {
   @property({ attribute: "is-drag-handle", type: Boolean })
   accessor isDragHandle: WebBottomSheetProps["isDragHandle"] = true;
 
-  @property({ attribute: "is-full-screen", type: Boolean })
-  accessor isFullScreen: WebBottomSheetProps["isFullScreen"] = true;
+  @property({ attribute: "is-fullscreen", type: Boolean })
+  accessor isFullscreen: WebBottomSheetProps["isFullscreen"] = true;
 
   @property({ attribute: "is-persistent", type: Boolean })
   accessor isPersistent: WebBottomSheetProps["isPersistent"] = false;
@@ -108,7 +109,7 @@ export class WebBottomSheet extends LitElement {
     this.singleton.setProps({
       isBackdrop: this.isBackdrop,
       isDragHandle: this.isDragHandle,
-      isFullScreen: this.isFullScreen,
+      isFullscreen: this.isFullscreen,
       isPersistent: this.isPersistent,
       isScrollLock: this.isScrollLock,
       open: this.open,
@@ -127,7 +128,57 @@ export class WebBottomSheet extends LitElement {
     this.singleton.setPanelRef(this.panelRef);
     this.singleton.updateBottomValue("-100%");
     this.singleton.updateMovementAmountY(0);
-    this.singleton.updateProp("open", this.open);
+
+    this.modalRef.value?.addEventListener("cancel", (event) => {
+      event.preventDefault();
+
+      this.singleton.dispatchOnCloseEvent();
+    });
+
+    this.modalRef.value?.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (event.target === this.modalRef.value) {
+        this.singleton.dispatchOnCloseEvent();
+      }
+    });
+
+    this.dragHandleWrapperRef.value?.addEventListener("touchstart", (event) => {
+      this.pointerEventProcessor.onDown({
+        type: "touch",
+        event,
+      });
+    }, { passive: true });
+
+    this.dragHandleWrapperRef.value?.addEventListener("touchmove", (event) => {
+      this.pointerEventProcessor.onMove({
+        type: "touch",
+        event,
+      });
+    }, { passive: true });
+
+    this.dragHandleWrapperRef.value?.addEventListener("touchend", () => {
+      this.pointerEventProcessor.onUp();
+    }, { passive: true });
+
+    this.dragHandleWrapperRef.value?.addEventListener("mousedown", (event) => {
+      this.pointerEventProcessor.onDown({
+        type: "mouse",
+        event,
+      });
+    }, { passive: true });
+
+    this.dragHandleWrapperRef.value?.addEventListener("mousemove", (event) => {
+      this.pointerEventProcessor.onMove({
+        type: "mouse",
+        event,
+      });
+    }, { passive: true });
+
+    this.dragHandleWrapperRef.value?.addEventListener("mouseup", () => {
+      this.pointerEventProcessor.onUp();
+    }, { passive: true });
   }
 
   updated(changedProperties: PropertyValues) {
@@ -135,7 +186,7 @@ export class WebBottomSheet extends LitElement {
     this.singleton.setProps({
       isBackdrop: this.isBackdrop,
       isDragHandle: this.isDragHandle,
-      isFullScreen: this.isFullScreen,
+      isFullscreen: this.isFullscreen,
       isPersistent: this.isPersistent,
       isScrollLock: this.isScrollLock,
       open: this.open,
@@ -143,7 +194,6 @@ export class WebBottomSheet extends LitElement {
     });
 
     if (changedProperties.has("open")) {
-      this.singleton.updateProp("open", this.open);
       if (this.singleton.props.open) {
         this.modalAnimator.open();
       }
@@ -165,47 +215,16 @@ export class WebBottomSheet extends LitElement {
         ${ref(this.modalRef)}
         class="web-bottom-sheet default-style"
       >
-        <slot
-          name="drag-handle"
-          @touchstart=${(event: TouchEvent) => {
-            this.pointerEventProcessor.onDown({
-              type: "touch",
-              event,
-            });
-          }}
-          @touchmove=${(event: TouchEvent) => {
-            this.pointerEventProcessor.onMove({
-              type: "touch",
-              event,
-            });
-          }}
-          @touchend=${() => {
-            this.pointerEventProcessor.onUp();
-          }}
-          @mousedown=${(event: MouseEvent) => {
-            this.pointerEventProcessor.onDown({
-              type: "mouse",
-              event,
-            });
-          }}
-          @mousemove=${(event: MouseEvent) => {
-            this.pointerEventProcessor.onMove({
-              type: "mouse",
-              event,
-            });
-          }}
-          @mouseup=${() => {
-            this.pointerEventProcessor.onUp();
-          }}
-        >
-          <div class="default-drag-handle">
-            <div class="default-drag-handle-icon"></div>
-          </div>
-        </slot>
+        <div ${ref(this.dragHandleWrapperRef)} class="drag-handle-wrapper">
+          <slot name="drag-handle">
+            <div class="default-drag-handle">
+              <div class="default-drag-handle-icon"></div>
+            </div>
+          </slot>
+        </div>
         </div>
         <div ${ref(this.panelRef)}>
           <slot></slot>
-          ${JSON.stringify(this.singleton.props, null, "\n")}
         </div>
     </dialog>
     `;

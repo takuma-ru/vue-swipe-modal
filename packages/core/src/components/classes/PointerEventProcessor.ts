@@ -52,7 +52,7 @@ export class PointerEventProcessor {
         this.moveStartPositionY = event.y;
       },
       touch: (event) => {
-        this.moveStartPositionY = event.touches[0].clientY;
+        this.moveStartPositionY = event.targetTouches[0].clientY || event.touches[0].clientY || event.changedTouches[0].clientY;
       },
     });
 
@@ -67,10 +67,10 @@ export class PointerEventProcessor {
     this.processSwitcher({
       params,
       mouse: (event) => {
-        this.singleton.updateMovementAmountY(event.y - this.moveStartPositionY);
+        this.singleton.updateMovementAmountY(this.moveStartPositionY - event.y);
       },
       touch: (event) => {
-        this.singleton.updateMovementAmountY(event.touches[0].clientY - this.moveStartPositionY);
+        this.singleton.updateMovementAmountY(this.moveStartPositionY - event.targetTouches[0].clientY || event.touches[0].clientY || event.changedTouches[0].clientY);
       },
     });
 
@@ -78,12 +78,18 @@ export class PointerEventProcessor {
       (this.singleton.movementAmountY > 0
       && this.singleton.positionStatus === "full")
       || (this.singleton.modalRef?.value?.getBoundingClientRect().top || 0) < 0
-    ) { return; }
+    ) {
+      return;
+    }
+
+    if (!this.singleton.props.isFullscreen && this.singleton.movementAmountY > 0) {
+      return;
+    }
 
     this.singleton.modalRef?.value?.style.setProperty("user-select", "none");
 
     if (this.singleton.positionStatus === "snap") {
-      this.singleton.updateBottomValue(`calc(${this.singleton.snapPointPosition} - ${this.singleton.movementAmountY}px)`);
+      this.singleton.updateBottomValue(`calc(${this.singleton.snapPointPosition} + ${this.singleton.movementAmountY}px)`);
 
       return;
     }
@@ -99,43 +105,50 @@ export class PointerEventProcessor {
     this.singleton.modalRef?.value?.style.removeProperty("user-select");
 
     if (Math.abs(this.singleton.movementAmountY) > 36) {
-      switch (this.singleton.positionStatus) {
-        case "full": {
-          if (this.singleton.props.snapPoint) {
-            this.modalAnimator.moveToSnapPoint();
-            break;
-          }
+      if (this.singleton.movementAmountY < 0) {
+        switch (this.singleton.positionStatus) {
+          case "full": {
+            if (this.singleton.props.snapPoint) {
+              this.modalAnimator.moveToSnapPoint();
+              return;
+            }
 
-          if (this.singleton.props.isPersistent) {
-            this.modalAnimator.cancel();
-            break;
-          }
+            if (this.singleton.props.isPersistent) {
+              this.modalAnimator.cancel();
+              return;
+            }
 
-          this.singleton.updateProp("open", false);
-          break;
+            this.singleton.dispatchOnCloseEvent();
+            return;
+          }
+          case "snap": {
+            if (this.singleton.props.isPersistent) {
+              this.modalAnimator.cancel();
+              return;
+            }
+
+            this.singleton.dispatchOnCloseEvent();
+            return;
+          }
+          default: {
+            return;
+          }
         }
+      }
+
+      switch (this.singleton.positionStatus) {
         case "snap": {
-          if (this.singleton.props.isPersistent) {
-            this.modalAnimator.cancel();
-            break;
+          if (this.singleton.props.isFullscreen) {
+            this.modalAnimator.moveToFull();
+            return;
           }
 
-          this.singleton.updateProp("open", false);
-          break;
+          this.modalAnimator.cancel();
+          return;
         }
         default: {
           return;
         }
-      }
-    }
-
-    switch (this.singleton.positionStatus) {
-      case "snap": {
-        this.modalAnimator.moveToSnapPoint();
-        break;
-      }
-      default: {
-        return;
       }
     }
 

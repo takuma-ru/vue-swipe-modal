@@ -42,6 +42,10 @@
 	}
 }
 
+.drag-handle-wrapper {
+	display: contents;
+}
+
 .default-drag-handle {
 	position: relative;
 	top: 0;
