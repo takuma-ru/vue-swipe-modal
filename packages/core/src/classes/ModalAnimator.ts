@@ -1,6 +1,6 @@
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
-import { calcSnapPointPosition } from "../../utils/calcSnapPointPosition";
-import { setPageScrollable } from "../../utils/setPageScrollable";
+import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
+import { setPageScrollable } from "../utils/setPageScrollable";
 
 export class ModalAnimator {
   private singleton: WebBottomSheetSingleton;

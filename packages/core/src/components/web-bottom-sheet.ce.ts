@@ -4,12 +4,12 @@ import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
 
 import { createRef, ref } from "lit/directives/ref.js";
+import { ModalAnimator } from "../classes/ModalAnimator";
+import { PointerEventProcessor } from "../classes/PointerEventProcessor";
+import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 import { resetCss } from "../styles/resetCss";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
-import { ModalAnimator } from "./classes/ModalAnimator";
-import { PointerEventProcessor } from "./classes/PointerEventProcessor";
-import { WebBottomSheetSingleton } from "./singletons/WebBottomSheetSingleton";
 import styles from "./web-bottom-sheet.cecss";
 
 @customElement("web-bottom-sheet")

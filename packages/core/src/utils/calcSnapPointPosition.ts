@@ -1,4 +1,4 @@
-import { WebBottomSheetSingleton } from "../components/singletons/WebBottomSheetSingleton";
+import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 
 export const calcSnapPointPosition = () => {
   const singleton = new WebBottomSheetSingleton();

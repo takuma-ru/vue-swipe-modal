@@ -1,5 +1,5 @@
 import type { Ref } from "lit/directives/ref.js";
-import type { WebBottomSheetProps } from "../../types/web-bottom-sheet.type";
+import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 
 export class WebBottomSheetSingleton {
   static instance: WebBottomSheetSingleton;
