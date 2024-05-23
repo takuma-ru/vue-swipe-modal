@@ -1,7 +1,7 @@
 {
   "folders": [
     {
-      "name": ".",
+      "name": "root",
       "path": "."
     },
     {
@@ -43,6 +43,14 @@
     {
       "name": "🔧 stylelint",
       "path": "config/stylelint"
+    },
+    {
+      "name": "-------",
+      "path": "c"
+    },
+    {
+      "name": "📃 docs",
+      "path": "docs"
     }
   ],
   "settings": {
@@ -64,7 +72,7 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit",
       "source.fixAll.stylelint": "explicit",
-      "source.organizeImports": "never"
+      "source.organizeImports": "explicit"
     },
 
     // Silent the stylistic rules in you IDE, but still auto fix them

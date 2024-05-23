@@ -1,5 +1,6 @@
 import type { CSSResultArray, PropertyValues } from "lit";
 import { LitElement, html } from "lit";
+
 import { customElement, property } from "lit/decorators.js";
 
 import { createRef, ref } from "lit/directives/ref.js";
@@ -13,7 +14,7 @@ import styles from "./web-bottom-sheet.cecss";
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {
-  singleton: WebBottomSheetSingleton;
+  private singleton: WebBottomSheetSingleton;
 
   // === Variables ===
   private modalRef = createRef<HTMLDialogElement>();
@@ -72,7 +73,6 @@ export class WebBottomSheet extends LitElement {
   // === Lifecycle ===
   connectedCallback() {
     super.connectedCallback();
-    calcSnapPointPosition();
   }
 
   firstUpdated() {

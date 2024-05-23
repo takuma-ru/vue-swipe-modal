@@ -1,3 +1,3 @@
-import configEslint from "@config/eslint";
+import { core } from "@config/eslint";
 
-export default configEslint;
+export default core;

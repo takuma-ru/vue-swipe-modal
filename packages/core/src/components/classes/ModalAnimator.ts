@@ -3,7 +3,7 @@ import { calcSnapPointPosition } from "../../utils/calcSnapPointPosition";
 import { setPageScrollable } from "../../utils/setPageScrollable";
 
 export class ModalAnimator {
-  singleton: WebBottomSheetSingleton;
+  private singleton: WebBottomSheetSingleton;
 
   constructor() {
     this.singleton = new WebBottomSheetSingleton();

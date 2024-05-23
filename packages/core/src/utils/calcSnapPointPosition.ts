@@ -5,15 +5,15 @@ export const calcSnapPointPosition = () => {
 
   let snapPointValue: string;
 
-  if (!singleton.props.snapPoint) {
+  if (!singleton.props["snap-point"]) {
     snapPointValue = "0px";
   }
-  else if (singleton.props.snapPoint === "auto") {
+  else if (singleton.props["snap-point"] === "auto") {
     const panelRefHeight = singleton.panelRef?.value?.getBoundingClientRect().height || 0;
     snapPointValue = `calc(${panelRefHeight}px + 36px - 100%)`;
   }
   else {
-    snapPointValue = `calc(${singleton.props.snapPoint} - 100%)`;
+    snapPointValue = `calc(${singleton.props["snap-point"]} - 100%)`;
   }
 
   singleton.updateSnapPointPosition(snapPointValue);

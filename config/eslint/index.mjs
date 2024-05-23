@@ -1,9 +1,9 @@
-import { FlatCompat } from '@eslint/eslintrc';
 import antfu from "@antfu/eslint-config";
+import { FlatCompat } from '@eslint/eslintrc';
 
 const compat = new FlatCompat();
 
-export default antfu({
+const core = antfu({
 		formatters: {
 			css: true,
 			html: true,
@@ -41,3 +41,7 @@ export default antfu({
 		}
 	}
 ));
+
+export {
+	core
+};

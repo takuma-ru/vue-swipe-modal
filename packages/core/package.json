@@ -15,13 +15,15 @@
     "build": "tsc && vite build",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint ./src/",
     "lint:style": "stylelint \"**/*.{cecss,css,scss,sass}\" --ignore-path .gitignore",
     "sb:dev": "storybook dev -p 3123 --no-open",
     "sb:build": "storybook build"
   },
   "dependencies": {
+    "@lit-labs/ssr-client": "^1.1.7",
     "lit": "^3.1.3",
+    "lit-html": "^3.1.3",
     "sass": "^1.77.1"
   },
   "devDependencies": {

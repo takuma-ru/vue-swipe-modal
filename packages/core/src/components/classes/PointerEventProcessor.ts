@@ -13,8 +13,8 @@ type PointerEventParameters
   };
 
 export class PointerEventProcessor {
-  singleton: WebBottomSheetSingleton;
-  modalAnimator: ModalAnimator;
+  private singleton: WebBottomSheetSingleton;
+  private modalAnimator: ModalAnimator;
 
   private isDragging: boolean = false;
   private moveStartPositionY: number = 0;
