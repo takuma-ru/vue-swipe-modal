@@ -5,8 +5,8 @@ import { customElement, property } from "lit/decorators.js";
 
 import { createRef, ref } from "lit/directives/ref.js";
 import { resetCss } from "../styles/resetCss";
-import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
+import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
 import { ModalAnimator } from "./classes/ModalAnimator";
 import { PointerEventProcessor } from "./classes/PointerEventProcessor";
 import { WebBottomSheetSingleton } from "./singletons/WebBottomSheetSingleton";

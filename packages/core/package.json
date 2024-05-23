@@ -15,7 +15,7 @@
     "build": "tsc && vite build",
     "build:watch": "vite build --watch",
     "preview": "vite preview",
-    "lint": "eslint ./src/",
+    "lint": "eslint .",
     "lint:style": "stylelint \"**/*.{cecss,css,scss,sass}\" --ignore-path .gitignore",
     "sb:dev": "storybook dev -p 3123 --no-open",
     "sb:build": "storybook build"
