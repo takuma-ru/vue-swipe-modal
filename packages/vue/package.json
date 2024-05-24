@@ -1,12 +1,13 @@
 {
   "name": "vue",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite --port 3124",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
@@ -14,6 +15,7 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
+    "@config/eslint": "workspace:*",
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",

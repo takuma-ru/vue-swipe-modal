@@ -178,7 +178,7 @@ export class WebBottomSheet extends LitElement {
         <div ${ref(this.panelRef)}>
           <slot></slot>
         </div>
-    </dialog>
+      </dialog>
     `;
   }
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BottomSheet from "../src/components/BottomSheet.vue"
 import { ref } from "vue";
+import BottomSheet from "../src/components/BottomSheet.vue";
 
 const isOpen = ref(false);
 </script>
@@ -15,5 +15,4 @@ const isOpen = ref(false);
   </BottomSheet>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

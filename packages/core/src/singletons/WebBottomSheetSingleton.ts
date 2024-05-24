@@ -52,6 +52,10 @@ export class WebBottomSheetSingleton {
     this.modalRef?.value?.dispatchEvent(new CustomEvent("on-close", { bubbles: true, composed: true }));
   }
 
+  dispatchOnChangePositionStatusEvent() {
+    this.modalRef?.value?.dispatchEvent(new CustomEvent("on-change-position-status", { bubbles: true, composed: true }));
+  }
+
   addWillChangeBottom() {
     this.modalRef?.value?.style.setProperty("will-change", "bottom");
   }
