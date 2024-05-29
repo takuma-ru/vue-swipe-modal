@@ -1,6 +1,7 @@
 import type { Ref, WritableComputedRef } from "vue";
 import { ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
+import { setWillChange } from "../utils/willChange";
 import { useModalAnim } from "./useModalAnim";
 import { useCssVar } from "./useCssVar";
 
@@ -68,6 +69,11 @@ export const usePointerEvent = ({
 		else startPositionY.value = touchEvent.touches[0].clientY;
 
 		isMouseDown.value = true;
+
+		if (!modalRef.value)
+			return;
+
+		setWillChange(modalRef.value, "bottom");
 	};
 
 	/**
