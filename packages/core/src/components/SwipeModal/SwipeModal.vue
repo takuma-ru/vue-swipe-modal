@@ -7,6 +7,7 @@ import { useCssVar } from "../../hooks/useCssVar";
 import { ANIMATION_EASING } from "../../constants";
 import { setPageScrollable } from "../../utils/setPageScrollable";
 import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
+import { removeWillChange, setWillChange } from "../../utils/willChange";
 
 const props = withDefaults(defineProps<SwipeModalProps>(), {
 	isBackdrop: true,
@@ -122,6 +123,7 @@ const handleOpenModal = () => {
 	const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
 
 	if (!isFirefox) {
+		setWillChange(modalRef.value, "opacity")
 		modalRef.value.animate([
 			{ opacity: 0 },
 			{ opacity: 1 },
@@ -129,9 +131,14 @@ const handleOpenModal = () => {
 			duration: 200,
 			pseudoElement: "::backdrop",
 			easing: ANIMATION_EASING,
-		});
+		}).onfinish = () => {
+			if (!modalRef.value) return;
+
+			removeWillChange(modalRef.value);
+		};
 	}
 
+	setWillChange(modalRef.value, "bottom");
 	modalRef.value.animate(
 		[
 			{
@@ -156,6 +163,10 @@ const handleOpenModal = () => {
 		if (props.isScrollLock)
 			setPageScrollable("hidden");
 	};
+
+	if (!modalRef.value) return;
+
+	removeWillChange(modalRef.value);
 };
 
 /**
@@ -167,6 +178,7 @@ const handleCloseModal = () => {
 
 	const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
 
+	setWillChange(modalRef.value, "opacity");
 	if (!isFirefox) {
 		modalRef.value.animate([
 			{ opacity: 1 },
@@ -175,9 +187,14 @@ const handleCloseModal = () => {
 			duration: 300,
 			pseudoElement: "::backdrop",
 			easing: ANIMATION_EASING,
-		});
+		}).onfinish = () => {
+			if (!modalRef.value) return;
+
+			removeWillChange(modalRef.value);
+		};
 	}
 
+	setWillChange(modalRef.value, "bottom");
 	modalRef.value.animate(
 		[
 			{
@@ -204,6 +221,10 @@ const handleCloseModal = () => {
 		modalRef.value?.style.setProperty("visibility", "hidden");
 
 		setPageScrollable("reset");
+
+		if (!modalRef.value) return;
+
+		removeWillChange(modalRef.value);
 	};
 };
 

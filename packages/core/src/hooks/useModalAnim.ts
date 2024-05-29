@@ -2,6 +2,7 @@ import type { Ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
 import { ANIMATION_EASING } from "../constants";
 import { useCssVar } from "./useCssVar";
+import { removeWillChange, setWillChange } from "../utils/willChange";
 
 interface UseModalAnimProps {
 	scopeName: string;
@@ -42,6 +43,7 @@ export const useModalAnim = ({
 			return "-100%";
 		};
 
+		setWillChange(modalRef.value, "bottom");
 		modalRef.value.animate(
 			[
 				{ bottom: getCssVar("bottom") },
@@ -62,6 +64,10 @@ export const useModalAnim = ({
 				name: "bottom",
 				value: calcToPositionBottom(),
 			});
+
+			if (!modalRef.value) return;
+
+			removeWillChange(modalRef.value);
 		};
 	};
 
@@ -75,6 +81,7 @@ export const useModalAnim = ({
 		if (!props.snapPoint)
 			return;
 
+		setWillChange(modalRef.value, "bottom");
 		modalRef.value.animate(
 			[
 				{ bottom: getCssVar("bottom") },
@@ -96,6 +103,10 @@ export const useModalAnim = ({
 				value: getCssVar("snapPointPosition"),
 			});
 			positionStatus.value = "snap";
+
+			if (!modalRef.value) return;
+
+			removeWillChange(modalRef.value);
 		};
 	};
 
@@ -106,6 +117,7 @@ export const useModalAnim = ({
 		if (!modalRef.value)
 			return;
 
+		setWillChange(modalRef.value, "bottom");
 		modalRef.value.animate(
 			[
 				{ bottom: getCssVar("bottom") },
@@ -127,6 +139,10 @@ export const useModalAnim = ({
 				value: "0%",
 			});
 			positionStatus.value = "full";
+
+			if (!modalRef.value) return;
+
+			removeWillChange(modalRef.value);
 		};
 	};
 
