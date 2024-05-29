@@ -1,8 +1,8 @@
 import type { Ref } from "vue";
 import type { SwipeModalProps } from "../components/SwipeModal/SwipeModal.types";
 import { ANIMATION_EASING } from "../constants";
-import { useCssVar } from "./useCssVar";
 import { removeWillChange, setWillChange } from "../utils/willChange";
+import { useCssVar } from "./useCssVar";
 
 interface UseModalAnimProps {
 	scopeName: string;
@@ -65,7 +65,8 @@ export const useModalAnim = ({
 				value: calcToPositionBottom(),
 			});
 
-			if (!modalRef.value) return;
+			if (!modalRef.value)
+				return;
 
 			removeWillChange(modalRef.value);
 		};
@@ -104,7 +105,8 @@ export const useModalAnim = ({
 			});
 			positionStatus.value = "snap";
 
-			if (!modalRef.value) return;
+			if (!modalRef.value)
+				return;
 
 			removeWillChange(modalRef.value);
 		};
@@ -140,7 +142,8 @@ export const useModalAnim = ({
 			});
 			positionStatus.value = "full";
 
-			if (!modalRef.value) return;
+			if (!modalRef.value)
+				return;
 
 			removeWillChange(modalRef.value);
 		};

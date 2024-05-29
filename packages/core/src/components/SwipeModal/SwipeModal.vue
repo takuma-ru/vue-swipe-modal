@@ -6,8 +6,8 @@ import { useModalAnim } from "../../hooks/useModalAnim";
 import { useCssVar } from "../../hooks/useCssVar";
 import { ANIMATION_EASING } from "../../constants";
 import { setPageScrollable } from "../../utils/setPageScrollable";
-import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
 import { removeWillChange, setWillChange } from "../../utils/willChange";
+import type { SwipeModalEmits, SwipeModalProps } from "./SwipeModal.types";
 
 const props = withDefaults(defineProps<SwipeModalProps>(), {
 	isBackdrop: true,
@@ -123,7 +123,7 @@ const handleOpenModal = () => {
 	const isFirefox = navigator.userAgent.toLowerCase().includes("firefox");
 
 	if (!isFirefox) {
-		setWillChange(modalRef.value, "opacity")
+		setWillChange(modalRef.value, "opacity");
 		modalRef.value.animate([
 			{ opacity: 0 },
 			{ opacity: 1 },
@@ -132,7 +132,8 @@ const handleOpenModal = () => {
 			pseudoElement: "::backdrop",
 			easing: ANIMATION_EASING,
 		}).onfinish = () => {
-			if (!modalRef.value) return;
+			if (!modalRef.value)
+				return;
 
 			removeWillChange(modalRef.value);
 		};
@@ -164,7 +165,8 @@ const handleOpenModal = () => {
 			setPageScrollable("hidden");
 	};
 
-	if (!modalRef.value) return;
+	if (!modalRef.value)
+		return;
 
 	removeWillChange(modalRef.value);
 };
@@ -188,7 +190,8 @@ const handleCloseModal = () => {
 			pseudoElement: "::backdrop",
 			easing: ANIMATION_EASING,
 		}).onfinish = () => {
-			if (!modalRef.value) return;
+			if (!modalRef.value)
+				return;
 
 			removeWillChange(modalRef.value);
 		};
@@ -222,7 +225,8 @@ const handleCloseModal = () => {
 
 		setPageScrollable("reset");
 
-		if (!modalRef.value) return;
+		if (!modalRef.value)
+			return;
 
 		removeWillChange(modalRef.value);
 	};
