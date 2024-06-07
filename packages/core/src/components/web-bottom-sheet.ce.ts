@@ -10,7 +10,7 @@ import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 import { resetCss } from "../styles/resetCss";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
-import styles from "./web-bottom-sheet.cecss";
+import styles from "./web-bottom-sheet.scss?litSass";
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {

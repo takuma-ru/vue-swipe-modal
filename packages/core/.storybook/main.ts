@@ -1,6 +1,5 @@
 import type { StorybookConfig } from "@storybook/web-components-vite";
 import { mergeConfig } from "vite";
-import { litScssToJs } from "../.scripts/litScssToJs";
 
 const config: StorybookConfig = {
   stories: [ "../stories/Intro.mdx", "../src/components/*.stories.@(js|jsx|mjs|ts|tsx)" ],
@@ -17,7 +16,7 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
   viteFinal: config => mergeConfig(config, {
-    plugins: [ litScssToJs() ],
+    plugins: [ import("unplugin-lit-sass").then(module => module.default.vite()) ],
   }),
 };
 export default config;

@@ -1,8 +1,8 @@
+import { unpluginLitSass } from "unplugin-lit-sass";
 import { defineConfig } from "vite";
-import { litScssToJs } from "./.scripts/litScssToJs";
 
 export default defineConfig({
-  plugins: [ litScssToJs() ],
+  plugins: [ unpluginLitSass.vite() ],
 
   build: {
     outDir: "./dist",

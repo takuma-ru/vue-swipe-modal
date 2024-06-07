@@ -107,20 +107,11 @@
       "astro"
     ],
 
-    "stylelint.validate": ["css", "scss", "cecss"],
+    "stylelint.validate": ["css", "scss"],
 
 
-    "emmet.includeLanguages": {
-      "cecss": "scss"
-    },
-    "emmet.syntaxProfiles": {
-      "cecss": "scss"
-    },
-    "files.associations": {
-      "*.cecss": "scss"
-    },
 
-    "cSpell.words": ["antfu", "cecss"],
+    "cSpell.words": ["antfu"],
 
     "terminal.integrated.cwd": "${workspaceFolder}"
   }
