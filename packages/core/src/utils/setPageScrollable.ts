@@ -9,19 +9,20 @@ export const setPageScrollable = (scrollable: "auto" | "hidden" | "reset") => {
   }
 
   let dv = window;
-  let xOffset, yOffset, de;
+  let xOffset: number;
+  let yOffset: number;
+  let de: HTMLElement;
   if (document.defaultView) {
     dv = document.defaultView;
     xOffset = dv.scrollX;
     yOffset = dv.scrollY;
-  }
-  else {
+  } else {
     de = document.documentElement;
     xOffset = de.scrollLeft;
     yOffset = de.scrollTop;
   }
   document.documentElement.style.overflow = scrollable;
-  document.documentElement.style.overscrollBehaviorY
-    = scrollable === "auto" ? "auto" : "none";
+  document.documentElement.style.overscrollBehaviorY =
+    scrollable === "auto" ? "auto" : "none";
   dv.scrollTo(xOffset, yOffset);
 };

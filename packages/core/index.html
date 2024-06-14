@@ -1,76 +1,78 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>web-bottom-sheet/core</title>
-    <link rel="stylesheet" href="./index.css" />
-    <script type="module" src="/src/main.ts"></script>
-  </head>
 
-  <body>
-    <button id="button">open</button>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>web-bottom-sheet/core</title>
+  <link rel="stylesheet" href="./index.css" />
+  <script type="module" src="/src/main.ts"></script>
+</head>
 
-    <web-bottom-sheet id="web-bottom-sheet" snap-point="50vh">
-      <h1>Web Bottom Sheet</h1>
-      <p>
-        This is a web component that mimics the native bottom sheet. It is
-        implemented using Lit and TypeScript.
-      </p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-      <p>1</p>
-    </web-bottom-sheet>
+<body>
+  <button id="button">open</button>
 
-    <script>
-      const button = document.getElementById("button");
-      const sheet = document.querySelector("web-bottom-sheet");
+  <web-bottom-sheet id="web-bottom-sheet" snap-point="50vh">
+    <h1>Web Bottom Sheet</h1>
+    <p>
+      This is a web component that mimics the native bottom sheet. It is
+      implemented using Lit and TypeScript.
+    </p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+  </web-bottom-sheet>
 
-      button.addEventListener("click", () => {
-        sheet.open = !sheet.open;
-      });
+  <script>
+    const button = document.getElementById("button");
+    const sheet = document.querySelector("web-bottom-sheet");
 
-      sheet.addEventListener("on-close", () => {
-        sheet.open = false;
-      });
-    </script>
-  </body>
+    button.addEventListener("click", () => {
+      sheet.open = !sheet.open;
+    });
+
+    sheet.addEventListener("on-close", () => {
+      sheet.open = false;
+    });
+  </script>
+</body>
+
 </html>

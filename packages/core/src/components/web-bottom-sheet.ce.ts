@@ -1,5 +1,9 @@
-import type { CSSResultArray, PropertyValues } from "lit";
-import { LitElement, html } from "lit";
+import {
+  type CSSResultArray,
+  LitElement,
+  type PropertyValues,
+  html,
+} from "lit";
 
 import { customElement, property } from "lit/decorators.js";
 
@@ -23,7 +27,7 @@ export class WebBottomSheet extends LitElement {
   private dragHandleWrapperRef = createRef<HTMLDivElement>();
   private modalAnimator: ModalAnimator;
   private pointerEventProcessor: PointerEventProcessor;
-  private isScrollTop: boolean = false;
+  private isScrollTop = false;
 
   // === Props ===
 
@@ -67,7 +71,7 @@ export class WebBottomSheet extends LitElement {
       "is-fullscreen": this.isFullscreen,
       "is-persistent": this.isPersistent,
       "is-scroll-lock": this.isScrollLock,
-      "open": this.open,
+      open: this.open,
       "snap-point": this.snapPoint,
     });
   }
@@ -88,14 +92,14 @@ export class WebBottomSheet extends LitElement {
 
       if (entry.isIntersecting) {
         this.isScrollTop = true;
-      }
-      else {
+      } else {
         this.isScrollTop = false;
       }
-    },
-    );
+    });
 
-    scrollTopObserver.observe(this.panelObserverTargetRef.value!);
+    if (this.panelObserverTargetRef.value) {
+      scrollTopObserver.observe(this.panelObserverTargetRef.value);
+    }
 
     this.modalRef.value?.addEventListener("cancel", (event) => {
       event.preventDefault();
@@ -112,41 +116,65 @@ export class WebBottomSheet extends LitElement {
       }
     });
 
-    this.dragHandleWrapperRef.value?.addEventListener("touchstart", (event) => {
-      this.pointerEventProcessor.onDown({
-        type: "touch",
-        event,
-      });
-    }, { passive: true });
+    this.dragHandleWrapperRef.value?.addEventListener(
+      "touchstart",
+      (event) => {
+        this.pointerEventProcessor.onDown({
+          type: "touch",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.dragHandleWrapperRef.value?.addEventListener("touchmove", (event) => {
-      this.pointerEventProcessor.onMove({
-        type: "touch",
-        event,
-      });
-    }, { passive: true });
+    this.dragHandleWrapperRef.value?.addEventListener(
+      "touchmove",
+      (event) => {
+        this.pointerEventProcessor.onMove({
+          type: "touch",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.dragHandleWrapperRef.value?.addEventListener("touchend", () => {
-      this.pointerEventProcessor.onUp();
-    }, { passive: true });
+    this.dragHandleWrapperRef.value?.addEventListener(
+      "touchend",
+      () => {
+        this.pointerEventProcessor.onUp();
+      },
+      { passive: true },
+    );
 
-    this.dragHandleWrapperRef.value?.addEventListener("mousedown", (event) => {
-      this.pointerEventProcessor.onDown({
-        type: "mouse",
-        event,
-      });
-    }, { passive: true });
+    this.dragHandleWrapperRef.value?.addEventListener(
+      "mousedown",
+      (event) => {
+        this.pointerEventProcessor.onDown({
+          type: "mouse",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.dragHandleWrapperRef.value?.addEventListener("mousemove", (event) => {
-      this.pointerEventProcessor.onMove({
-        type: "mouse",
-        event,
-      });
-    }, { passive: true });
+    this.dragHandleWrapperRef.value?.addEventListener(
+      "mousemove",
+      (event) => {
+        this.pointerEventProcessor.onMove({
+          type: "mouse",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.dragHandleWrapperRef.value?.addEventListener("mouseup", () => {
-      this.pointerEventProcessor.onUp();
-    }, { passive: true });
+    this.dragHandleWrapperRef.value?.addEventListener(
+      "mouseup",
+      () => {
+        this.pointerEventProcessor.onUp();
+      },
+      { passive: true },
+    );
 
     /* this.panelRef.value?.addEventListener("touchstart", (event) => {
       if (!this.isScrollTop) {
@@ -217,26 +245,28 @@ export class WebBottomSheet extends LitElement {
       "is-fullscreen": this.isFullscreen,
       "is-persistent": this.isPersistent,
       "is-scroll-lock": this.isScrollLock,
-      "open": this.open,
+      open: this.open,
       "snap-point": this.snapPoint,
     });
 
     if (changedProperties.has("open")) {
       if (this.singleton.props.open) {
         this.modalAnimator.open();
-      }
-      else {
+      } else {
         this.modalAnimator.close();
       }
     }
 
-    if (changedProperties.has("snapPoint") || changedProperties.has("panelRef")) {
+    if (
+      changedProperties.has("snapPoint") ||
+      changedProperties.has("panelRef")
+    ) {
       calcSnapPointPosition();
     }
   }
 
   // === Render ===
-  static readonly styles: CSSResultArray = [ resetCss, styles ];
+  static readonly styles: CSSResultArray = [resetCss, styles];
   protected render() {
     return html`
       <dialog

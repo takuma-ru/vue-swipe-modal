@@ -2,117 +2,71 @@
   "folders": [
     {
       "name": "root",
-      "path": "."
+      "path": ".",
     },
     {
       "name": "-------",
-      "path": "a"
+      "path": "a",
     },
     {
       "name": "📦 wbs",
-      "path": "packages/web-bottom-sheet"
+      "path": "packages/web-bottom-sheet",
     },
     {
       "name": "📦 core",
-      "path": "packages/core"
+      "path": "packages/core",
     },
     {
       "name": "📦 angular",
-      "path": "packages/angular"
+      "path": "packages/angular",
     },
     {
       "name": "📦 react",
-      "path": "packages/react"
+      "path": "packages/react",
     },
     {
       "name": "📦 svelte",
-      "path": "packages/svelte"
+      "path": "packages/svelte",
     },
     {
       "name": "📦 vue",
-      "path": "packages/vue"
+      "path": "packages/vue",
     },
     {
       "name": "-------",
-      "path": "b"
-    },
-    {
-      "name": "🔧 eslint",
-      "path": "config/eslint"
-    },
-    {
-      "name": "🔧 stylelint",
-      "path": "config/stylelint"
+      "path": "b",
     },
     {
       "name": "-------",
-      "path": "c"
+      "path": "c",
     },
     {
       "name": "📃 docs",
-      "path": "docs"
-    }
+      "path": "docs",
+    },
   ],
   "settings": {
-
-    // https://github.com/antfu/eslint-config?tab=readme-ov-file#vs-code-support-auto-fix-on-save
-
-    // Enable the ESlint flat config support
-    // (remove this if your ESLint extension above v3.0.5)
-    "eslint.experimental.useFlatConfig": true,
-
-    // Disable the default formatter, use eslint instead
-    "prettier.enable": false,
-    "editor.formatOnSave": false,
-    "editor.tabSize": 2,
-    "files.eol": "\n",
-    "typescript.preferences.importModuleSpecifier": "non-relative",
-
-    // Auto fix
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit",
-      "source.fixAll.stylelint": "explicit",
-      "source.organizeImports": "explicit"
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+      "editor.defaultFormatter": "biomejs.biome",
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "biomejs.biome",
+    },
+    "[css]": {
+      "editor.defaultFormatter": "biomejs.biome",
     },
 
-    // Silent the stylistic rules in you IDE, but still auto fix them
-    "eslint.rules.customizations": [
-      { "rule": "style/*", "severity": "off" },
-      { "rule": "format/*", "severity": "off" },
-      { "rule": "*-indent", "severity": "off" },
-      { "rule": "*-spacing", "severity": "off" },
-      { "rule": "*-spaces", "severity": "off" },
-      { "rule": "*-order", "severity": "off" },
-      { "rule": "*-dangle", "severity": "off" },
-      { "rule": "*-newline", "severity": "off" },
-      { "rule": "*quotes", "severity": "off" },
-      { "rule": "*semi", "severity": "off" }
-    ],
+    "editor.codeActionsOnSave": {
+      "quickfix.biome": "explicit",
+      "source.organizeImports.biome": "explicit",
+      "source.addMissingImports": "explicit",
+    },
 
-    // Enable eslint for all supported languages
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "vue",
-      "html",
-      "markdown",
-      "json",
-      "jsonc",
-      "yaml",
-      "toml",
-      "gql",
-      "graphql",
-      "astro"
-    ],
-
-    "stylelint.validate": ["css", "scss"],
-
-
-
-    "cSpell.words": ["antfu"],
-
-    "terminal.integrated.cwd": "${workspaceFolder}"
-  }
+    "stylelint.enable": false,
+    "emmet.triggerExpansionOnTab": true,
+    "cSpell.words": ["antfu", "biomejs"],
+    "terminal.integrated.cwd": "${workspaceFolder}",
+  },
 }

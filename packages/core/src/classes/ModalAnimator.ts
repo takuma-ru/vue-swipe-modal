@@ -16,8 +16,7 @@ export class ModalAnimator {
 
     if (this.singleton.props["is-backdrop"]) {
       this.singleton.modalRef.value.showModal();
-    }
-    else {
+    } else {
       this.singleton.modalRef.value.show();
     }
 
@@ -25,14 +24,16 @@ export class ModalAnimator {
 
     this.singleton.addWillChangeBottom();
 
-    this.singleton.modalRef.value.animate([
-      { bottom: "-100%" },
-      { bottom: this.singleton.snapPointPosition },
-    ], {
-      duration: 300,
-      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }).onfinish = () => {
-      this.singleton.updatePositionStatus(this.singleton.props["snap-point"] ? "snap" : "full");
+    this.singleton.modalRef.value.animate(
+      [{ bottom: "-100%" }, { bottom: this.singleton.snapPointPosition }],
+      {
+        duration: 300,
+        easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+      },
+    ).onfinish = () => {
+      this.singleton.updatePositionStatus(
+        this.singleton.props["snap-point"] ? "snap" : "full",
+      );
       this.singleton.updateBottomValue(this.singleton.snapPointPosition);
 
       if (this.singleton.props["is-scroll-lock"]) {
@@ -50,13 +51,13 @@ export class ModalAnimator {
 
     this.singleton.addWillChangeBottom();
 
-    this.singleton.modalRef.value.animate([
-      { bottom: this.singleton.bottom },
-      { bottom: "-100%" },
-    ], {
-      duration: 300,
-      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }).onfinish = () => {
+    this.singleton.modalRef.value.animate(
+      [{ bottom: this.singleton.bottom }, { bottom: "-100%" }],
+      {
+        duration: 300,
+        easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+      },
+    ).onfinish = () => {
       this.singleton.modalRef?.value?.close();
 
       this.singleton.updateSnapPointPosition("auto");
@@ -77,7 +78,9 @@ export class ModalAnimator {
     const calcToPositionBottom = () => {
       switch (this.singleton.positionStatus) {
         case "snap": {
-          return this.singleton.props["snap-point"] ? this.singleton.snapPointPosition : "0%";
+          return this.singleton.props["snap-point"]
+            ? this.singleton.snapPointPosition
+            : "0%";
         }
         case "full": {
           return "0%";
@@ -90,13 +93,13 @@ export class ModalAnimator {
 
     this.singleton.addWillChangeBottom();
 
-    this.singleton.modalRef.value.animate([
-      { bottom: this.singleton.bottom },
-      { bottom: calcToPositionBottom() },
-    ], {
-      duration: 300,
-      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }).onfinish = () => {
+    this.singleton.modalRef.value.animate(
+      [{ bottom: this.singleton.bottom }, { bottom: calcToPositionBottom() }],
+      {
+        duration: 300,
+        easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+      },
+    ).onfinish = () => {
       this.singleton.updateMovementAmountY(0);
       this.singleton.updateBottomValue(calcToPositionBottom());
 
@@ -115,13 +118,16 @@ export class ModalAnimator {
 
     this.singleton.addWillChangeBottom();
 
-    this.singleton.modalRef.value.animate([
-      { bottom: this.singleton.bottom },
-      { bottom: this.singleton.snapPointPosition },
-    ], {
-      duration: 300,
-      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }).onfinish = () => {
+    this.singleton.modalRef.value.animate(
+      [
+        { bottom: this.singleton.bottom },
+        { bottom: this.singleton.snapPointPosition },
+      ],
+      {
+        duration: 300,
+        easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+      },
+    ).onfinish = () => {
       this.singleton.updateMovementAmountY(0);
       this.singleton.updateBottomValue(this.singleton.snapPointPosition);
       this.singleton.updatePositionStatus("snap");
@@ -137,13 +143,13 @@ export class ModalAnimator {
 
     this.singleton.addWillChangeBottom();
 
-    this.singleton.modalRef.value.animate([
-      { bottom: this.singleton.bottom },
-      { bottom: "0%" },
-    ], {
-      duration: 300,
-      easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-    }).onfinish = () => {
+    this.singleton.modalRef.value.animate(
+      [{ bottom: this.singleton.bottom }, { bottom: "0%" }],
+      {
+        duration: 300,
+        easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
+      },
+    ).onfinish = () => {
       this.singleton.updateMovementAmountY(0);
       this.singleton.updateBottomValue("0%");
       this.singleton.updatePositionStatus("full");

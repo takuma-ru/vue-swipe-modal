@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite --port 3124",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "lint": "eslint ."
+    "preview": "vite preview"
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
@@ -15,7 +14,6 @@
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@config/eslint": "workspace:*",
     "@vitejs/plugin-vue": "^5.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",

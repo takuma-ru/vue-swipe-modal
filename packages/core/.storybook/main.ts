@@ -2,7 +2,10 @@ import type { StorybookConfig } from "@storybook/web-components-vite";
 import { mergeConfig } from "vite";
 
 const config: StorybookConfig = {
-  stories: [ "../stories/Intro.mdx", "../src/components/*.stories.@(js|jsx|mjs|ts|tsx)" ],
+  stories: [
+    "../stories/Intro.mdx",
+    "../src/components/*.stories.@(js|jsx|mjs|ts|tsx)",
+  ],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -15,8 +18,11 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
-  viteFinal: config => mergeConfig(config, {
-    plugins: [ import("unplugin-lit-sass").then(module => module.default.vite()) ],
-  }),
+  viteFinal: (config) =>
+    mergeConfig(config, {
+      plugins: [
+        import("unplugin-lit-sass").then((module) => module.default.vite()),
+      ],
+    }),
 };
 export default config;

@@ -34,7 +34,7 @@ export interface WebBottomSheetProps {
    *
    * @default false
    */
-  "open"?: boolean;
+  open?: boolean;
   /**
    * Modal upper edge position.
    *
@@ -43,7 +43,8 @@ export interface WebBottomSheetProps {
    *
    * @default undefined
    */
-  // eslint-disable-next-line ts/ban-types
+
+  // biome-ignore lint/complexity/noBannedTypes: <explanation>
   "snap-point"?: "auto" | String;
 }
 

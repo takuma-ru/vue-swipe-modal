@@ -5,9 +5,9 @@ export class WebBottomSheetSingleton {
   static instance: WebBottomSheetSingleton;
 
   // == state ==
-  bottom: string = "-100%";
-  movementAmountY: number = 0;
-  snapPointPosition: string = "auto";
+  bottom = "-100%";
+  movementAmountY = 0;
+  snapPointPosition = "auto";
   positionStatus: "full" | "snap" | "close" = "close";
 
   modalRef: Ref<HTMLDialogElement> | undefined;
@@ -49,11 +49,18 @@ export class WebBottomSheetSingleton {
 
   // == event methods ==
   dispatchOnCloseEvent() {
-    this.modalRef?.value?.dispatchEvent(new CustomEvent("on-close", { bubbles: true, composed: true }));
+    this.modalRef?.value?.dispatchEvent(
+      new CustomEvent("on-close", { bubbles: true, composed: true }),
+    );
   }
 
   dispatchOnChangePositionStatusEvent() {
-    this.modalRef?.value?.dispatchEvent(new CustomEvent("on-change-position-status", { bubbles: true, composed: true }));
+    this.modalRef?.value?.dispatchEvent(
+      new CustomEvent("on-change-position-status", {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   addWillChangeBottom() {
@@ -67,6 +74,7 @@ export class WebBottomSheetSingleton {
   // == constructor ==
   constructor() {
     if (WebBottomSheetSingleton.instance) {
+      // biome-ignore lint/correctness/noConstructorReturn: <explanation>
       return WebBottomSheetSingleton.instance;
     }
 

@@ -6,9 +6,8 @@ import { WebBottomSheet } from "./web-bottom-sheet.ce";
 
 const meta = {
   title: "web-bottom-sheet",
-  tags: [ "autodocs" ],
+  tags: ["autodocs"],
   render: (args) => {
-    // eslint-disable-next-line no-new
     new WebBottomSheet();
 
     return html`
@@ -33,7 +32,7 @@ type Story = StoryObj<WebBottomSheetProps>;
 
 export const Primary: Story = {
   args: {
-    "open": true,
+    open: true,
     "is-backdrop": true,
     "is-drag-handle": true,
     "is-fullscreen": true,

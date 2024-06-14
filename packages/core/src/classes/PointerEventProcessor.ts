@@ -3,21 +3,22 @@ import { ModalAnimator } from "./ModalAnimator";
 
 type PointerType = "mouse" | "touch";
 
-type PointerEventParameters
-  = {
-    type: Extract<PointerType, "mouse">;
-    event: MouseEvent;
-  } | {
-    type: Extract<PointerType, "touch">;
-    event: TouchEvent;
-  };
+type PointerEventParameters =
+  | {
+      type: Extract<PointerType, "mouse">;
+      event: MouseEvent;
+    }
+  | {
+      type: Extract<PointerType, "touch">;
+      event: TouchEvent;
+    };
 
 export class PointerEventProcessor {
   private singleton: WebBottomSheetSingleton;
   private modalAnimator: ModalAnimator;
 
-  private isDragging: boolean = false;
-  private moveStartPositionY: number = 0;
+  private isDragging = false;
+  private moveStartPositionY = 0;
 
   constructor() {
     this.singleton = new WebBottomSheetSingleton();
@@ -52,7 +53,10 @@ export class PointerEventProcessor {
         this.moveStartPositionY = event.y;
       },
       touch: (event) => {
-        this.moveStartPositionY = event.targetTouches[0].clientY || event.touches[0].clientY || event.changedTouches[0].clientY;
+        this.moveStartPositionY =
+          event.targetTouches[0].clientY ||
+          event.touches[0].clientY ||
+          event.changedTouches[0].clientY;
       },
     });
 
@@ -70,26 +74,35 @@ export class PointerEventProcessor {
         this.singleton.updateMovementAmountY(this.moveStartPositionY - event.y);
       },
       touch: (event) => {
-        this.singleton.updateMovementAmountY(this.moveStartPositionY - event.targetTouches[0].clientY || event.touches[0].clientY || event.changedTouches[0].clientY);
+        this.singleton.updateMovementAmountY(
+          this.moveStartPositionY - event.targetTouches[0].clientY ||
+            event.touches[0].clientY ||
+            event.changedTouches[0].clientY,
+        );
       },
     });
 
     if (
-      (this.singleton.movementAmountY > 0
-      && this.singleton.positionStatus === "full")
-      || (this.singleton.modalRef?.value?.getBoundingClientRect().top || 0) < 0
+      (this.singleton.movementAmountY > 0 &&
+        this.singleton.positionStatus === "full") ||
+      (this.singleton.modalRef?.value?.getBoundingClientRect().top || 0) < 0
     ) {
       return;
     }
 
-    if (!this.singleton.props["is-fullscreen"] && this.singleton.movementAmountY > 0) {
+    if (
+      !this.singleton.props["is-fullscreen"] &&
+      this.singleton.movementAmountY > 0
+    ) {
       return;
     }
 
     this.singleton.modalRef?.value?.style.setProperty("user-select", "none");
 
     if (this.singleton.positionStatus === "snap") {
-      this.singleton.updateBottomValue(`calc(${this.singleton.snapPointPosition} + ${this.singleton.movementAmountY}px)`);
+      this.singleton.updateBottomValue(
+        `calc(${this.singleton.snapPointPosition} + ${this.singleton.movementAmountY}px)`,
+      );
 
       return;
     }

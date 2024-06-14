@@ -8,10 +8,10 @@ export const calcSnapPointPosition = () => {
 
   if (snapPoint) {
     if (snapPoint === "auto") {
-      const panelRefHeight = singleton.panelRef?.value?.getBoundingClientRect().height || 0;
+      const panelRefHeight =
+        singleton.panelRef?.value?.getBoundingClientRect().height || 0;
       snapPointValue = `calc(${panelRefHeight}px + 36px - 100%)`;
-    }
-    else {
+    } else {
       snapPointValue = `calc(${snapPoint} - 100%)`;
     }
   }
