@@ -74,7 +74,6 @@ export class WebBottomSheetSingleton {
   // == constructor ==
   constructor() {
     if (WebBottomSheetSingleton.instance) {
-      // biome-ignore lint/correctness/noConstructorReturn: <explanation>
       return WebBottomSheetSingleton.instance;
     }
 

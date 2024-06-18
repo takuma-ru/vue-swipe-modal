@@ -1,0 +1,215 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
+  "files": {
+    "ignore": [
+      "**/**/node_modules/**",
+      "**/**/dist/**",
+      "**/**/build/**",
+      "**/**/coverage/**"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "attributePosition": "auto"
+  },
+  "organizeImports": { "enabled": true },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "a11y": {
+        "noAccessKey": "warn",
+        "noAriaUnsupportedElements": "warn",
+        "noBlankTarget": "warn",
+        "noDistractingElements": "warn",
+        "noHeaderScope": "warn",
+        "noRedundantAlt": "warn",
+        "noRedundantRoles": "warn",
+        "useAltText": "warn",
+        "useAnchorContent": "warn",
+        "useAriaActivedescendantWithTabindex": "warn",
+        "useAriaPropsForRole": "warn",
+        "useHeadingContent": "warn",
+        "useIframeTitle": "warn",
+        "useValidAnchor": "warn",
+        "useValidAriaProps": "warn",
+        "useValidAriaRole": {
+          "level": "warn",
+          "options": { "allowInvalidRoles": [], "ignoreNonDom": true }
+        },
+        "useValidAriaValues": "warn"
+      },
+      "complexity": {
+        "noBannedTypes": "error",
+        "noMultipleSpacesInRegularExpressionLiterals": "warn",
+        "noUselessConstructor": "warn",
+        "noUselessLabel": "warn",
+        "noUselessLoneBlockStatements": "warn",
+        "noUselessRename": "warn",
+        "noUselessTypeConstraint": "error",
+        "noWith": "warn"
+      },
+      "correctness": {
+        "noConstAssign": "warn",
+        "noEmptyCharacterClassInRegex": "warn",
+        "noEmptyPattern": "warn",
+        "noGlobalObjectCalls": "warn",
+        "noInvalidUseBeforeDeclaration": "warn",
+        "noNewSymbol": "warn",
+        "noPrecisionLoss": "error",
+        "noSelfAssign": "warn",
+        "noUndeclaredVariables": "error",
+        "noUnreachable": "warn",
+        "noUnreachableSuper": "warn",
+        "noUnusedLabels": "warn",
+        "noUnusedVariables": "warn",
+        "useArrayLiterals": "warn",
+        "useExhaustiveDependencies": "warn",
+        "useHookAtTopLevel": "error",
+        "useIsNan": "warn",
+        "useYield": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtmlWithChildren": "warn",
+        "noGlobalEval": "warn"
+      },
+      "style": {
+        "noCommaOperator": "warn",
+        "noInferrableTypes": "error",
+        "noNamespace": "error",
+        "noNonNullAssertion": "warn",
+        "noRestrictedGlobals": {
+          "level": "error",
+          "options": {
+            "deniedGlobals": [
+              "addEventListener",
+              "blur",
+              "close",
+              "closed",
+              "confirm",
+              "defaultStatus",
+              "defaultstatus",
+              "event",
+              "external",
+              "find",
+              "focus",
+              "frameElement",
+              "frames",
+              "history",
+              "innerHeight",
+              "innerWidth",
+              "length",
+              "location",
+              "locationbar",
+              "menubar",
+              "moveBy",
+              "moveTo",
+              "name",
+              "onblur",
+              "onerror",
+              "onfocus",
+              "onload",
+              "onresize",
+              "onunload",
+              "open",
+              "opener",
+              "opera",
+              "outerHeight",
+              "outerWidth",
+              "pageXOffset",
+              "pageYOffset",
+              "parent",
+              "print",
+              "removeEventListener",
+              "resizeBy",
+              "resizeTo",
+              "screen",
+              "screenLeft",
+              "screenTop",
+              "screenX",
+              "screenY",
+              "scroll",
+              "scrollbars",
+              "scrollBy",
+              "scrollTo",
+              "scrollX",
+              "scrollY",
+              "self",
+              "status",
+              "statusbar",
+              "stop",
+              "toolbar",
+              "top"
+            ]
+          }
+        },
+        "useAsConstAssertion": "error"
+      },
+      "suspicious": {
+        "noCatchAssign": "warn",
+        "noCommentText": "warn",
+        "noControlCharactersInRegex": "warn",
+        "noDoubleEquals": "warn",
+        "noDuplicateCase": "warn",
+        "noDuplicateClassMembers": "warn",
+        "noDuplicateJsxProps": "warn",
+        "noDuplicateObjectKeys": "warn",
+        "noDuplicateParameters": "warn",
+        "noEmptyBlockStatements": "error",
+        "noExplicitAny": "warn",
+        "noExtraNonNullAssertion": "error",
+        "noFallthroughSwitchClause": "warn",
+        "noFunctionAssign": "warn",
+        "noGlobalAssign": "warn",
+        "noLabelVar": "warn",
+        "noMisleadingInstantiator": "error",
+        "noRedeclare": "warn",
+        "noSelfCompare": "warn",
+        "noShadowRestrictedNames": "warn",
+        "noUnsafeNegation": "warn",
+        "useGetterReturn": "warn",
+        "useNamespaceKeyword": "error",
+        "useValidTypeof": "warn"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noConstAssign": "off",
+            "noGlobalObjectCalls": "off",
+            "noInvalidConstructorSuper": "off",
+            "noNewSymbol": "off",
+            "noSetterReturn": "off",
+            "noUndeclaredVariables": "off",
+            "noUnreachable": "off",
+            "noUnreachableSuper": "off"
+          },
+          "style": {
+            "noArguments": "error",
+            "noVar": "error",
+            "useConst": "error"
+          },
+          "suspicious": {
+            "noDuplicateClassMembers": "off",
+            "noDuplicateObjectKeys": "off",
+            "noDuplicateParameters": "off",
+            "noFunctionAssign": "off",
+            "noImportAssign": "off",
+            "noRedeclare": "off",
+            "noUnsafeNegation": "off",
+            "useGetterReturn": "off",
+            "useValidTypeof": "off"
+          }
+        }
+      }
+    }
+  ]
+}
