@@ -5,11 +5,14 @@ import "core";
 const props = defineProps<{
   open: boolean;
   snapPoint?: "auto" | string;
+  isFullscreen?: boolean;
 }>();
 const emit = defineEmits<{
   (event: "onClose", value: boolean): void;
   (event: "update:open", value: boolean): void;
 }>();
+
+// biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
 const modelValue = useVModel(props, "open", emit);
 
 const onClose = () => {
@@ -21,7 +24,7 @@ const onClose = () => {
   <web-bottom-sheet
     :open="modelValue"
     :snap-point="props.snapPoint"
-    is-fullscreen
+    :is-fullscreen="props.isFullscreen"
     @on-close="onClose"
   >
     <slot />

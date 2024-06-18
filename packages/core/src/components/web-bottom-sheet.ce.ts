@@ -15,6 +15,7 @@ import { resetCss } from "../styles/resetCss";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
 import styles from "./web-bottom-sheet.scss?litSass";
+import { booleanConverter } from "../utils/propertyConverter";
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {
@@ -30,28 +31,45 @@ export class WebBottomSheet extends LitElement {
   private isScrollTop = false;
 
   // === Props ===
-
-  @property({ attribute: "open", type: Boolean })
-
   @property({ attribute: "open", type: Boolean })
   accessor open: WebBottomSheetProps["open"] = false;
 
   @property({ attribute: "snap-point", type: String })
   accessor snapPoint: WebBottomSheetProps["snap-point"] = undefined;
 
-  @property({ attribute: "is-back-drop", type: Boolean })
+  @property({
+    attribute: "is-back-drop",
+    type: Boolean,
+    converter: booleanConverter,
+  })
   accessor isBackdrop: WebBottomSheetProps["is-backdrop"] = true;
 
-  @property({ attribute: "is-drag-handle", type: Boolean })
+  @property({
+    attribute: "is-drag-handle",
+    type: Boolean,
+    converter: booleanConverter,
+  })
   accessor isDragHandle: WebBottomSheetProps["is-drag-handle"] = true;
 
-  @property({ attribute: "is-fullscreen", type: Boolean })
+  @property({
+    attribute: "is-fullscreen",
+    type: Boolean,
+    converter: booleanConverter,
+  })
   accessor isFullscreen: WebBottomSheetProps["is-fullscreen"] = true;
 
-  @property({ attribute: "is-persistent", type: Boolean })
+  @property({
+    attribute: "is-persistent",
+    type: Boolean,
+    converter: booleanConverter,
+  })
   accessor isPersistent: WebBottomSheetProps["is-persistent"] = false;
 
-  @property({ attribute: "is-scroll-lock", type: Boolean })
+  @property({
+    attribute: "is-scroll-lock",
+    type: Boolean,
+    converter: booleanConverter,
+  })
   accessor isScrollLock: WebBottomSheetProps["is-scroll-lock"] = true;
 
   // === Methods ==
@@ -176,65 +194,89 @@ export class WebBottomSheet extends LitElement {
       { passive: true },
     );
 
-    /* this.panelRef.value?.addEventListener("touchstart", (event) => {
-      if (!this.isScrollTop) {
-        return;
-      }
+    this.panelRef.value?.addEventListener(
+      "touchstart",
+      (event) => {
+        if (!this.isScrollTop) {
+          return;
+        }
 
-      this.pointerEventProcessor.onDown({
-        type: "touch",
-        event,
-      });
-    }, { passive: true });
+        this.pointerEventProcessor.onDown({
+          type: "touch",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.panelRef.value?.addEventListener("touchmove", (event) => {
-      if (!this.isScrollTop) {
-        return;
-      }
+    this.panelRef.value?.addEventListener(
+      "touchmove",
+      (event) => {
+        if (!this.isScrollTop) {
+          return;
+        }
 
-      this.pointerEventProcessor.onMove({
-        type: "touch",
-        event,
-      });
-    }, { passive: true });
+        this.pointerEventProcessor.onMove({
+          type: "touch",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.panelRef.value?.addEventListener("touchend", () => {
-      if (!this.isScrollTop) {
-        return;
-      }
+    this.panelRef.value?.addEventListener(
+      "touchend",
+      () => {
+        if (!this.isScrollTop) {
+          return;
+        }
 
-      this.pointerEventProcessor.onUp();
-    }, { passive: true });
+        this.pointerEventProcessor.onUp();
+      },
+      { passive: true },
+    );
 
-    this.panelRef.value?.addEventListener("mousedown", (event) => {
-      if (!this.isScrollTop) {
-        return;
-      }
+    this.panelRef.value?.addEventListener(
+      "mousedown",
+      (event) => {
+        if (!this.isScrollTop) {
+          return;
+        }
 
-      this.pointerEventProcessor.onDown({
-        type: "mouse",
-        event,
-      });
-    }, { passive: true });
+        this.pointerEventProcessor.onDown({
+          type: "mouse",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.panelRef.value?.addEventListener("mousemove", (event) => {
-      if (!this.isScrollTop) {
-        return;
-      }
+    this.panelRef.value?.addEventListener(
+      "mousemove",
+      (event) => {
+        if (!this.isScrollTop) {
+          return;
+        }
 
-      this.pointerEventProcessor.onMove({
-        type: "mouse",
-        event,
-      });
-    }, { passive: true });
+        this.pointerEventProcessor.onMove({
+          type: "mouse",
+          event,
+        });
+      },
+      { passive: true },
+    );
 
-    this.panelRef.value?.addEventListener("mouseup", () => {
-      if (!this.isScrollTop) {
-        return;
-      }
+    this.panelRef.value?.addEventListener(
+      "mouseup",
+      () => {
+        if (!this.isScrollTop) {
+          return;
+        }
 
-      this.pointerEventProcessor.onUp();
-    }, { passive: true }); */
+        this.pointerEventProcessor.onUp();
+      },
+      { passive: true },
+    );
   }
 
   updated(changedProperties: PropertyValues) {

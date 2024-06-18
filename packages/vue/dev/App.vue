@@ -10,7 +10,12 @@ const isOpen = ref(false);
   <p>isOpen: {{ isOpen }}</p>
   <button @click="isOpen = true">open</button>
 
-  <BottomSheet :open="isOpen" snap-point="50%" @on-close="isOpen = false">
+  <BottomSheet
+    :open="isOpen"
+    snap-point="50%"
+    :is-fullscreen="false"
+    @on-close="isOpen = false"
+  >
     <button @click="isOpen = false">close</button>
   </BottomSheet>
 </template>

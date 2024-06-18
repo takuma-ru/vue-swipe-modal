@@ -68,6 +68,8 @@ export class PointerEventProcessor {
       return;
     }
 
+    // Japanese: ドラッグ量を更新
+    // English: Update the amount of drag
     this.processSwitcher({
       params,
       mouse: (event) => {
@@ -82,6 +84,8 @@ export class PointerEventProcessor {
       },
     });
 
+    // Japanese: フルスクリーン表示状態でさらに上にドラッグした場合は処理を中断
+    // English: If you drag further up while in full screen display state, the process is interrupted
     if (
       (this.singleton.movementAmountY > 0 &&
         this.singleton.positionStatus === "full") ||
@@ -90,6 +94,8 @@ export class PointerEventProcessor {
       return;
     }
 
+    // Japanese: フルスクリーン表示にしない場合かつ上にドラッグした場合は処理を中断
+    // English: If you do not want to display in full screen and drag up, the process is interrupted
     if (
       !this.singleton.props["is-fullscreen"] &&
       this.singleton.movementAmountY > 0
@@ -100,6 +106,10 @@ export class PointerEventProcessor {
     this.singleton.modalRef?.value?.style.setProperty("user-select", "none");
 
     if (this.singleton.positionStatus === "snap") {
+      this.singleton.panelRef?.value?.style.setProperty("overflow-y", "hidden");
+
+      // Japanese: ドラッグ開始時の位置がスナップポイントの場合、スナップポイントの位置+ドラッグ量でbottom値を更新
+      // English: If the position at the start of dragging is a snap point, update the bottom value with the snap point position + the drag amount
       this.singleton.updateBottomValue(
         `calc(${this.singleton.snapPointPosition} + ${this.singleton.movementAmountY}px)`,
       );
@@ -116,6 +126,7 @@ export class PointerEventProcessor {
     this.isDragging = false;
 
     this.singleton.modalRef?.value?.style.removeProperty("user-select");
+    this.singleton.panelRef?.value?.style.removeProperty("overflow-y");
 
     if (Math.abs(this.singleton.movementAmountY) > 36) {
       if (this.singleton.movementAmountY < 0) {
