@@ -61,6 +61,7 @@ export class PointerEventProcessor {
     });
 
     this.isDragging = true;
+    this.singleton.addWillChangeBottom();
   }
 
   onMove(params: PointerEventParameters) {
@@ -175,6 +176,8 @@ export class PointerEventProcessor {
         }
       }
     }
+
+    this.singleton.removeWillChangeBottom();
 
     return this.modalAnimator.cancel();
   }

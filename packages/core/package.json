@@ -1,15 +1,31 @@
 {
-  "name": "core",
+  "name": "@web-bottom-sheet/core",
   "type": "module",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
-  "files": ["dist/*", "types/*", "wca/*"],
+  "files": [
+    "dist/*",
+    "types/*",
+    "wca/*"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/core.js",
+        "types": "./dist/types/main.d.ts"
+      },
+      "require": {
+        "default": "./dist/core.cjs",
+        "types": "./dist/types/main.d.ts"
+      }
+    }
+  },
   "scripts": {
     "dev": "vite --port 3122",
-    "build": "tsc && vite build",
-    "build:watch": "vite build --watch",
+    "build": "vite build && tsc",
+    "build:watch": "concurrently \"vite build --watch\" \"tsc -w\"",
     "preview": "vite preview",
     "lint": "biome lint",
     "lint:fix": "biome lint --write",
@@ -36,6 +52,7 @@
     "@storybook/web-components": "^8.0.10",
     "@storybook/web-components-vite": "^8.0.10",
     "@types/node": "^20.12.11",
+    "concurrently": "^8.2.2",
     "sass-embedded": "^1.77.1",
     "storybook": "^8.0.10",
     "typescript": "^5.4.5",

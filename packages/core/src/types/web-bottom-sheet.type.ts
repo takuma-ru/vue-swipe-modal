@@ -5,6 +5,7 @@ export interface WebBottomSheetProps {
    * @default true
    */
   "is-backdrop"?: boolean;
+
   /**
    * Whether to display the drag handle.
    *
@@ -17,24 +18,28 @@ export interface WebBottomSheetProps {
    * @default true
    */
   "is-fullscreen"?: boolean;
+
   /**
    * Whether to disable swipe and back drop click events.
    *
    * @default false
    */
   "is-persistent"?: boolean;
+
   /**
    * Whether to disable scroll of the background.
    *
    *  @default true
    */
   "is-scroll-lock"?: boolean;
+
   /**
    * Whether to display the modal.
    *
    * @default false
    */
   open?: boolean;
+
   /**
    * Modal upper edge position.
    *

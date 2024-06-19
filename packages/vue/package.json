@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
-    "core": "workspace:*",
+    "@web-bottom-sheet/core": "workspace:*",
     "vue": "^3.4.21"
   },
   "devDependencies": {

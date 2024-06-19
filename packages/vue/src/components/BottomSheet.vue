@@ -1,12 +1,29 @@
 <script setup lang="ts">
 import { useVModel } from "@vueuse/core";
-import "core";
+import type { WebBottomSheetProps } from "@web-bottom-sheet/core";
 
-const props = defineProps<{
-  open: boolean;
-  snapPoint?: "auto" | string;
-  isFullscreen?: boolean;
-}>();
+// biome-ignore lint/correctness/noUndeclaredVariables: <explanation>
+const props = withDefaults(
+  defineProps<{
+    open?: WebBottomSheetProps["open"];
+    snapPoint?: WebBottomSheetProps["snap-point"];
+    isBackdrop?: WebBottomSheetProps["is-backdrop"];
+    isDragHandle?: WebBottomSheetProps["is-drag-handle"];
+    isFullscreen?: WebBottomSheetProps["is-fullscreen"];
+    isPersistent?: WebBottomSheetProps["is-persistent"];
+    isScrollLock?: WebBottomSheetProps["is-scroll-lock"];
+  }>(),
+  {
+    open: false,
+    snapPoint: "auto",
+    isBackdrop: true,
+    isDragHandle: true,
+    isFullscreen: true,
+    isPersistent: false,
+    isScrollLock: true,
+  }
+);
+
 const emit = defineEmits<{
   (event: "onClose", value: boolean): void;
   (event: "update:open", value: boolean): void;
@@ -24,7 +41,11 @@ const onClose = () => {
   <web-bottom-sheet
     :open="modelValue"
     :snap-point="props.snapPoint"
+    :is-backdrop="props.isBackdrop"
+    :is-drag-handle="props.isDragHandle"
     :is-fullscreen="props.isFullscreen"
+    :is-persistent="props.isPersistent"
+    :is-scroll-lock="props.isScrollLock"
     @on-close="onClose"
   >
     <slot />

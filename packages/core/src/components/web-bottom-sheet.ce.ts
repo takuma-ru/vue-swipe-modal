@@ -14,8 +14,8 @@ import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 import { resetCss } from "../styles/resetCss";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
-import styles from "./web-bottom-sheet.scss?litSass";
 import { booleanConverter } from "../utils/propertyConverter";
+import styles from "./web-bottom-sheet.scss?litSass";
 
 @customElement("web-bottom-sheet")
 export class WebBottomSheet extends LitElement {
@@ -313,7 +313,8 @@ export class WebBottomSheet extends LitElement {
     return html`
       <dialog
         ${ref(this.modalRef)}
-        class="modal-ref default-style"
+        class="modal-ref web-bottom-sheet-default"
+        part="dialog"
       >
         <div ${ref(this.dragHandleWrapperRef)} class="drag-handle-wrapper">
           <slot name="drag-handle">
