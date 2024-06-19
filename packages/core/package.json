@@ -1,15 +1,40 @@
 {
   "name": "@web-bottom-sheet/core",
-  "type": "module",
+  "description": "Web modal component that can be opened and closed by swiping",
   "version": "0.0.0",
   "private": false,
+  "author": "takuma-ru <takuma-ru@takumaru.dev> (https://github.com/takuma-ru/)",
+  "keywords": [
+    "web-components",
+    "swiping",
+    "lit",
+    "bottom-sheet",
+    "modal",
+    "dialog",
+    "vue",
+    "react",
+    "svelte",
+    "angular"
+  ],
+  "homepage": "https://web-bottom-sheet.takumaru.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takuma-ru/web-bottom-sheet"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/web-bottom-sheet/issues",
+    "email": "takuma-ru@takumaru.dev"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "license": "ISC",
+  "type": "module",
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
-  "files": [
-    "dist/*",
-    "types/*",
-    "wca/*"
-  ],
+  "types": "./dist/types/main.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -22,9 +47,14 @@
       }
     }
   },
+  "files": [
+    "dist/*",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "dev": "vite --port 3122",
-    "build": "vite build && tsc",
+    "build": "vite build && tsc && pnpm wca:all",
     "build:watch": "concurrently \"vite build --watch\" \"tsc -w\"",
     "preview": "vite preview",
     "lint": "biome lint",
@@ -34,7 +64,11 @@
     "check": "biome check",
     "check:fix": "biome check --write",
     "sb:dev": "storybook dev -p 3123 --no-open",
-    "sb:build": "storybook build"
+    "sb:build": "storybook build",
+    "wca:json": "web-component-analyzer src/components/**/*.ce.ts --format json --outFile dist/wca/vum-custom-elements.json",
+    "wca:md": "web-component-analyzer src/components/**/*.ce.ts --format markdown --outDir dist/wca/markdown",
+    "wca:vscode": "web-component-analyzer src/components/**/*.ce.ts --format vscode --outFile dist/wca/vscode-vum-custom-data.json",
+    "wca:all": "pnpm wca:json && pnpm wca:md && pnpm wca:vscode"
   },
   "dependencies": {
     "@lit-labs/ssr-client": "^1.1.7",
@@ -56,6 +90,7 @@
     "sass-embedded": "^1.77.1",
     "storybook": "^8.0.10",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "web-component-analyzer": "^2.0.0"
   }
 }
