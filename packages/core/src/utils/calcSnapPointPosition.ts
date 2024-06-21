@@ -11,13 +11,14 @@ export const calcSnapPointPosition = () => {
       const panelRefHeight =
         singleton.panelRef?.value?.getBoundingClientRect().height || 0;
       const dragHandleWrapperRefHeight =
-        singleton.panelRef?.value?.getBoundingClientRect().height || 0;
+        singleton.dragHandleWrapperRef?.value?.getBoundingClientRect().height ||
+        0;
 
-      snapPointValue = `calc(${panelRefHeight}px + ${dragHandleWrapperRefHeight}px - 100%)`;
+      snapPointValue = `calc((${panelRefHeight}px + ${dragHandleWrapperRefHeight}px) - 100%)`;
     } else {
       snapPointValue = `calc(${snapPoint} - 100%)`;
     }
   }
 
-  singleton.updateSnapPointPosition(snapPointValue);
+  singleton.setSnapPointPosition(snapPointValue);
 };

@@ -11,7 +11,8 @@ const isOpen = ref(false);
   <button @click="isOpen = true">open</button>
 
   <BottomSheet :open="isOpen" @on-close="isOpen = false">
-    <div class="">
+    <div class="panel">
+      <h3>@web-bottom-sheet/vue</h3>
       <button @click="isOpen = false">close</button>
     </div>
   </BottomSheet>
@@ -22,9 +23,24 @@ web-bottom-sheet::part(dialog) {
   background-color: #242424;
   border-radius: 8px 8px 0 0;
   box-sizing: border-box;
+}
 
-  @media (prefers-color-scheme: light) {
+web-bottom-sheet::part(dialog):focus {
+  outline-color: #646cff;
+}
+
+web-bottom-sheet::part(dialog)::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+@media (prefers-color-scheme: light) {
+  web-bottom-sheet::part(dialog) {
     background-color: #ffffff;
   }
+}
+.panel {
+  padding: 16px;
 }
 </style>

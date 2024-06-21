@@ -23,9 +23,11 @@ export class WebBottomSheet extends LitElement {
 
   // === Variables ===
   private modalRef = createRef<HTMLDialogElement>();
+  private bottomSheetRef = createRef<HTMLDivElement>();
   private panelRef = createRef<HTMLDivElement>();
   private panelObserverTargetRef = createRef<HTMLDivElement>();
   private dragHandleWrapperRef = createRef<HTMLDivElement>();
+
   private modalAnimator: ModalAnimator;
   private pointerEventProcessor: PointerEventProcessor;
   private isScrollTop = false;
@@ -102,8 +104,10 @@ export class WebBottomSheet extends LitElement {
   firstUpdated() {
     this.singleton.setModalRef(this.modalRef);
     this.singleton.setPanelRef(this.panelRef);
-    this.singleton.updateBottomValue("-100%");
-    this.singleton.updateMovementAmountY(0);
+    this.singleton.setBottomSheetRef(this.bottomSheetRef);
+    this.singleton.setDragHandleWrapperRef(this.dragHandleWrapperRef);
+    this.singleton.setBottom("-100%");
+    this.singleton.setMovementAmountY(0);
 
     const scrollTopObserver = new IntersectionObserver((entries) => {
       const entry = entries[0];
@@ -134,9 +138,13 @@ export class WebBottomSheet extends LitElement {
       }
     });
 
-    this.dragHandleWrapperRef.value?.addEventListener(
+    this.bottomSheetRef.value?.addEventListener(
       "touchstart",
       (event) => {
+        if (event.target === this.panelRef.value && !this.isScrollTop) {
+          return;
+        }
+
         this.pointerEventProcessor.onDown({
           type: "touch",
           event,
@@ -145,9 +153,13 @@ export class WebBottomSheet extends LitElement {
       { passive: true },
     );
 
-    this.dragHandleWrapperRef.value?.addEventListener(
+    this.bottomSheetRef.value?.addEventListener(
       "touchmove",
       (event) => {
+        if (event.target === this.panelRef.value && !this.isScrollTop) {
+          return;
+        }
+
         this.pointerEventProcessor.onMove({
           type: "touch",
           event,
@@ -156,17 +168,25 @@ export class WebBottomSheet extends LitElement {
       { passive: true },
     );
 
-    this.dragHandleWrapperRef.value?.addEventListener(
+    this.bottomSheetRef.value?.addEventListener(
       "touchend",
-      () => {
+      (event) => {
+        if (event.target === this.panelRef.value && !this.isScrollTop) {
+          return;
+        }
+
         this.pointerEventProcessor.onUp();
       },
       { passive: true },
     );
 
-    this.dragHandleWrapperRef.value?.addEventListener(
+    this.bottomSheetRef.value?.addEventListener(
       "mousedown",
       (event) => {
+        if (event.target === this.panelRef.value && !this.isScrollTop) {
+          return;
+        }
+
         this.pointerEventProcessor.onDown({
           type: "mouse",
           event,
@@ -175,9 +195,13 @@ export class WebBottomSheet extends LitElement {
       { passive: true },
     );
 
-    this.dragHandleWrapperRef.value?.addEventListener(
+    this.bottomSheetRef.value?.addEventListener(
       "mousemove",
       (event) => {
+        if (event.target === this.panelRef.value && !this.isScrollTop) {
+          return;
+        }
+
         this.pointerEventProcessor.onMove({
           type: "mouse",
           event,
@@ -186,90 +210,10 @@ export class WebBottomSheet extends LitElement {
       { passive: true },
     );
 
-    this.dragHandleWrapperRef.value?.addEventListener(
+    this.bottomSheetRef.value?.addEventListener(
       "mouseup",
-      () => {
-        this.pointerEventProcessor.onUp();
-      },
-      { passive: true },
-    );
-
-    this.panelRef.value?.addEventListener(
-      "touchstart",
       (event) => {
-        if (!this.isScrollTop) {
-          return;
-        }
-
-        this.pointerEventProcessor.onDown({
-          type: "touch",
-          event,
-        });
-      },
-      { passive: true },
-    );
-
-    this.panelRef.value?.addEventListener(
-      "touchmove",
-      (event) => {
-        if (!this.isScrollTop) {
-          return;
-        }
-
-        this.pointerEventProcessor.onMove({
-          type: "touch",
-          event,
-        });
-      },
-      { passive: true },
-    );
-
-    this.panelRef.value?.addEventListener(
-      "touchend",
-      () => {
-        if (!this.isScrollTop) {
-          return;
-        }
-
-        this.pointerEventProcessor.onUp();
-      },
-      { passive: true },
-    );
-
-    this.panelRef.value?.addEventListener(
-      "mousedown",
-      (event) => {
-        if (!this.isScrollTop) {
-          return;
-        }
-
-        this.pointerEventProcessor.onDown({
-          type: "mouse",
-          event,
-        });
-      },
-      { passive: true },
-    );
-
-    this.panelRef.value?.addEventListener(
-      "mousemove",
-      (event) => {
-        if (!this.isScrollTop) {
-          return;
-        }
-
-        this.pointerEventProcessor.onMove({
-          type: "mouse",
-          event,
-        });
-      },
-      { passive: true },
-    );
-
-    this.panelRef.value?.addEventListener(
-      "mouseup",
-      () => {
-        if (!this.isScrollTop) {
+        if (event.target === this.panelRef.value && !this.isScrollTop) {
           return;
         }
 
@@ -316,16 +260,18 @@ export class WebBottomSheet extends LitElement {
         class="modal-ref web-bottom-sheet-default"
         part="dialog"
       >
-        <div ${ref(this.dragHandleWrapperRef)} class="drag-handle-wrapper">
-          <slot name="drag-handle">
-            <div class="drag-handle-default">
-              <div class="drag-handle-default-icon"></div>
-            </div>
-          </slot>
-        </div>
-        <div ${ref(this.panelRef)} class="panel-ref">
-          <div ${ref(this.panelObserverTargetRef)} class="panel-observer-target"></div>
-          <slot></slot>
+        <div ${ref(this.bottomSheetRef)} class="bottom-sheet">
+          <div ${ref(this.dragHandleWrapperRef)} class="drag-handle-wrapper">
+            <slot name="drag-handle">
+              <div class="drag-handle-default">
+                <div class="drag-handle-default-icon"></div>
+              </div>
+            </slot>
+          </div>
+          <div ${ref(this.panelRef)} class="panel-ref">
+            <div ${ref(this.panelObserverTargetRef)} class="panel-observer-target"></div>
+            <slot></slot>
+          </div>
         </div>
       </dialog>
     `;

@@ -16,8 +16,6 @@ type PointerEventParameters =
 export class PointerEventProcessor {
   private singleton: WebBottomSheetSingleton;
   private modalAnimator: ModalAnimator;
-
-  private isDragging = false;
   private moveStartPositionY = 0;
 
   constructor() {
@@ -60,12 +58,12 @@ export class PointerEventProcessor {
       },
     });
 
-    this.isDragging = true;
+    this.singleton.setIsDragging(true);
     this.singleton.addWillChangeBottom();
   }
 
   onMove(params: PointerEventParameters) {
-    if (!this.isDragging) {
+    if (!this.singleton.isDragging) {
       return;
     }
 
@@ -74,26 +72,16 @@ export class PointerEventProcessor {
     this.processSwitcher({
       params,
       mouse: (event) => {
-        this.singleton.updateMovementAmountY(this.moveStartPositionY - event.y);
+        this.singleton.setMovementAmountY(this.moveStartPositionY - event.y);
       },
       touch: (event) => {
-        this.singleton.updateMovementAmountY(
+        this.singleton.setMovementAmountY(
           this.moveStartPositionY - event.targetTouches[0].clientY ||
             event.touches[0].clientY ||
             event.changedTouches[0].clientY,
         );
       },
     });
-
-    // Japanese: フルスクリーン表示状態でさらに上にドラッグした場合は処理を中断
-    // English: If you drag further up while in full screen display state, the process is interrupted
-    if (
-      (this.singleton.movementAmountY > 0 &&
-        this.singleton.positionStatus === "full") ||
-      (this.singleton.modalRef?.value?.getBoundingClientRect().top || 0) < 0
-    ) {
-      return;
-    }
 
     // Japanese: フルスクリーン表示にしない場合かつ上にドラッグした場合は処理を中断
     // English: If you do not want to display in full screen and drag up, the process is interrupted
@@ -111,20 +99,20 @@ export class PointerEventProcessor {
 
       // Japanese: ドラッグ開始時の位置がスナップポイントの場合、スナップポイントの位置+ドラッグ量でbottom値を更新
       // English: If the position at the start of dragging is a snap point, update the bottom value with the snap point position + the drag amount
-      this.singleton.updateBottomValue(
-        `calc(${this.singleton.snapPointPosition} + ${this.singleton.movementAmountY}px)`,
+      this.singleton.setBottom(
+        `clamp(-100%, calc(${this.singleton.snapPointPosition} + ${this.singleton.movementAmountY}px), 0px)`,
       );
 
       return;
     }
 
-    this.singleton.updateBottomValue(
-      `calc(0% + ${this.singleton.movementAmountY}px)`,
+    this.singleton.setBottom(
+      `clamp(-100%, calc(0% + ${this.singleton.movementAmountY}px), 0px)`,
     );
   }
 
   onUp() {
-    this.isDragging = false;
+    this.singleton.setIsDragging(false);
 
     this.singleton.modalRef?.value?.style.removeProperty("user-select");
     this.singleton.panelRef?.value?.style.removeProperty("overflow-y");

@@ -31,10 +31,10 @@ export class ModalAnimator {
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
       },
     ).onfinish = () => {
-      this.singleton.updatePositionStatus(
+      this.singleton.setPositionStatus(
         this.singleton.props["snap-point"] ? "snap" : "full",
       );
-      this.singleton.updateBottomValue(this.singleton.snapPointPosition);
+      this.singleton.setBottom(this.singleton.snapPointPosition);
 
       if (this.singleton.props["is-scroll-lock"]) {
         setPageScrollable("hidden");
@@ -60,13 +60,9 @@ export class ModalAnimator {
     ).onfinish = () => {
       this.singleton.modalRef?.value?.close();
 
-      this.singleton.updateSnapPointPosition("auto");
-      this.singleton.updateBottomValue("-100%");
-      this.singleton.updatePositionStatus("close");
-
-      setPageScrollable("reset");
-
       this.singleton.removeWillChangeBottom();
+      setPageScrollable("reset");
+      this.singleton.resetAllState();
     };
   }
 
@@ -100,8 +96,8 @@ export class ModalAnimator {
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
       },
     ).onfinish = () => {
-      this.singleton.updateMovementAmountY(0);
-      this.singleton.updateBottomValue(calcToPositionBottom());
+      this.singleton.setMovementAmountY(0);
+      this.singleton.setBottom(calcToPositionBottom());
 
       this.singleton.removeWillChangeBottom();
     };
@@ -128,9 +124,9 @@ export class ModalAnimator {
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
       },
     ).onfinish = () => {
-      this.singleton.updateMovementAmountY(0);
-      this.singleton.updateBottomValue(this.singleton.snapPointPosition);
-      this.singleton.updatePositionStatus("snap");
+      this.singleton.setMovementAmountY(0);
+      this.singleton.setBottom(this.singleton.snapPointPosition);
+      this.singleton.setPositionStatus("snap");
 
       this.singleton.removeWillChangeBottom();
     };
@@ -150,9 +146,9 @@ export class ModalAnimator {
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
       },
     ).onfinish = () => {
-      this.singleton.updateMovementAmountY(0);
-      this.singleton.updateBottomValue("0%");
-      this.singleton.updatePositionStatus("full");
+      this.singleton.setMovementAmountY(0);
+      this.singleton.setBottom("0%");
+      this.singleton.setPositionStatus("full");
 
       this.singleton.removeWillChangeBottom();
     };
