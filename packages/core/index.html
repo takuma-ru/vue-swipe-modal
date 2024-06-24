@@ -11,6 +11,42 @@
 </head>
 
 <body>
+  <h2>@web-bottom-sheet/core</h2>
+
+
+  <div class="input-text">
+    <label for="snapPoint">snapPoint</label>
+    <input id="snapPoint" name="snapPoint" type="text" value="auto">
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isBackdrop">isBackdrop</label>
+    <input id="isBackdrop" name="isBackdrop" type="checkbox" checked>
+  </div>
+
+
+  <div class="input-checkbox">
+    <label for="isDragHandle">isDragHandle</label>
+    <input id="isDragHandle" name="isDragHandle" type="checkbox" checked>
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isFullscreen">isFullscreen</label>
+    <input id="isFullscreen" name="isFullscreen" type="checkbox" checked>
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isPersistent">isPersistent</label>
+    <input id="isPersistent" name="isPersistent" type="checkbox" checked>
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isScrollLock">isScrollLock</label>
+    <input id="isScrollLock" name="isScrollLock" type="checkbox" checked>
+  </div>
+
+  <hr>
+
   <button id="button">open</button>
 
   <web-bottom-sheet id="web-bottom-sheet" snap-point="auto">
@@ -51,6 +87,36 @@
 
     sheet.addEventListener("on-close", () => {
       sheet.open = false;
+    });
+
+    document.getElementById('snapPoint').addEventListener('change', function () {
+      const snapPointValue = this.value;
+      sheet.setAttribute('snap-point', snapPointValue);
+    });
+
+    document.getElementById('isBackdrop').addEventListener('change', function () {
+      const isBackdropValue = this.checked;
+      sheet.setAttribute('is-backdrop', isBackdropValue);
+    });
+
+    document.getElementById('isDragHandle').addEventListener('change', function () {
+      const isDragHandleValue = this.checked;
+      sheet.setAttribute('is-drag-handle', isDragHandleValue);
+    });
+
+    document.getElementById('isFullscreen').addEventListener('change', function () {
+      const isFullscreenValue = this.checked;
+      sheet.setAttribute('is-fullscreen', isFullscreenValue);
+    });
+
+    document.getElementById('isPersistent').addEventListener('change', function () {
+      const isPersistentValue = this.checked;
+      sheet.setAttribute('is-persistent', isPersistentValue);
+    });
+
+    document.getElementById('isScrollLock').addEventListener('change', function () {
+      const isScrollLockValue = this.checked;
+      sheet.setAttribute('is-scroll-lock', isScrollLockValue);
     });
   </script>
 </body>

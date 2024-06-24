@@ -6,13 +6,45 @@ const isOpen = ref(false);
 </script>
 
 <template>
-  <h1>Vue</h1>
-  <p>isOpen: {{ isOpen }}</p>
+  <h2>@web-bottom-sheet/vue</h2>
+
+  <div class="input-text">
+    <label for="snapPoint">snapPoint</label>
+    <input id="snapPoint" name="snapPoint" type="text" value="auto" />
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isBackdrop">isBackdrop</label>
+    <input id="isBackdrop" name="isBackdrop" type="checkbox" checked />
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isDragHandle">isDragHandle</label>
+    <input id="isDragHandle" name="isDragHandle" type="checkbox" checked />
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isFullscreen">isFullscreen</label>
+    <input id="isFullscreen" name="isFullscreen" type="checkbox" checked />
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isPersistent">isPersistent</label>
+    <input id="isPersistent" name="isPersistent" type="checkbox" checked />
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isScrollLock">isScrollLock</label>
+    <input id="isScrollLock" name="isScrollLock" type="checkbox" checked />
+  </div>
+
+  <hr />
+
   <button @click="isOpen = true">open</button>
 
   <BottomSheet :open="isOpen" @on-close="isOpen = false">
     <div class="panel">
-      <h3>@web-bottom-sheet/vue</h3>
+      <p>This is contents.</p>
       <button @click="isOpen = false">close</button>
     </div>
   </BottomSheet>

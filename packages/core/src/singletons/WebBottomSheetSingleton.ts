@@ -127,6 +127,26 @@ export class WebBottomSheetSingleton {
     );
   }
 
+  calcSnapPointPosition() {
+    const snapPoint = this._props["snap-point"];
+    let snapPointValue = "0px";
+
+    if (snapPoint) {
+      if (snapPoint === "auto") {
+        const panelRefHeight =
+          this.panelRef?.value?.getBoundingClientRect().height || 0;
+        const dragHandleWrapperRefHeight =
+          this.dragHandleWrapperRef?.value?.getBoundingClientRect().height || 0;
+
+        snapPointValue = `calc((${panelRefHeight}px + ${dragHandleWrapperRefHeight}px) - 100%)`;
+      } else {
+        snapPointValue = `calc(${snapPoint} - 100%)`;
+      }
+    }
+
+    this.setSnapPointPosition(snapPointValue);
+  }
+
   addWillChangeBottom() {
     this.modalRef?.value?.style.setProperty("will-change", "bottom");
   }

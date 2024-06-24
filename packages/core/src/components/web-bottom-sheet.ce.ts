@@ -13,7 +13,6 @@ import { PointerEventProcessor } from "../classes/PointerEventProcessor";
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
 import { resetCss } from "../styles/resetCss";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
-import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
 import { booleanConverter } from "../utils/propertyConverter";
 import styles from "./web-bottom-sheet.scss?litSass";
 
@@ -247,7 +246,7 @@ export class WebBottomSheet extends LitElement {
       changedProperties.has("snapPoint") ||
       changedProperties.has("panelRef")
     ) {
-      calcSnapPointPosition();
+      this.singleton.calcSnapPointPosition();
     }
   }
 

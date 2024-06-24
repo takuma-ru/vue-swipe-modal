@@ -1,5 +1,4 @@
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
-import { calcSnapPointPosition } from "../utils/calcSnapPointPosition";
 import { setPageScrollable } from "../utils/setPageScrollable";
 
 export class ModalAnimator {
@@ -20,7 +19,7 @@ export class ModalAnimator {
       this.singleton.modalRef.value.show();
     }
 
-    calcSnapPointPosition();
+    this.singleton.calcSnapPointPosition();
 
     this.singleton.addWillChangeBottom();
 

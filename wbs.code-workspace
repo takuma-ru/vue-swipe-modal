@@ -69,4 +69,8 @@
     "cSpell.words": ["antfu", "biomejs"],
     "terminal.integrated.cwd": "${workspaceFolder}",
   },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [],
+  },
 }
