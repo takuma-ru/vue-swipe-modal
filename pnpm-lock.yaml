@@ -88,6 +88,9 @@ importers:
 
   packages/vue:
     dependencies:
+      '@takuma-ru/vue-swipe-modal':
+        specifier: ^5.0.5
+        version: 5.0.5(vue@3.4.27(typescript@5.4.5))
       '@vueuse/core':
         specifier: ^10.9.0
         version: 10.10.0(vue@3.4.27(typescript@5.4.5))
@@ -1598,6 +1601,11 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       lit: ^2.0.0 || ^3.0.0
+
+  '@takuma-ru/vue-swipe-modal@5.0.5':
+    resolution: {integrity: sha512-KCEiCHU0sc0z+NKMY0pWYUYcLiicsUeVrlqFc3lv9juQO/fiUgB5tOuG9iN0jM0eJ7uVEUbcAYN21emmbvbqsQ==}
+    peerDependencies:
+      vue: ^3.0.0
 
   '@testing-library/dom@9.3.4':
     resolution: {integrity: sha512-FlS4ZWlp97iiNWig0Muq8p+3rVDjRiYE+YKGbAqXOu9nwJFFOdL00kFpz42M+4huzYi86vAK1sOOfyOG45muIQ==}
@@ -6524,6 +6532,14 @@ snapshots:
       - react
       - react-dom
       - supports-color
+
+  '@takuma-ru/vue-swipe-modal@5.0.5(vue@3.4.27(typescript@5.4.5))':
+    dependencies:
+      '@vueuse/core': 10.10.0(vue@3.4.27(typescript@5.4.5))
+      consola: 3.2.3
+      vue: 3.4.27(typescript@5.4.5)
+    transitivePeerDependencies:
+      - '@vue/composition-api'
 
   '@testing-library/dom@9.3.4':
     dependencies:
