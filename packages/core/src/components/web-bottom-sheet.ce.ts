@@ -96,10 +96,6 @@ export class WebBottomSheet extends LitElement {
   }
 
   // === Lifecycle ===
-  connectedCallback() {
-    super.connectedCallback();
-  }
-
   firstUpdated() {
     this.singleton.setModalRef(this.modalRef);
     this.singleton.setPanelRef(this.panelRef);
