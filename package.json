@@ -1,23 +1,29 @@
 {
-  "name": "vue-swipe-modal-monorepo",
-  "version": "1.0.0",
-  "private": true,
+  "name": "@takuma-ru/web-bottom-sheets",
+  "version": "0.0.0",
+  "description": "",
   "scripts": {
-    "vsm": "pnpm -F \"@takuma-ru/vue-swipe-modal\"",
-    "demo": "pnpm -F \"demo\"",
-    "doc": "pnpm -F \"docs\""
+    "p:core": "pnpm -C packages/core",
+    "p:wbs": "pnpm -C packages/web-bottom-sheets",
+    "p:angular": "pnpm -C packages/angular",
+    "p:react": "pnpm -C packages/react",
+    "p:svelte": "pnpm -C packages/svelte",
+    "p:vue": "pnpm -C packages/vue",
+    "doc": "pnpm -C docs"
   },
-  "packageManager": "pnpm@8.10.2",
   "engines": {
-    "npm": "use pnpm please!",
-    "yarn": "use pnpm please!",
-    "pnpm": ">=8.9.2"
+    "pnpm": "9.1.0",
+    "npm": "please_use_pnpm_instead"
   },
+  "packageManager": "pnpm@9.1.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "volta": {
-    "node": "20.9.0",
-    "pnpm": "8.10.2"
+    "node": "22.1.0",
+    "pnpm": "9.1.0"
   },
   "devDependencies": {
-    "semver": "^7.6.1"
+    "@biomejs/biome": "^1.8.1"
   }
 }

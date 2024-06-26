@@ -1,14 +1,124 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Vite + Vue + TS</title>
-	</head>
 
-	<body>
-		<div id="app"></div>
-		<script type="module" src="/dev/main.ts"></script>
-	</body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>web-bottom-sheet/core</title>
+  <link rel="stylesheet" href="./index.css" />
+  <script type="module" src="/src/main.ts"></script>
+</head>
+
+<body>
+  <h2>@web-bottom-sheet/core</h2>
+
+
+  <div class="input-text">
+    <label for="snapPoint">snapPoint</label>
+    <input id="snapPoint" name="snapPoint" type="text" value="auto">
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isBackdrop">isBackdrop</label>
+    <input id="isBackdrop" name="isBackdrop" type="checkbox" checked>
+  </div>
+
+
+  <div class="input-checkbox">
+    <label for="isDragHandle">isDragHandle</label>
+    <input id="isDragHandle" name="isDragHandle" type="checkbox" checked>
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isFullscreen">isFullscreen</label>
+    <input id="isFullscreen" name="isFullscreen" type="checkbox" checked>
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isPersistent">isPersistent</label>
+    <input id="isPersistent" name="isPersistent" type="checkbox" checked>
+  </div>
+
+  <div class="input-checkbox">
+    <label for="isScrollLock">isScrollLock</label>
+    <input id="isScrollLock" name="isScrollLock" type="checkbox" checked>
+  </div>
+
+  <hr>
+
+  <button id="button">open</button>
+
+  <web-bottom-sheet id="web-bottom-sheet" snap-point="auto">
+    <h3>Web Bottom Sheet</h3>
+    <p>
+      This is a web component that mimics the native bottom sheet. It is
+      implemented using Lit and TypeScript.
+    </p>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+  </web-bottom-sheet>
+
+  <script>
+    const button = document.getElementById("button");
+    const sheet = document.querySelector("web-bottom-sheet");
+
+    button.addEventListener("click", () => {
+      sheet.open = !sheet.open;
+    });
+
+    sheet.addEventListener("on-close", () => {
+      sheet.open = false;
+    });
+
+    document.getElementById('snapPoint').addEventListener('change', function () {
+      const snapPointValue = this.value;
+      sheet.setAttribute('snap-point', snapPointValue);
+    });
+
+    document.getElementById('isBackdrop').addEventListener('change', function () {
+      const isBackdropValue = this.checked;
+      sheet.setAttribute('is-backdrop', isBackdropValue);
+    });
+
+    document.getElementById('isDragHandle').addEventListener('change', function () {
+      const isDragHandleValue = this.checked;
+      sheet.setAttribute('is-drag-handle', isDragHandleValue);
+    });
+
+    document.getElementById('isFullscreen').addEventListener('change', function () {
+      const isFullscreenValue = this.checked;
+      sheet.setAttribute('is-fullscreen', isFullscreenValue);
+    });
+
+    document.getElementById('isPersistent').addEventListener('change', function () {
+      const isPersistentValue = this.checked;
+      sheet.setAttribute('is-persistent', isPersistentValue);
+    });
+
+    document.getElementById('isScrollLock').addEventListener('change', function () {
+      const isScrollLockValue = this.checked;
+      sheet.setAttribute('is-scroll-lock', isScrollLockValue);
+    });
+  </script>
+</body>
+
 </html>

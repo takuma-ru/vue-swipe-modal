@@ -12,9 +12,9 @@ dist
 dist-ssr
 *.local
 
-.npmrc
-
 # Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -23,4 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# .d.ts
+*storybook.log
