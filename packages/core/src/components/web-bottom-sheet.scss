@@ -46,7 +46,7 @@
   overflow: hidden;
   height: 100%;
   display: grid !important;
-  grid-template-rows: auto 1fr !important;
+  grid-template-rows: fit-content(100%) fit-content(100%) !important;
 }
 
 .drag-handle-wrapper {
@@ -82,8 +82,6 @@
 }
 
 .panel-ref {
-  height: fit-content;
-  max-height: 100%;
   grid-row: 2;
   overflow: auto;
 }
