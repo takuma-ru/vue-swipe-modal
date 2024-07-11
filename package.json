@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
+    "dev": "turbo run dev",
     "p:core": "pnpm -C packages/core",
     "p:wbs": "pnpm -C packages/web-bottom-sheets",
     "p:angular": "pnpm -C packages/angular",
@@ -24,6 +25,7 @@
     "pnpm": "9.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.1"
+    "@biomejs/biome": "^1.8.1",
+    "turbo": "^2.0.6"
   }
 }
