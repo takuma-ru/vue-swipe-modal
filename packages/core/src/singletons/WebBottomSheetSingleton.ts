@@ -10,6 +10,7 @@ export class WebBottomSheetSingleton {
   private _snapPointPosition = "auto";
   private _positionStatus: "full" | "snap" | "close" = "close";
   private _isDragging = false;
+  private _isScrollTop = true;
 
   // == ref ==
   private _modalRef: Ref<HTMLDialogElement> | undefined;
@@ -41,6 +42,10 @@ export class WebBottomSheetSingleton {
     return this._isDragging;
   }
 
+  public get isScrollTop() {
+    return this._isScrollTop;
+  }
+
   public get modalRef() {
     return this._modalRef;
   }
@@ -68,6 +73,7 @@ export class WebBottomSheetSingleton {
     this._snapPointPosition = "auto";
     this._positionStatus = "close";
     this._isDragging = false;
+    this._isScrollTop = true;
   }
 
   setBottom(value: typeof this._bottom) {
@@ -89,6 +95,10 @@ export class WebBottomSheetSingleton {
 
   setIsDragging(value: typeof this._isDragging) {
     this._isDragging = value;
+  }
+
+  setIsScrollTop(value: typeof this._isScrollTop) {
+    this._isScrollTop = value;
   }
 
   setModalRef(value: typeof this._modalRef) {

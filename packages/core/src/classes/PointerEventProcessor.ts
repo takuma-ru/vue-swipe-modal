@@ -92,11 +92,21 @@ export class PointerEventProcessor {
       return;
     }
 
+    if (!this.singleton.isScrollTop) {
+      return;
+    }
+
+    if (
+      this.singleton.positionStatus === "full" &&
+      this.singleton.movementAmountY > 0
+    ) {
+      return;
+    }
+
     this.singleton.modalRef?.value?.style.setProperty("user-select", "none");
+    this.singleton.panelRef?.value?.style.setProperty("overflow-y", "hidden");
 
     if (this.singleton.positionStatus === "snap") {
-      this.singleton.panelRef?.value?.style.setProperty("overflow-y", "hidden");
-
       // Japanese: ドラッグ開始時の位置がスナップポイントの場合、スナップポイントの位置+ドラッグ量でbottom値を更新
       // English: If the position at the start of dragging is a snap point, update the bottom value with the snap point position + the drag amount
       this.singleton.setBottom(
@@ -122,8 +132,31 @@ export class PointerEventProcessor {
         switch (this.singleton.positionStatus) {
           case "full": {
             if (this.singleton.props["snap-point"]) {
-              this.modalAnimator.moveToSnapPoint();
-              return;
+              switch (this.singleton.props["snap-point"]) {
+                case "auto":
+                case "100%":
+                case "100vh":
+                case "100dvh":
+                case "100svh": {
+                  if (
+                    (this.singleton.panelRef?.value?.offsetHeight ?? 0) +
+                      (this.singleton.dragHandleWrapperRef?.value
+                        ?.offsetHeight ?? 0) >=
+                      (this.singleton.bottomSheetRef?.value?.offsetHeight ??
+                        0) &&
+                    this.singleton.isScrollTop
+                  ) {
+                    this.singleton.dispatchOnCloseEvent();
+                  }
+
+                  this.modalAnimator.moveToSnapPoint();
+                  return;
+                }
+                default: {
+                  this.modalAnimator.moveToSnapPoint();
+                  return;
+                }
+              }
             }
 
             if (this.singleton.props["is-persistent"]) {

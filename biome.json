@@ -150,6 +150,7 @@
         "useAsConstAssertion": "error"
       },
       "suspicious": {
+        "noConsoleLog": "warn",
         "noCatchAssign": "warn",
         "noCommentText": "warn",
         "noControlCharactersInRegex": "warn",

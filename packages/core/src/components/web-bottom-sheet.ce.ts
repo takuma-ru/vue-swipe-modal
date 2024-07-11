@@ -29,7 +29,6 @@ export class WebBottomSheet extends LitElement {
 
   private modalAnimator: ModalAnimator;
   private pointerEventProcessor: PointerEventProcessor;
-  private isScrollTop = false;
 
   // === Props ===
   @property({ attribute: "open", type: Boolean })
@@ -104,15 +103,26 @@ export class WebBottomSheet extends LitElement {
     this.singleton.setBottom("-100%");
     this.singleton.setMovementAmountY(0);
 
-    const scrollTopObserver = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-
-      if (entry.isIntersecting) {
-        this.isScrollTop = true;
-      } else {
-        this.isScrollTop = false;
-      }
-    });
+    const scrollTopObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // 要素の上端がビューポートの上端よりも下にあるかどうかをチェック
+          if (
+            entry.isIntersecting &&
+            entry.boundingClientRect.top >= (entry.rootBounds?.top ?? 0)
+          ) {
+            this.singleton.setIsScrollTop(true);
+          } else {
+            this.singleton.setIsScrollTop(false);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0,
+      },
+    );
 
     if (this.panelObserverTargetRef.value) {
       scrollTopObserver.observe(this.panelObserverTargetRef.value);
@@ -136,7 +146,10 @@ export class WebBottomSheet extends LitElement {
     this.bottomSheetRef.value?.addEventListener(
       "touchstart",
       (event) => {
-        if (event.target === this.panelRef.value && !this.isScrollTop) {
+        if (
+          event.target === this.panelRef.value &&
+          !this.singleton.isScrollTop
+        ) {
           return;
         }
 
@@ -151,7 +164,10 @@ export class WebBottomSheet extends LitElement {
     this.bottomSheetRef.value?.addEventListener(
       "touchmove",
       (event) => {
-        if (event.target === this.panelRef.value && !this.isScrollTop) {
+        if (
+          event.target === this.panelRef.value &&
+          !this.singleton.isScrollTop
+        ) {
           return;
         }
 
@@ -166,7 +182,10 @@ export class WebBottomSheet extends LitElement {
     this.bottomSheetRef.value?.addEventListener(
       "touchend",
       (event) => {
-        if (event.target === this.panelRef.value && !this.isScrollTop) {
+        if (
+          event.target === this.panelRef.value &&
+          !this.singleton.isScrollTop
+        ) {
           return;
         }
 
@@ -178,7 +197,10 @@ export class WebBottomSheet extends LitElement {
     this.bottomSheetRef.value?.addEventListener(
       "mousedown",
       (event) => {
-        if (event.target === this.panelRef.value && !this.isScrollTop) {
+        if (
+          event.target === this.panelRef.value &&
+          !this.singleton.isScrollTop
+        ) {
           return;
         }
 
@@ -193,7 +215,10 @@ export class WebBottomSheet extends LitElement {
     this.bottomSheetRef.value?.addEventListener(
       "mousemove",
       (event) => {
-        if (event.target === this.panelRef.value && !this.isScrollTop) {
+        if (
+          event.target === this.panelRef.value &&
+          !this.singleton.isScrollTop
+        ) {
           return;
         }
 
@@ -208,7 +233,10 @@ export class WebBottomSheet extends LitElement {
     this.bottomSheetRef.value?.addEventListener(
       "mouseup",
       (event) => {
-        if (event.target === this.panelRef.value && !this.isScrollTop) {
+        if (
+          event.target === this.panelRef.value &&
+          !this.singleton.isScrollTop
+        ) {
           return;
         }
 

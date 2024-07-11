@@ -30,16 +30,20 @@ export class ModalAnimator {
         easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
       },
     ).onfinish = () => {
-      this.singleton.setPositionStatus(
-        this.singleton.props["snap-point"] ? "snap" : "full",
-      );
       this.singleton.setBottom(this.singleton.snapPointPosition);
+      this.singleton.removeWillChangeBottom();
+
+      if (
+        this.singleton.bottomSheetRef?.value?.getBoundingClientRect().top === 0
+      ) {
+        this.singleton.setPositionStatus("full");
+      } else {
+        this.singleton.setPositionStatus("snap");
+      }
 
       if (this.singleton.props["is-scroll-lock"]) {
         setPageScrollable("hidden");
       }
-
-      this.singleton.removeWillChangeBottom();
     };
   }
 
