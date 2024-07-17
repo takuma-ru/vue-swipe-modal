@@ -31,7 +31,7 @@ export class WebBottomSheet extends LitElement {
   private pointerEventProcessor: PointerEventProcessor;
 
   // === Props ===
-  @property({ attribute: "open", type: Boolean })
+  @property({ attribute: "open", type: Boolean, converter: booleanConverter })
   accessor open: WebBottomSheetProps["open"] = false;
 
   @property({ attribute: "snap-point", type: String })
@@ -135,8 +135,9 @@ export class WebBottomSheet extends LitElement {
     });
 
     this.modalRef.value?.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+      // NOTE: この処理の影響で、Reactの onClick イベントよりもこのイベントが発火してしまう
+      // event.preventDefault();
+      // event.stopPropagation();
 
       if (event.target === this.modalRef.value) {
         this.singleton.dispatchOnCloseEvent();
