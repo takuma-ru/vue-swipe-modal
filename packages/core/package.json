@@ -53,7 +53,7 @@
     "README.md"
   ],
   "scripts": {
-    "dev": "vite --port 3122",
+    "dev": "vite --port 52100",
     "build": "vite build && tsc && pnpm wca:all",
     "build:watch": "concurrently \"vite build --watch\" \"tsc -w\"",
     "preview": "vite preview",

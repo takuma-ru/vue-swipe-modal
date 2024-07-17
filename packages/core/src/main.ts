@@ -3,6 +3,6 @@ import { WebBottomSheet } from "./components/web-bottom-sheet.ce";
 import { WebBottomSheetProps } from "./types/web-bottom-sheet.type";
 
 export { WebBottomSheet };
-export default WebBottomSheet;
-
 export type { WebBottomSheetProps };
+
+export default WebBottomSheet;

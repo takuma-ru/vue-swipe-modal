@@ -1,7 +1,7 @@
 {
   "name": "docs",
   "scripts": {
-    "dev": "vitepress dev --port 3120",
+    "dev": "vitepress dev --port 52109",
     "build": "vitepress build",
     "preview": "vitepress preview"
   },

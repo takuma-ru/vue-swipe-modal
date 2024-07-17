@@ -50,7 +50,7 @@
     }
   },
   "scripts": {
-    "dev": "vite --port 3124",
+    "dev": "vite --port 52104",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
