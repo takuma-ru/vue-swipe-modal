@@ -1,0 +1,71 @@
+{
+  "name": "@web-bottom-sheet/vue",
+  "description": "Web modal component that can be opened and closed by swiping",
+  "version": "0.0.0",
+  "private": false,
+  "author": "takuma-ru <takuma-ru@takumaru.dev> (https://github.com/takuma-ru/)",
+  "keywords": [
+    "web-components",
+    "swiping",
+    "bottom-sheet",
+    "modal",
+    "dialog",
+    "vue",
+    "vue.js",
+    "nuxt",
+    "nuxt.js",
+    "swipe",
+    "swipeble",
+    "pwa"
+  ],
+  "homepage": "https://web-bottom-sheet.takumaru.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takuma-ru/web-bottom-sheet"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/web-bottom-sheet/issues",
+    "email": "takuma-ru@takumaru.dev"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/vue.umd.cjs",
+  "module": "./dist/vue.js",
+  "types": "./dist/vue.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/vue.js",
+        "types": "./dist/vue.d.ts"
+      },
+      "require": {
+        "default": "./dist/vue.cjs",
+        "types": "./dist/vue.d.ts"
+      }
+    }
+  },
+  "scripts": {
+    "dev": "vite --port 3124",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@takuma-ru/vue-swipe-modal": "^5.0.5",
+    "@vueuse/core": "^10.9.0",
+    "@web-bottom-sheet/core": "workspace:*",
+    "vue": "^3.4.21"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
+    "vite-plugin-dts": "^3.9.1",
+    "vue-tsc": "^2.0.6"
+  }
+}
