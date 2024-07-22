@@ -1,47 +1,59 @@
+import React from "react";
 import { useState } from "react";
 import "./App.css";
-import React from "react";
-import { BottomSheet } from "../src/components/BottomSheet";
+import { BottomSheet } from "../src/main";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(0);
 
+  const [props, setProps] = useState({
+    snapPoint: "auto",
+    isBackdrop: true,
+    isDragHandle: true,
+    isFullscreen: true,
+    isPersistent: false,
+    isScrollLock: true,
+  });
+
   const handleIncrement = () => {
-    console.log("handleIncrement");
     setCount(count + 1);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
   };
 
   return (
     <>
-      <h2>@web-bottom-sheet/vue</h2>
+      <h2>@web-bottom-sheet/react</h2>
       <button onClick={() => setIsOpen(true)}>open</button>
-      <button onClick={handleIncrement}>count: {count}</button>
 
       <BottomSheet
         open={isOpen}
-        snapPoint={"auto"}
-        isBackdrop={true}
-        onClose={() => {
-          setIsOpen(false);
+        snapPoint={props.snapPoint}
+        isBackdrop={props.isBackdrop}
+        isDragHandle={props.isDragHandle}
+        isFullscreen={props.isFullscreen}
+        isPersistent={props.isPersistent}
+        isScrollLock={props.isScrollLock}
+        onClose={handleClose}
+        onChangePositionStatus={(e) => {
+          // console.log("onChangePositionStatus");
+          console.log("onChangePositionStatus", e.detail.positionStatus);
         }}
       >
-        <button
-          onClick={() => {
-            setIsOpen(false);
-          }}
-        >
-          close
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            handleIncrement();
-          }}
-        >
-          count: {count}
-        </button>
+        <div className="panel">
+          <p>This is contents.</p>
+          <button onClick={handleClose}>close</button>
+          <button
+            onClick={(e) => {
+              handleIncrement();
+            }}
+          >
+            count: {count}
+          </button>
+        </div>
       </BottomSheet>
     </>
   );

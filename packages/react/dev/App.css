@@ -4,3 +4,28 @@
   padding: 2rem;
   text-align: center;
 }
+
+web-bottom-sheet::part(dialog) {
+  background-color: #242424;
+  border-radius: 8px 8px 0 0;
+  box-sizing: border-box;
+}
+
+web-bottom-sheet::part(dialog):focus {
+  outline-color: #646cff;
+}
+
+web-bottom-sheet::part(dialog)::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+@media (prefers-color-scheme: light) {
+  web-bottom-sheet::part(dialog) {
+    background-color: #ffffff;
+  }
+}
+.panel {
+  padding: 16px;
+}
