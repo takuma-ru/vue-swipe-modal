@@ -1,6 +1,7 @@
 import { EventName, createComponent } from "@lit/react";
 import WebBottomSheet, {
   ChangePositionStatusEvent,
+  CloseEvent,
 } from "@web-bottom-sheet/core";
 import React from "react";
 
@@ -9,7 +10,7 @@ export const BottomSheet = createComponent({
   elementClass: WebBottomSheet,
   react: React,
   events: {
-    onClose: "on-close",
+    onClose: "on-close" as EventName<CloseEvent>,
     onChangePositionStatus:
       "on-change-position-status" as EventName<ChangePositionStatusEvent>,
   },
