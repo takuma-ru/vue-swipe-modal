@@ -7,7 +7,7 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(0);
 
-  const [props, setProps] = useState({
+  const [props, _setProps] = useState({
     snapPoint: "auto",
     isBackdrop: true,
     isDragHandle: true,
@@ -47,7 +47,7 @@ const App = () => {
           <p>This is contents.</p>
           <button onClick={handleClose}>close</button>
           <button
-            onClick={(e) => {
+            onClick={() => {
               handleIncrement();
             }}
           >

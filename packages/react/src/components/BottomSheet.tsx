@@ -1,7 +1,7 @@
-import { EventName, createComponent } from "@lit/react";
+import { type EventName, createComponent } from "@lit/react";
 import WebBottomSheet, {
-  ChangePositionStatusEvent,
-  CloseEvent,
+  type ChangePositionStatusEvent,
+  type CloseEvent,
 } from "@web-bottom-sheet/core";
 import React from "react";
 

@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import dts from "vite-plugin-dts";
 
@@ -9,13 +9,12 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: tag => tag.includes("web-"),
+          isCustomElement: (tag) => tag.includes("web-"),
         },
       },
     }),
     cssInjectedByJsPlugin(),
     dts({ rollupTypes: true }),
-
   ],
 
   build: {
@@ -25,14 +24,10 @@ export default defineConfig({
       entry: "src/main.ts",
       name: "vue",
       fileName: "vue",
-      formats: [
-        "es",
-        "cjs",
-        "umd",
-      ],
+      formats: ["es", "cjs", "umd"],
     },
     rollupOptions: {
-      external: [ "vue" ],
+      external: ["vue"],
       output: {
         exports: "named",
         manualChunks: undefined,

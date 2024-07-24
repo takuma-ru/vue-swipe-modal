@@ -52,6 +52,12 @@
   "scripts": {
     "dev": "vite --port 52104",
     "build": "vue-tsc && vite build",
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write",
+    "format": "biome format",
+    "format:fix": "biome format --write",
+    "check": "biome check",
+    "check:fix": "biome check --write",
     "preview": "vite preview"
   },
   "dependencies": {

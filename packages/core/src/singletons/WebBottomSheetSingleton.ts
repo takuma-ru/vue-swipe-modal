@@ -1,23 +1,6 @@
-import { Ref } from "lit-html/directives/ref.js";
-import { WebBottomSheetProps } from "../main";
-
-export class CloseEvent extends CustomEvent<void> {
-  constructor() {
-    super("on-close", { bubbles: true, composed: true });
-  }
-}
-
-export class ChangePositionStatusEvent extends CustomEvent<{
-  positionStatus: "full" | "snap" | "close";
-}> {
-  constructor(positionStatus: "full" | "snap" | "close") {
-    super("on-change-position-status", {
-      bubbles: true,
-      composed: true,
-      detail: { positionStatus },
-    });
-  }
-}
+import type { Ref } from "lit-html/directives/ref.js";
+import { ChangePositionStatusEvent, CloseEvent } from "../classes/Events";
+import type { WebBottomSheetProps } from "../main";
 
 export class WebBottomSheetSingleton {
   static instance: WebBottomSheetSingleton;
