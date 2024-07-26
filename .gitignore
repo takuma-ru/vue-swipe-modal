@@ -20,7 +20,7 @@ dist
 tsconfig.tsbuildinfo
 
 # Visual Studio Code configs
-.vscode/
+# .vscode/
 
 # JetBrains IDEs
 .idea/

@@ -180,6 +180,11 @@
       }
     }
   },
+  "javascript": {
+    "formatter": {
+      "trailingCommas": "all"
+    }
+  },
   "overrides": [
     {
       "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
@@ -210,6 +215,17 @@
             "noUnsafeNegation": "off",
             "useGetterReturn": "off",
             "useValidTypeof": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["*.vue"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off",
+            "useHookAtTopLevel": "off"
           }
         }
       }

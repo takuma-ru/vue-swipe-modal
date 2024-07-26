@@ -3,34 +3,36 @@ import { useVModel } from "@vueuse/core";
 import type { WebBottomSheetProps } from "@web-bottom-sheet/core";
 import { onMounted, ref } from "vue";
 
-// biome-ignore lint/correctness/noUndeclaredVariables: <explanation>
-const props = withDefaults(
-  defineProps<{
-    open?: WebBottomSheetProps["open"];
-    snapPoint?: WebBottomSheetProps["snap-point"];
-    isBackdrop?: WebBottomSheetProps["is-backdrop"];
-    isDragHandle?: WebBottomSheetProps["is-drag-handle"];
-    isFullscreen?: WebBottomSheetProps["is-fullscreen"];
-    isPersistent?: WebBottomSheetProps["is-persistent"];
-    isScrollLock?: WebBottomSheetProps["is-scroll-lock"];
-  }>(),
-  {
-    open: false,
-    snapPoint: "auto",
-    isBackdrop: true,
-    isDragHandle: true,
-    isFullscreen: true,
-    isPersistent: false,
-    isScrollLock: true,
-  },
-);
+type VueWebBottomSheetProps = {
+  open: WebBottomSheetProps["open"];
+  snapPoint: WebBottomSheetProps["snap-point"];
+  isBackdrop: WebBottomSheetProps["is-backdrop"];
+  isDragHandle: WebBottomSheetProps["is-drag-handle"];
+  isFullscreen: WebBottomSheetProps["is-fullscreen"];
+  isPersistent: WebBottomSheetProps["is-persistent"];
+  isScrollLock: WebBottomSheetProps["is-scroll-lock"];
+};
+
+const propsDefault: VueWebBottomSheetProps = {
+  open: false,
+  snapPoint: "auto",
+  isBackdrop: true,
+  isDragHandle: true,
+  isFullscreen: true,
+  isPersistent: false,
+  isScrollLock: true,
+};
+
+const props = withDefaults(defineProps<VueWebBottomSheetProps>(), {
+  ...propsDefault,
+  snapPoint: "auto",
+});
 
 const emit = defineEmits<{
   (event: "onClose", value: boolean): void;
   (event: "onLoaded"): void;
   (event: "update:open", value: boolean): void;
 }>();
-// biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
 const modelValue = useVModel(props, "open", emit);
 const onClose = () => {
   emit("onClose", false);

@@ -39,7 +39,7 @@ const App = () => {
         isScrollLock={props.isScrollLock}
         onClose={handleClose}
         onChangePositionStatus={(e) => {
-          // console.log("onChangePositionStatus");
+          // biome-ignore lint/suspicious/noConsoleLog: <explanation>
           console.log("onChangePositionStatus", e.detail.positionStatus);
         }}
       >

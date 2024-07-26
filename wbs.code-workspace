@@ -64,7 +64,7 @@
       "source.addMissingImports": "explicit",
     },
 
-    "stylelint.enable": false,
+    "biome.searchInPath": true,
     "emmet.triggerExpansionOnTab": true,
     "cSpell.words": ["antfu", "biomejs"],
     "terminal.integrated.cwd": "${workspaceFolder}",

@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "check": "turbo run check",
+    "check:fix": "turbo run check:fix",
     "p:core": "pnpm -C packages/core",
     "p:wbs": "pnpm -C packages/web-bottom-sheets",
     "p:angular": "pnpm -C packages/angular",
@@ -14,7 +16,7 @@
     "doc": "pnpm -C docs"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.1",
+    "@biomejs/biome": "^1.8.3",
     "turbo": "^2.0.6"
   },
   "engines": {
