@@ -11,7 +11,7 @@ import { createRef, ref } from "lit/directives/ref.js";
 import { ModalAnimator } from "../classes/ModalAnimator";
 import { PointerEventProcessor } from "../classes/PointerEventProcessor";
 import { WebBottomSheetSingleton } from "../singletons/WebBottomSheetSingleton";
-import { resetCss } from "../styles/resetCss";
+import resetStyles from "../styles/reset.scss?litSass";
 import type { WebBottomSheetProps } from "../types/web-bottom-sheet.type";
 import { booleanConverter } from "../utils/propertyConverter";
 import styles from "./web-bottom-sheet.scss?litSass";
@@ -31,7 +31,7 @@ export class WebBottomSheet extends LitElement {
   private pointerEventProcessor: PointerEventProcessor;
 
   // === Props ===
-  @property({ attribute: "open", type: Boolean })
+  @property({ attribute: "open", type: Boolean, converter: booleanConverter })
   accessor open: WebBottomSheetProps["open"] = false;
 
   @property({ attribute: "snap-point", type: String })
@@ -135,8 +135,9 @@ export class WebBottomSheet extends LitElement {
     });
 
     this.modalRef.value?.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+      // NOTE: この処理の影響で、Reactの onClick イベントよりもこのイベントが発火してしまう
+      // event.preventDefault();
+      // event.stopPropagation();
 
       if (event.target === this.modalRef.value) {
         this.singleton.dispatchOnCloseEvent();
@@ -275,7 +276,7 @@ export class WebBottomSheet extends LitElement {
   }
 
   // === Render ===
-  static readonly styles: CSSResultArray = [resetCss, styles];
+  static readonly styles: CSSResultArray = [resetStyles, styles];
   protected render() {
     return html`
       <dialog

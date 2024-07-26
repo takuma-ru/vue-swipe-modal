@@ -45,15 +45,27 @@
         "default": "./dist/core.cjs",
         "types": "./dist/types/main.d.ts"
       }
+    },
+    "./@types": {
+      "import": "./dist/types/main.d.ts",
+      "require": "./dist/types/main.d.ts"
+    },
+    "./wca/md": {
+      "import": "./dist/wca/markdown/web-bottom-sheet.md",
+      "require": "./dist/wca/markdown/web-bottom-sheet.md"
+    },
+    "./wca/vscode": {
+      "import": "./dist/wca/web-bottom-sheet.vscode.json",
+      "require": "./dist/wca/web-bottom-sheet.vscode.json"
+    },
+    "./wca/json": {
+      "import": "./dist/wca/web-bottom-sheet.json",
+      "require": "./dist/wca/web-bottom-sheet.json"
     }
   },
-  "files": [
-    "dist/*",
-    "LICENSE",
-    "README.md"
-  ],
+  "files": ["dist/*", "LICENSE", "README.md"],
   "scripts": {
-    "dev": "vite --port 3122",
+    "dev": "vite --port 52100",
     "build": "vite build && tsc && pnpm wca:all",
     "build:watch": "concurrently \"vite build --watch\" \"tsc -w\"",
     "preview": "vite preview",
@@ -65,9 +77,9 @@
     "check:fix": "biome check --write",
     "sb:dev": "storybook dev -p 3123 --no-open",
     "sb:build": "storybook build",
-    "wca:json": "web-component-analyzer src/components/**/*.ce.ts --format json --outFile dist/wca/vum-custom-elements.json",
+    "wca:json": "web-component-analyzer src/components/**/*.ce.ts --format json --outFile dist/wca/web-bottom-sheet.json",
     "wca:md": "web-component-analyzer src/components/**/*.ce.ts --format markdown --outDir dist/wca/markdown",
-    "wca:vscode": "web-component-analyzer src/components/**/*.ce.ts --format vscode --outFile dist/wca/vscode-vum-custom-data.json",
+    "wca:vscode": "web-component-analyzer src/components/**/*.ce.ts --format vscode --outFile dist/wca/web-bottom-sheet.vscode.json",
     "wca:all": "pnpm wca:json && pnpm wca:md && pnpm wca:vscode"
   },
   "dependencies": {

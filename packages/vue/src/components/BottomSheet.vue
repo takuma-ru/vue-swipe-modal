@@ -22,7 +22,7 @@ const props = withDefaults(
     isFullscreen: true,
     isPersistent: false,
     isScrollLock: true,
-  }
+  },
 );
 
 const emit = defineEmits<{

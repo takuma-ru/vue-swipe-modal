@@ -1,5 +1,6 @@
-import { Ref } from "lit-html/directives/ref.js";
-import { WebBottomSheetProps } from "../main";
+import type { Ref } from "lit-html/directives/ref.js";
+import { ChangePositionStatusEvent, CloseEvent } from "../classes/Events";
+import type { WebBottomSheetProps } from "../main";
 
 export class WebBottomSheetSingleton {
   static instance: WebBottomSheetSingleton;
@@ -90,7 +91,13 @@ export class WebBottomSheetSingleton {
   }
 
   setPositionStatus(value: typeof this._positionStatus) {
+    const shouldDispatchEvent = this._positionStatus !== value;
+
     this._positionStatus = value;
+
+    if (shouldDispatchEvent) {
+      this.dispatchOnChangePositionStatusEvent();
+    }
   }
 
   setIsDragging(value: typeof this._isDragging) {
@@ -123,17 +130,12 @@ export class WebBottomSheetSingleton {
 
   // == methods ==
   dispatchOnCloseEvent() {
-    this.modalRef?.value?.dispatchEvent(
-      new CustomEvent("on-close", { bubbles: true, composed: true }),
-    );
+    this.modalRef?.value?.dispatchEvent(new CloseEvent());
   }
 
   dispatchOnChangePositionStatusEvent() {
     this.modalRef?.value?.dispatchEvent(
-      new CustomEvent("on-change-position-status", {
-        bubbles: true,
-        composed: true,
-      }),
+      new ChangePositionStatusEvent(this.positionStatus),
     );
   }
 

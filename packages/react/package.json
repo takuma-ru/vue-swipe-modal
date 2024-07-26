@@ -1,6 +1,5 @@
 {
-  "name": "@web-bottom-sheet/vue",
-  "description": "Web modal component that can be opened and closed by swiping",
+  "name": "@web-bottom-sheet/react",
   "version": "0.0.0",
   "private": false,
   "author": "takuma-ru <takuma-ru@takumaru.dev> (https://github.com/takuma-ru/)",
@@ -10,10 +9,10 @@
     "bottom-sheet",
     "modal",
     "dialog",
-    "vue",
-    "vue.js",
-    "nuxt",
-    "nuxt.js",
+    "react",
+    "react.js",
+    "next",
+    "next.js",
     "swipe",
     "swipeble",
     "pwa"
@@ -34,24 +33,24 @@
   },
   "license": "ISC",
   "type": "module",
-  "main": "./dist/vue.umd.cjs",
-  "module": "./dist/vue.js",
-  "types": "./dist/vue.d.ts",
+  "main": "./dist/react.umd.cjs",
+  "module": "./dist/react.js",
+  "types": "./dist/react.d.ts",
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/vue.js",
-        "types": "./dist/vue.d.ts"
+        "default": "./dist/react.js",
+        "types": "./dist/react.d.ts"
       },
       "require": {
-        "default": "./dist/vue.cjs",
-        "types": "./dist/vue.d.ts"
+        "default": "./dist/react.cjs",
+        "types": "./dist/react.d.ts"
       }
     }
   },
   "scripts": {
-    "dev": "vite --port 52104",
-    "build": "vue-tsc && vite build",
+    "dev": "vite --port 52102",
+    "build": "vite build",
     "lint": "biome lint",
     "lint:fix": "biome lint --write",
     "format": "biome format",
@@ -61,17 +60,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@takuma-ru/vue-swipe-modal": "^5.0.5",
-    "@vueuse/core": "^10.9.0",
+    "@lit/react": "^1.0.5",
     "@web-bottom-sheet/core": "workspace:*",
-    "vue": "^3.4.21"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vite-plugin-css-injected-by-js": "^3.5.1",
-    "vite-plugin-dts": "^3.9.1",
-    "vue-tsc": "^2.0.6"
+    "vite": "^5.3.4",
+    "vite-plugin-dts": "^3.9.1"
   }
 }

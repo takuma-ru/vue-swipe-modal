@@ -9,7 +9,7 @@ const option = ref({
   isBackdrop: true,
   isDragHandle: true,
   isFullscreen: true,
-  isPersistent: true,
+  isPersistent: false,
   isScrollLock: true,
 });
 </script>
@@ -34,7 +34,6 @@ const option = ref({
       id="isBackdrop"
       name="isBackdrop"
       type="checkbox"
-      checked
     />
   </div>
 
@@ -45,7 +44,6 @@ const option = ref({
       id="isDragHandle"
       name="isDragHandle"
       type="checkbox"
-      checked
     />
   </div>
 
@@ -56,7 +54,6 @@ const option = ref({
       id="isFullscreen"
       name="isFullscreen"
       type="checkbox"
-      checked
     />
   </div>
 
@@ -67,7 +64,6 @@ const option = ref({
       id="isPersistent"
       name="isPersistent"
       type="checkbox"
-      checked
     />
   </div>
 
@@ -78,7 +74,6 @@ const option = ref({
       id="isScrollLock"
       name="isScrollLock"
       type="checkbox"
-      checked
     />
   </div>
 

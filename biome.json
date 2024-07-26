@@ -80,6 +80,8 @@
       "style": {
         "noCommaOperator": "warn",
         "noInferrableTypes": "error",
+        "useImportType": "error",
+        "useNodejsImportProtocol": "error",
         "noNamespace": "error",
         "noNonNullAssertion": "warn",
         "noRestrictedGlobals": {
