@@ -17,6 +17,10 @@
       "path": "packages/core",
     },
     {
+      "name": "📦 core-old",
+      "path": "packages/core-old",
+    },
+    {
       "name": "📦 angular",
       "path": "packages/angular",
     },
@@ -55,6 +59,9 @@
       "editor.defaultFormatter": "biomejs.biome",
     },
     "[css]": {
+      "editor.defaultFormatter": "biomejs.biome",
+    },
+    "[vue]": {
       "editor.defaultFormatter": "biomejs.biome",
     },
 

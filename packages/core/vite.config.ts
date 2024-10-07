@@ -1,20 +1,38 @@
-import { unpluginLitSass } from "unplugin-lit-sass";
+import vue from "@vitejs/plugin-vue";
+import Unimport from "unimport/unplugin";
 import { defineConfig } from "vite";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import dts from "vite-plugin-dts";
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [unpluginLitSass.vite()],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes("web-"),
+        },
+      },
+    }),
+    Unimport.vite({
+      presets: ["vue", "@vueuse/core"],
+      dts: true,
+    }),
+    cssInjectedByJsPlugin(),
+    dts({ rollupTypes: true }),
+  ],
 
   build: {
     outDir: "./dist",
-    minify: true,
+    cssCodeSplit: true,
     lib: {
       entry: "src/main.ts",
-      name: "core",
-      fileName: "core",
+      name: "vue",
+      fileName: "vue",
       formats: ["es", "cjs", "umd"],
     },
     rollupOptions: {
-      external: /^lit/,
+      external: ["vue"],
       output: {
         exports: "named",
         manualChunks: undefined,

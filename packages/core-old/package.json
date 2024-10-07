@@ -1,0 +1,108 @@
+{
+  "name": "@web-bottom-sheet/core",
+  "description": "Web modal component that can be opened and closed by swiping",
+  "version": "0.0.0",
+  "private": false,
+  "author": "takuma-ru <takuma-ru@takumaru.dev> (https://github.com/takuma-ru/)",
+  "keywords": [
+    "web-components",
+    "swiping",
+    "lit",
+    "bottom-sheet",
+    "modal",
+    "dialog",
+    "vue",
+    "react",
+    "svelte",
+    "angular"
+  ],
+  "homepage": "https://web-bottom-sheet.takumaru.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takuma-ru/web-bottom-sheet"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/web-bottom-sheet/issues",
+    "email": "takuma-ru@takumaru.dev"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/core.umd.cjs",
+  "module": "./dist/core.js",
+  "types": "./dist/types/main.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/core.js",
+        "types": "./dist/types/main.d.ts"
+      },
+      "require": {
+        "default": "./dist/core.cjs",
+        "types": "./dist/types/main.d.ts"
+      }
+    },
+    "./@types": {
+      "import": "./dist/types/main.d.ts",
+      "require": "./dist/types/main.d.ts"
+    },
+    "./wca/md": {
+      "import": "./dist/wca/markdown/web-bottom-sheet.md",
+      "require": "./dist/wca/markdown/web-bottom-sheet.md"
+    },
+    "./wca/vscode": {
+      "import": "./dist/wca/web-bottom-sheet.vscode.json",
+      "require": "./dist/wca/web-bottom-sheet.vscode.json"
+    },
+    "./wca/json": {
+      "import": "./dist/wca/web-bottom-sheet.json",
+      "require": "./dist/wca/web-bottom-sheet.json"
+    }
+  },
+  "files": ["dist/*", "LICENSE", "README.md"],
+  "scripts": {
+    "dev": "vite --port 52100",
+    "build": "vite build && tsc && pnpm wca:all",
+    "build:watch": "concurrently \"vite build --watch\" \"tsc -w\"",
+    "preview": "vite preview",
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write",
+    "format": "biome format",
+    "format:fix": "biome format --write",
+    "check": "biome check",
+    "check:fix": "biome check --write",
+    "sb:dev": "storybook dev -p 3123 --no-open",
+    "sb:build": "storybook build",
+    "wca:json": "web-component-analyzer src/components/**/*.ce.ts --format json --outFile dist/wca/web-bottom-sheet.json",
+    "wca:md": "web-component-analyzer src/components/**/*.ce.ts --format markdown --outDir dist/wca/markdown",
+    "wca:vscode": "web-component-analyzer src/components/**/*.ce.ts --format vscode --outFile dist/wca/web-bottom-sheet.vscode.json",
+    "wca:all": "pnpm wca:json && pnpm wca:md && pnpm wca:vscode"
+  },
+  "dependencies": {
+    "@lit-labs/ssr-client": "^1.1.7",
+    "lit": "^3.1.3",
+    "lit-html": "^3.1.3",
+    "sass": "^1.77.1",
+    "unplugin-lit-sass": "0.0.2-beta.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "1.3.5",
+    "@storybook/addon-essentials": "^8.0.10",
+    "@storybook/addon-links": "^8.0.10",
+    "@storybook/blocks": "^8.0.10",
+    "@storybook/test": "^8.0.10",
+    "@storybook/web-components": "^8.0.10",
+    "@storybook/web-components-vite": "^8.0.10",
+    "@types/node": "^20.12.11",
+    "concurrently": "^8.2.2",
+    "sass-embedded": "^1.77.1",
+    "storybook": "^8.0.10",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "web-component-analyzer": "^2.0.0"
+  }
+}

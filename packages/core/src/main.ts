@@ -1,9 +1,6 @@
-import { ChangePositionStatusEvent, CloseEvent } from "./classes/Events";
-// import "@lit-labs/ssr-client/lit-element-hydrate-support.js";
-import { WebBottomSheet } from "./components/web-bottom-sheet.ce";
-import type { WebBottomSheetProps } from "./types/web-bottom-sheet.type";
+import { defineCustomElement } from "vue";
+import WebBottomSheetCe from "./components/WebBottomSheet/WebBottomSheet.ce.vue";
 
-export { WebBottomSheet, CloseEvent, ChangePositionStatusEvent };
-export type { WebBottomSheetProps };
+const WebBottomSheet = defineCustomElement(WebBottomSheetCe);
 
-export default WebBottomSheet;
+customElements.define("web-bottom-sheet", WebBottomSheet);
