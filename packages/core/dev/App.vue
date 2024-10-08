@@ -93,6 +93,42 @@ const option = ref({
     <div class="panel">
       <p>This is contents.</p>
       <button @click="isOpen = false">close</button>
+      <h3>Web Bottom Sheet</h3>
+      <p>
+        This is a web component that mimics the native bottom sheet. It is
+        implemented using Lit and TypeScript.
+      </p>
+      <web-bottom-sheet-snap-point></web-bottom-sheet-snap-point>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+      <p>5</p>
+      <p>6</p>
+      <p>7</p>
+      <p>8</p>
+      <p>9</p>
+      <p>10</p>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+      <p>5</p>
+      <p>6</p>
+      <p>7</p>
+      <p>8</p>
+      <p>9</p>
+      <p>10</p>
+      <p>1</p>
+      <p>2</p>
+      <p>3</p>
+      <p>4</p>
+      <p>5</p>
+      <p>6</p>
+      <p>7</p>
+      <p>8</p>
+      <p>9</p>
+      <p>10</p>
     </div>
   </web-bottom-sheet>
 </template>

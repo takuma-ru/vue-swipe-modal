@@ -27,8 +27,8 @@ export default defineConfig({
     cssCodeSplit: true,
     lib: {
       entry: "src/main.ts",
-      name: "vue",
-      fileName: "vue",
+      name: "core",
+      fileName: "core",
       formats: ["es", "cjs", "umd"],
     },
     rollupOptions: {
