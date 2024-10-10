@@ -1,36 +1,24 @@
 <script setup lang="ts">
-import { useAnimation } from "../hooks/useAnimation";
-import { useSnap } from "../hooks/useSnap";
+import { useAnimation } from "src/hooks/useAnimation";
+import { useDrag } from "src/hooks/useDrag";
+import { useSnap } from "src/hooks/useSnap";
+import type { WebBottomSheetProps } from "src/types/WebBottomSheet";
+import { setPageScrollable } from "src/utils/setPageScrollable";
 
-type Props = {
-  isBackdrop?: boolean;
-  isDragHandle?: boolean;
-  isFullscreen?: boolean;
-  isPersistent?: boolean;
-  isScrollLock?: boolean;
-};
 const {
   isBackdrop = true,
   isDragHandle = true,
   isFullscreen = true,
   isPersistent = false,
   isScrollLock = true,
-} = defineProps<Props>();
-
-console.info({
-  isBackdrop,
-  isDragHandle,
-  isFullscreen,
-  isPersistent,
-  isScrollLock,
-});
+} = defineProps<WebBottomSheetProps>();
 
 const open = defineModel<boolean>("open", {
   type: Boolean,
   default: false,
 });
-const internalOpen = ref(open.value);
 
+const internalOpen = ref(open.value);
 const dialogRef = ref<HTMLDialogElement | null>(null);
 const panelRef = ref<HTMLDivElement | null>(null);
 
@@ -38,16 +26,21 @@ const { currentSnapPointIndex, snapToIndex } = useSnap({
   dialogRef,
   panelRef,
 });
-
 const { move } = useAnimation({ dialogRef });
+const { onMoveStart, onMove, onMoveEnd } = useDrag({ dialogRef, panelRef });
 
 watch(open, (value) => {
   if (value === true) {
+    if (isScrollLock) {
+      setPageScrollable("hidden");
+    }
+
     internalOpen.value = true;
     dialogRef.value?.showModal();
-    snapToIndex(currentSnapPointIndex.value);
+    snapToIndex(0);
   } else {
     move("-100%", () => {
+      setPageScrollable("reset");
       internalOpen.value = false;
       dialogRef.value?.close();
     });
@@ -61,6 +54,24 @@ watch(open, (value) => {
     :open="internalOpen"
     class="dialog"
     part="dialog"
+    @touchstart="(e) => onMoveStart({
+      event: e,
+      type: 'touch',
+    })"
+    @touchmove="(e) => onMove({
+      event: e,
+      type: 'touch',
+    })"
+    @touchend="onMoveEnd"
+    @mousedown="(e) => onMoveStart({
+      event: e,
+      type: 'mouse',
+    })"
+    @mousemove="(e) => onMove({
+      event: e,
+      type: 'mouse',
+    })"
+    @mouseup="onMoveEnd"
   >
     <div class="bottom-sheet">
       <div ref="panelRef" class="panel">

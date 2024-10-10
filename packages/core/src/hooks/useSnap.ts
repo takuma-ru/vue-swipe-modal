@@ -1,8 +1,10 @@
-import { useAnimation } from "./useAnimation";
+import { useAnimation } from "src/hooks/useAnimation";
+import type { WebBottomSheetProps } from "src/types/WebBottomSheet";
 
 type UseSnapProps = {
   dialogRef: globalThis.Ref<HTMLDialogElement | null>;
   panelRef: globalThis.Ref<HTMLDivElement | null>;
+  isFullscreen?: WebBottomSheetProps["isFullscreen"];
 };
 
 export const useSnap = ({ dialogRef, panelRef }: UseSnapProps) => {
@@ -11,32 +13,60 @@ export const useSnap = ({ dialogRef, panelRef }: UseSnapProps) => {
   const snapPointElements = ref<HTMLElement[]>([]);
   const currentSnapPointIndex = ref<number>(-1);
 
+  const isFullSnapped = computed(
+    () => currentSnapPointIndex.value >= snapPointElements.value.length - 1,
+  );
+
+  const isOpenedFullscreen = computed(
+    () => currentSnapPointIndex.value >= snapPointElements.value.length,
+  );
+
   const snapToIndex = (index: number) => {
-    if (index < 0 || index >= snapPointElements.value.length) {
+    if (!dialogRef.value?.open || isOpenedFullscreen.value) {
       return;
     }
 
-    if (!dialogRef.value?.open) {
-      return;
-    }
+    currentSnapPointIndex.value = index;
 
-    const snapPoint = snapPointElements.value[index];
+    const snapPoint = snapPointElements.value.at(index);
+
     const dialogRect = dialogRef.value.getBoundingClientRect();
-    const snapPointRect = snapPoint.getBoundingClientRect();
     const dialogRefTop = dialogRect.top + window.scrollY;
-    const snapPointTop = snapPointRect.top + window.scrollY;
+    const snapPointRect = snapPoint?.getBoundingClientRect();
+    const snapPointTop = snapPointRect?.top || 0 + window.scrollY;
+
+    if (isFullSnapped.value) {
+      move("0px", ({ position }) => {
+        dialogRef.value?.style.setProperty(
+          "--current-snap-point-position-y",
+          position,
+        );
+      });
+      return;
+    }
 
     if (snapPoint) {
-      move(`calc(min(${snapPointTop - dialogRefTop}px - 100%, 0px))`);
+      move(
+        `calc(min(${snapPointTop - dialogRefTop}px - 100%, 0px))`,
+        ({ position }) => {
+          dialogRef.value?.style.setProperty(
+            "--current-snap-point-position-y",
+            position,
+          );
+        },
+      );
+      return;
     }
+
+    move("-100%", () => {
+      dialogRef.value?.style.removeProperty("--current-snap-point-position-y");
+    });
   };
   const snapToNext = () => {
-    currentSnapPointIndex.value += 1;
-    snapToIndex(currentSnapPointIndex.value);
+    snapToIndex(currentSnapPointIndex.value + 1);
   };
   const snapToPrevious = () => {
-    currentSnapPointIndex.value -= 1;
-    snapToIndex(currentSnapPointIndex.value);
+    snapToIndex(currentSnapPointIndex.value - 1);
   };
 
   const findSnapPoints = (node: Node, snapPoints: HTMLElement[]) => {
@@ -50,24 +80,31 @@ export const useSnap = ({ dialogRef, panelRef }: UseSnapProps) => {
       }
     }
   };
-  watchEffect(() => {
-    const slotElement = dialogRef.value?.querySelector("slot");
+  watch(
+    [dialogRef, panelRef],
+    () => {
+      const slotElement = dialogRef.value?.querySelector("slot");
 
-    if (slotElement) {
-      const assignedNodes = slotElement.assignedNodes();
-      for (const node of assignedNodes) {
-        findSnapPoints(node, snapPointElements.value);
-      }
+      if (slotElement) {
+        const assignedNodes = slotElement.assignedNodes();
+        for (const node of assignedNodes) {
+          findSnapPoints(node, snapPointElements.value);
+        }
 
-      if (snapPointElements.value.length > 0) {
-        currentSnapPointIndex.value = 0;
-        panelRef.value?.style.setProperty("overflow-y", "hidden");
+        if (snapPointElements.value.length > 0) {
+          currentSnapPointIndex.value = -1;
+          panelRef.value?.style.setProperty("overflow-y", "hidden");
+        }
       }
-    }
-  });
+    },
+    {
+      immediate: true,
+    },
+  );
 
   return {
     currentSnapPointIndex: readonly(currentSnapPointIndex),
+    isFullSnapped,
     snapToIndex,
     snapToNext,
     snapToPrevious,

@@ -4,3 +4,4 @@ packages:
 
 catalog:
   "@biomejs/biome": "^1.9.3" # https://www.npmjs.com/package/@biomejs/biome
+  "typescript": "5.6.3" # https://www.typescriptlang.org/

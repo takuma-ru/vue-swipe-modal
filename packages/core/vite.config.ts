@@ -3,10 +3,12 @@ import Unimport from "unimport/unplugin";
 import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import dts from "vite-plugin-dts";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    tsconfigPaths(),
     vue({
       template: {
         compilerOptions: {
@@ -21,6 +23,12 @@ export default defineConfig({
     cssInjectedByJsPlugin(),
     dts({ rollupTypes: true }),
   ],
+
+  resolve: {
+    alias: {
+      src: "/src",
+    },
+  },
 
   build: {
     outDir: "./dist",

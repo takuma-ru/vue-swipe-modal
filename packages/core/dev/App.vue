@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const isOpen = ref(false);
+const isNestedOpen = ref(false);
 
 const option = ref({
   snapPoint: "auto",
@@ -93,12 +94,26 @@ const option = ref({
     <div class="panel">
       <p>This is contents.</p>
       <button @click="isOpen = false">close</button>
+      <button
+        @click="isNestedOpen = true"
+      >
+        Open nested bottom sheet
+      </button>
       <h3>Web Bottom Sheet</h3>
       <p>
         This is a web component that mimics the native bottom sheet. It is
         implemented using Lit and TypeScript.
       </p>
       <web-bottom-sheet-snap-point></web-bottom-sheet-snap-point>
+      <web-bottom-sheet
+       :open="isNestedOpen"
+      >
+        <div class="panel">
+          <p>This is nested contents.</p>
+          <button @click="isNestedOpen = false">close</button>
+          <web-bottom-sheet-snap-point></web-bottom-sheet-snap-point>
+        </div>
+      </web-bottom-sheet>
       <p>1</p>
       <p>2</p>
       <p>3</p>
