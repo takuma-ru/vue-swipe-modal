@@ -93,7 +93,12 @@ const option = ref({
   >
     <div class="panel">
       <p>This is contents.</p>
-      <button @click="isOpen = false">close</button>
+      <button @click="
+        (e) => {
+          e.stopPropagation();
+          isOpen = false;
+        }
+      ">close</button>
       <button
         @click="isNestedOpen = true"
       >
@@ -110,7 +115,10 @@ const option = ref({
       >
         <div class="panel">
           <p>This is nested contents.</p>
-          <button @click="isNestedOpen = false">close</button>
+          <button @click="(e) => {
+            e.stopPropagation()
+            isNestedOpen = false
+          }">close</button>
           <web-bottom-sheet-snap-point></web-bottom-sheet-snap-point>
         </div>
       </web-bottom-sheet>

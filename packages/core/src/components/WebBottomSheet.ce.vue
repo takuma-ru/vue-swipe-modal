@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAnimation } from "src/hooks/useAnimation";
-import { useDrag } from "src/hooks/useDrag";
-import { useSnap } from "src/hooks/useSnap";
+import { useAnimation } from "src/composables/useAnimation";
+import { useDrag } from "src/composables/useDrag";
+import { useSnap } from "src/composables/useSnap";
 import type { WebBottomSheetProps } from "src/types/WebBottomSheet";
 import { setPageScrollable } from "src/utils/setPageScrollable";
 
@@ -22,30 +22,64 @@ const internalOpen = ref(open.value);
 const dialogRef = ref<HTMLDialogElement | null>(null);
 const panelRef = ref<HTMLDivElement | null>(null);
 
-const { currentSnapPointIndex, snapToIndex } = useSnap({
+const { snapToIndex, snapToNext, snapToPrevious } = useSnap({
   dialogRef,
   panelRef,
 });
 const { move } = useAnimation({ dialogRef });
-const { onMoveStart, onMove, onMoveEnd } = useDrag({ dialogRef, panelRef });
-
-watch(open, (value) => {
-  if (value === true) {
-    if (isScrollLock) {
-      setPageScrollable("hidden");
-    }
-
-    internalOpen.value = true;
-    dialogRef.value?.showModal();
-    snapToIndex(0);
-  } else {
-    move("-100%", () => {
-      setPageScrollable("reset");
-      internalOpen.value = false;
-      dialogRef.value?.close();
-    });
-  }
+const { onMoveStart, onMove, onMoveEnd } = useDrag({
+  dialogRef,
+  panelRef,
 });
+
+const handleMoveEnd = ({
+  status,
+}: Parameters<Parameters<typeof onMoveEnd>[0]>[0]) => {
+  if (!open.value) {
+    return;
+  }
+
+  console.log(status);
+
+  switch (status) {
+    case "scrolledUp": {
+      snapToNext();
+      break;
+    }
+    case "scrolledDown": {
+      snapToPrevious();
+      break;
+    }
+    case "noMovement": {
+      move("var(--current-snap-point-position-y)");
+      break;
+    }
+  }
+};
+
+watch(
+  open,
+  (value) => {
+    if (value === true) {
+      if (isScrollLock) {
+        setPageScrollable("hidden");
+      }
+
+      internalOpen.value = true;
+      dialogRef.value?.showModal();
+      snapToIndex(0);
+    } else {
+      snapToIndex(-1, () => {
+        setPageScrollable("reset");
+        internalOpen.value = false;
+        dialogRef.value?.close();
+      });
+    }
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
@@ -54,26 +88,28 @@ watch(open, (value) => {
     :open="internalOpen"
     class="dialog"
     part="dialog"
-    @touchstart="(e) => onMoveStart({
-      event: e,
-      type: 'touch',
-    })"
-    @touchmove="(e) => onMove({
-      event: e,
-      type: 'touch',
-    })"
-    @touchend="onMoveEnd"
-    @mousedown="(e) => onMoveStart({
-      event: e,
-      type: 'mouse',
-    })"
-    @mousemove="(e) => onMove({
-      event: e,
-      type: 'mouse',
-    })"
-    @mouseup="onMoveEnd"
   >
-    <div class="bottom-sheet">
+    <div
+      class="bottom-sheet"
+      @touchstart="(e) => onMoveStart({
+        event: e,
+        type: 'touch',
+      })"
+      @touchmove="(e) => onMove({
+        event: e,
+        type: 'touch',
+      })"
+      @touchend="onMoveEnd(handleMoveEnd)"
+      @mousedown="(e) => onMoveStart({
+        event: e,
+        type: 'mouse',
+      })"
+      @mousemove="(e) => onMove({
+        event: e,
+        type: 'mouse',
+      })"
+      @mouseup="onMoveEnd(handleMoveEnd)"
+    >
       <div ref="panelRef" class="panel">
         <slot />
       </div>

@@ -1,6 +1,3 @@
-import { useAnimation } from "src/hooks/useAnimation";
-import { useSnap } from "src/hooks/useSnap";
-
 type UseDragProps = {
   dialogRef: globalThis.Ref<HTMLDialogElement | null>;
   panelRef: globalThis.Ref<HTMLDivElement | null>;
@@ -16,10 +13,7 @@ type DragEventProps =
       type: "touch";
     };
 
-export const useDrag = ({ dialogRef, panelRef }: UseDragProps) => {
-  const { move } = useAnimation({ dialogRef });
-  const { snapToNext, snapToPrevious } = useSnap({ dialogRef, panelRef });
-
+export const useDrag = ({ dialogRef }: UseDragProps) => {
   const touchStartY = ref<number>(0);
   const diffY = ref<number>(0);
 
@@ -34,7 +28,7 @@ export const useDrag = ({ dialogRef, panelRef }: UseDragProps) => {
   };
 
   const onMove = ({ event, type }: DragEventProps) => {
-    event.stopPropagation();
+    // event.stopPropagation();
 
     if (type === "mouse") {
       diffY.value = touchStartY.value - event.clientY;
@@ -48,18 +42,20 @@ export const useDrag = ({ dialogRef, panelRef }: UseDragProps) => {
     );
   };
 
-  const onMoveEnd = () => {
+  const onMoveEnd = (
+    act: ({
+      status,
+    }: { status: "scrolledUp" | "scrolledDown" | "noMovement" }) => void,
+  ) => {
     if (diffY.value > 40) {
-      snapToNext();
-      return;
+      return act({ status: "scrolledUp" });
     }
 
     if (diffY.value < -40) {
-      snapToPrevious();
-      return;
+      return act({ status: "scrolledDown" });
     }
 
-    move("var(--current-snap-point-position-y)");
+    act({ status: "noMovement" });
   };
 
   return {
