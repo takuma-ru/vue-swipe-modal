@@ -1,66 +1,79 @@
-type UseDragProps = {
-  dialogRef: globalThis.Ref<HTMLDialogElement | null>;
-  panelRef: globalThis.Ref<HTMLDivElement | null>;
+type UseDragParams = {
+  panelRef: Ref<HTMLDivElement | null>;
 };
 
-type DragEventProps =
-  | {
-      event: MouseEvent;
-      type: "mouse";
+export const useDrag = ({ panelRef }: UseDragParams) => {
+  const isDragging = ref<boolean>(false);
+  const dragStartY = ref<number>(0);
+  const dragAmountY = ref<number>(0);
+
+  const onDragStart = (e: MouseEvent | TouchEvent) => {
+    isDragging.value = true;
+
+    if (e instanceof MouseEvent) {
+      dragStartY.value = e.y;
     }
-  | {
-      event: TouchEvent;
-      type: "touch";
-    };
 
-export const useDrag = ({ dialogRef }: UseDragProps) => {
-  const touchStartY = ref<number>(0);
-  const diffY = ref<number>(0);
+    if (e instanceof TouchEvent) {
+      dragStartY.value =
+        e.targetTouches[0].clientY ||
+        e.touches[0].clientY ||
+        e.changedTouches[0].clientY;
+    }
 
-  const onMoveStart = ({ event, type }: DragEventProps) => {
-    // event.preventDefault();
+    panelRef.value?.style.setProperty("overflow-y", "hidden");
+  };
 
-    if (type === "mouse") {
-      touchStartY.value = event.clientY;
-    } else {
-      touchStartY.value = event.touches[0].clientY;
+  const onDragging = (e: MouseEvent | TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isDragging) {
+      return;
+    }
+
+    if (e instanceof MouseEvent) {
+      dragAmountY.value = dragStartY.value - e.y;
+    }
+
+    if (e instanceof TouchEvent) {
+      dragAmountY.value =
+        dragStartY.value -
+        (e.targetTouches[0].clientY ||
+          e.touches[0].clientY ||
+          e.changedTouches[0].clientY);
     }
   };
 
-  const onMove = ({ event, type }: DragEventProps) => {
-    // event.stopPropagation();
+  type ReturnOnDragEnd = "drag-up" | "drag-down" | "not-move" | "drag-cancel";
 
-    if (type === "mouse") {
-      diffY.value = touchStartY.value - event.clientY;
-    } else {
-      diffY.value = touchStartY.value - event.touches[0].clientY;
+  const onDragEnd = (): ReturnOnDragEnd => {
+    isDragging.value = false;
+
+    panelRef.value?.style.removeProperty("overflow-y");
+
+    if (dragAmountY.value > 40) {
+      return "drag-up";
     }
 
-    dialogRef.value?.style.setProperty(
-      "--bottom",
-      `clamp(-100%, calc(var(--current-snap-point-position-y) + ${diffY.value}px), 0px)`,
-    );
-  };
-
-  const onMoveEnd = (
-    act: ({
-      status,
-    }: { status: "scrolledUp" | "scrolledDown" | "noMovement" }) => void,
-  ) => {
-    if (diffY.value > 40) {
-      return act({ status: "scrolledUp" });
+    if (dragAmountY.value < -40) {
+      return "drag-down";
     }
 
-    if (diffY.value < -40) {
-      return act({ status: "scrolledDown" });
+    if (Math.abs(dragAmountY.value) < 0.5) {
+      return "not-move";
     }
 
-    act({ status: "noMovement" });
+    return "drag-cancel";
   };
 
   return {
-    onMoveStart,
-    onMove,
-    onMoveEnd,
+    dragAmountY: readonly(dragAmountY),
+    onDragStart,
+    onDragging,
+    onDragEnd,
   };
 };
+
+// TODO: ドラッグイベントを捌くための関数を実装する
+// TODO: アニメーションに関する処理は行わないこと
