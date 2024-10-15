@@ -1,11 +1,64 @@
 {
   "name": "@web-bottom-sheet/core",
-  "private": false,
+  "description": "Web modal component that can be opened and closed by swiping",
   "version": "0.0.0",
+  "private": false,
+  "author": "takuma-ru <takuma-ru@takumaru.dev> (https://github.com/takuma-ru/)",
+  "keywords": [
+    "web-components",
+    "swiping",
+    "lit",
+    "bottom-sheet",
+    "modal",
+    "dialog",
+    "vue",
+    "react",
+    "svelte",
+    "angular"
+  ],
+  "homepage": "https://web-bottom-sheet.takumaru.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takuma-ru/web-bottom-sheet"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/web-bottom-sheet/issues",
+    "email": "takuma-ru@takumaru.dev"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "license": "ISC",
   "type": "module",
+  "main": "./dist/core.umd.cjs",
+  "module": "./dist/core.js",
+  "types": "./dist/types/main.d.ts",
+  "files": [
+    "dist/*",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/core.js",
+        "types": "./dist/types/main.d.ts"
+      },
+      "require": {
+        "default": "./dist/core.cjs",
+        "types": "./dist/types/main.d.ts"
+      }
+    },
+    "./@types": {
+      "import": "./dist/types/main.d.ts",
+      "require": "./dist/types/main.d.ts"
+    }
+  },
   "scripts": {
     "dev": "vite --port 52100",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "biome lint",
     "format": "biome format",
@@ -19,7 +72,6 @@
     "@biomejs/biome": "catalog:",
     "@vitejs/plugin-vue": "^5.1.4",
     "typescript": "catalog:",
-    "unimport": "^3.13.1",
     "vite": "^5.4.8",
     "vite-plugin-css-injected-by-js": "^3.5.1",
     "vite-plugin-dts": "^3.9.1",

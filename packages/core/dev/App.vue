@@ -4,22 +4,20 @@ import { ref } from "vue";
 const isOpen = ref(false);
 const isNestedOpen = ref(false);
 
-const option = ref({
-  isBackdrop: true,
-  isDragHandle: true,
-  isFullscreen: true,
-  isPersistent: false,
-  isScrollLock: true,
-});
+const isBackdrop = ref(true);
+const isDragHandle = ref(true);
+const isFullscreen = ref(true);
+const isPersistent = ref(false);
+const isScrollLock = ref(true);
 </script>
 
 <template>
   <h2>@web-bottom-sheet/core</h2>
 
   <div class="input-checkbox">
-    <label for="isBackdrop">isBackdrop</label>
+    <label for="isBackdrop">isBackdrop: {{ isBackdrop }}</label>
     <input
-      v-model="option.isBackdrop"
+      v-model="isBackdrop"
       id="isBackdrop"
       name="isBackdrop"
       type="checkbox"
@@ -29,7 +27,7 @@ const option = ref({
   <div class="input-checkbox">
     <label for="isDragHandle">isDragHandle</label>
     <input
-      v-model="option.isDragHandle"
+      v-model="isDragHandle"
       id="isDragHandle"
       name="isDragHandle"
       type="checkbox"
@@ -39,7 +37,7 @@ const option = ref({
   <div class="input-checkbox">
     <label for="isFullscreen">isFullscreen</label>
     <input
-      v-model="option.isFullscreen"
+      v-model="isFullscreen"
       id="isFullscreen"
       name="isFullscreen"
       type="checkbox"
@@ -49,7 +47,7 @@ const option = ref({
   <div class="input-checkbox">
     <label for="isPersistent">isPersistent</label>
     <input
-      v-model="option.isPersistent"
+      v-model="isPersistent"
       id="isPersistent"
       name="isPersistent"
       type="checkbox"
@@ -59,7 +57,7 @@ const option = ref({
   <div class="input-checkbox">
     <label for="isScrollLock">isScrollLock</label>
     <input
-      v-model="option.isScrollLock"
+      v-model="isScrollLock"
       id="isScrollLock"
       name="isScrollLock"
       type="checkbox"
@@ -72,11 +70,11 @@ const option = ref({
 
   <web-bottom-sheet
     :open="isOpen"
-    :is-backdrop="option.isBackdrop"
-    :is-drag-handle="option.isDragHandle"
-    :is-fullscreen="option.isFullscreen"
-    :is-persistent="option.isPersistent"
-    :is-scroll-lock="option.isScrollLock"
+    :is-backdrop="isBackdrop"
+    :is-drag-handle="isDragHandle"
+    :is-fullscreen="isFullscreen"
+    :is-persistent="isPersistent"
+    :is-scroll-lock="isScrollLock"
     @close="() => isOpen = false"
   >
     <div class="panel">

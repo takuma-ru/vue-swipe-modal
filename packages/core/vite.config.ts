@@ -1,5 +1,4 @@
 import vue from "@vitejs/plugin-vue";
-import Unimport from "unimport/unplugin";
 import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import dts from "vite-plugin-dts";
@@ -16,10 +15,14 @@ export default defineConfig({
         },
       },
     }),
-    Unimport.vite({
+    /* Unimport.vite({
       presets: ["vue", "@vueuse/core"],
       dts: true,
-    }),
+      addons: {
+        vueTemplate: true,
+        vueDirectives: true,
+      },
+    }), */
     cssInjectedByJsPlugin(),
     dts({ rollupTypes: true }),
   ],

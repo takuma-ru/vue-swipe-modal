@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, watch } from "vue";
+
 import { useDrag } from "src/composables/useDrag";
 import { useSnapPoint } from "src/composables/useSnapPoint";
 import type { WebBottomSheetProps } from "src/types/WebBottomSheet";
@@ -12,7 +14,7 @@ const KEY_FRAME_ANIMATION_OPTIONS = {
 const {
   open = false,
   isBackdrop = true,
-  isDragHandle = true,
+  isDragHandle: _isDragHandle = true,
   isFullscreen = true,
   isPersistent = false,
   isScrollLock = true,
@@ -25,11 +27,11 @@ const emit = defineEmits<WebBottomSheetEmits>();
 const internalOpen = ref(open);
 const dialogRef = ref<HTMLDialogElement | null>(null);
 const panelRef = ref<HTMLDivElement | null>(null);
-
+const panelObserverTargetRef = ref<HTMLDivElement | null>(null);
 const currentSnapPointPositionY = ref<string>("");
 
 const {
-  isFullSnapped,
+  isFullSnapped: _isFullSnapped,
   isOpenedFullscreen,
   updateSnapPointIndex,
   resetSnapPointIndex,
@@ -51,6 +53,8 @@ const move = (
     return;
   }
 
+  dialogRef.value?.style.setProperty("will-change", "bottom");
+
   const animate = dialogRef.value.animate(
     [
       {
@@ -65,14 +69,15 @@ const move = (
 
   animate.onfinish = () => {
     dialogRef.value?.style.setProperty("--bottom", position);
+    dialogRef.value?.style.removeProperty("will-change");
     onFinish?.({ position });
   };
 };
 
 const moveToSnapPoint = ({
-  snapPointIndex,
+  snapPointIndex: _snapPointIndex,
   snapPointElement,
-  isFullSnapped,
+  isFullSnapped: _isFullSnapped,
   isOpenedFullscreen,
 }: Parameters<
   NonNullable<Parameters<typeof updateSnapPointIndex>["1"]>
@@ -86,7 +91,7 @@ const moveToSnapPoint = ({
   const snapPointRect = snapPointElement?.getBoundingClientRect();
   const snapPointTop = snapPointRect?.top || 0 + window.scrollY;
 
-  if (isOpenedFullscreen) {
+  if (isOpenedFullscreen && isFullscreen) {
     move("0px", ({ position }) => {
       currentSnapPointPositionY.value = position;
     });
@@ -107,7 +112,13 @@ const handleOpen = () => {
   }
 
   internalOpen.value = true;
-  dialogRef.value?.showModal();
+
+  if (isBackdrop) {
+    dialogRef.value?.showModal();
+  } else {
+    dialogRef.value?.show();
+  }
+
   updateSnapPointIndex(
     () => 0,
     (props) => {
@@ -127,15 +138,24 @@ const handleClose = () => {
 };
 
 const handleDragging = (e: MouseEvent | TouchEvent) => {
-  onDragging(e);
-  dialogRef.value?.style.setProperty(
-    "--bottom",
-    `clamp(-100%, calc(${currentSnapPointPositionY.value} + ${dragAmountY.value}px), 0px)`,
-  );
+  onDragging(e, () => {
+    if (isOpenedFullscreen.value && dragAmountY.value > 0) {
+      return;
+    }
+
+    panelRef.value?.style.setProperty("overflow-y", "hidden");
+    dialogRef.value?.style.setProperty("will-change", "bottom");
+    dialogRef.value?.style.setProperty(
+      "--bottom",
+      `clamp(-100%, calc(${currentSnapPointPositionY.value} + ${dragAmountY.value}px), 0px)`,
+    );
+  });
 };
 
 const handleDragEnd = () => {
   const dragStatus = onDragEnd();
+
+  dialogRef.value?.style.removeProperty("will-change");
 
   switch (dragStatus) {
     case "drag-up": {
@@ -149,7 +169,7 @@ const handleDragEnd = () => {
     }
     case "drag-down": {
       return decrementSnapPointIndex((props) => {
-        if (props.snapPointIndex < 0) {
+        if (props.snapPointIndex < 0 && !isPersistent) {
           emit("close", false);
           handleClose();
         }
@@ -187,6 +207,12 @@ watch(
     :open="internalOpen"
     class="dialog"
     part="dialog"
+    @touchstart="(e) => e.stopPropagation()"
+    @touchmove="(e) => e.stopPropagation()"
+    @touchend="(e) => e.stopPropagation()"
+    @mousedown="(e) => e.stopPropagation()"
+    @mousemove="(e) => e.stopPropagation()"
+    @mouseup="(e) => e.stopPropagation()"
   >
     <div
       class="bottom-sheet"
@@ -198,6 +224,7 @@ watch(
       @mouseup="handleDragEnd"
     >
       <div ref="panelRef" class="panel">
+        <div ref="panelObserverTargetRef" class="panel-observer-target"></div>
         <slot />
       </div>
     </div>
@@ -246,6 +273,10 @@ watch(
   .panel {
     grid-row: 2;
     overflow: auto;
+
+    .panel-observer-target {
+      display: contents;
+    }
   }
 
   :host::part(dialog) {

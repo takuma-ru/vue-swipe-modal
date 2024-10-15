@@ -1,3 +1,5 @@
+import { type Ref, readonly, ref, watch } from "vue";
+
 type UseSnapPointParams = {
   dialogRef: Ref<HTMLDialogElement | null>;
 };
@@ -125,6 +127,3 @@ export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
     decrementSnapPointIndex,
   };
 };
-
-// TODO: モーダルがスナップする予定/現在スナップ中のスナップポイントのインデックスを管理する
-// TODO: アニメーションに関する処理は行わないこと

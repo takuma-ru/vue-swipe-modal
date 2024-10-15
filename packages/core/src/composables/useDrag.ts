@@ -1,3 +1,5 @@
+import { type Ref, readonly, ref } from "vue";
+
 type UseDragParams = {
   panelRef: Ref<HTMLDivElement | null>;
 };
@@ -20,15 +22,18 @@ export const useDrag = ({ panelRef }: UseDragParams) => {
         e.touches[0].clientY ||
         e.changedTouches[0].clientY;
     }
-
-    panelRef.value?.style.setProperty("overflow-y", "hidden");
   };
 
-  const onDragging = (e: MouseEvent | TouchEvent) => {
-    e.preventDefault();
+  const onDragging = (e: MouseEvent | TouchEvent, act?: () => void) => {
+    // e.preventDefault();
     e.stopPropagation();
 
-    if (!isDragging) {
+    if (!isDragging.value) {
+      return;
+    }
+
+    if ((panelRef.value?.scrollTop || 0) > 0) {
+      isDragging.value = false;
       return;
     }
 
@@ -43,11 +48,17 @@ export const useDrag = ({ panelRef }: UseDragParams) => {
           e.touches[0].clientY ||
           e.changedTouches[0].clientY);
     }
+
+    act?.();
   };
 
   type ReturnOnDragEnd = "drag-up" | "drag-down" | "not-move" | "drag-cancel";
 
   const onDragEnd = (): ReturnOnDragEnd => {
+    if (!isDragging.value) {
+      return "not-move";
+    }
+
     isDragging.value = false;
 
     panelRef.value?.style.removeProperty("overflow-y");
@@ -74,6 +85,3 @@ export const useDrag = ({ panelRef }: UseDragParams) => {
     onDragEnd,
   };
 };
-
-// TODO: ドラッグイベントを捌くための関数を実装する
-// TODO: アニメーションに関する処理は行わないこと
