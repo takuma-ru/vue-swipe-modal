@@ -78,10 +78,17 @@ export const useDrag = ({ panelRef }: UseDragParams) => {
     return "drag-cancel";
   };
 
+  const reset = () => {
+    isDragging.value = false;
+    dragStartY.value = 0;
+    dragAmountY.value = 0;
+  };
+
   return {
     dragAmountY: readonly(dragAmountY),
     onDragStart,
     onDragging,
     onDragEnd,
+    reset,
   };
 };

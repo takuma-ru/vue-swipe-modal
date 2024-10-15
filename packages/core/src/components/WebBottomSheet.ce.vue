@@ -3,8 +3,8 @@ import { ref, watch } from "vue";
 
 import { useDrag } from "src/composables/useDrag";
 import { useSnapPoint } from "src/composables/useSnapPoint";
-import type { WebBottomSheetProps } from "src/types/WebBottomSheet";
 import { setPageScrollable } from "src/utils/setPageScrollable";
+import type { WebBottomSheetProps } from "../types/WebBottomSheet";
 
 const KEY_FRAME_ANIMATION_OPTIONS = {
   duration: 300,
@@ -37,10 +37,17 @@ const {
   resetSnapPointIndex,
   incrementSnapPointIndex,
   decrementSnapPointIndex,
+  reset: resetSnapPoint,
 } = useSnapPoint({
   dialogRef,
 });
-const { dragAmountY, onDragStart, onDragging, onDragEnd } = useDrag({
+const {
+  dragAmountY,
+  onDragStart,
+  onDragging,
+  onDragEnd,
+  reset: resetDrag,
+} = useDrag({
   panelRef,
 });
 
@@ -131,8 +138,14 @@ const handleClose = () => {
   resetSnapPointIndex(() => {
     move("-100%", () => {
       dialogRef.value?.close();
-      setPageScrollable("reset");
       internalOpen.value = false;
+      currentSnapPointPositionY.value = "";
+      resetDrag();
+      resetSnapPoint();
+
+      if (isScrollLock) {
+        setPageScrollable("reset");
+      }
     });
   });
 };

@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import "./style.css";
-import App from "./App.vue";
 // biome-ignore lint/nursery/useImportRestrictions: <explanation>
-import "../src/main";
+import { resister } from "../src/main";
+import App from "./App.vue";
 
+resister();
 createApp(App).mount("#app");

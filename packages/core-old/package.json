@@ -1,5 +1,5 @@
 {
-  "name": "@web-bottom-sheet/core",
+  "name": "@web-bottom-sheet/old",
   "description": "Web modal component that can be opened and closed by swiping",
   "version": "0.0.0",
   "private": false,
@@ -63,7 +63,11 @@
       "require": "./dist/wca/web-bottom-sheet.json"
     }
   },
-  "files": ["dist/*", "LICENSE", "README.md"],
+  "files": [
+    "dist/*",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "dev": "vite --port 52100",
     "build": "vite build && tsc && pnpm wca:all",

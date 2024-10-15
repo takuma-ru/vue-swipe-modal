@@ -62,6 +62,12 @@ export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
     return updateSnapPointIndex((currentValue) => currentValue - 1, callback);
   };
 
+  const reset = () => {
+    snapPointIndex.value = -1;
+    isFullSnapped.value = false;
+    isOpenedFullscreen.value = false;
+  };
+
   watch(
     dialogRef,
     (dialog) => {
@@ -125,5 +131,6 @@ export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
     resetSnapPointIndex,
     incrementSnapPointIndex,
     decrementSnapPointIndex,
+    reset,
   };
 };

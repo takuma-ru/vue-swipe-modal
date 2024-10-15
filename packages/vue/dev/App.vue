@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { BottomSheet } from "../src/main";
+// biome-ignore lint/correctness/noUnusedImports: <explanation>
+import BottomSheet from "../src/components/BottomSheet.vue";
 
 const isOpen = ref(false);
 
 const option = ref({
-  snapPoint: "auto",
   isBackdrop: true,
   isDragHandle: true,
   isFullscreen: true,
@@ -16,16 +16,6 @@ const option = ref({
 
 <template>
   <h2>@web-bottom-sheet/vue</h2>
-
-  <div class="input-text">
-    <label for="snapPoint">snapPoint</label>
-    <input
-      v-model="option.snapPoint"
-      id="snapPoint"
-      name="snapPoint"
-      type="text"
-    />
-  </div>
 
   <div class="input-checkbox">
     <label for="isBackdrop">isBackdrop</label>
@@ -83,17 +73,17 @@ const option = ref({
 
   <BottomSheet
     :open="isOpen"
-    @on-close="isOpen = false"
-    :snap-point="option.snapPoint"
     :is-backdrop="option.isBackdrop"
     :is-drag-handle="option.isDragHandle"
     :is-fullscreen="option.isFullscreen"
     :is-persistent="option.isPersistent"
     :is-scroll-lock="option.isScrollLock"
+    @close="() => isOpen = false"
   >
     <div class="panel">
-      <p>This is contents.</p>
       <button @click="isOpen = false">close</button>
+      <p>This is contents.</p>
+      <web-bottom-sheet-snap-point />
     </div>
   </BottomSheet>
 </template>

@@ -10,7 +10,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "src/*": ["./src/*"]
     },

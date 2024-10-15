@@ -1,5 +1,7 @@
 packages:
-  - "packages/*"
+  - "packages/core"
+  - "packages/react"
+  - "packages/vue"
   - "docs/"
 
 catalog:
