@@ -32,7 +32,7 @@ const handleClose = () => {
 
   <BottomSheet
     :open="isOpen"
-    @on-close="handleClose"
+    @close="handleClose"
   >
     <div class="panel">
       <p>This is contents.</p>

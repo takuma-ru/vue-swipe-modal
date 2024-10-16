@@ -10,11 +10,11 @@ import type { WebBottomSheetProps } from "../types/WebBottomSheet";
 
 const {
   open = false,
-  isBackdrop = true,
-  isDragHandle: _isDragHandle = true,
-  isFullscreen = true,
-  isPersistent = false,
-  isScrollLock = true,
+  isBackdrop,
+  isDragHandle,
+  isFullscreen,
+  isPersistent,
+  isScrollLock,
 } = defineProps<WebBottomSheetProps>();
 
 type WebBottomSheetEmits = { close: [value: boolean] };
@@ -23,7 +23,7 @@ const emit = defineEmits<WebBottomSheetEmits>();
 const internalOpen = ref(open);
 const dialogRef = ref<HTMLDialogElement | null>(null);
 const panelRef = ref<HTMLDivElement | null>(null);
-// const dragHandleWrapperRef = ref<HTMLDivElement | null>(null);
+const dragHandleWrapperRef = ref<HTMLDivElement | null>(null);
 const panelObserverTargetRef = ref<HTMLDivElement | null>(null);
 
 const {
@@ -36,6 +36,7 @@ const {
   reset: resetSnapPoint,
 } = useSnapPoint({
   dialogRef,
+  panelRef,
 });
 const {
   dragAmountY,
@@ -45,6 +46,7 @@ const {
   reset: resetDrag,
 } = useDrag({
   panelRef,
+  dragHandleWrapperRef,
 });
 const { move, moveToSnapPoint } = useAnimation({ dialogRef });
 
@@ -180,13 +182,15 @@ watch(
       @mousemove="handleDragging"
       @mouseup="handleDragEnd"
     >
-      <!-- <div ref="dragHandleWrapperRef" class="drag-handle-wrapper">
-        <slot name="drag-handle">
-          <div class="drag-handle-default">
-            <div class="drag-handle-default-icon"></div>
-          </div>
-        </slot>
-      </div> -->
+      <template v-if="isDragHandle">
+        <div ref="dragHandleWrapperRef" class="drag-handle-wrapper">
+          <slot name="drag-handle">
+            <div class="drag-handle-default">
+              <div class="drag-handle-default-icon"></div>
+            </div>
+          </slot>
+        </div>
+      </template>
       <div ref="panelRef" class="panel">
         <div ref="panelObserverTargetRef" class="panel-observer-target"></div>
         <slot />

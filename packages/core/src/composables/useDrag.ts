@@ -2,9 +2,10 @@ import { type Ref, readonly, ref } from "vue";
 
 type UseDragParams = {
   panelRef: Ref<HTMLDivElement | null>;
+  dragHandleWrapperRef: Ref<HTMLDivElement | null>;
 };
 
-export const useDrag = ({ panelRef }: UseDragParams) => {
+export const useDrag = ({ panelRef, dragHandleWrapperRef }: UseDragParams) => {
   const isDragging = ref<boolean>(false);
   const dragStartY = ref<number>(0);
   const dragAmountY = ref<number>(0);
@@ -32,7 +33,10 @@ export const useDrag = ({ panelRef }: UseDragParams) => {
       return;
     }
 
-    if ((panelRef.value?.scrollTop || 0) > 0) {
+    if (
+      (panelRef.value?.scrollTop || 0) > 0 &&
+      !dragHandleWrapperRef.value?.contains(e.target as Node)
+    ) {
       isDragging.value = false;
       return;
     }

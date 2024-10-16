@@ -2,9 +2,10 @@ import { type Ref, readonly, ref, watch } from "vue";
 
 type UseSnapPointParams = {
   dialogRef: Ref<HTMLDialogElement | null>;
+  panelRef: Ref<HTMLDivElement | null>;
 };
 
-export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
+export const useSnapPoint = ({ panelRef }: UseSnapPointParams) => {
   /**
    * The index of the snap point.
    */
@@ -68,7 +69,7 @@ export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
     isOpenedFullscreen.value = false;
   };
 
-  watch(
+  /* watch(
     dialogRef,
     (dialog) => {
       if (!dialog) {
@@ -86,10 +87,10 @@ export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
       });
     },
     { immediate: true },
-  );
+  ); */
 
   watch(
-    dialogRef,
+    panelRef,
     () => {
       const findSnapPoints = (node: Node, snapPoints: HTMLElement[]) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
@@ -109,7 +110,7 @@ export const useSnapPoint = ({ dialogRef }: UseSnapPointParams) => {
         }
       };
 
-      const slotElement = dialogRef.value?.querySelector("slot");
+      const slotElement = panelRef.value?.querySelector("slot");
 
       if (slotElement) {
         const assignedNodes = slotElement.assignedNodes();

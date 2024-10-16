@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { toReactive, useVModel } from "@vueuse/core";
+import { useVModel } from "@vueuse/core";
 import { type WebBottomSheetProps, resister } from "@web-bottom-sheet/core";
 import { onMounted, ref } from "vue";
-
-const DialogRef = ref<HTMLElement | null>(null);
 
 const props = defineProps<{
   open?: WebBottomSheetProps["open"];
@@ -14,9 +12,6 @@ const props = defineProps<{
   isScrollLock?: WebBottomSheetProps["isScrollLock"];
 }>();
 
-const { isBackdrop, isDragHandle, isFullscreen, isPersistent, isScrollLock } =
-  toReactive(props);
-
 const emit = defineEmits<{
   (event: "close", value: boolean): void;
   (event: "loaded"): void;
@@ -25,6 +20,7 @@ const emit = defineEmits<{
 const modelValue = useVModel(props, "open", emit);
 const onClose = () => {
   emit("close", false);
+  modelValue.value = false;
 };
 const onLoaded = () => {
   emit("loaded");
@@ -44,13 +40,12 @@ onMounted(() => {
 <template>
   <template v-if="isLoaded">
     <web-bottom-sheet
-      ref="DialogRef"
       :open="modelValue"
-      :isBackdrop="isBackdrop"
-      :isDragHandle="isDragHandle"
-      :isFullscreen="isFullscreen"
-      :isPersistent="isPersistent"
-      :isScrollLock="isScrollLock"
+      :is-backdrop="props.isBackdrop || null"
+      :is-drag-handle="props.isDragHandle || null"
+      :is-fullscreen="props.isFullscreen || null"
+      :is-persistent="props.isPersistent || null"
+      :is-scrollLock="props.isScrollLock || null"
       @close="onClose"
     >
       <slot />
