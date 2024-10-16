@@ -145,9 +145,10 @@ const isScrollLock = ref(true);
 </template>
 
 <style scoped>
-web-bottom-sheet::part(dialog) {
+/* web-bottom-sheet::part(dialog) {
   background-color: #242424;
   border-radius: 8px 8px 0 0;
+  min-width: 100vw;
   box-sizing: border-box;
 }
 
@@ -165,8 +166,8 @@ web-bottom-sheet::part(dialog)::backdrop {
   web-bottom-sheet::part(dialog) {
     background-color: #ffffff;
   }
-}
-.panel {
+} */
+/* .panel {
   padding: 16px;
-}
+} */
 </style>

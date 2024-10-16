@@ -50,6 +50,12 @@ const { move, moveToSnapPoint } = useAnimation({ dialogRef });
 
 const { setCssVar, getCssVar } = cssVar(dialogRef);
 
+// Event Handlers
+const handleClickBackDrop = (e: MouseEvent | ToggleEvent) => {
+  if (e.target === dialogRef.value && !isPersistent) {
+    handleClose();
+  }
+};
 const handleOpen = () => {
   if (isScrollLock) {
     setPageScrollable("hidden");
@@ -70,9 +76,9 @@ const handleOpen = () => {
     },
   );
 };
-
 const handleClose = () => {
   resetSnapPointIndex(() => {
+    emit("close", false);
     move("-100%", () => {
       dialogRef.value?.close();
       internalOpen.value = false;
@@ -87,6 +93,7 @@ const handleClose = () => {
   });
 };
 
+// Drag Handlers
 const handleDragging = (e: MouseEvent | TouchEvent) => {
   onDragging(e, () => {
     if (isOpenedFullscreen.value && dragAmountY.value > 0) {
@@ -101,7 +108,6 @@ const handleDragging = (e: MouseEvent | TouchEvent) => {
     );
   });
 };
-
 const handleDragEnd = () => {
   const dragStatus = onDragEnd();
 
@@ -120,7 +126,6 @@ const handleDragEnd = () => {
     case "drag-down": {
       return decrementSnapPointIndex((props) => {
         if (props.snapPointIndex < 0 && !isPersistent) {
-          emit("close", false);
           handleClose();
         }
 
@@ -139,6 +144,7 @@ const handleDragEnd = () => {
   }
 };
 
+// Watchers
 watch(
   () => open,
   () => {
@@ -163,6 +169,7 @@ watch(
     @mousedown="(e) => e.stopPropagation()"
     @mousemove="(e) => e.stopPropagation()"
     @mouseup="(e) => e.stopPropagation()"
+    @click="handleClickBackDrop"
   >
     <div
       class="bottom-sheet"
@@ -203,11 +210,9 @@ watch(
     position: fixed !important;
     top: auto !important;
     bottom: var(--bottom, 0px);
-    margin: 0;
-    // width: 100% !important;
-    max-width: 100vw !important;
-    // height: 100% !important;
+    height: 100% !important;
     max-height: 100dvh !important;
+    box-sizing: border-box;
 
     &::backdrop {
       user-select: none;
@@ -257,16 +262,5 @@ watch(
     .panel-observer-target {
       display: contents;
     }
-  }
-
-  :host::part(dialog) {
-    border: 1px solid #ccc;
-    overflow-y: auto;
-    padding: 0 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    border-radius: 8px;
-    width: 100vw;
-    height: 100%;
   }
 </style>
