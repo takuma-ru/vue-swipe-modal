@@ -60,22 +60,24 @@ export const useDrag = ({ panelRef }: UseDragParams) => {
     }
 
     isDragging.value = false;
-
     panelRef.value?.style.removeProperty("overflow-y");
 
+    let status: ReturnOnDragEnd = "drag-cancel";
+
     if (dragAmountY.value > 40) {
-      return "drag-up";
+      status = "drag-up";
     }
 
     if (dragAmountY.value < -40) {
-      return "drag-down";
+      status = "drag-down";
     }
 
     if (Math.abs(dragAmountY.value) < 0.5) {
-      return "not-move";
+      status = "not-move";
     }
 
-    return "drag-cancel";
+    dragAmountY.value = 0;
+    return status;
   };
 
   const reset = () => {

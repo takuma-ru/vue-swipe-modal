@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
+import { useAnimation } from "src/composables/useAnimation";
 import { useDrag } from "src/composables/useDrag";
 import { useSnapPoint } from "src/composables/useSnapPoint";
+import { cssVar } from "src/utils/cssVar";
 import { setPageScrollable } from "src/utils/setPageScrollable";
 import type { WebBottomSheetProps } from "../types/WebBottomSheet";
-
-const KEY_FRAME_ANIMATION_OPTIONS = {
-  duration: 300,
-  easing: "cubic-bezier(0.2, 0.0, 0, 1.0)",
-} as const satisfies KeyframeAnimationOptions;
 
 const {
   open = false,
@@ -21,14 +18,13 @@ const {
 } = defineProps<WebBottomSheetProps>();
 
 type WebBottomSheetEmits = { close: [value: boolean] };
-
 const emit = defineEmits<WebBottomSheetEmits>();
 
 const internalOpen = ref(open);
 const dialogRef = ref<HTMLDialogElement | null>(null);
 const panelRef = ref<HTMLDivElement | null>(null);
+// const dragHandleWrapperRef = ref<HTMLDivElement | null>(null);
 const panelObserverTargetRef = ref<HTMLDivElement | null>(null);
-const currentSnapPointPositionY = ref<string>("");
 
 const {
   isFullSnapped: _isFullSnapped,
@@ -50,68 +46,9 @@ const {
 } = useDrag({
   panelRef,
 });
+const { move, moveToSnapPoint } = useAnimation({ dialogRef });
 
-// Animation
-const move = (
-  position: string,
-  onFinish?: ({ position }: { position: string }) => void,
-) => {
-  if (!dialogRef.value?.open) {
-    return;
-  }
-
-  dialogRef.value?.style.setProperty("will-change", "bottom");
-
-  const animate = dialogRef.value.animate(
-    [
-      {
-        bottom: dialogRef.value.style.getPropertyValue("--bottom") || "-100%",
-      },
-      {
-        bottom: position,
-      },
-    ],
-    KEY_FRAME_ANIMATION_OPTIONS,
-  );
-
-  animate.onfinish = () => {
-    dialogRef.value?.style.setProperty("--bottom", position);
-    dialogRef.value?.style.removeProperty("will-change");
-    onFinish?.({ position });
-  };
-};
-
-const moveToSnapPoint = ({
-  snapPointIndex: _snapPointIndex,
-  snapPointElement,
-  isFullSnapped: _isFullSnapped,
-  isOpenedFullscreen,
-}: Parameters<
-  NonNullable<Parameters<typeof updateSnapPointIndex>["1"]>
->["0"]) => {
-  if (!dialogRef.value?.open) {
-    return;
-  }
-
-  const dialogRect = dialogRef.value.getBoundingClientRect();
-  const dialogRefTop = dialogRect.top + window.scrollY;
-  const snapPointRect = snapPointElement?.getBoundingClientRect();
-  const snapPointTop = snapPointRect?.top || 0 + window.scrollY;
-
-  if (isOpenedFullscreen && isFullscreen) {
-    move("0px", ({ position }) => {
-      currentSnapPointPositionY.value = position;
-    });
-    return;
-  }
-
-  move(
-    `calc(min(${snapPointTop - dialogRefTop}px - 100%, 0px))`,
-    ({ position }) => {
-      currentSnapPointPositionY.value = position;
-    },
-  );
-};
+const { setCssVar, getCssVar } = cssVar(dialogRef);
 
 const handleOpen = () => {
   if (isScrollLock) {
@@ -129,7 +66,7 @@ const handleOpen = () => {
   updateSnapPointIndex(
     () => 0,
     (props) => {
-      moveToSnapPoint(props);
+      moveToSnapPoint({ isFullscreen, ...props });
     },
   );
 };
@@ -139,7 +76,7 @@ const handleClose = () => {
     move("-100%", () => {
       dialogRef.value?.close();
       internalOpen.value = false;
-      currentSnapPointPositionY.value = "";
+      setCssVar("CURRENT_SNAP_POINT_POSITION_Y", "");
       resetDrag();
       resetSnapPoint();
 
@@ -158,9 +95,9 @@ const handleDragging = (e: MouseEvent | TouchEvent) => {
 
     panelRef.value?.style.setProperty("overflow-y", "hidden");
     dialogRef.value?.style.setProperty("will-change", "bottom");
-    dialogRef.value?.style.setProperty(
-      "--bottom",
-      `clamp(-100%, calc(${currentSnapPointPositionY.value} + ${dragAmountY.value}px), 0px)`,
+    setCssVar(
+      "BOTTOM",
+      `clamp(-100%, calc(${getCssVar("CURRENT_SNAP_POINT_POSITION_Y")} + ${dragAmountY.value}px), 0px)`,
     );
   });
 };
@@ -177,7 +114,7 @@ const handleDragEnd = () => {
       }
 
       return incrementSnapPointIndex((props) => {
-        moveToSnapPoint(props);
+        moveToSnapPoint({ isFullscreen, ...props });
       });
     }
     case "drag-down": {
@@ -187,11 +124,11 @@ const handleDragEnd = () => {
           handleClose();
         }
 
-        moveToSnapPoint(props);
+        moveToSnapPoint({ isFullscreen, ...props });
       });
     }
     case "drag-cancel": {
-      return move(currentSnapPointPositionY.value);
+      return move(getCssVar("CURRENT_SNAP_POINT_POSITION_Y"));
     }
     case "not-move": {
       return;
@@ -236,6 +173,13 @@ watch(
       @mousemove="handleDragging"
       @mouseup="handleDragEnd"
     >
+      <!-- <div ref="dragHandleWrapperRef" class="drag-handle-wrapper">
+        <slot name="drag-handle">
+          <div class="drag-handle-default">
+            <div class="drag-handle-default-icon"></div>
+          </div>
+        </slot>
+      </div> -->
       <div ref="panelRef" class="panel">
         <div ref="panelObserverTargetRef" class="panel-observer-target"></div>
         <slot />
@@ -278,9 +222,32 @@ watch(
     grid-template-rows: fit-content(100%) fit-content(100%) !important;
   }
 
-  .drag-handle {
+  .drag-handle-wrapper {
     grid-row: 1;
     isolation: isolate;
+  }
+
+  .drag-handle-default {
+    top: 0;
+    flex-shrink: 0;
+    height: 36px;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    > .drag-handle-default-icon {
+      position: absolute;
+      left: 50%;
+      width: 32px;
+      height: 4px;
+      margin: 16px 0;
+      content: "";
+      background-color: #ccc;
+      border-radius: 2px;
+      transform: translateX(-50%);
+    }
   }
 
   .panel {
