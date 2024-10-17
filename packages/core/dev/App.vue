@@ -78,6 +78,7 @@ const isScrollLock = ref(true);
     @close="() => isOpen = false"
   >
     <div class="panel">
+    <input type="text" />
       <p>This is contents.</p>
       <button @click="
         (e) => {
