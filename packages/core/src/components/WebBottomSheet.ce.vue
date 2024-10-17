@@ -81,6 +81,7 @@ const handleOpen = () => {
 const handleClose = () => {
   resetSnapPointIndex(() => {
     emit("close", false);
+
     move("-100%", () => {
       dialogRef.value?.close();
       internalOpen.value = false;
@@ -150,7 +151,7 @@ const handleDragEnd = () => {
 watch(
   () => open,
   () => {
-    if (open === true) {
+    if (open) {
       handleOpen();
     } else {
       handleClose();

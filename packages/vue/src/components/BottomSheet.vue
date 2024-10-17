@@ -28,7 +28,7 @@ const onLoaded = () => {
 
 const isLoaded = ref(false);
 onMounted(() => {
-  resister();
+  resister(["web-bottom-sheet"]);
 
   customElements.whenDefined("web-bottom-sheet").then(() => {
     isLoaded.value = true;
@@ -41,11 +41,11 @@ onMounted(() => {
   <template v-if="isLoaded">
     <web-bottom-sheet
       :open="modelValue"
-      :is-backdrop="props.isBackdrop || null"
-      :is-drag-handle="props.isDragHandle || null"
-      :is-fullscreen="props.isFullscreen || null"
-      :is-persistent="props.isPersistent || null"
-      :is-scrollLock="props.isScrollLock || null"
+      :is-backdrop="props.isBackdrop ? '' : null"
+      :is-drag-handle="props.isDragHandle ? '' : null"
+      :is-fullscreen="props.isFullscreen ? '' : null"
+      :is-persistent="props.isPersistent ? '' : null"
+      :is-scroll-lock="props.isScrollLock ? '' : null"
       @close="onClose"
     >
       <slot />
