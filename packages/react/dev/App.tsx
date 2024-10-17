@@ -1,14 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import "./App.css";
-import { BottomSheet } from "../src/main";
+import { BottomSheet, BottomSheetSnapPoint } from "../src/main";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(0);
 
   const [props, _setProps] = useState({
-    snapPoint: "auto",
     isBackdrop: true,
     isDragHandle: true,
     isFullscreen: true,
@@ -21,27 +20,25 @@ const App = () => {
   };
 
   const handleClose = () => {
+    console.log("handleClose");
     setIsOpen(false);
   };
 
   return (
     <>
       <h2>@web-bottom-sheet/react</h2>
-      <button onClick={() => setIsOpen(true)}>open</button>
+      <button onClick={() => setIsOpen(true)}>
+        open {isOpen ? "opened" : "closed"}
+      </button>
 
       <BottomSheet
         open={isOpen}
-        snapPoint={props.snapPoint}
         isBackdrop={props.isBackdrop}
         isDragHandle={props.isDragHandle}
         isFullscreen={props.isFullscreen}
         isPersistent={props.isPersistent}
         isScrollLock={props.isScrollLock}
         onClose={handleClose}
-        onChangePositionStatus={(e) => {
-          // console.log("onChangePositionStatus");
-          console.log("onChangePositionStatus", e.detail.positionStatus);
-        }}
       >
         <div className="panel">
           <p>This is contents.</p>
@@ -53,6 +50,8 @@ const App = () => {
           >
             count: {count}
           </button>
+          <hr />
+          <BottomSheetSnapPoint />
         </div>
       </BottomSheet>
     </>

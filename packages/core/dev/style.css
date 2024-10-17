@@ -25,15 +25,9 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
   place-items: center;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 1em;
   min-width: 320px;
   min-height: 100vh;
-  box-sizing: border-box;
 }
 
 h1 {
@@ -105,9 +99,16 @@ hr {
 
 #app {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  place-items: center;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1em;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {

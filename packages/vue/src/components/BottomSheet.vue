@@ -1,46 +1,35 @@
 <script setup lang="ts">
 import { useVModel } from "@vueuse/core";
-import type { WebBottomSheetProps } from "@web-bottom-sheet/core";
+import { type WebBottomSheetProps, resister } from "@web-bottom-sheet/core";
 import { onMounted, ref } from "vue";
 
-// biome-ignore lint/correctness/noUndeclaredVariables: <explanation>
-const props = withDefaults(
-  defineProps<{
-    open?: WebBottomSheetProps["open"];
-    snapPoint?: WebBottomSheetProps["snap-point"];
-    isBackdrop?: WebBottomSheetProps["is-backdrop"];
-    isDragHandle?: WebBottomSheetProps["is-drag-handle"];
-    isFullscreen?: WebBottomSheetProps["is-fullscreen"];
-    isPersistent?: WebBottomSheetProps["is-persistent"];
-    isScrollLock?: WebBottomSheetProps["is-scroll-lock"];
-  }>(),
-  {
-    open: false,
-    snapPoint: "auto",
-    isBackdrop: true,
-    isDragHandle: true,
-    isFullscreen: true,
-    isPersistent: false,
-    isScrollLock: true,
-  },
-);
+const props = defineProps<{
+  open?: WebBottomSheetProps["open"];
+  isBackdrop?: WebBottomSheetProps["isBackdrop"];
+  isDragHandle?: WebBottomSheetProps["isDragHandle"];
+  isFullscreen?: WebBottomSheetProps["isFullscreen"];
+  isPersistent?: WebBottomSheetProps["isPersistent"];
+  isScrollLock?: WebBottomSheetProps["isScrollLock"];
+}>();
 
 const emit = defineEmits<{
-  (event: "onClose", value: boolean): void;
-  (event: "onLoaded"): void;
+  (event: "close", value: boolean): void;
+  (event: "loaded"): void;
   (event: "update:open", value: boolean): void;
 }>();
-// biome-ignore lint/correctness/useHookAtTopLevel: <explanation>
 const modelValue = useVModel(props, "open", emit);
 const onClose = () => {
-  emit("onClose", false);
+  emit("close", false);
+  modelValue.value = false;
 };
 const onLoaded = () => {
-  emit("onLoaded");
+  emit("loaded");
 };
 
 const isLoaded = ref(false);
 onMounted(() => {
+  resister(["web-bottom-sheet"]);
+
   customElements.whenDefined("web-bottom-sheet").then(() => {
     isLoaded.value = true;
     onLoaded();
@@ -52,13 +41,12 @@ onMounted(() => {
   <template v-if="isLoaded">
     <web-bottom-sheet
       :open="modelValue"
-      :snap-point="props.snapPoint"
-      :is-backdrop="props.isBackdrop"
-      :is-drag-handle="props.isDragHandle"
-      :is-fullscreen="props.isFullscreen"
-      :is-persistent="props.isPersistent"
-      :is-scroll-lock="props.isScrollLock"
-      @on-close="onClose"
+      :is-backdrop="props.isBackdrop ? '' : null"
+      :is-drag-handle="props.isDragHandle ? '' : null"
+      :is-fullscreen="props.isFullscreen ? '' : null"
+      :is-persistent="props.isPersistent ? '' : null"
+      :is-scroll-lock="props.isScrollLock ? '' : null"
+      @close="onClose"
     >
       <slot />
     </web-bottom-sheet>

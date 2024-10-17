@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-*.tsbuildinfo
 
 node_modules
 dist
@@ -14,6 +13,8 @@ dist-ssr
 *.local
 
 # Editor directories and files
+.vscode/*
+!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
@@ -21,5 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-unimport.d.ts

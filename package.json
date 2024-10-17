@@ -11,23 +11,24 @@
     "p:react": "pnpm -C packages/react",
     "p:svelte": "pnpm -C packages/svelte",
     "p:vue": "pnpm -C packages/vue",
+    "pg:vanilla-ts": "pnpm -C playgrounds/vanilla-ts",
     "doc": "pnpm -C docs"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.1",
+    "@biomejs/biome": "catalog:",
     "turbo": "^2.0.6"
   },
   "engines": {
-    "pnpm": "9.5.0",
+    "pnpm": "9.8.0",
     "npm": "please_use_pnpm_instead",
     "yarn": "please_use_pnpm_instead"
   },
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.8.0",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "volta": {
     "node": "22.1.0",
-    "pnpm": "9.5.0"
+    "pnpm": "9.8.0"
   }
 }
