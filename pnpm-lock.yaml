@@ -4,15 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@biomejs/biome':
-      specifier: ^1.9.3
-      version: 1.9.3
-    typescript:
-      specifier: 5.6.3
-      version: 5.6.3
-
 importers:
 
   .:
@@ -73,9 +64,6 @@ importers:
 
   packages/react:
     dependencies:
-      '@lit/react':
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react@18.3.3)
       '@web-bottom-sheet/core':
         specifier: workspace:*
         version: link:../core
@@ -138,6 +126,19 @@ importers:
       vue-tsc:
         specifier: ^2.0.6
         version: 2.0.19(typescript@5.4.5)
+
+  playgrounds/vanilla-ts:
+    dependencies:
+      '@web-bottom-sheet/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      typescript:
+        specifier: ^5.5.3
+        version: 5.6.3
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.8(@types/node@20.14.2)(sass-embedded@1.77.2)(sass@1.77.4)
 
 packages:
 
@@ -705,11 +706,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
-
-  '@lit/react@1.0.5':
-    resolution: {integrity: sha512-RSHhrcuSMa4vzhqiTenzXvtQ6QDq3hSPsnHHO3jaPmmvVFeoNNm4DHoQ0zLdKAUvY3wP3tTENSUf7xpyVfrDEA==}
-    peerDependencies:
-      '@types/react': 17 || 18
 
   '@microsoft/api-extractor-model@7.28.13':
     resolution: {integrity: sha512-39v/JyldX4MS9uzHcdfmjjfS6cYGAoXV+io8B5a338pkHiSt+gy2eXQ0Q7cGFJ7quSa1VqqlMdlPrB6sLR/cAw==}
@@ -2757,10 +2753,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@lit/react@1.0.5(@types/react@18.3.3)':
-    dependencies:
-      '@types/react': 18.3.3
 
   '@microsoft/api-extractor-model@7.28.13(@types/node@20.14.2)':
     dependencies:

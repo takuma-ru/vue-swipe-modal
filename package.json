@@ -11,6 +11,7 @@
     "p:react": "pnpm -C packages/react",
     "p:svelte": "pnpm -C packages/svelte",
     "p:vue": "pnpm -C packages/vue",
+    "pg:vanilla-ts": "pnpm -C playgrounds/vanilla-ts",
     "doc": "pnpm -C docs"
   },
   "devDependencies": {

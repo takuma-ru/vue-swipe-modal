@@ -2,52 +2,48 @@
   "folders": [
     {
       "name": "root",
-      "path": ".",
+      "path": "."
     },
     {
       "name": "-------",
-      "path": "a",
+      "path": "a"
     },
     {
       "name": "📦 wbs",
-      "path": "packages/web-bottom-sheet",
+      "path": "packages/web-bottom-sheet"
     },
     {
       "name": "📦 core",
-      "path": "packages/core",
-    },
-    {
-      "name": "📦 core-old",
-      "path": "packages/core-old",
+      "path": "packages/core"
     },
     {
       "name": "📦 angular",
-      "path": "packages/angular",
+      "path": "packages/angular"
     },
     {
       "name": "📦 react",
-      "path": "packages/react",
+      "path": "packages/react"
     },
     {
       "name": "📦 svelte",
-      "path": "packages/svelte",
+      "path": "packages/svelte"
     },
     {
       "name": "📦 vue",
-      "path": "packages/vue",
+      "path": "packages/vue"
     },
     {
       "name": "-------",
-      "path": "b",
+      "path": "b"
     },
     {
       "name": "-------",
-      "path": "c",
+      "path": "c"
     },
     {
       "name": "📃 docs",
-      "path": "docs",
-    },
+      "path": "docs"
+    }
   ],
   "settings": {
     "editor.formatOnSave": true,
@@ -57,42 +53,42 @@
       "editor.codeActionsOnSave": {
         "quickfix.biome": "explicit",
         "source.organizeImports.biome": "explicit",
-        "source.addMissingImports": "explicit",
-      },
+        "source.addMissingImports": "explicit"
+      }
     },
     "[typescript]": {
       "editor.defaultFormatter": "biomejs.biome",
       "editor.codeActionsOnSave": {
         "quickfix.biome": "explicit",
         "source.organizeImports.biome": "explicit",
-        "source.addMissingImports": "explicit",
-      },
+        "source.addMissingImports": "explicit"
+      }
     },
     "[css]": {
       "editor.defaultFormatter": "biomejs.biome",
       "editor.codeActionsOnSave": {
-        "quickfix.biome": "explicit",
-      },
+        "quickfix.biome": "explicit"
+      }
     },
     "[vue]": {
       "editor.defaultFormatter": "biomejs.biome",
       "editor.codeActionsOnSave": {
         "quickfix.biome": "explicit",
         "source.organizeImports.biome": "explicit",
-        "source.addMissingImports": "explicit",
-      },
+        "source.addMissingImports": "explicit"
+      }
     },
     "[vue-html]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.codeActionsOnSave": {
-        "quickfix.biome": "explicit",
-      },
+        "quickfix.biome": "explicit"
+      }
     },
     "[html]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
       "editor.codeActionsOnSave": {
-        "quickfix.biome": "explicit",
-      },
+        "quickfix.biome": "explicit"
+      }
     },
 
     "typescript.preferences.importModuleSpecifier": "non-relative",
@@ -101,16 +97,16 @@
     "stylelint.enable": false,
     "emmet.triggerExpansionOnTab": true,
     "cSpell.words": ["antfu", "biomejs"],
-    "terminal.integrated.cwd": "${workspaceFolder}",
+    "terminal.integrated.cwd": "${workspaceFolder}"
   },
   "extensions": {
     "unwantedRecommendations": [
       "esbenp.prettier-vscode",
-      "dbaeumer.vscode-eslint",
-    ],
+      "dbaeumer.vscode-eslint"
+    ]
   },
   "launch": {
     "version": "0.2.0",
-    "configurations": [],
-  },
+    "configurations": []
+  }
 }

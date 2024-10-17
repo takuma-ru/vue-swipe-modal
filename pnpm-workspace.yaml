@@ -2,6 +2,7 @@ packages:
   - "packages/core"
   - "packages/react"
   - "packages/vue"
+  - "playgrounds/*"
   - "docs/"
 
 catalog:
