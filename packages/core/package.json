@@ -1,9 +1,20 @@
 {
   "name": "@web-bottom-sheet/core",
-  "description": "Web modal component that can be opened and closed by swiping",
+  "type": "module",
   "version": "0.0.0",
   "private": false,
+  "description": "Web modal component that can be opened and closed by swiping",
   "author": "takuma-ru <takuma-ru@takumaru.dev> (https://github.com/takuma-ru/)",
+  "license": "ISC",
+  "homepage": "https://web-bottom-sheet.takumaru.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/takuma-ru/web-bottom-sheet"
+  },
+  "bugs": {
+    "url": "https://github.com/takuma-ru/web-bottom-sheet/issues",
+    "email": "takuma-ru@takumaru.dev"
+  },
   "keywords": [
     "web-components",
     "swiping",
@@ -16,39 +27,20 @@
     "svelte",
     "angular"
   ],
-  "homepage": "https://web-bottom-sheet.takumaru.dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/takuma-ru/web-bottom-sheet"
-  },
-  "bugs": {
-    "url": "https://github.com/takuma-ru/web-bottom-sheet/issues",
-    "email": "takuma-ru@takumaru.dev"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
     "provenance": true
   },
-  "license": "ISC",
-  "type": "module",
-  "main": "./dist/core.umd.cjs",
-  "module": "./dist/core.js",
-  "types": "./dist/types/main.d.ts",
-  "files": [
-    "dist/*",
-    "LICENSE",
-    "README.md"
-  ],
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/core.js",
-        "types": "./dist/types/main.d.ts"
+        "types": "./dist/types/main.d.ts",
+        "default": "./dist/core.js"
       },
       "require": {
-        "default": "./dist/core.cjs",
-        "types": "./dist/types/main.d.ts"
+        "types": "./dist/types/main.d.ts",
+        "default": "./dist/core.cjs"
       }
     },
     "./@types": {
@@ -56,21 +48,27 @@
       "require": "./dist/types/main.d.ts"
     }
   },
+  "main": "./dist/core.umd.cjs",
+  "module": "./dist/core.js",
+  "types": "./dist/types/main.d.ts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist/*"
+  ],
   "scripts": {
     "dev": "vite --port 52100",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "biome lint",
-    "format": "biome format",
-    "check": "biome check"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
     "vue": "^3.5.10"
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
     "@vitejs/plugin-vue": "^5.1.4",
+    "@web-bottom-sheet/config": "workspace:*",
     "typescript": "catalog:",
     "vite": "^5.4.8",
     "vite-plugin-css-injected-by-js": "^3.5.1",

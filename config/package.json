@@ -1,0 +1,19 @@
+{
+  "name": "@web-bottom-sheet/config",
+  "private": "true",
+  "version": "0.0.0",
+  "description": "Configuration for web-bottom-sheet",
+  "exports": {
+    ".": {},
+    "./tsconfig/*": "./tsconfig/*",
+    "./eslint/*": "./eslint/*"
+  },
+  "dependencies": {
+    "@tsconfig/node22": "^22.0.0",
+    "@tsconfig/recommended": "^1.0.7"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.8.0",
+    "eslint": "^9.12.0"
+  }
+}

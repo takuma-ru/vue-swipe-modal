@@ -5,6 +5,10 @@
       "path": "."
     },
     {
+      "name": "⚙️ config",
+      "path": "./config"
+    },
+    {
       "name": "-------",
       "path": "a"
     },
