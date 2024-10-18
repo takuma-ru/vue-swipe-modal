@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "lint": "turbo run lint",
     "cfg": "pnpm -C config",
     "p:core": "pnpm -C packages/core",
     "p:wbs": "pnpm -C packages/web-bottom-sheets",
