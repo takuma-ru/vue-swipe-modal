@@ -1,4 +1,4 @@
-export type WebBottomSheetProps = {
+export interface WebBottomSheetProps {
   /**
    * Whether to display the modal.
    *
@@ -35,4 +35,4 @@ export type WebBottomSheetProps = {
    *  @default true
    */
   isScrollLock?: boolean;
-};
+}

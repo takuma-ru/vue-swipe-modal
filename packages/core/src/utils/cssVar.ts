@@ -1,5 +1,5 @@
-import { CSS_VAR_NAME } from "src/constants/CSS_VAR_NAME";
 import type { Ref } from "vue";
+import { CSS_VAR_NAME } from "src/constants/CSS_VAR_NAME";
 
 export const cssVar = (dialogRef: Ref<HTMLDialogElement | null>) => {
   const setCssVar = (name: keyof typeof CSS_VAR_NAME, value: string) => {

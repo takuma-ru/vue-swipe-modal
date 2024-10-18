@@ -5,6 +5,6 @@ import { resister } from "../src/main";
 import App from "./App.vue";
 
 resister();
-const app = createApp(App)
-app.config.compilerOptions.isCustomElement = (tag) => tag.includes("web-");
+const app = createApp(App);
+app.config.compilerOptions.isCustomElement = tag => tag.includes("web-");
 app.mount("#app");

@@ -1,5 +1,5 @@
-import { cssVar } from "src/utils/cssVar";
 import type { Ref } from "vue";
+import { cssVar } from "src/utils/cssVar";
 
 const KEY_FRAME_ANIMATION_OPTIONS = {
   duration: 300,

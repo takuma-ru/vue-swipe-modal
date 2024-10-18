@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import type { WebBottomSheetProps } from "../types/WebBottomSheet";
 
 import { useAnimation } from "src/composables/useAnimation";
 import { useDrag } from "src/composables/useDrag";
 import { useSnapPoint } from "src/composables/useSnapPoint";
 import { cssVar } from "src/utils/cssVar";
 import { setPageScrollable } from "src/utils/setPageScrollable";
-import type { WebBottomSheetProps } from "../types/WebBottomSheet";
+import { ref, watch } from "vue";
 
 const {
   open = false,
@@ -17,8 +17,7 @@ const {
   isScrollLock,
 } = defineProps<WebBottomSheetProps>();
 
-type WebBottomSheetEmits = { close: [value: boolean] };
-const emit = defineEmits<WebBottomSheetEmits>();
+const emit = defineEmits<{ close: [value: boolean] }>();
 
 const internalOpen = ref(open);
 const dialogRef = ref<HTMLDialogElement | null>(null);
@@ -53,11 +52,6 @@ const { move, moveToSnapPoint } = useAnimation({ dialogRef });
 const { setCssVar, getCssVar } = cssVar(dialogRef);
 
 // Event Handlers
-const handleClickBackDrop = (e: MouseEvent | ToggleEvent) => {
-  if (e.target === dialogRef.value && !isPersistent) {
-    handleClose();
-  }
-};
 const handleOpen = () => {
   if (isScrollLock) {
     setPageScrollable("hidden");
@@ -67,7 +61,8 @@ const handleOpen = () => {
 
   if (isBackdrop) {
     dialogRef.value?.showModal();
-  } else {
+  }
+  else {
     dialogRef.value?.show();
   }
 
@@ -78,6 +73,7 @@ const handleOpen = () => {
     },
   );
 };
+
 const handleClose = () => {
   resetSnapPointIndex(() => {
     emit("close", false);
@@ -94,6 +90,12 @@ const handleClose = () => {
       }
     });
   });
+};
+
+const handleClickBackDrop = (e: MouseEvent | ToggleEvent) => {
+  if (e.target === dialogRef.value && !isPersistent) {
+    handleClose();
+  }
 };
 
 // Drag Handlers
@@ -153,7 +155,8 @@ watch(
   () => {
     if (open) {
       handleOpen();
-    } else {
+    }
+    else {
       handleClose();
     }
   },
@@ -187,13 +190,13 @@ watch(
         <div ref="dragHandleWrapperRef" class="drag-handle-wrapper">
           <slot name="drag-handle">
             <div class="drag-handle-default">
-              <div class="drag-handle-default-icon"></div>
+              <div class="drag-handle-default-icon" />
             </div>
           </slot>
         </div>
       </template>
       <div ref="panelRef" class="panel">
-        <div ref="panelObserverTargetRef" class="panel-observer-target"></div>
+        <div ref="panelObserverTargetRef" class="panel-observer-target" />
         <slot />
       </div>
     </div>

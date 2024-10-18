@@ -1,4 +1,5 @@
 {
+  "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
@@ -6,6 +7,5 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
-  },
-  "extends": "@tsconfig/node22/tsconfig.json"
+  }
 }

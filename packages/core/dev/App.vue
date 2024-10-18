@@ -17,56 +17,58 @@ const isScrollLock = ref(true);
   <div class="input-checkbox">
     <label for="isBackdrop">isBackdrop: {{ isBackdrop }}</label>
     <input
-      v-model="isBackdrop"
       id="isBackdrop"
+      v-model="isBackdrop"
       name="isBackdrop"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isDragHandle">isDragHandle</label>
     <input
-      v-model="isDragHandle"
       id="isDragHandle"
+      v-model="isDragHandle"
       name="isDragHandle"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isFullscreen">isFullscreen</label>
     <input
-      v-model="isFullscreen"
       id="isFullscreen"
+      v-model="isFullscreen"
       name="isFullscreen"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isPersistent">isPersistent</label>
     <input
-      v-model="isPersistent"
       id="isPersistent"
+      v-model="isPersistent"
       name="isPersistent"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isScrollLock">isScrollLock</label>
     <input
-      v-model="isScrollLock"
       id="isScrollLock"
+      v-model="isScrollLock"
       name="isScrollLock"
       type="checkbox"
-    />
+    >
   </div>
 
-  <hr />
+  <hr>
 
-  <button @click="isOpen = true">open ({{ isOpen ? "opened" : "closed" }})</button>
+  <button @click="isOpen = true">
+    open ({{ isOpen ? "opened" : "closed" }})
+  </button>
 
   <web-bottom-sheet
     :open="isOpen"
@@ -78,14 +80,18 @@ const isScrollLock = ref(true);
     @close="() => isOpen = false"
   >
     <div class="panel">
-    <input type="text" />
+      <input type="text">
       <p>This is contents.</p>
-      <button @click="
-        (e) => {
-          e.stopPropagation();
-          isOpen = false;
-        }
-      ">close</button>
+      <button
+        @click="
+          (e) => {
+            e.stopPropagation();
+            isOpen = false;
+          }
+        "
+      >
+        close
+      </button>
       <button
         @click="isNestedOpen = true"
       >
@@ -96,19 +102,23 @@ const isScrollLock = ref(true);
         This is a web component that mimics the native bottom sheet. It is
         implemented using Lit and TypeScript.
       </p>
-      <web-bottom-sheet-snap-point></web-bottom-sheet-snap-point>
+      <web-bottom-sheet-snap-point />
       <web-bottom-sheet
-       :open="isNestedOpen"
-       @close="() => isNestedOpen = false"
+        :open="isNestedOpen"
+        @close="() => isNestedOpen = false"
       >
         <div class="panel">
           <p>This is nested contents.</p>
-          <button @click="(e) => {
-            e.stopPropagation()
-            isNestedOpen = false
-          }">close</button>
+          <button
+            @click="(e) => {
+              e.stopPropagation()
+              isNestedOpen = false
+            }"
+          >
+            close
+          </button>
           <p>This is nested contents.</p>
-          <web-bottom-sheet-snap-point></web-bottom-sheet-snap-point>
+          <web-bottom-sheet-snap-point />
         </div>
       </web-bottom-sheet>
       <p>1</p>

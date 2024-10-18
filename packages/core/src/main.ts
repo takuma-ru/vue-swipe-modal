@@ -14,7 +14,8 @@ export const resister = (resistTypes?: ResistTypes) => {
     customElements.get(tagName) !== undefined;
 
   const resist = (tagName: string, component: CustomElementConstructor) => {
-    if (isResisted(tagName)) return;
+    if (isResisted(tagName))
+      return;
 
     customElements.define(tagName, component);
   };

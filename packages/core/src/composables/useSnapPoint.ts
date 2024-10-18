@@ -1,9 +1,9 @@
-import { type Ref, readonly, ref, watch } from "vue";
+import { readonly, type Ref, ref, watch } from "vue";
 
-type UseSnapPointParams = {
+interface UseSnapPointParams {
   dialogRef: Ref<HTMLDialogElement | null>;
   panelRef: Ref<HTMLDivElement | null>;
-};
+}
 
 export const useSnapPoint = ({ panelRef }: UseSnapPointParams) => {
   /**
@@ -54,13 +54,13 @@ export const useSnapPoint = ({ panelRef }: UseSnapPointParams) => {
   const incrementSnapPointIndex = (
     callback?: Parameters<typeof updateSnapPointIndex>["1"],
   ) => {
-    return updateSnapPointIndex((currentValue) => currentValue + 1, callback);
+    return updateSnapPointIndex(currentValue => currentValue + 1, callback);
   };
 
   const decrementSnapPointIndex = (
     callback?: Parameters<typeof updateSnapPointIndex>["1"],
   ) => {
-    return updateSnapPointIndex((currentValue) => currentValue - 1, callback);
+    return updateSnapPointIndex(currentValue => currentValue - 1, callback);
   };
 
   const reset = () => {

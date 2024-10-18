@@ -11,5 +11,3 @@
   display: contents;
 }
 </style>
-
-

@@ -1,9 +1,9 @@
-import { type Ref, readonly, ref } from "vue";
+import { readonly, type Ref, ref } from "vue";
 
-type UseDragParams = {
+interface UseDragParams {
   panelRef: Ref<HTMLDivElement | null>;
   dragHandleWrapperRef: Ref<HTMLDivElement | null>;
-};
+}
 
 export const useDrag = ({ panelRef, dragHandleWrapperRef }: UseDragParams) => {
   const isDragging = ref<boolean>(false);
@@ -18,10 +18,10 @@ export const useDrag = ({ panelRef, dragHandleWrapperRef }: UseDragParams) => {
     }
 
     if (e instanceof TouchEvent) {
-      dragStartY.value =
-        e.targetTouches[0].clientY ||
-        e.touches[0].clientY ||
-        e.changedTouches[0].clientY;
+      dragStartY.value
+        = e.targetTouches[0].clientY
+        || e.touches[0].clientY
+        || e.changedTouches[0].clientY;
     }
   };
 
@@ -34,8 +34,8 @@ export const useDrag = ({ panelRef, dragHandleWrapperRef }: UseDragParams) => {
     }
 
     if (
-      (panelRef.value?.scrollTop || 0) > 0 &&
-      !dragHandleWrapperRef.value?.contains(e.target as Node)
+      (panelRef.value?.scrollTop || 0) > 0
+      && !dragHandleWrapperRef.value?.contains(e.target as Node)
     ) {
       isDragging.value = false;
       return;
@@ -46,11 +46,11 @@ export const useDrag = ({ panelRef, dragHandleWrapperRef }: UseDragParams) => {
     }
 
     if (e instanceof TouchEvent) {
-      dragAmountY.value =
-        dragStartY.value -
-        (e.targetTouches[0].clientY ||
-          e.touches[0].clientY ||
-          e.changedTouches[0].clientY);
+      dragAmountY.value
+        = dragStartY.value
+        - (e.targetTouches[0].clientY
+          || e.touches[0].clientY
+          || e.changedTouches[0].clientY);
     }
 
     act?.();
