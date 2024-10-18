@@ -205,69 +205,69 @@ watch(
 
 <style lang="scss">
   :host {
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.dialog {
+  position: fixed !important;
+  top: auto !important;
+  bottom: var(--bottom, 0px);
+  height: 100% !important;
+  max-height: 100dvh !important;
+  box-sizing: border-box;
+
+  &::backdrop {
+    user-select: none;
+  }
+}
+
+.bottom-sheet {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: grid !important;
+  grid-template-rows: fit-content(100%) fit-content(100%) !important;
+}
+
+.drag-handle-wrapper {
+  grid-row: 1;
+  isolation: isolate;
+}
+
+.drag-handle-default {
+  top: 0;
+  flex-shrink: 0;
+  height: 36px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
   }
 
-  .dialog {
-    position: fixed !important;
-    top: auto !important;
-    bottom: var(--bottom, 0px);
-    height: 100% !important;
-    max-height: 100dvh !important;
-    box-sizing: border-box;
-
-    &::backdrop {
-      user-select: none;
-    }
+  > .drag-handle-default-icon {
+    position: absolute;
+    left: 50%;
+    width: 32px;
+    height: 4px;
+    margin: 16px 0;
+    content: "";
+    background-color: #ccc;
+    border-radius: 2px;
+    transform: translateX(-50%);
   }
+}
 
-  .bottom-sheet {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    display: grid !important;
-    grid-template-rows: fit-content(100%) fit-content(100%) !important;
+.panel {
+  grid-row: 2;
+  overflow: auto;
+
+  .panel-observer-target {
+    display: contents;
   }
-
-  .drag-handle-wrapper {
-    grid-row: 1;
-    isolation: isolate;
-  }
-
-  .drag-handle-default {
-    top: 0;
-    flex-shrink: 0;
-    height: 36px;
-    cursor: grab;
-
-    &:active {
-      cursor: grabbing;
-    }
-
-    > .drag-handle-default-icon {
-      position: absolute;
-      left: 50%;
-      width: 32px;
-      height: 4px;
-      margin: 16px 0;
-      content: "";
-      background-color: #ccc;
-      border-radius: 2px;
-      transform: translateX(-50%);
-    }
-  }
-
-  .panel {
-    grid-row: 2;
-    overflow: auto;
-
-    .panel-observer-target {
-      display: contents;
-    }
-  }
+}
 </style>
