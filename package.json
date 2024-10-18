@@ -20,6 +20,7 @@
     "turbo": "^2.0.6"
   },
   "engines": {
+    "node": "22.1.0",
     "pnpm": "9.8.0",
     "npm": "please_use_pnpm_instead",
     "yarn": "please_use_pnpm_instead"
