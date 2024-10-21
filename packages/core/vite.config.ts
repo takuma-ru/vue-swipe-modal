@@ -11,6 +11,19 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
+    /* Unimport.vite({
+      presets: ["vue", "@vueuse/core"],
+      dts: true,
+      addons: {
+        vueTemplate: true,
+        vueDirectives: true,
+      },
+    }), */
+    cssInjectedByJsPlugin(),
+    dts({
+      outDir: "dist/types",
+      tsconfigPath: resolve(__dirname, "tsconfig.json"),
+    }),
     VueMacros({
       plugins: {
         vue: Vue({
@@ -26,19 +39,6 @@ export default defineConfig({
         // })
       },
       // overrides plugin options
-    }),
-    /* Unimport.vite({
-      presets: ["vue", "@vueuse/core"],
-      dts: true,
-      addons: {
-        vueTemplate: true,
-        vueDirectives: true,
-      },
-    }), */
-    cssInjectedByJsPlugin(),
-    dts({
-      outDir: "dist/types",
-      tsconfigPath: resolve(__dirname, "tsconfig.json"),
     }),
   ],
 
