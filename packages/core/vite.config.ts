@@ -1,5 +1,7 @@
 import { resolve } from "node:path";
-import vue from "@vitejs/plugin-vue";
+import Vue from "@vitejs/plugin-vue";
+import VueJsx from "@vitejs/plugin-vue-jsx";
+import VueMacros from "unplugin-vue-macros/vite";
 import { defineConfig } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import dts from "vite-plugin-dts";
@@ -9,13 +11,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [
     tsconfigPaths(),
-    vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: tag => tag.includes("web-"),
-        },
-      },
-    }),
     /* Unimport.vite({
       presets: ["vue", "@vueuse/core"],
       dts: true,
@@ -28,6 +23,22 @@ export default defineConfig({
     dts({
       outDir: "dist/types",
       tsconfigPath: resolve(__dirname, "tsconfig.json"),
+    }),
+    VueMacros({
+      plugins: {
+        vue: Vue({
+          template: {
+            compilerOptions: {
+              isCustomElement: tag => tag.includes("web-"),
+            },
+          },
+        }),
+        vueJsx: VueJsx(), // if needed
+        // vueRouter: VueRouter({ // if needed
+        //   extensions: ['.vue', '.setup.tsx']
+        // })
+      },
+      // overrides plugin options
     }),
   ],
 

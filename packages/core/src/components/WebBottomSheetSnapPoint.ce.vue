@@ -1,12 +1,10 @@
-<script setup lang="ts">
-
+<script setup lang="tsx">
+defineRender(() => (
+  <hr class="web-bottom-sheet-snap-point" />
+));
 </script>
 
-<template>
-  <hr class="web-bottom-sheet-snap-point">
-</template>
-
-<style lang="scss" scoped>
+<style lang="scss">
 .web-bottom-sheet-snap-point {
   display: contents;
 }

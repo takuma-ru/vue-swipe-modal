@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="tsx">
 import type { WebBottomSheetProps } from "../types/WebBottomSheet";
 
 import { useAnimation } from "src/composables/useAnimation";
@@ -161,50 +161,53 @@ watch(
     }
   },
 );
+
+// Render
+defineRender(() => {
+  return (
+    <dialog
+      ref={dialogRef}
+      open={internalOpen.value}
+      class="dialog"
+      part="dialog"
+      onTouchstart={e => e.stopPropagation()}
+      onTouchmove={e => e.stopPropagation()}
+      onTouchend={e => e.stopPropagation()}
+      onMousedown={e => e.stopPropagation()}
+      onMousemove={e => e.stopPropagation()}
+      onMouseup={e => e.stopPropagation()}
+      onClick={handleClickBackDrop}
+    >
+      <div
+        class="bottom-sheet"
+        onTouchstart={onDragStart}
+        onTouchmove={handleDragging}
+        onTouchend={handleDragEnd}
+        onMousedown={onDragStart}
+        onMousemove={handleDragging}
+        onMouseup={handleDragEnd}
+      >
+        {isDragHandle && (
+          <div ref={dragHandleWrapperRef} class="drag-handle-wrapper">
+            <slot name="drag-handle">
+              <div class="drag-handle-default">
+                <div class="drag-handle-default-icon" />
+              </div>
+            </slot>
+          </div>
+        )}
+        <div ref={panelRef} class="panel">
+          <div ref={panelObserverTargetRef} class="panel-observer-target" />
+          <slot />
+        </div>
+      </div>
+    </dialog>
+  );
+});
 </script>
 
-<template>
-  <dialog
-    ref="dialogRef"
-    :open="internalOpen"
-    class="dialog"
-    part="dialog"
-    @touchstart="(e) => e.stopPropagation()"
-    @touchmove="(e) => e.stopPropagation()"
-    @touchend="(e) => e.stopPropagation()"
-    @mousedown="(e) => e.stopPropagation()"
-    @mousemove="(e) => e.stopPropagation()"
-    @mouseup="(e) => e.stopPropagation()"
-    @click="handleClickBackDrop"
-  >
-    <div
-      class="bottom-sheet"
-      @touchstart="onDragStart"
-      @touchmove="handleDragging"
-      @touchend="handleDragEnd"
-      @mousedown="onDragStart"
-      @mousemove="handleDragging"
-      @mouseup="handleDragEnd"
-    >
-      <template v-if="isDragHandle">
-        <div ref="dragHandleWrapperRef" class="drag-handle-wrapper">
-          <slot name="drag-handle">
-            <div class="drag-handle-default">
-              <div class="drag-handle-default-icon" />
-            </div>
-          </slot>
-        </div>
-      </template>
-      <div ref="panelRef" class="panel">
-        <div ref="panelObserverTargetRef" class="panel-observer-target" />
-        <slot />
-      </div>
-    </div>
-  </dialog>
-</template>
-
 <style lang="scss">
-  :host {
+:host {
   position: fixed;
   top: 0;
   left: 0;
