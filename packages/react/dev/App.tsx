@@ -1,7 +1,6 @@
-import React from "react";
-import { useState } from "react";
-import "./App.css";
+import React, { useState } from "react";
 import { BottomSheet, BottomSheetSnapPoint } from "../src/main";
+import "./App.css";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,15 +19,16 @@ const App = () => {
   };
 
   const handleClose = () => {
-    console.log("handleClose");
     setIsOpen(false);
   };
 
   return (
     <>
       <h2>@web-bottom-sheet/react</h2>
-      <button onClick={() => setIsOpen(true)}>
-        open {isOpen ? "opened" : "closed"}
+      <button type="button" onClick={() => setIsOpen(true)}>
+        open
+        {" "}
+        {isOpen ? "opened" : "closed"}
       </button>
 
       <BottomSheet
@@ -42,13 +42,16 @@ const App = () => {
       >
         <div className="panel">
           <p>This is contents.</p>
-          <button onClick={handleClose}>close</button>
+          <button type="button" onClick={handleClose}>close</button>
           <button
+            type="button"
             onClick={() => {
               handleIncrement();
             }}
           >
-            count: {count}
+            count:
+            {" "}
+            {count}
           </button>
           <hr />
           <BottomSheetSnapPoint />

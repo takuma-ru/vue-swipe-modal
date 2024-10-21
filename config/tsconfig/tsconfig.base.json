@@ -1,16 +1,17 @@
 {
+  "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "preserve",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022"],
     "useDefineForClassFields": true,
-    "baseUrl": ".",
     "module": "ESNext",
 
     /* Bundler mode */
+    "bundler": true,
     "moduleResolution": "bundler",
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["/src/*"]
     },
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
@@ -24,7 +25,5 @@
     "isolatedModules": true,
     "skipLibCheck": true
   },
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "dev/main.ts"],
   "exclude": ["node_modules", "dist", "dev"]
 }

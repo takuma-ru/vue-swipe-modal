@@ -1,5 +1,5 @@
 import { resister } from "@web-bottom-sheet/core";
-import { useEffect, type PropsWithChildren } from "react";
+import { type PropsWithChildren, useEffect } from "react";
 
 export const BottomSheetSnapPoint = (props: PropsWithChildren) => {
   const { children } = props;

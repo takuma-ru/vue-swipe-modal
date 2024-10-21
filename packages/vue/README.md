@@ -13,8 +13,8 @@ npm i @web-bottom-sheet/vue
 ## Usage
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue';
-import { BottomSheet } from '@web-bottom-sheet/vue';
+import { BottomSheet } from "@web-bottom-sheet/vue";
+import { ref } from "vue";
 
 const isOpen = ref(false);
 
@@ -28,7 +28,9 @@ const handleClose = () => {
 </script>
 
 <template>
-  <button @click="handleOpen">open</button>
+  <button @click="handleOpen">
+    open
+  </button>
 
   <BottomSheet
     :open="isOpen"
@@ -36,7 +38,9 @@ const handleClose = () => {
   >
     <div class="panel">
       <p>This is contents.</p>
-      <button @click="handleClose">close</button>
+      <button @click="handleClose">
+        close
+      </button>
     </div>
   </BottomSheet>
 </template>

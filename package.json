@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "lint": "turbo run lint",
+    "cfg": "pnpm -C config",
     "p:core": "pnpm -C packages/core",
     "p:wbs": "pnpm -C packages/web-bottom-sheets",
     "p:angular": "pnpm -C packages/angular",
@@ -15,10 +17,10 @@
     "doc": "pnpm -C docs"
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
     "turbo": "^2.0.6"
   },
   "engines": {
+    "node": "22.1.0",
     "pnpm": "9.8.0",
     "npm": "please_use_pnpm_instead",
     "yarn": "please_use_pnpm_instead"

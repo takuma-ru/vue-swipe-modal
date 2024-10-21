@@ -20,56 +20,58 @@ const option = ref({
   <div class="input-checkbox">
     <label for="isBackdrop">isBackdrop</label>
     <input
-      v-model="option.isBackdrop"
       id="isBackdrop"
+      v-model="option.isBackdrop"
       name="isBackdrop"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isDragHandle">isDragHandle</label>
     <input
-      v-model="option.isDragHandle"
       id="isDragHandle"
+      v-model="option.isDragHandle"
       name="isDragHandle"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isFullscreen">isFullscreen</label>
     <input
-      v-model="option.isFullscreen"
       id="isFullscreen"
+      v-model="option.isFullscreen"
       name="isFullscreen"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isPersistent">isPersistent</label>
     <input
-      v-model="option.isPersistent"
       id="isPersistent"
+      v-model="option.isPersistent"
       name="isPersistent"
       type="checkbox"
-    />
+    >
   </div>
 
   <div class="input-checkbox">
     <label for="isScrollLock">isScrollLock</label>
     <input
-      v-model="option.isScrollLock"
       id="isScrollLock"
+      v-model="option.isScrollLock"
       name="isScrollLock"
       type="checkbox"
-    />
+    >
   </div>
 
-  <hr />
+  <hr>
 
-  <button @click="isOpen = true">open</button>
+  <button @click="isOpen = true">
+    open
+  </button>
 
   <BottomSheet
     :open="isOpen"
@@ -81,7 +83,9 @@ const option = ref({
     @close="() => isOpen = false"
   >
     <div class="panel">
-      <button @click="isOpen = false">close</button>
+      <button @click="isOpen = false">
+        close
+      </button>
       <p>This is contents.</p>
       <web-bottom-sheet-snap-point />
     </div>

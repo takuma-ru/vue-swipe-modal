@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import type { WebBottomSheetProps } from "../types/WebBottomSheet";
 
 import { useAnimation } from "src/composables/useAnimation";
 import { useDrag } from "src/composables/useDrag";
 import { useSnapPoint } from "src/composables/useSnapPoint";
 import { cssVar } from "src/utils/cssVar";
 import { setPageScrollable } from "src/utils/setPageScrollable";
-import type { WebBottomSheetProps } from "../types/WebBottomSheet";
+import { ref, watch } from "vue";
 
 const {
   open = false,
@@ -17,8 +17,7 @@ const {
   isScrollLock,
 } = defineProps<WebBottomSheetProps>();
 
-type WebBottomSheetEmits = { close: [value: boolean] };
-const emit = defineEmits<WebBottomSheetEmits>();
+const emit = defineEmits<{ close: [value: boolean] }>();
 
 const internalOpen = ref(open);
 const dialogRef = ref<HTMLDialogElement | null>(null);
@@ -53,11 +52,6 @@ const { move, moveToSnapPoint } = useAnimation({ dialogRef });
 const { setCssVar, getCssVar } = cssVar(dialogRef);
 
 // Event Handlers
-const handleClickBackDrop = (e: MouseEvent | ToggleEvent) => {
-  if (e.target === dialogRef.value && !isPersistent) {
-    handleClose();
-  }
-};
 const handleOpen = () => {
   if (isScrollLock) {
     setPageScrollable("hidden");
@@ -67,7 +61,8 @@ const handleOpen = () => {
 
   if (isBackdrop) {
     dialogRef.value?.showModal();
-  } else {
+  }
+  else {
     dialogRef.value?.show();
   }
 
@@ -78,6 +73,7 @@ const handleOpen = () => {
     },
   );
 };
+
 const handleClose = () => {
   resetSnapPointIndex(() => {
     emit("close", false);
@@ -94,6 +90,12 @@ const handleClose = () => {
       }
     });
   });
+};
+
+const handleClickBackDrop = (e: MouseEvent | ToggleEvent) => {
+  if (e.target === dialogRef.value && !isPersistent) {
+    handleClose();
+  }
 };
 
 // Drag Handlers
@@ -153,7 +155,8 @@ watch(
   () => {
     if (open) {
       handleOpen();
-    } else {
+    }
+    else {
       handleClose();
     }
   },
@@ -187,13 +190,13 @@ watch(
         <div ref="dragHandleWrapperRef" class="drag-handle-wrapper">
           <slot name="drag-handle">
             <div class="drag-handle-default">
-              <div class="drag-handle-default-icon"></div>
+              <div class="drag-handle-default-icon" />
             </div>
           </slot>
         </div>
       </template>
       <div ref="panelRef" class="panel">
-        <div ref="panelObserverTargetRef" class="panel-observer-target"></div>
+        <div ref="panelObserverTargetRef" class="panel-observer-target" />
         <slot />
       </div>
     </div>
@@ -202,70 +205,69 @@ watch(
 
 <style lang="scss">
   :host {
-    position: fixed;
-    top: 0;
-    left: 0;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.dialog {
+  position: fixed !important;
+  top: auto !important;
+  bottom: var(--bottom, 0px);
+  height: 100% !important;
+  max-height: 100dvh !important;
+  box-sizing: border-box;
+
+  &::backdrop {
+    user-select: none;
+  }
+}
+
+.bottom-sheet {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: grid !important;
+  grid-template-rows: fit-content(100%) fit-content(100%) !important;
+}
+
+.drag-handle-wrapper {
+  grid-row: 1;
+  isolation: isolate;
+}
+
+.drag-handle-default {
+  top: 0;
+  flex-shrink: 0;
+  height: 36px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
   }
 
-  .dialog {
-    position: fixed !important;
-    top: auto !important;
-    bottom: var(--bottom, 0px);
-    height: 100% !important;
-    max-height: 100dvh !important;
-    box-sizing: border-box;
-
-    &::backdrop {
-      user-select: none;
-    }
+  > .drag-handle-default-icon {
+    position: absolute;
+    left: 50%;
+    width: 32px;
+    height: 4px;
+    margin: 16px 0;
+    content: "";
+    background-color: #ccc;
+    border-radius: 2px;
+    transform: translateX(-50%);
   }
+}
 
-  .bottom-sheet {
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    display: grid !important;
-    grid-template-rows: fit-content(100%) fit-content(100%) !important;
+.panel {
+  grid-row: 2;
+  overflow: auto;
+
+  .panel-observer-target {
+    display: contents;
   }
-
-  .drag-handle-wrapper {
-    grid-row: 1;
-    isolation: isolate;
-  }
-
-  .drag-handle-default {
-    top: 0;
-    flex-shrink: 0;
-    height: 36px;
-    cursor: grab;
-
-    &:active {
-      cursor: grabbing;
-    }
-
-    > .drag-handle-default-icon {
-      position: absolute;
-      left: 50%;
-      width: 32px;
-      height: 4px;
-      margin: 16px 0;
-      content: "";
-      background-color: #ccc;
-      border-radius: 2px;
-      transform: translateX(-50%);
-    }
-  }
-
-  .panel {
-    grid-row: 2;
-    overflow: auto;
-
-    .panel-observer-target {
-      display: contents;
-    }
-  }
+}
 </style>

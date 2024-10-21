@@ -1,5 +1,5 @@
 import { resister, type WebBottomSheetProps } from "@web-bottom-sheet/core";
-import { useEffect, useRef, type PropsWithChildren } from "react";
+import { type PropsWithChildren, useEffect, useRef } from "react";
 
 type BottomSheetProps = PropsWithChildren<
   WebBottomSheetProps & {
@@ -26,13 +26,15 @@ export const BottomSheet = (props: BottomSheetProps) => {
   }, []);
 
   useEffect(() => {
-    if (webBottomSheetRef.current) {
-      webBottomSheetRef.current.addEventListener("close", onClose);
+    const currentWebBottomSheetRef = webBottomSheetRef.current;
+
+    if (currentWebBottomSheetRef) {
+      currentWebBottomSheetRef.addEventListener("close", onClose);
     }
 
     return () => {
-      if (webBottomSheetRef.current) {
-        webBottomSheetRef.current.removeEventListener("close", onClose);
+      if (currentWebBottomSheetRef) {
+        currentWebBottomSheetRef.removeEventListener("close", onClose);
       }
     };
   }, [onClose]);

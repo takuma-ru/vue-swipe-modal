@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useVModel } from "@vueuse/core";
-import { type WebBottomSheetProps, resister } from "@web-bottom-sheet/core";
+import { resister, type WebBottomSheetProps } from "@web-bottom-sheet/core";
 import { onMounted, ref } from "vue";
 
 const props = defineProps<{

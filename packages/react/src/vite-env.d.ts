@@ -6,7 +6,7 @@ declare namespace JSX {
       React.HTMLAttributes<HTMLElement>,
       HTMLElement
     > & {
-      open?: string;
+      "open"?: string;
       "is-backdrop"?: string;
       "is-drag-handle"?: string;
       "is-fullscreen"?: string;
