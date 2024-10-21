@@ -13,6 +13,7 @@
       "src/*": ["./src/*"]
     },
     "resolveJsonModule": true,
+    "types": ["unplugin-vue-macros/macros-global", "vue/jsx"],
     "allowImportingTsExtensions": true,
 
     /* Linting */
@@ -23,6 +24,9 @@
     "noEmit": true,
     "isolatedModules": true,
     "skipLibCheck": true
+  },
+  "vueCompilerOptions": {
+    "plugins": ["unplugin-vue-macros/volar"]
   },
   "references": [{ "path": "./tsconfig.node.json" }],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "dev/main.ts"],
