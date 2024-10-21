@@ -1,8 +1,8 @@
-import type { DialogHTMLAttributes } from "vue";
+import type { DialogHTMLAttributes as VueDialogHTMLAttributes } from "vue";
 
 /// <reference types="vite/client" />
 declare module "vue" {
-  interface DialogHTMLAttributes extends DialogHTMLAttributes {
+  interface DialogHTMLAttributes extends VueDialogHTMLAttributes {
     part?: string;
   }
 }
